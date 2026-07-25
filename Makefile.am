@@ -44,11 +44,12 @@ ical.desktop:
 	echo "Name=Ical" >>$@
 	echo "Comment=Ical calendar package" >>$@
 	echo "Exec=ical" >>$@
-	echo  'Icon=$(icallibdir)/contrib/ical_icon.png' >>$@
+	echo "Icon=ical" >>$@
 	echo "Terminal=false" >>$@
 	echo "Type=Application" >>$@
 	echo "Categories=Office" >>$@
-	echo "StartupNotify=true;" >>$@
+	echo "StartupNotify=true" >>$@
+	echo "StartupWMClass=Dayview" >>$@
 	chmod 644 $@
 
 # cannot do it in configure, as libdir is not known there :(

@@ -1,4 +1,4 @@
-AC_INIT([ical], [3.0.4])
+AC_INIT([ical], [3.0.5])
 AM_INIT_AUTOMAKE([subdir-objects])
 
 # Create config files
@@ -18,8 +18,8 @@ AC_PROG_SED
 # Find Tcl/Tk
 
 AC_CHECKING(Tcl/Tk installation)
-legal_tk_versions="8.6 8.5 8.4 8.3 8.2 8.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1"
-legal_tcl_versions="8.6 8.5 8.4 8.3 8.2 8.0 7.9 7.8 7.7 7.6 7.5"
+legal_tk_versions="8.6"
+legal_tcl_versions="8.6"
 
 #### Find tclsh
 AC_ARG_WITH(tclsh,
@@ -105,7 +105,7 @@ Make sure you have a new enough version installed on your system.])
 fi
 AC_MSG_RESULT($tkconfig/tkConfig.sh)
 
-#### Load the Tcl/Tk configuration files 
+#### Load the Tcl/Tk configuration files
 . $tclconfig/tclConfig.sh
 . $tkconfig/tkConfig.sh
 

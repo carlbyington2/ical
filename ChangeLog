@@ -1,3 +1,14 @@
+Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
+
+    * changes to the desktop file for fedora packaging
+
+    * brighter icon image to show up better against the fedora
+    default background
+
+Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
+
+    * New icon and desktop file
+
 Version 3.0.3 Sergei Golubchik <sergii@pisem.net>
 
 	* support for gcc 6+
