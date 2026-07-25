@@ -466,14 +466,14 @@ static int item_alarms(ClientData c, Tcl_Interp* tcl, int argc, const char** arg
         return TCL_OK;
     }
 
-    int count;
+    Tcl_Size count;
     const char** list;
     if (Tcl_SplitList(tcl, argv[0], &count, &list) != TCL_OK) {
         TCL_Error(tcl, "invalid alarm list");
     }
 
     intArray* alarms = new intArray(count);
-    for (int i = 0; i < count; i++) {
+    for (Tcl_Size i = 0; i < count; i++) {
         int x;
         if ((Tcl_GetInt(tcl, list[i], &x) != TCL_OK) || (x < 0) || (x > 60)) {
             Tcl_Free((char*) list);
@@ -483,7 +483,7 @@ static int item_alarms(ClientData c, Tcl_Interp* tcl, int argc, const char** arg
         alarms->append(x);
     }
     Tcl_Free((char*) list);
-            
+
     if (! check_permission(tcl, item)) {
         delete alarms;
         return TCL_ERROR;

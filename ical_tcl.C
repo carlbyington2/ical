@@ -57,8 +57,7 @@ int Cmd_CreateCalendar(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]
 /*
  * usage        ical_expand_file_name <filename>
  * effects      Converts <filename> into a name suitable for passing
- *              to the local operating system.  This transformation
- *              may involve tilde substitution.  If any part of the
+ *              to the local operating system.  If any part of the
  *              of the translation fails, this routine returns an
  *              error.  Otherwise it returns the translated file name.
  */

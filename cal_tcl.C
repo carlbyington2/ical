@@ -50,16 +50,16 @@ Calendar_Tcl::~Calendar_Tcl() {
 }
 
 void Calendar_Tcl::add_item_handles(CalFile* cal) {
-    int count = cal->GetCalendar()->Size();
-    for (int i = 0; i < count; i++) {
+    Tcl_Size count = cal->GetCalendar()->Size();
+    for (Tcl_Size i = 0; i < count; i++) {
         // the object gets automatically inserted into tcl hash table
         new Item_Tcl(tcl(), cal->GetCalendar()->Get(i), cal);
     }
 }
 
 void Calendar_Tcl::remove_item_handles(Calendar* cal) {
-    int count = cal->Size();
-    for (int i = 0; i < count; i++) {
+    Tcl_Size count = cal->Size();
+    for (Tcl_Size i = 0; i < count; i++) {
         Item_Tcl* item = Item_Tcl::find(cal->Get(i));
         if (item != 0)
             delete item;
@@ -281,7 +281,7 @@ static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,
     }
 
     if ((argc >= 2) && (strcmp(argv[0], "-items") == 0)) {
-        int count;
+        Tcl_Size count;
         const char** list;
         if (Tcl_SplitList(tcl, argv[1], &count, &list) != TCL_OK) {
             TCL_Error(tcl, "invalid item list");
@@ -289,7 +289,7 @@ static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,
 
         // Stash initial array size so we can abort on error
         int isize = items.size();
-        for (int i = 0; i < count; i++) {
+        for (Tcl_Size i = 0; i < count; i++) {
             Object* obj = Object::find(tcl, list[i]);
             if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
                 Tcl_Free((char*) list);
@@ -445,8 +445,6 @@ static int cal_add(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){
 }
 
 static int cal_remove(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){
-    Calendar_Tcl* cal = (Calendar_Tcl*) c;
-
     // Find item
     Object* obj = Object::find(tcl, argv[0]);
     if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {

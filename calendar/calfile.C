@@ -54,7 +54,7 @@ CalFile::CalFile(int ro, const char* name) {
 
     // Copy backup file name
     tmp = new char[len+2];
-    sprintf(tmp, "%s~", fileName);
+    snprintf(tmp, len+2, "%s~", fileName);
     backupName = tmp;
 
     // Get directory name for access checks

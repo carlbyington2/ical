@@ -94,7 +94,7 @@ proc defkey_make {} {
     pack $f.bot -side bottom -expand 1 -fill both
 
     bind $f.list <ButtonRelease-1> defkey_select_command
-    trace variable defkey(cmd) w {defkey_changed_command}
+    trace add ariable defkey(cmd) w {defkey_changed_command}
 
     wm withdraw $f
     update
@@ -157,7 +157,7 @@ proc defkey_help_toggle {} {
         pack forget $f.top
         set defkey(help) 0
     } else {
-        pack $f.top -before $f.mid -side top -expand 1 -fill both       
+        pack $f.top -before $f.mid -side top -expand 1 -fill both
         set defkey(help) 1
     }
 }

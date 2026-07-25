@@ -94,7 +94,7 @@ int Cmd_MonthDays(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
  *              hilite style.
  */
 int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
-    int i;
+    Tcl_Size i;
 
     if (argc != 8) {
         TCL_Error(tcl, "illegal number of arguments");
@@ -112,7 +112,7 @@ int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
         return TCL_ERROR;
     }
 
-    int count;
+    Tcl_Size count;
     const char** strlist;
     if (Tcl_SplitList(tcl, argv[2], &count, &strlist) != TCL_OK) {
         return TCL_ERROR;

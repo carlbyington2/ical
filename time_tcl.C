@@ -281,8 +281,7 @@ int Cmd_Time(ClientData, Tcl_Interp* tcl, int argc, const char** argv) {
         break;
       case 7:
         if (strcmp(cmd, "extract_range") == 0) {
-            // "date extract_range <string> <startvar> <finishvar>\
-            //                     <prevar> <postvar>"
+            // "date extract_range <string> <startvar> <finishvar> <prevar> <postvar>"
             int r1, r2;
             int start, length;
 

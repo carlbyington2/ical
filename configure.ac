@@ -18,8 +18,8 @@ AC_PROG_SED
 # Find Tcl/Tk
 
 AC_CHECKING(Tcl/Tk installation)
-legal_tk_versions="8.6"
-legal_tcl_versions="8.6"
+legal_tk_versions="9.0"
+legal_tcl_versions="9.0"
 
 #### Find tclsh
 AC_ARG_WITH(tclsh,

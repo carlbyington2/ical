@@ -60,7 +60,7 @@ proc support_init {} {
     # Load various customization files
     ical_load_file $ical(libparent)/site.tcl
     ical_load_file $ical(library)/site.tcl
-    ical_load_file ~/.tk/ical/user.tcl
+    ical_load_file [file tildeexpand ~/.tk/ical/user.tcl]
 
     run-hook ical-startup
 }
@@ -384,7 +384,7 @@ proc ical_reconfig_options {} {
 # "ical_action_enabler($X)" to the name of entry.
 #
 # Currently the following entries in "ical_enable" are supported:
-#       ical_enable(always)     always set to "normal" 
+#       ical_enable(always)     always set to "normal"
 #       ical_enable(writable)   "normal" iff main calendar is writable
 #       ical_enable(item)       "normal" iff an item is selected
 #       ical_enable(appt)       "normal" iff an appointment is selected

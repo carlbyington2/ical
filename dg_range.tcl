@@ -29,7 +29,7 @@ proc get_daterange {leader svar fvar} {
     upvar $fvar finish
     set dr_state(start)  [date2text_no_weekday $start]
     set dr_state(finish) [date2text_no_weekday $finish]
-    
+
     dr_init
 
     if ![dr_interact $leader] {return 0}
@@ -77,8 +77,8 @@ proc dr_init {} {
     update
 
     # Set-up a variable trace to track changes to editor state
-    trace variable dr_state(start)  w dr_validate
-    trace variable dr_state(finish) w dr_validate
+    trace add variable dr_state(start)  w dr_validate
+    trace add variable dr_state(finish) w dr_validate
     dr_validate
 }
 

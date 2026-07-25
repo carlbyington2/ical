@@ -98,7 +98,7 @@ unsigned int HTABLE::find_index(HKEY key) const {
     unsigned int h = htable_hash_elem(key);
     unsigned int index = htable_hash(h, slot_bits);
     unsigned int msk = mask;
-    
+
     while (1) {
         if (tbl->is_empty(index)) {
             return index;
@@ -216,7 +216,7 @@ void HTABLE::clear() {
     delcount = 0;
 }
 
-void HTABLE::set_occupancy(int x) {
+void HTABLE::set_occupancy(unsigned int x) {
     // Do not go outside range 10..90%
     if (x < 10) x = 10;
     if (x > 90) x = 90;
@@ -270,7 +270,7 @@ void HTABLE::init(int n) {
     table = new HTABLEREP(tsize);
 }
 
-void HTABLE::resize(int n) {
+void HTABLE::resize(unsigned int n) {
     if (n < count) n = count;
 
     // Save old contents and make new correctly sized table
@@ -280,7 +280,7 @@ void HTABLE::resize(int n) {
     assert(tsize > n);
 
     // Now restore the old contents
-    for (int i = old_size-1; i >= 0; i--) {
+    for (unsigned int i = old_size-1; i >= 0; i--) {
         if (old->is_full(i)) {
             HKEY k = old->key(i);
 #ifdef HVAL
@@ -295,7 +295,7 @@ void HTABLE::resize(int n) {
 }
 
 void HTABLE::check() const {
-    int i, j;
+    unsigned int i, j;
 
     /* Check for duplicates */
     for (i = 0; i < tsize; i++) {
@@ -377,9 +377,9 @@ void HTABLE::report_stats(char const* msg) const {
     if (count == 0) return;
 
     // Count number of extra probes to get to each element
-    int probes = 0;
-    int max_probes = 0;
-    for (int index = tsize-1; index >= 0; index--) {
+    unsigned int probes = 0;
+    unsigned int max_probes = 0;
+    for (unsigned int index = tsize-1; index >= 0; index--) {
         if (!table->is_full(index)) continue;
         unsigned int h = htable_hash_elem(table->key(index));
         unsigned int j = htable_hash(h, slot_bits);
@@ -395,8 +395,8 @@ void HTABLE::report_stats(char const* msg) const {
     }
 
     fprintf(stderr,
-            "%s: size %6d, present %6d, deleted %6d, "
-            "probes(avg/max)= %5.3f/%d\n",
+            "%s: size %6u, present %6u, deleted %6u, "
+            "probes(avg/max)= %5.3f/%u\n",
             msg, tsize, count, delcount,
             ((double) (probes+count)) / ((double) count),
             max_probes);

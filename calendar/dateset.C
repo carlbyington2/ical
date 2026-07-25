@@ -1120,7 +1120,6 @@ void MonthBasedDateSetRep::describe(charArray* buffer) const {
 }
 
 void MonthBasedDateSetRep::describe_terse(charArray* buffer) const {
-    int index;
     format(buffer, "monthly %d", interval);
     switch(mtype) {
       case ByDay:
@@ -1508,20 +1507,20 @@ DateSetRep* WeekSetDateSetRep::normalize(Date& start, Date& finish,
             /* Weekly */
             return new DayBasedDateSetRep(7, firstDate);
         }
-        
+
         if ((years == 1) && (count_ranges(months) == 1)) {
             /* Weekly in range */
             set_month_range(start, finish, months);
             return new DayBasedDateSetRep(7, firstDate);
         }
     }
-    
+
     if (days.Size() == 7) {
         if (months.Size() == 12) {
             /* Daily */
             return new DayBasedDateSetRep(1, firstDate);
         }
-        
+
         if ((years == 1) && (count_ranges(months) == 1)) {
             /* Daily in range */
             set_month_range(start, finish, months);
@@ -1657,32 +1656,32 @@ DateSetRep* MonthSetDateSetRep::normalize(Date& start, Date& finish,
             /* Annual */
             return new MonthDateSetRep(12, firstDate);
         }
-        
+
         if (months.Size() == 12) {
             /* Monthly */
             return new MonthDateSetRep(1, firstDate);
         }
-        
+
         if ((years == 1) && (count_ranges(months) == 1)) {
             /* Monthly in range */
             set_month_range(start, finish, months);
             return new MonthDateSetRep(1, firstDate);
         }
     }
-    
+
     else if (days.Size() == 31) {
         if (months.Size() == 12) {
             /* Daily */
             return new DayBasedDateSetRep(1, firstDate);
         }
-        
+
         if ((years == 1) && (count_ranges(months) == 1)) {
             /* Daily in range */
             set_month_range(start, finish, months);
             return new DayBasedDateSetRep(1, firstDate);
         }
     }
-    
+
     else if ((years==1) && (months.Size()==1) && (count_ranges(days)==1)) {
         /* Find first and last days in range */
         int i;
@@ -1698,7 +1697,7 @@ DateSetRep* MonthSetDateSetRep::normalize(Date& start, Date& finish,
                 break;
             }
         }
-        
+
         /* Find month */
         Month m = Month::First();   /* Should not be necessary */
         for (i = 1; i <= 12; i++) {
@@ -1707,7 +1706,7 @@ DateSetRep* MonthSetDateSetRep::normalize(Date& start, Date& finish,
                 break;
             }
         }
-        
+
         /* Find new range */
         int year = start.GetYear();
         Date newStart = Date(a, m, year);

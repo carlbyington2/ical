@@ -40,7 +40,6 @@ static int have_tk;
 // Was a script specified on the command line?
 static int have_script;
 
-static int eval_list(Tcl_Interp*, const char** list);
 static int app_init(Tcl_Interp*);
 extern int Ical_Init(Tcl_Interp*);
 
@@ -149,7 +148,7 @@ static int app_init(Tcl_Interp* tcl) {
 int Ical_Init(Tcl_Interp* tcl) {
     if (have_tk) {
         /* Load necessary Tk support code */
-        Tk_Window mainWindow = Tk_MainWindow(tcl);
+        Tk_MainWindow(tcl);
 
         if (!MAKE_BITMAP(tcl, "left_arrow",     left))    return TCL_ERROR;
         if (!MAKE_BITMAP(tcl, "right_arrow",    right))   return TCL_ERROR;
@@ -182,28 +181,3 @@ int Ical_Init(Tcl_Interp* tcl) {
     return TCL_OK;
 }
 
-// Concatenate list of lines into one string and "Tcl_Eval" it.
-static int eval_list(Tcl_Interp* tcl, const char** list) {
-    // Get buffer size
-    int i;
-    int count = 0;
-    for (i = 0; list[i] != 0; i++) {
-        count += strlen(list[i]);
-        count++;                        // Space for newline
-    }
-
-    // Copy lines into buffer
-    int index = 0;
-    char* buf = new char[count+1];
-    for (i = 0; list[i] != 0; i++) {
-        strcpy(buf+index, list[i]);
-        index += strlen(list[i]);
-        buf[index] = '\n';
-        index++;
-    }
-    buf[index] = '\0';
-
-    int result = Tcl_Eval(tcl, buf);
-    delete [] buf;
-    return result;
-}

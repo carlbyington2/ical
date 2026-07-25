@@ -146,18 +146,19 @@ proc pref_fixfonts {} {
         lucidatypewriter
     }]
 
+    set scale 1.5
     switch -exact -- [option get . fontSize String] {
         small {
-            set size1   120
-            set size2   120
-            set size3   140
-            set size4   180
+            set size1  [expr {120 * $scale}]
+            set size2  [expr {120 * $scale}]
+            set size3  [expr {140 * $scale}]
+            set size4  [expr {180 * $scale}]
         }
         default {
-            set size1   120
-            set size2   140
-            set size3   180
-            set size4   240
+            set size1  [expr {120 * $scale}]
+            set size2  [expr {140 * $scale}]
+            set size3  [expr {180 * $scale}]
+            set size4  [expr {240 * $scale}]
         }
     }
 

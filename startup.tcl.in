@@ -7,8 +7,8 @@
 
 proc ical_init {} {
     set tv [info tclversion]
-    if {[package vcompare $tv 7.5] < 0} {
-        puts stderr "Ical requires at least Tcl version 7.5"
+    if {[package vcompare $tv 9.0] < 0} {
+        puts stderr "Ical requires at least Tcl version 9.0"
         exit 1
     }
 
@@ -35,7 +35,7 @@ proc ical_init {} {
     if [info exists env(CALENDAR)] {
         set ical(calendar) $env(CALENDAR)
     } else {
-        set ical(calendar) [ical_expand_file_name ~/.calendar]
+        set ical(calendar) [ical_expand_file_name [file tildeexpand ~/.calendar]]
     }
 
     # Auto-loading path
@@ -51,8 +51,8 @@ proc ical_init {} {
 
 proc ical_tk_init {} {
     global tk_version
-    if {[package vcompare $tk_version 4.1] < 0} {
-        puts stderr "Ical requires at least Tk version 4.1"
+    if {[package vcompare $tk_version 9.0] < 0} {
+        puts stderr "Ical requires at least Tk version 9.0"
         exit 1
     }
 

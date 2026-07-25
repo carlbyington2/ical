@@ -102,11 +102,11 @@ class HTABLE {
     // effects  Reports collected table statistics prefixed with "msg".
     //          Report is sent to stderr.
 
-    void predict(int n);
+    void predict(unsigned int n);
     // effects  Resizes table to an appropriate size to hold "n" entries.
     //          This is an O(n) operation.
 
-    void set_occupancy(int x);
+    void set_occupancy(unsigned int x);
     // effects  Set occupancy target to "x" percent.
     //          Values for "x" that are too small or too big to be
     //          beneficial are silently ignored.
@@ -160,7 +160,7 @@ class HTABLE {
     // effects  ignores old state and sets new empty state to hold at
     //          least "s" elements.
 
-    void resize(int n);
+    void resize(unsigned int n);
     // effects  Resizes the table to an appropriate size to hold "n" entries.
 
     unsigned int find_index(HKEY key) const;
@@ -168,7 +168,7 @@ class HTABLE {
     //          Otherwise return an index suitable for inserting the element.
     //          The returned entry will be full if the element is already
     //          in the table, and empty or deleted otherwise.
-    
+
     unsigned int table_size(unsigned int n) const;
     // effects  Return appropriate table size for "n" entries.
 
@@ -193,7 +193,7 @@ inline int HTABLE::size() const {
     return count;
 }
 
-inline void HTABLE::predict(int n) {
+inline void HTABLE::predict(unsigned int n) {
     resize(n);
 }
 

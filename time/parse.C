@@ -33,14 +33,14 @@ enum Token_Type {
 
     OTHER_TOKEN,
     LAST_TOKEN
-}; 
+};
 
 // Part of string being parsed.
 struct Token {
-    char const* ptr;            // Pointer into string
-    int         len;            // Length of this token
-    Token_Type  ttype;          // The type of this token
-    long        tvalue;         // Any value associated with this token
+    char const*  ptr;       // Pointer into string
+    unsigned int len;       // Length of this token
+    Token_Type   ttype;     // The type of this token
+    long         tvalue;    // Any value associated with this token
 };
 
 declareArray(Tokens,Token)
@@ -48,7 +48,7 @@ implementArray(Tokens,Token)
 
 static void parse_tokens(char const*, Tokens&);
 static void parse_token(char const*, Token&);
-static int  parse_word(char const*, int, Token&);
+static int  parse_word(char const*, size_t, Token&);
 
 static void parse_tokens(char const* str, Tokens& list) {
     while (str[0] != '\0') {
@@ -74,6 +74,7 @@ static void parse_tokens(char const* str, Tokens& list) {
     t.ptr = str;
     t.len = 0;
     t.ttype = LAST_TOKEN;
+    t.tvalue = 0;
     list.append(t);
 }
 
@@ -90,7 +91,6 @@ static void parse_token(char const* string, Token& t) {
             t.len = endptr - string;
             t.ttype = INT_TOKEN;
             t.tvalue = v;
-            
             return;
         }
     }
@@ -98,7 +98,7 @@ static void parse_token(char const* string, Token& t) {
     // Special handling for "am/pm".
     if (isalpha(c)) {
         // Skip periods and alphabetic characters.
-        int end = 1;
+        size_t end = 1;
         while ((string[end] != '\0') &&
                (isalpha(string[end]) || (string[end] == '.')))
             end++;
@@ -106,10 +106,10 @@ static void parse_token(char const* string, Token& t) {
         if (parse_word(string, end, t))
             return;
     }
-    
+
     // Parse word
     if (isalpha(c)) {
-        int end = 1;
+        size_t end = 1;
         while ((string[end] != '\0') && isalpha(string[end]))
             end++;
 
@@ -226,8 +226,8 @@ static int build_date(int m, int d, int y, Date& result) {
     return 1;
 }
 
-static int parse_word(char const* str, int len, Token& t) {
-    for (int i = 0; words[i].ptr != 0; i++) {
+static int parse_word(char const* str, size_t len, Token& t) {
+    for (size_t i = 0; words[i].ptr != 0; i++) {
         if (len < words[i].len) continue;
         if (len > strlen(words[i].ptr)) continue;
         if (strncasecmp(str, words[i].ptr, len) != 0) continue;
@@ -344,7 +344,6 @@ static int match_timeofday(Tokens& list, int index, int& result,
 
 static int match_timerange(Tokens& list, int index, int& start, int& finish) {
     if (index >= list.size()) return 0;
-    Token t = list[index];
     int noon = 12 * 60 * 60;
 
     // "<timeofday> <to> <timeofday>"
