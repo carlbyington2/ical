@@ -7,7 +7,7 @@
 # A DayView shows the notices and appointments for one day.
 
 set dayview_id 0
-set ICAL_ICON [file join [file dirname [info script]] contrib ical_icon.png]
+set ICAL_ICON [file join [file dirname [info script]] ical.png]
 
 class DayView {} {
     global ICAL_ICON
@@ -47,11 +47,11 @@ class DayView {} {
 
     $self reconfig
 
-    wm title $n Calendar
-    wm iconname $n ical
-    image create photo applicationIcon -file $ICAL_ICON;wm iconphoto $n -default applicationIcon   
-
-    wm protocol $n WM_DELETE_WINDOW [list ical_close_view $n]
+    image create photo applicationIcon -file $ICAL_ICON
+    wm iconphoto $n -default applicationIcon
+    wm title     $n Calendar
+    wm iconname  $n ical
+    wm protocol  $n WM_DELETE_WINDOW [list ical_close_view $n]
 
     $self set_date [date today]
 

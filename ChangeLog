@@ -9,6 +9,8 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * fix signed/unsigned type mismatches
 
+    * removed ancient files that are no longer useful
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file
