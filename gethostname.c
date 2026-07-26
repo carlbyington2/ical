@@ -21,7 +21,7 @@ int gethostname(name, len)
     struct utsname uinfo;
 
     if (uname(&uinfo) < 0)
-	return -1;
+        return -1;
 
     strncpy(name, uinfo.nodename, len);
     return 0;

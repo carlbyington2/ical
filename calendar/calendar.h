@@ -15,16 +15,16 @@ class charArray;
 
 class Calendar {
   public:
-    Calendar();			/* Create a new calendar */
+    Calendar();                 /* Create a new calendar */
     ~Calendar();
 
     /*
      * Item list.
      */
-    int Size() const;			/* Number of items */
-    Item* Get(int) const;		/* Get the ith item */
-    void Add(Item*);			/* Add an item */
-    void Remove(Item*);			/* Remove an item */
+    int Size() const;                   /* Number of items */
+    Item* Get(int) const;               /* Get the ith item */
+    void Add(Item*);                    /* Add an item */
+    void Remove(Item*);                 /* Remove an item */
 
     /*
      * Included calendars.
@@ -59,27 +59,27 @@ class Calendar {
     // Options...
 
     char const* GetOption(char const* key) const;
-    // effects	- Return value associated with option named "key".
-    //		  Returns 0 if option is not found.
+    // effects  - Return value associated with option named "key".
+    //            Returns 0 if option is not found.
 
     void SetOption(char const* key, char const* value);
-    // modifies	- this
-    // effects	- add "<key, value>" to option list.
+    // modifies - this
+    // effects  - add "<key, value>" to option list.
 
     void RemoveOption(char const* key);
-    // modifies	- this
-    // effects	- Remove any option associated with "key"
+    // modifies - this
+    // effects  - Remove any option associated with "key"
   protected:
-    pointerArray& items;		// Items
-    pointerArray& includes;		// Included calendars
-    int readonly;			// Readonly calendar?
-    UidSet*	  hidden;		// Hidden items from other calendars
-    OptionMap*	  options;		// Calendar options
-    int		  major, minor;		// Calendar file version numbers
+    pointerArray& items;                // Items
+    pointerArray& includes;             // Included calendars
+    int readonly;                       // Readonly calendar?
+    UidSet*       hidden;               // Hidden items from other calendars
+    OptionMap*    options;              // Calendar options
+    int           major, minor;         // Calendar file version numbers
 
     void clear();
-    // modifies	this
-    // effects	Restores calendar to pristine state.
+    // modifies this
+    // effects  Restores calendar to pristine state.
 
     void WriteV1(charArray*) const;
     void WriteLatestVersion(charArray*) const;

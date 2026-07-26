@@ -3,7 +3,9 @@
 #ifndef TIMEH
 #define TIMEH
 
-struct timeval;
+#include <time.h>
+#include <sys/time.h>
+
 class Time;
 class Duration;
 class WeekDay;
@@ -17,19 +19,19 @@ class Time {
     /*
      * Constructors and assignments.
      */
-    Time();			/* Unspecified time */
-    Time(Time const&);		/* Copy other time */
-    Time(double seconds);	/* Seconds since unspecified epoch */
+    Time();                     /* Unspecified time */
+    Time(Time const&);          /* Copy other time */
+    Time(double seconds);       /* Seconds since unspecified epoch */
 
     Time& operator=(Time const&);
     static Time Now();
 
     /* Addition and subtraction */
-    inline friend Time		operator+ (Time const&, Duration const&);
-    inline friend Time		operator- (Time const&, Duration const&);
-    inline friend Duration	operator- (Time const&, Time const&);
-    Time&			operator+=(Duration const&);
-    Time&			operator-=(Duration const&);
+    inline friend Time          operator+ (Time const&, Duration const&);
+    inline friend Time          operator- (Time const&, Duration const&);
+    inline friend Duration      operator- (Time const&, Time const&);
+    Time&                       operator+=(Duration const&);
+    Time&                       operator-=(Duration const&);
 
     /* Comparisons */
     inline friend int operator == (Time const&, Time const&);
@@ -46,31 +48,32 @@ class Time {
     /* Variables for default references */
     static int junkInt;
 
-    void BreakDownDate(int&	mday,
-		       WeekDay&	wday,
-		       Month&	month,
-		       int&	year) const;
+    void BreakDownDate(int&     mday,
+                       WeekDay& wday,
+                       Month&   month,
+                       int&     year) const;
 
     void BreakDownClock(int& hour     = junkInt,
-			int& minute   = junkInt,
-			int& second   = junkInt,
-			int& millisec = junkInt) const;
+                        int& minute   = junkInt,
+                        int& second   = junkInt,
+                        int& millisec = junkInt) const;
 
-    void BreakDown(int&	    mday,
-		   WeekDay& wday,
-		   Month&   month,
-		   int&	    year,
-		   int&     hour     = junkInt,
-		   int&	    minute   = junkInt,
-		   int&	    second   = junkInt,
-		   int&	    millisec = junkInt) const;
+    void BreakDown(int&     mday,
+                   WeekDay& wday,
+                   Month&   month,
+                   int&     year,
+                   int&     hour     = junkInt,
+                   int&     minute   = junkInt,
+                   int&     second   = junkInt,
+                   int&     millisec = junkInt,
+                   const char *tz=0) const;
 
     /* UN*X specific */
     /* Copy UN*X time structure */
     Time(struct timeval const&);
     void Convert(struct timeval&) const;
 
-    double EpochSeconds() const;	/* Return seconds since epoch */
+    double EpochSeconds() const;        /* Return seconds since epoch */
   private:
     /*
      * Rep is the number of seconds since some epoch.
@@ -78,7 +81,7 @@ class Time {
     double rep;
 
     /* Time initialization stuff. */
-    static int	  initialized;
+    static int    initialized;
     static double offset;
 
     static void Initialize();
@@ -104,25 +107,25 @@ class Duration {
     static Duration MicroSecond();
 
     /* Addition and subtraction */
-    inline friend Time		operator+ (Time const&, Duration const&);
-    inline friend Time		operator- (Time const&, Duration const&);
-    inline friend Duration	operator- (Time const&, Time const&);
+    inline friend Time          operator+ (Time const&, Duration const&);
+    inline friend Time          operator- (Time const&, Duration const&);
+    inline friend Duration      operator- (Time const&, Time const&);
 
-    inline friend Duration	operator+ (Duration const&, Duration const&);
-    inline friend Duration	operator- (Duration const&, Duration const&);
+    inline friend Duration      operator+ (Duration const&, Duration const&);
+    inline friend Duration      operator- (Duration const&, Duration const&);
 
     /* Multiplication and division */
-    inline friend Duration	operator* (Duration const&, int);
-    inline friend Duration	operator* (Duration const&, double);
-    inline friend Duration	operator/ (Duration const&, int);
-    inline friend Duration	operator/ (Duration const&, double);
+    inline friend Duration      operator* (Duration const&, int);
+    inline friend Duration      operator* (Duration const&, double);
+    inline friend Duration      operator/ (Duration const&, int);
+    inline friend Duration      operator/ (Duration const&, double);
 
-    Duration&	operator += (Duration const&);
-    Duration&	operator -= (Duration const&);
-    Duration&	operator *= (int);
-    Duration&	operator *= (double);
-    Duration&	operator /= (int);
-    Duration&	operator /= (double);
+    Duration&   operator += (Duration const&);
+    Duration&   operator -= (Duration const&);
+    Duration&   operator *= (int);
+    Duration&   operator *= (double);
+    Duration&   operator /= (int);
+    Duration&   operator /= (double);
 
     /* Comparisons (ints represent seconds) */
     inline friend int operator == (Duration const&, Duration const&);

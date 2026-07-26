@@ -10,22 +10,22 @@
 #### Definitions of useful routines for older versions of ical ####
 if [string compare [info commands require] require] {
     proc require {proc} {
-	if ![string compare [info commands $proc] $proc] return
+        if ![string compare [info commands $proc] $proc] return
 
-	global auto_index
-	if [info exists auto_index($proc)] {
-	    uplevel #0 $auto_index($proc)
-	}
+        global auto_index
+        if [info exists auto_index($proc)] {
+            uplevel #0 $auto_index($proc)
+        }
     }
 }
 
 if [string compare [info commands rename_method] rename_method] {
     proc rename_method {class old new} {
-	upvar #0 [set class]_ops ops
-	set ops($new) $ops($old)
-	unset ops($old)
+        upvar #0 [set class]_ops ops
+        set ops($new) $ops($old)
+        unset ops($old)
 
-	rename $class::$old $class::$new
+        rename $class::$old $class::$new
     }
 }
 
@@ -37,7 +37,7 @@ method DateEditor load_month {} {
     $self orig_load_month
 
     if ![winfo exists $slot(window).weeknums] {
-	$self make_weeknums
+        $self make_weeknums
     }
     $self update_weeknums
 }
@@ -61,7 +61,7 @@ method DateEditor make_weeknums {} {
     set wd_box_h [expr $height/8]
     $n create text 5 2\
         -fill [pref weekdayColor]\
-	-anchor nw\
+        -anchor nw\
         -font [pref weekdayFont]\
         -tags {wd_week}\
         -text "Week"
@@ -98,7 +98,7 @@ method DateEditor update_weeknums {} {
         set wd_wknr [expr ($wd_start + $wd_cnt) % $wd_mod]
         if {$wd_wknr < [expr $wd_start + $wd_cnt]} {incr wd_wknr}
         $n itemconfigure wd_week$wd_cnt -text "$wd_wknr"\
-	    -fill [pref weekdayColor]
+            -fill [pref weekdayColor]
         incr wd_cnt
     }             
 
@@ -118,10 +118,10 @@ proc wd_first {date} {
     set wd_month [date month $date]
     set wd_cnt 1
     while {$wd_cnt < $wd_month} {
-	if ![catch {date make 1 $wd_cnt $wd_year}] {
+        if ![catch {date make 1 $wd_cnt $wd_year}] {
            set wd_days [expr $wd_days + [date monthsize [date make 1 $wd_cnt $wd_year]]]
         } else {
-	   set wd_days 30
+           set wd_days 30
         }
         incr wd_cnt
     }
@@ -137,7 +137,7 @@ proc wd_first {date} {
           } else {
              set wd_prev_days 30
           }
-	  incr wd_cnt
+          incr wd_cnt
     }
     if ![catch {date make 1 1 $wd_prev_year}] {
        set wd_prev_first [date weekday [date make 1 1 $wd_prev_year]]
@@ -156,10 +156,10 @@ proc wd_first {date} {
        set wd_days [expr $wd_days - (9-$wd_first)]
        if {$wd_month == 1} {
           if {($wd_first == 8) && ([cal option MondayFirst] == 0)} {
- 	     return [list 1 [expr (($wd_prev_days-1) / 7) + 2]]
+             return [list 1 [expr (($wd_prev_days-1) / 7) + 2]]
           } else {
-	     return [list [expr (($wd_prev_days-1) / 7) +1] [expr (($wd_prev_days-1) / 7) + 2]]
-	  }
+             return [list [expr (($wd_prev_days-1) / 7) +1] [expr (($wd_prev_days-1) / 7) + 2]]
+          }
        }
     } else {
        set wd_prev_days [expr $wd_prev_days - ($wd_first-2)]

@@ -25,14 +25,14 @@ Lexer::Lexer(char const* file) {
 
     int fd = open((char*)file, O_RDONLY, 0);
     if (fd < 0) {
-	SetError("could not open file");
-	return;
+        SetError("could not open file");
+        return;
     }
 
     struct stat fs;
     if (fstat(fd, &fs) < 0) {
-	SetError("could not get file size");
-	return;
+        SetError("could not get file size");
+        return;
     }
 
     /* Read the contents of the file */
@@ -40,21 +40,21 @@ Lexer::Lexer(char const* file) {
     buf = new char[fs.st_size+1];
     length = 0;
     while (length < fs.st_size) {
-	int result = read(fd, buf+length, fs.st_size - length);
-	if (result == 0) {
-	    /* Early EOF! */
-	    SetError("could not read file");
-	    break;
-	}
-	if (result < 0) {
-	    /* Ignore EINTR errors */
-	    if (errno == EINTR) {
-		continue;
-	    }
-	    SetError("could not read file");
-	    break;
-	}
-	length += result;
+        int result = read(fd, buf+length, fs.st_size - length);
+        if (result == 0) {
+            /* Early EOF! */
+            SetError("could not read file");
+            break;
+        }
+        if (result < 0) {
+            /* Ignore EINTR errors */
+            if (errno == EINTR) {
+                continue;
+            }
+            SetError("could not read file");
+            break;
+        }
+        length += result;
     }
 
     /* Null-terminate the array for fast scanning */
@@ -82,13 +82,13 @@ int Lexer::Skip(char const* str) {
     int len = strlen(str);
 
     if ((index + len) <= length) {
-	/* Still have enough chars left */
-	if (strncmp(buf+index, str, len) == 0) {
-	    index += len;
-	    return 1;
-	}
-	SetError("unexpected string");
-	return 0;
+        /* Still have enough chars left */
+        if (strncmp(buf+index, str, len) == 0) {
+            index += len;
+            return 1;
+        }
+        SetError("unexpected string");
+        return 0;
     }
 
     /* EOF */
@@ -98,8 +98,8 @@ int Lexer::Skip(char const* str) {
 
 int Lexer::SkipWS() {
     while (index < length) {
-	char c = buf[index];
-	if (!isspace(c)) return 1;
+        char c = buf[index];
+        if (!isspace(c)) return 1;
  index++;
     }
 
@@ -116,18 +116,18 @@ static inline int is_numletter(char c) {
 
 int Lexer::GetId(char const*& x) {
     if (index >= length) {
-	return 0;
+        return 0;
     }
 
     /* Check first character */
     if (! is_letter(buf[index])) {
-	SetError("illegal character when expecting id");
-	return 0;
+        SetError("illegal character when expecting id");
+        return 0;
     }
 
     int start = index;
     while ((index < length) && is_numletter(buf[index])) {
-	index++;
+        index++;
     }
 
     tmp->clear();
@@ -139,12 +139,12 @@ int Lexer::GetId(char const*& x) {
 
 int Lexer::GetUntil(char terminator, char const*& x) {
     if (index >= length) {
-	return 0;
+        return 0;
     }
 
     int start = index;
     while ((index < length) && (buf[index] != terminator)) {
-	index++;
+        index++;
     }
 
     tmp->clear();
@@ -156,14 +156,14 @@ int Lexer::GetUntil(char terminator, char const*& x) {
  
 int Lexer::GetNumber(int& x) {
     if (index >= length) {
-	return 0;
+        return 0;
     }
 
     char* finish;
     long result = strtol(buf+index, &finish, 10);
     if (finish == (buf+index)) {
-	SetError("error while reading number");
-	return 0;
+        SetError("error while reading number");
+        return 0;
     }
 
     x = result;
@@ -175,17 +175,17 @@ int Lexer::GetText(char* result, int len) {
     int i;
 
     if (index >= length) {
-	return 0;
+        return 0;
     }
 
     if ((index + len) > length) {
-	/* Not enough characters */
-	index = length;
-	return 0;
+        /* Not enough characters */
+        index = length;
+        return 0;
     }
 
     for (i = 0; i < len; i++) {
-	result[i] = buf[index+i];
+        result[i] = buf[index+i];
     }
     index += i;
     return 1;
@@ -197,12 +197,12 @@ int Lexer::GetString(char const*& x) {
     tmp->clear();
 
     while ((index < length) && (buf[index] != ']')) {
-	if (buf[index] == '\\') {
-	    index++;
-	    if (index >= length) return 0;
-	}
-	tmp->append(buf[index]);
-	index++;
+        if (buf[index] == '\\') {
+            index++;
+            if (index >= length) return 0;
+        }
+        tmp->append(buf[index]);
+        index++;
     }
 
     tmp->append('\0');
@@ -212,9 +212,9 @@ int Lexer::GetString(char const*& x) {
 
 void Lexer::PutString(charArray* out, char const* x) {
     while (*x != '\0') {
-	char c = *x;
-	if ((c == '\\') || (c == '[') || (c == ']')) out->append('\\');
-	out->append(c);
-	x++;
+        char c = *x;
+        if ((c == '\\') || (c == '[') || (c == ']')) out->append('\\');
+        out->append(c);
+        x++;
     }
 }

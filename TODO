@@ -1,3 +1,11 @@
+* cyrillic in postscript
+
+timezones:
+* a case when an item is split between two days (2-hr appt that starts at 23:00 in some tz)
+* Item::first, next, range, set_start, set_finish, delete_occurence are probably broken
+  when timezone is set. But I'm too lazy to fix them right now.
+
+==============================================
 Copyright (c) 1993 by Sanjay Ghemawat
 
 Bugs + Stuff to Fix

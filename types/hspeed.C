@@ -18,16 +18,16 @@ main(int argc, char *argv[]) {
     int reps;
     int count = 0;
     if (argc < 2 || argc > 3) {
-	fprintf(stderr, "Usage: %s <repetitions> [<size>]\n", argv[0]);
-	exit(EXIT_FAILURE);
+        fprintf(stderr, "Usage: %s <repetitions> [<size>]\n", argv[0]);
+        exit(EXIT_FAILURE);
     }
     srand48(time(0));
     reps = atoi(argv[1]);
     if (argc == 3) size = atoi(argv[2]);
     for (long i = 0; i < reps; i++) {
-	long j1 = i%size, j2 = size - j1;
-	m.insert(j1, i);
-	m.remove(j2);
+        long j1 = i%size, j2 = size - j1;
+        m.insert(j1, i);
+        m.remove(j2);
     }
     m.report_stats("table");
     return EXIT_SUCCESS;

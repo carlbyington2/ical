@@ -4,20 +4,20 @@
 #
 # Commands
 #
-#	error_notify <leader> <message> [<title>]
-#		Display error message to user.
+#       error_notify <leader> <message> [<title>]
+#               Display error message to user.
 
 # Hidden global variables
 #
-#	error_done		Is error interaction finished
+#       error_done              Is error interaction finished
 
 set error_done 0
 
 proc error_notify {leader message {title Error}} {
     if ![string compare [info commands tk] ""] {
-	# Tk is not available
-	puts stderr $message
-	return
+        # Tk is not available
+        puts stderr $message
+        return
     }
 
     error_make
@@ -37,7 +37,7 @@ proc error_make {} {
     label $f.icon -bitmap warning
     message $f.text -aspect 400 -text {Uninitialized Error Message}
     make_buttons $f.bot 0 {
-	{Okay {set error_done 1}}
+        {Okay {set error_done 1}}
     }
 
     pack $f.text -in $f.top -side right -expand 1 -fill both -padx 5m -pady 5m

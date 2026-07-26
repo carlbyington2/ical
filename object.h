@@ -23,24 +23,24 @@ class Object {
     virtual ~Object();
 
     /*
-     * effects	Returns associated interpreter.
+     * effects  Returns associated interpreter.
      */
     Tcl_Interp* tcl();
 
     /*
-     * effects	Return type.
+     * effects  Return type.
      */
     char const* type();
 
     /*
-     * effects	Returns handle name.  Returned storage is guaranteed
-     *		to last as long as the object lives.
+     * effects  Returns handle name.  Returned storage is guaranteed
+     *          to last as long as the object lives.
      */
     char const* handle();
 
     /*
-     * effects	Returns object with specified handle.  If no such
-     *		object exists, returns 0.
+     * effects  Returns object with specified handle.  If no such
+     *          object exists, returns 0.
      */
     static Object* find(Tcl_Interp*, char const* handle);
 
@@ -49,9 +49,9 @@ class Object {
   private:
     void init(Tcl_Interp*, char const* otype, char const* ohandle);
 
-    char* objtype;	/* My type */
-    char* name;		/* Handle */
-    Tcl_Interp* interp;	/* Interpreter */
+    char* objtype;      /* My type */
+    char* name;         /* Handle */
+    Tcl_Interp* interp; /* Interpreter */
 };
 
 inline Tcl_Interp* Object::tcl() {

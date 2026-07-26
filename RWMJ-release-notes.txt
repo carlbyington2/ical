@@ -1,0 +1,5 @@
+autoconf
+cvs up           # check everything is in CVS
+cvs export -r HEAD -d ical-2.3.XXX annexia/test/ical  # replace XXX with subver
+# diff against previous version
+tar zcf /tmp/ical-2.3.XXX.tar.gz ical-2.3.XXX/

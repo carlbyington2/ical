@@ -28,11 +28,11 @@ void WeekDay::Normalize() {
     int val = rep - 1;
 
     if (val < 0) {
-	val = 7 - (0 - val) % 7;
-	if (val == 7) val = 0;
+        val = 7 - (0 - val) % 7;
+        if (val == 7) val = 0;
     }
     else {
-	val = val % 7;
+        val = val % 7;
     }
 
     rep = val + 1;

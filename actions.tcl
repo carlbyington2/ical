@@ -6,18 +6,18 @@
 # The actions all take place in the context of a "view".  A "view"
 # object should provide the following operations:
 #
-#	<view> window
-#	<view> date
-#	<view> set_date <date>
+#       <view> window
+#       <view> date
+#       <view> set_date <date>
 
 #### A null view to be used if nothing is selected ####
 
 proc ical_null_view {method args} {
     switch -exact -- $method {
-	window		{return .}
-	date		{return [date today]}
-	set_date	{}
-	default		{error "unknown view method: $method"}
+        window          {return .}
+        date            {return [date today]}
+        set_date        {}
+        default         {error "unknown view method: $method"}
     }
 }
 
@@ -33,9 +33,9 @@ proc ical_view {} {
 
     set f [ical_focus]
     if ![info exists ical_view($f)] {
-	return ical_null_view
+        return ical_null_view
     } else {
-	return $ical_view($f)
+        return $ical_view($f)
     }
 }
 
@@ -70,8 +70,8 @@ proc ical_with_mod_item {v} {
 
     if [catch {set cal [$x calendar]}] {return 0}
     if [cal readonly $cal] {
-	ical_error "$cal: permission denied"
-	return 0
+        ical_error "$cal: permission denied"
+        return 0
     }
 
     upvar $v i
@@ -94,7 +94,7 @@ proc ical_clip {i} {
     global ical_state
     set old $ical_state(clip)
     if [string compare $old ""] {
-	$old delete
+        $old delete
     }
     set ical_state(clip) $i
 }
@@ -150,16 +150,16 @@ action ical_close always {Close ical window} {} {
 
     global ical_state
     if {[llength $ical_state(views)] < 2} {
-	# Try and save --- last view is about to be closed
-	if ![io_save [ical_leader]] return
+        # Try and save --- last view is about to be closed
+        if ![io_save [ical_leader]] return
 
-	class_kill [ical_view]
-	run-hook ical-exit
-	cal delete
-	destroy .
+        class_kill [ical_view]
+        run-hook ical-exit
+        cal delete
+        destroy .
     } else {
-	# Not the last view
-	class_kill [ical_view]
+        # Not the last view
+        class_kill [ical_view]
     }
 }
 
@@ -169,9 +169,9 @@ action ical_cut_or_hide item {Delete selected item} {} {
 
     if [catch {set cal [$i calendar]}] return
     if {[$i owned] || ($cal == [cal main])} {
-	ical_cut
+        ical_cut
     } else {
-	ical_hide
+        ical_hide
     }
 }
 
@@ -189,27 +189,27 @@ action ical_hide item {Hide selected item} {} {
     # Since the hide entry will go in the main calendar,
     # check for permission there.
     if [cal readonly] {
-	ical_error "Permission denied"
-	return
+        ical_error "Permission denied"
+        return
     }
 
     # Try to avoid checking permission in the item calendar
     # unless we have to split a repeating item.
 
     if [$i repeats] {
-	if [cal readonly $cal] {
-	    # Tell user that the item cannot be split.
-	    # See if all entries should be hidden.
-	    if {![yes_or_no [ical_leader] [join {
-		{This item repeats and you are not allowed to split it.}
-		{Do you want to hide all occurrences of this item from}
-		{your view?}
-	    }]]} {
-		return
-	    }
-	} else {
-	    if ![ical_with_mod_single_item i] return
-	}
+        if [cal readonly $cal] {
+            # Tell user that the item cannot be split.
+            # See if all entries should be hidden.
+            if {![yes_or_no [ical_leader] [join {
+                {This item repeats and you are not allowed to split it.}
+                {Do you want to hide all occurrences of this item from}
+                {your view?}
+            }]]} {
+                return
+            }
+        } else {
+            if ![ical_with_mod_single_item i] return
+        }
     }
 
     ical_clip [$i clone]
@@ -223,14 +223,14 @@ action ical_copy item {Copy selected item to clipboard} {} {
 
 action ical_paste writable {Paste clipboard item} {} {
     if [cal readonly] {
-	ical_error "Permission denied"
-	return
+        ical_error "Permission denied"
+        return
     }
 
     set i [ical_clipped]
     if {$i == ""} {
-	ical_error "No item in clipboard"
-	return
+        ical_error "No item in clipboard"
+        return
     }
 
     set i [$i clone]
@@ -255,10 +255,10 @@ action ical_import writable {Parse X selection as an item and add it to calendar
     if [catch {set sel [selection get]}] {return}
 
     if ![cal readonly] {
-	set i [item_parse $sel [ical_date]]
-	cal add $i
-	run-hook item-create $i
-	ical_set_date [$i first]
+        set i [item_parse $sel [ical_date]]
+        cal add $i
+        run-hook item-create $i
+        ical_set_date [$i first]
     }
 }
 
@@ -266,8 +266,8 @@ action ical_makeunique witem {Create unique occurrence of selected item} {} {
     if ![ical_with_mod_item i] return
     if [catch {set cal [$i calendar]}] return
     if ![$i repeats] {
-	ical_error "Item does not repeat"
-	return
+        ical_error "Item does not repeat"
+        return
     }
 
     set c [$i clone]
@@ -278,8 +278,8 @@ action ical_makeunique witem {Create unique occurrence of selected item} {} {
 
 action ical_moveitem witem {Move item to another calendar} {calendar} {
     if [cal readonly $calendar] {
-	ical_error "$calendar: permission denied"
-	return
+        ical_error "$calendar: permission denied"
+        return
     }
 
     if ![ical_with_mod_single_item i] return
@@ -288,82 +288,82 @@ action ical_moveitem witem {Move item to another calendar} {calendar} {
 
 action ical_addinclude writable {Include calendar} {} {
     if [cal readonly] {
-	ical_error "[cal main]: permission denied"
-	return
+        ical_error "[cal main]: permission denied"
+        return
     }
 
     # Find last include file name and use as initial value for dialog
     global ical
     if ![info exists ical(last_include)] {
-	set last [file dirname $ical(calendar)]
+        set last [file dirname $ical(calendar)]
     } else {
-	set last $ical(last_include)
+        set last $ical(last_include)
     }
     if ![get_file_name [ical_leader] "Include Calendar"\
-	     "Select calendar file to include." filename $last] return
+             "Select calendar file to include." filename $last] return
     set ical(last_include) [file dirname $filename]
 
     # Some sanity checking
     if [catch {set e [file exists $filename]} msg] {
-	ical_error "$filename: $msg"
-	return
+        ical_error "$filename: $msg"
+        return
     }
 
     if $e {
-	if ![file isfile $filename] {
-	    ical_error "$filename: not a regular file"
-	    return
-	}
+        if ![file isfile $filename] {
+            ical_error "$filename: not a regular file"
+            return
+        }
 
-	if ![file readable $filename] {
-	    ical_error "$filename: permission denied"
-	    return
-	}
+        if ![file readable $filename] {
+            ical_error "$filename: permission denied"
+            return
+        }
     }
 
     if [catch {cal include [ical_expand_file_name $filename]} error] {
-	ical_error $error
+        ical_error $error
     }
 }
 
 action ical_removeinc writable {Remove included calendar} {calendar} {
     if [cal readonly] {
-	ical_error "[cal main]: permission denied"
-	return
+        ical_error "[cal main]: permission denied"
+        return
     }
 
     if [catch {set dirty [cal dirty $calendar]}] {
-	# Unknown calendar - probably because a tear-off menu
-	# allowed multiple invocations of removeinc.
-	return
+        # Unknown calendar - probably because a tear-off menu
+        # allowed multiple invocations of removeinc.
+        return
     }
 
     if $dirty {
-	set save 1
-	if [cal stale $calendar] {
-	    # Conflict!
-	    set query [yes_no_cancel [ical_leader]\
-		       "$calendar has been modified since last read. Save?"]
-	    if {$query == "cancel"} {
-		return
-	    }
-	    if {$query == "no"} {
-		set save 0
-	    }
-	}
+        set save 1
+        if [cal stale $calendar] {
+            # Conflict!
+            set query [yes_no_cancel [ical_leader]\
+                       "$calendar has been modified since last read. Save?"]
+            if {$query == "cancel"} {
+                return
+            }
+            if {$query == "no"} {
+                set save 0
+            }
+        }
 
-	if $save {
-	    if [catch {cal save $calendar} error] {
-		ical_error "$calendar\n\n$error"
-		return
-	    }
-	}
+        if $save {
+            if [catch {cal save $calendar} error] {
+                ical_error "$calendar\n\n$error"
+                return
+            }
+        }
     }
 
     # Remove it
     if [catch {cal exclude $calendar} error] {
-	ical_error "$calendar\n\n$error"
-	return
+        ical_error "$calendar\n\n$error"
+        return
     }
 }
 
@@ -414,12 +414,12 @@ action ical_set_range witem {Restrict item repetition range} {} {
     if ![ical_with_mod_item i] return
 
     if ![$i repeats] {
-	ical_error "Item does not repeat"
-	return
+        ical_error "Item does not repeat"
+        return
     }
 
     if ![$i range start finish] {
-	ical_error "Item does not repeat"
+        ical_error "Item does not repeat"
     }
 
     if ![get_daterange [ical_leader] start finish] return
@@ -432,8 +432,8 @@ action ical_last_date witem {Stop item repetition at this date} {} {
     if ![ical_with_mod_item i] return
 
     if ![$i repeats] {
-	ical_error "Item does not repeat"
-	return
+        ical_error "Item does not repeat"
+        return
     }
     $i finish [ical_date]
 }
@@ -443,7 +443,7 @@ action ical_alarms wappt {Change appointment alarms} {} {
 
     if [catch {set alarms [$i alarms]}] {set alarms [cal option DefaultAlarms]}
     if ![alarm_set [ical_leader] {Item alarms (in minutes)} alarms $alarms] {
-	return
+        return
     }
 
     # Make sure item still exists
@@ -461,14 +461,14 @@ action ical_link_to_file witem {Create a link to a file} {} {
     # Try to get good initial file name
     set initial {}
     if ![catch {set link [$i option Link]}] {
-	if [regexp {^file://localhost/(.*)$} $link junk filename] {
-	    set initial /$filename
-	}
+        if [regexp {^file://localhost/(.*)$} $link junk filename] {
+            set initial /$filename
+        }
     }
 
     if ![get_file_name [ical_leader] "Item link"\
-	     "Select file to which link should be created."\
-	     filename $initial] return
+             "Select file to which link should be created."\
+             filename $initial] return
 
     $i option Link file://localhost[ical_expand_file_name $filename]
 }
@@ -480,8 +480,8 @@ action ical_link_to_uri witem {Create a link to a Web document} {} {
     catch {set initial [$i option Link]}
 
     if ![get_string [ical_leader] "Document Locator"\
-	     "Enter the uniform resource identifier of document"\
-	     $initial result] return
+             "Enter the uniform resource identifier of document"\
+             $initial result] return
     $i option Link $result
 }
 
@@ -489,7 +489,7 @@ action ical_remove_link witem {Remove any link from item} {} {
     if ![ical_with_mod_item i] return
 
     if [catch {$i delete_option Link} msg] {
-	ical_error {Item does not contain a link}
+        ical_error {Item does not contain a link}
     }
 }
 
@@ -497,8 +497,8 @@ action ical_follow_link item {Follow link from item} {} {
     if ![ical_with_item i] return
 
     if [catch {set uri [$i option Link]}] {
-	ical_error "Item does not have a link."
-	return
+        ical_error "Item does not have a link."
+        return
     }
 
     follow_link $uri
@@ -507,10 +507,10 @@ action ical_follow_link item {Follow link from item} {} {
 action ical_deflistings writable {Set default value for item early warnings} {} {
     set num [cal option DefaultEarlyWarning]
     if [get_number [ical_leader] {Early warning}\
-	    {Days}\
-	    {By default items show up in item listings this many days early}\
-	    0 15 5 $num num] {
-	cal option DefaultEarlyWarning $num
+            {Days}\
+            {By default items show up in item listings this many days early}\
+            0 15 5 $num num] {
+        cal option DefaultEarlyWarning $num
     }
 }
 
@@ -524,10 +524,10 @@ action ical_set_remind witem {Set early warning option for item} {} {
 
     set num [$i earlywarning]
     if [get_number [ical_leader] {Early warning}\
-	    {Days}\
-	    {By default this item shows up in item listings this many days early}\
-	    0 15 5 $num num] {
-	$i earlywarning $num
+            {Days}\
+            {By default this item shows up in item listings this many days early}\
+            0 15 5 $num num] {
+        $i earlywarning $num
     }
 }
 
@@ -535,7 +535,7 @@ action ical_set_owner witem {Change item owner} {} {
     if ![ical_with_mod_single_item i] return
 
     if ![get_string [ical_leader] "Owner" "Enter owner name"\
-	     [$i owner] result] return
+             [$i owner] result] return
     $i owner $result
 }
 
@@ -554,23 +554,23 @@ action ical_toggle_done witem {Mark todo item as done} {} {
     if [catch {set cal [$i calendar]}] return
 
     if ![$i todo] {
-	ical_error "Item is not a todo item"
-	return
+        ical_error "Item is not a todo item"
+        return
     }
 
     if [$i is_done] {
-	$i done 0
-	return
+        $i done 0
+        return
     }
 
     set date [ical_date]
 
     # Make the current instance of the item unique
     if [$i repeats] {
-	# XXX Make clone that does not occur on or before the current date
-	set c [$i clone]
-	$c start [expr $date+1]
-	cal add $c $cal
+        # XXX Make clone that does not occur on or before the current date
+        set c [$i clone]
+        $c start [expr $date+1]
+        cal add $c $cal
     }
 
     # Modify this occurrence
@@ -583,7 +583,7 @@ action ical_toggle_done witem {Mark todo item as done} {} {
 
 action ical_print always {Print calendar contents} {} {
     if [catch {print_calendar [ical_leader] [ical_date]} msg] {
-	ical_error $msg
+        ical_error $msg
     }
 }
 
@@ -595,22 +595,22 @@ action ical_viewitems always {View all items from a calendar} {calendar} {
 action ical_list always {List items from selected range of dates} {n} {
     set start [ical_date]
     if {$n == "week"} {
-	set start [expr $start+1-[date weekday $start]]
-	if [cal option MondayFirst] {
-	    incr start
-	    if {$start > [ical_date]} {
-		set start [expr $start - 7]
-	    }
-	}
-	set n 7
+        set start [expr $start+1-[date weekday $start]]
+        if [cal option MondayFirst] {
+            incr start
+            if {$start > [ical_date]} {
+                set start [expr $start - 7]
+            }
+        }
+        set n 7
     }
     if {$n == "month"} {
-	set start [expr $start+1-[date monthday $start]]
-	set n [date monthsize $start]
+        set start [expr $start+1-[date monthday $start]]
+        set n [date monthsize $start]
     }
     if {$n == "year"} {
-	set start [date make 1 1 [date year $start]]
-	set n [expr [date make 1 1 [expr [date year $start]+1]] - $start]
+        set start [date make 1 1 [date year $start]]
+        set n [expr [date make 1 1 [expr [date year $start]+1]] - $start]
     }
 
     set l [ItemListing]
@@ -643,14 +643,14 @@ action ical_timerange writable {Set the range of time initially displayed in a w
     set finish [cal option DayviewTimeFinish]
 
     set msg [join {
-	{Use the two sliders to change the range of time displayed by}
-	{default in a Calendar window.}
+        {Use the two sliders to change the range of time displayed by}
+        {default in a Calendar window.}
     } "\n"]
 
     if [get_time_range [ical_leader] $msg start finish] {
-	cal option DayviewTimeStart $start
-	cal option DayviewTimeFinish $finish
-	trigger fire reconfig
+        cal option DayviewTimeStart $start
+        cal option DayviewTimeFinish $finish
+        trigger fire reconfig
     }
 }
 
@@ -659,11 +659,11 @@ action ical_noticeheight writable {Change the default height of the notice windo
 
     set ht [cal option NoticeHeight]
     if [get_number [ical_leader] {Notice Window Height}\
-	    {Centimeters}\
-	    {Specify the height of the notice window}\
-	    1 15 0 $ht ht] {
-	cal option NoticeHeight $ht
-	trigger fire reconfig
+            {Centimeters}\
+            {Specify the height of the notice window}\
+            1 15 0 $ht ht] {
+        cal option NoticeHeight $ht
+        trigger fire reconfig
     }
 }
 
@@ -672,11 +672,22 @@ action ical_itemwidth writable {Change the default width of the notice and appt 
 
     set w [cal option ItemWidth]
     if [get_number [ical_leader] {Item Width}\
-	    {Centimeters}\
-	    {Specify the width of appointments and notices}\
-	    5 15 0 $w w] {
-	cal option ItemWidth $w
-	trigger fire reconfig
+            {Centimeters}\
+            {Specify the width of appointments and notices}\
+            5 15 0 $w w] {
+        cal option ItemWidth $w
+        trigger fire reconfig
+    }
+}
+
+action ical_webbrowser writable {Change the default browser which is used for opening web links} {} {
+    if [cal readonly] {return}
+
+    set w netscape
+    catch {set w [cal option WebBrowser]}
+    if [get_string [ical_leader] {Web Browser} {Enter the path to the executable} $w w] {
+        cal option WebBrowser $w
+        trigger fire reconfig
     }
 }
 
@@ -685,8 +696,8 @@ action ical_defalarms writable {Change default alarm settings} {} {
 
     set alarms [cal option DefaultAlarms]
     if {![alarm_set [ical_leader]\
-	      {Default Alarms (in minutes)} alarms $alarms]} {
-	return
+              {Default Alarms (in minutes)} alarms $alarms]} {
+        return
     }
 
     cal option DefaultAlarms $alarms
@@ -696,7 +707,7 @@ action ical_defalarms writable {Change default alarm settings} {} {
 action ical_edit_key always {Change command key bindings} {} {
     if [cal readonly] {return}
     if [define_key [ical_leader] key] {
-	ical_define_key $key
+        ical_define_key $key
     }
 }
 
@@ -706,15 +717,15 @@ proc ical_define_key {key} {
     set val([lindex $key 0]) [lindex $key 1]
     set map {}
     foreach key [lsort [array names val]] {
-	if [string compare $val($key) ""] {
-	    lappend map $key $val($key)
-	}
+        if [string compare $val($key) ""] {
+            lappend map $key $val($key)
+        }
     }
 
     if [catch {cal option Keybindings $map} msg] {
-	error_notify [ical_leader] $msg
+        error_notify [ical_leader] $msg
     } else {
-	trigger fire keybind
+        trigger fire keybind
     }
 }
 
@@ -744,10 +755,10 @@ action ical_last_month always {Move to previous month} {} {
     set month [lindex $split 2]
     set year [lindex $split 3]
     if {$month == 1} {
-	set month 12
-	incr year -1
+        set month 12
+        incr year -1
     } else {
-	incr month -1
+        incr month -1
     }
 
     # Handle range errors
@@ -765,10 +776,10 @@ action ical_next_month always {Move to next month} {} {
     set month [lindex $split 2]
     set year [lindex $split 3]
     if {$month == 12} {
-	set month 1
-	incr year
+        set month 1
+        incr year
     } else {
-	incr month
+        incr month
     }
 
     # Handle range errors
@@ -844,16 +855,16 @@ action ical_next_week always {Move to next week} {} {
 action ical_cycle_through_items always {Select next item} {} {
     set found_it 0
     if ![ical_with_item cur] {
-	set cur {}
-	set found_it 1
+        set cur {}
+        set found_it 1
     }
 
     cal query [ical_date] [ical_date] i d {
-	if $found_it {
-	    ical_select $i $d
-	    return
-	}
-	if ![string compare $i $cur] {set found_it 1}
+        if $found_it {
+            ical_select $i $d
+            return
+        }
+        if ![string compare $i $cur] {set found_it 1}
     }
 
     ical_unselect
@@ -865,7 +876,7 @@ action ical_search_forward always {Search forward} {} {
 
     set opat $ical_state(search)
     if ![get_string [ical_leader] "Search" "Enter search string" $opat pat] {
-	return
+        return
     }
     set ical_state(search) $pat
 
@@ -873,35 +884,35 @@ action ical_search_forward always {Search forward} {} {
     regsub -all {[^a-zA-Z0-9_]} $pat {\\&} pat
 
     if [ical_with_item cur] {
-	# Special handling for current day
-	set list {}
-	cal query $current $current i d {
-	    lappend list $i
-	}
+        # Special handling for current day
+        set list {}
+        cal query $current $current i d {
+            lappend list $i
+        }
 
-	# Drop all items upto and including "cur"
-	foreach i [lrange $list [expr [lsearch -exact $list $cur]+1] end] {
-	    if [regexp -nocase -- $pat [$i text]] {
-		ical_select $i $current
-		return
-	    }
-	}
-	incr current
+        # Drop all items upto and including "cur"
+        foreach i [lrange $list [expr [lsearch -exact $list $cur]+1] end] {
+            if [regexp -nocase -- $pat [$i text]] {
+                ical_select $i $current
+                return
+            }
+        }
+        incr current
     }
-	    
+            
     # Get list of items we want to query over
     set list {}
     cal loop i {
-	if [regexp -nocase -- $pat [$i text]] {
-	    lappend list $i
-	}
+        if [regexp -nocase -- $pat [$i text]] {
+            lappend list $i
+        }
     }
 
     # Now search for next occurrence
     cal loop_forward -items $list {} $current i d {
-	ical_set_date $d
-	ical_select $i $d
-	return
+        ical_set_date $d
+        ical_select $i $d
+        return
     }
 
     error_notify [ical_leader] "No more items"
@@ -913,7 +924,7 @@ action ical_search_backward always {Search backward} {} {
 
     set opat $ical_state(search)
     if ![get_string [ical_leader] "Search" "Enter search string" $opat pat] {
-	return
+        return
     }
     set ical_state(search) $pat
 
@@ -921,41 +932,41 @@ action ical_search_backward always {Search backward} {} {
     regsub -all {[^a-zA-Z0-9_]} $pat {\\&} pat
 
     if [ical_with_item cur] {
-	# Special handling for current day
-	set list {}
-	cal query $current $current i d {
-	    lappend list $i
-	}
+        # Special handling for current day
+        set list {}
+        cal query $current $current i d {
+            lappend list $i
+        }
 
-	# Drop all items from "cur" onwards
-	set last {}
-	foreach i [lrange $list 0 [expr [lsearch -exact $list $cur]-1]] {
-	    if [regexp -nocase -- $pat [$i text]] {
-		set last $i
-	    }
-	}
+        # Drop all items from "cur" onwards
+        set last {}
+        foreach i [lrange $list 0 [expr [lsearch -exact $list $cur]-1]] {
+            if [regexp -nocase -- $pat [$i text]] {
+                set last $i
+            }
+        }
 
-	if [string compare $last {}] {
-	    ical_select $last $current
-	    return
-	}
+        if [string compare $last {}] {
+            ical_select $last $current
+            return
+        }
 
-	incr current -1
+        incr current -1
     }
 
     # Get list of items we want to query over
     set list {}
     cal loop i {
-	if [regexp -nocase -- $pat [$i text]] {
-	    lappend list $i
-	}
+        if [regexp -nocase -- $pat [$i text]] {
+            lappend list $i
+        }
     }
 
     # Now search for previous occurrence
     cal loop_backward -items $list {} $current i d {
-	ical_set_date $d
-	ical_select $i $d
-	return
+        ical_set_date $d
+        ical_select $i $d
+        return
     }
 
     error_notify [ical_leader] "No more items"

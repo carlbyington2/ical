@@ -12,7 +12,7 @@
          ECHO = echo
        RANLIB = @RANLIB@
 
-     CXXFLAGS = -O $(DEFS)
+     CXXFLAGS = @CXXFLAGS@ $(DEFS)
       CXXINCS = -I$(srcdir)
          OBJS = bitvec.o hashfuncs.o intset.o
         TESTS = testarray testbv testomap testoset timemap testhash testmap\

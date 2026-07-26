@@ -136,8 +136,7 @@ calendars to persistent storage.
       if [cal dirty $file] {
           cal save $file
       }
-  }
-  </pre>
+  }</pre>
 
 <li> <strong><em>cal</em> reread [<em>file</em>]</strong><br>
   Incorporate any changes made to <em>file</em> by other users or
@@ -164,8 +163,7 @@ properties of the calendar file.
   Example:
   <pre>
   set p "lpr"
-  catch {set p [cal option PrintCmd]}
-  </pre>
+  catch {set p [cal option PrintCmd]}</pre>
 
 <li> <strong><em>cal</em> option [-calendar <em>file</em>] <em>name</em> <em>value</em></strong><br>
   Set the value of the option named <em>name</em> to <em>value</em> in the named
@@ -173,8 +171,7 @@ properties of the calendar file.
   looked up in the main calendar file.
   Example:
   <pre>
-  cal option PrintCmd "lpr -m"
-  </pre>
+  cal option PrintCmd "lpr -m"</pre>
 
 <li> <strong><em>cal</em> delete_option [-calendar <em>file</em>] <em>name</em></strong><br>
   Remove the option named <em>name</em> from the named calendar <em>file</em>.
@@ -183,8 +180,7 @@ properties of the calendar file.
   exist in the calendar.
   Example:
   <pre>
-  catch {cal delete_option PrintCmd}
-  </pre>
+  catch {cal delete_option PrintCmd}</pre>
 
 </ul>
 
@@ -229,8 +225,7 @@ The actual query methods are as follows:
   cal listing $date [expr $date+9] i d {
       print_date $d
       print_item $i
-  }
-  </pre>
+  }</pre>
 
 <li> <strong><em>cal</em> incalendar <em>file</em> <em>itemvar</em> <em>body</em></strong><br>
   For all items <em>i</em> in <em>file</em>, Set <em>itemvar</em> to <em>i</em> and execute
@@ -241,8 +236,7 @@ The actual query methods are as follows:
   <pre>
   cal incalendar [cal main] item {
       print_item $item
-  }
-  </pre>
+  }</pre>
 
 <li> <strong><em>cal</em> loop_forward [<em>range options</em>]
      <em>item</em> <em>date</em>
@@ -258,8 +252,7 @@ The actual query methods are as follows:
           ...
           break
       }
-  }
-  </pre>
+  }</pre>
 
 
 <li> <strong><em>cal</em> loop_backward [<em>range options</em>]
@@ -276,8 +269,7 @@ The actual query methods are as follows:
           ...
           break
       }
-  }
-  </pre>
+  }</pre>
 
 </ul>
 
@@ -347,9 +339,10 @@ set of dates on which an item occurs.
 <li> <strong><em>item</em> type</strong><br>
   Returns a brief textual description of how the item repeats.
 
-<li> <strong><em>item</em> describe_repeat</strong><br>
+<li> <strong><em>item</em> describe_repeat [-terse]</strong><br>
   Like ``<strong><em>item</em> type</strong>'', except that it returns a more complete
-  description of how the item repeats..
+  description of how the item repeats. If terse, returns the complete description
+  of the repetition as <em>start finish { deleted [ deleted ... ] } how...</em>
 
 <li> <strong><em>item</em> date <em>date</em></strong><br>
   Modifies <em>item</em> to occur exactly on <em>date</em>.
@@ -360,8 +353,7 @@ set of dates on which an item occurs.
   the following code makes ``$item'' repeat every Saturday assuming
   that the anchor date occurs on a Saturday.
   <pre>
-  $item dayrepeat 7 $anchor
-  </pre>
+  $item dayrepeat 7 $anchor</pre>
 
 <li> <strong><em>item</em> monthrepeat <em>interval</em> <em>anchor</em></strong><br>
   Modifies <em>item</em> to occur on all dates that are an integral
@@ -369,8 +361,7 @@ set of dates on which an item occurs.
   the following code makes ``$item'' repeat on the 23rd of February
   every year.
   <pre>
-  $item monthrepeat 12 [date make 23 2 1994]
-  </pre>
+  $item monthrepeat 12 [date make 23 2 1994]</pre>
 
 <li> <strong><em>item</em> weekdays [<em>weekday</em>...]</strong><br>
   Modifies <em>item</em> to repeat on all specified <em>weekdays</em>.  For
@@ -378,8 +369,7 @@ set of dates on which an item occurs.
   Wednesday and Friday (Sunday is represented by 1, Monday is
   represented by 2, ...).
   <pre>
-  $item weekdays 2 4 6 
-  </pre>
+  $item weekdays 2 4 6 </pre>
 
 <li> <strong><em>item</em> month_day <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
   Modifies <em>item</em> to repeat on the <em>n</em>th day of every month
@@ -390,8 +380,7 @@ set of dates on which an item occurs.
   ``$item'' repeat on the 17th of every January because the anchor
   date is in January, and the interval is 12.
   <pre>
-  $item month_day 17 [date make 1 1 1994] 12
-  </pre>
+  $item month_day 17 [date make 1 1 1994] 12</pre>
 
 <li> <strong><em>item</em> month_last_day <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
   Behaves like ``<strong><em>item</em> month_day</strong>'' except that <em>item</em> is made
@@ -399,8 +388,7 @@ set of dates on which an item occurs.
   For example, the following code makes ``$item'' repeat on the second
   last day of every month.
   <pre>
-  $item month_last_day 2
-  </pre>
+  $item month_last_day 2</pre>
 
 <li> <strong><em>item</em> month_work_day <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
   Behaves like ``<strong><em>item</em> month_day</strong>'' except that <em>item</em> is made to
@@ -408,8 +396,7 @@ set of dates on which an item occurs.
   For example, the following code makes ``$item'' repeat on the first
   working day of each month.
   <pre>
-  $item month_work_day 1
-  </pre>
+  $item month_work_day 1</pre>
 
 <li> <strong><em>item</em> month_last_work_day <em>n</em></strong><br>
   Behaves like ``<strong><em>item</em> month_last_day</strong>'' except that <em>item</em> is made to
@@ -417,8 +404,7 @@ set of dates on which an item occurs.
   For example, the following code makes ``$item'' repeat on the
   fourth-last working day of each month.
   <pre>
-  $item month_last_work_day 4
-  </pre>
+  $item month_last_work_day 4</pre>
 
 <li> <strong><em>item</em> month_week_day <em>day</em> <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
   Behaves like ``<strong><em>item</em> month_day</strong>'' except that <em>item</em> is made
@@ -432,8 +418,7 @@ set of dates on which an item occurs.
   the following code makes ``$item'' repeat on the third Thursday of
   every month.  (Thursday is specified by the integer $5$).
   <pre>
-  $item month_week_day 5 3
-  </pre>
+  $item month_week_day 5 3</pre>
 
 <li> <strong><em>item</em> month_last_week_day <em>day</em> <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br> 
   Behaves like ``<strong><em>item</em> month_week_day</strong>'' except that
@@ -441,8 +426,7 @@ set of dates on which an item occurs.
   example, the following code makes ``$item'' repeat on the last
   Friday of every month.  (Friday is specified by the integer $6$.)
   <pre>
-  $item month_last_week_day 6 1
-  </pre>
+  $item month_last_week_day 6 1</pre>
 
 <li> <strong><em>item</em> start <em>date</em></strong><br>
   Modifies <em>item</em> by removing all occurrences that occur before
@@ -454,8 +438,7 @@ set of dates on which an item occurs.
   occur only in 1994.
   <pre>
   $item start  [date make 1  1  1994]
-  $item finish [date make 31 12 1994]
-  </pre>
+  $item finish [date make 31 12 1994]</pre>
 
 <li> <strong><em>item</em> deleteon <em>date</em></strong><br>
   If <em>item</em> occurs on <em>date</em>, removes that occurrence of <em>item</em>.
@@ -478,11 +461,25 @@ notices.
 <li> <strong><em>appt</em> length <em>length</em></strong><br>
   Set <em>appt</em>'s length to <em>length</em> minutes.
 
-<li> <strong><em>appt</em> starttime</strong><br>
+<li> <strong><em>appt</em> starttime <em>date</em></strong><br>
   Return the starting time for <em>appt</em> in minutes since midnight.
+  Unless the <em>date</em> is specified as <strong>native</strong>,
+  the value is converted from the native item's time zone to the current
+  system time zone for <em>date</em>.
 
-<li> <strong><em>appt</em> starttime <em>minutes</em></strong><br>
+<li> <strong><em>appt</em> starttime <em>date</em> <em>minutes</em></strong><br>
   Set the starting time for <em>appt</em> to <em>minutes</em> after midnight.
+  Unless the <em>date</em> is specified as <strong>native</strong>,
+  the value is interpreted in the current system time zone for
+  <em>date</em>.
+
+<li> <strong><em>appt</em> timezone</strong><br>
+  Returns the time zone of the <em>appt</em>.
+
+<li> <strong><em>appt</em> timezone [-convert] <em>name</em></strong><br>
+Sets the time zone of the <em>appt</em> to <em>name</em>.
+If <strong>-convert</strong> is specified, the starting date and time
+are converted to the new time zone.
 
 <li> <strong><em>appt</em> alarms</strong><br>
   Return a list of alarm times.  For each entry <em>t</em> in this list,
@@ -494,13 +491,11 @@ notices.
   this list should be non-negative.  For example, the following code
   will remove all alarms from ``$appt''.
   <pre>
-  $appt alarms {}
-  </pre>
+  $appt alarms {}</pre>
   The following code will set alarms to occur at the appointment start time,
   and also 5, 10, and 15 minutes before the appointment starts.
   <pre>
-  $appts alarms {0 5 10 15}
-  </pre>
+  $appts alarms {0 5 10 15}</pre>
 
 <li> <strong><em>item</em> is appt</strong><br>
   Returns true iff <em>item</em> is an appointment.
@@ -560,8 +555,7 @@ notices.
   $i monthrepeat 12 [date make 25 12 1994]
   $i text {Christmas}
   $i hilite holiday
-  cal add $i
-  </pre>
+  cal add $i</pre>
 
 <li> <strong><em>item</em> todo</strong><br>
   Ical supports <em>todo</em> items.  If a todo item occurs in the past, that
@@ -594,24 +588,21 @@ notices.
   Example:
   <pre>
   set priority normal
-  catch {set priority [$item option Priority]}
-  </pre>
+  catch {set priority [$item option Priority]}</pre>
 
 <li> <strong><em>item</em> option <em>name</em> <em>value</em></strong><br>
   Set the value of the option named <em>name</em> to <em>value</em> in the named
   item <em>item</em>.
   Example:
   <pre>
-  $item option Priority high
-  </pre>
+  $item option Priority high</pre>
 
 <li> <strong><em>item</em> delete_option <em>name</em></strong><br>
   Remove the option named <em>name</em> from the named item <em>item</em>.
   An error is raised if the named option does not exist in the item.
   Example:
   <pre>
-  catch {$item delete_option Priority}
-  </pre>
+  catch {$item delete_option Priority}</pre>
 
 </ul>
 
@@ -631,8 +622,7 @@ operations on dates.
   example of a date creation:
   <pre>
   # March 5, 1994.
-  set d [date make 5 3 1994]
-  </pre>
+  set d [date make 5 3 1994]</pre>
 <li> <strong>date today</strong><br>
   Returns today's date.
 <li> <strong>date first</strong><br>
@@ -670,8 +660,7 @@ operations on dates.
   ``date'', the string ``before'' in the variable ``pre'', and
   the string ``after'' in the variable ``post''.
   <pre>
-  date extract {before today after} date pre post
-  </pre>
+  date extract {before today after} date pre post</pre>
 
 </ul>
 
@@ -706,10 +695,14 @@ subtraction.  Here is a list of other supported operations on times.
   Returns the millisecond of the second represented by <em>time</em> as an integer in
   the range 0...999.
 
-<li> <strong>ical_time split <em>time</em></strong><br>
-  Returns a four element list of the components of <em>time</em>.  The first
-  element is the hour, the second element is the minute, the third
-  element is the second, and the fourth element is the millisecond.
+<li> <strong>ical_time split [-all] [-timezone name] <em>time</em></strong><br>
+  Returns eight (if <strong>-all</strong>) or four element
+  list of the components of <em>time</em>. They are: the day of the month (1..31),
+  the day of the week (1..7, for Sunday..Saturday), month (1..12), year (4-digit),
+  hour, minute, second, millisecond. If <strong>-all</strong> is not specified,
+  only the last four elements (hour...millisecond) are returned.
+  Unless the time zone is specified, the conversion takes place in the
+  current system time zone.
 
 <li> <strong>ical_time extract_time <em>s</em> <em>t</em> <em>pre</em> <em>post</em></strong><br>
   Returns true iff a time of day specification is successfully parsed
@@ -723,8 +716,7 @@ subtraction.  Here is a list of other supported operations on times.
   ``post''.
 
   <pre>
-  ical_time extract_time {X 3am Y} time pre post
-  </pre>
+  ical_time extract_time {X 3am Y} time pre post</pre>
 
 <li> <strong>ical_time extract_range <em>s</em> <em>start</em> <em>finish</em> <em>pre</em> <em>post</em></strong><br>
   Returns true iff a time range specification is successfully parsed
@@ -738,8 +730,7 @@ subtraction.  Here is a list of other supported operations on times.
   ``in Room 419'' in the variable ``post''.
 
   <pre>
-  ical_time extract_range {Meeting 3-4am in Room 419} s f pre post
-  </pre>
+  ical_time extract_range {Meeting 3-4am in Room 419} s f pre post</pre>
 
 </ul>
 
@@ -766,8 +757,7 @@ the following commands.
   <pre>
   append-hook dayview-startup {w} {
       pack [$w window].al -side bottom
-  }
-  </pre>
+  }</pre>
 
 <li> <strong>prepend-hook <em>hook</em> {<em>varnames...</em>} {<em>code</em>}</strong><br>
   This command is very similar to ``append-hook''.  The only difference is

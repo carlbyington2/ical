@@ -28,14 +28,14 @@ class Year {
     static int  first;
     static int  last;
     static int  first_century;
-    static int  first_year_off;	/* Diff between first, first_century */
+    static int  first_year_off; /* Diff between first, first_century */
     static long first_day_off;
 };
 
 inline int Year::IsLeap(int y) {
     return (((y % 4) == 0) &&
-	    (((y % 100) != 0) || ((y % 400) == 0))
-	    );
+            (((y % 100) != 0) || ((y % 400) == 0))
+            );
 }
 
 inline int Year::Size(int y) {

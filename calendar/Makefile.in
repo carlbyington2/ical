@@ -12,7 +12,7 @@
            AR = ar
          ECHO = echo
 
-   CXXFLAGS = -O
+   CXXFLAGS = @CXXFLAGS@
     CXXINCS = -I.. -I$(srcdir) -I$(srcdir)/../types -I$(srcdir)/../time
 
     CXXOBJS = arrays.o calendar.o calfile.o dateset.o item.o\

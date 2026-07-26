@@ -4,16 +4,16 @@
 #
 # Commands
 #
-#	get_time_range <leader> <msg> <varstart> <varfinish>
+#       get_time_range <leader> <msg> <varstart> <varfinish>
 #
-#	Allow user to edit time range.  The initially displayed range
-#	is taken from the value of the variables named by <varstart>
-#	and <varfinish>.  If user confirms the dialog, set <varstart>
-#	and <varfinish> to the new values and return 1.  Else
-#	return 0.
+#       Allow user to edit time range.  The initially displayed range
+#       is taken from the value of the variables named by <varstart>
+#       and <varfinish>.  If user confirms the dialog, set <varstart>
+#       and <varfinish> to the new values and return 1.  Else
+#       return 0.
 #
-#	<varstart> and <varfinish> take integral values in the range 0..24
-#	to represent hours.
+#       <varstart> and <varfinish> take integral values in the range 0..24
+#       to represent hours.
 
 proc build_time_range {w gvar} {
     toplevel $w -class Dialog
@@ -23,8 +23,8 @@ proc build_time_range {w gvar} {
     frame $w.mid -class Pane
 
     make_buttons $w.bot 1 {
-	{Cancel		{set tr_done 0}}
-	{Okay		{set tr_done 1}}
+        {Cancel         {set tr_done 0}}
+        {Okay           {set tr_done 1}}
     }
 
     frame $w.mid.top
@@ -32,14 +32,14 @@ proc build_time_range {w gvar} {
     label $w.mid.mid -text to
 
     scale $w.start -from 0 -to 24 -tickinterval 0\
-	-orient horizontal -length 3i\
-	-showvalue 0 -command [list time_range_start $w]
+        -orient horizontal -length 3i\
+        -showvalue 0 -command [list time_range_start $w]
 
     label $w.slabel -text "" -width 8
 
     scale $w.finish -from 0 -to 24 -tickinterval 0\
-	-orient horizontal -length 3i\
-	-showvalue 0 -command [list time_range_finish $w]
+        -orient horizontal -length 3i\
+        -showvalue 0 -command [list time_range_finish $w]
 
     label $w.flabel -text "" -width 8
 
@@ -70,16 +70,16 @@ proc build_time_range {w gvar} {
 
 proc time_range_start {w value} {
     if {$value >= [$w.finish get]} {
-	set value [expr [$w.finish get] - 1]
-	$w.start set $value
+        set value [expr [$w.finish get] - 1]
+        $w.start set $value
     }
     $w.slabel config -text [time2text [expr $value*60]]
 }
 
 proc time_range_finish {w value} {  
     if {$value <= [$w.start get]} {
-	set value [expr [$w.start get] + 1]
-	$w.finish set $value
+        set value [expr [$w.start get] + 1]
+        $w.finish set $value
     }
     $w.flabel config -text [time2text [expr $value*60]]
 }
@@ -99,15 +99,15 @@ proc get_time_range {leader msg varstart varfinish} {
     set tr_done -1
 
     if ![winfo exists .tr] {
-	build_time_range .tr tr_done
+        build_time_range .tr tr_done
     }
 
     time_range_edit .tr $start $finish
     .tr.msg configure -text $msg
     dialog_run $leader .tr tr_done
     if $tr_done {
-	set start [.tr.start get]
-	set finish [.tr.finish get]
+        set start [.tr.start get]
+        set finish [.tr.finish get]
     }
     return $tr_done
 }

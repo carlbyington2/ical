@@ -357,7 +357,7 @@ for {set date $from} {$date <= $to} {incr date} {
   puts -nonewline "[date year $date]) dateline\n"
   
   cal query $date $date i d {
-    set item [item2text $i "" "" 75]
+    set item [item2text $d $i "" "" 75]
     foreach line [split $item "\n"] {
       if [string length $line] {
         puts stdout "[psstring $line] itemline"

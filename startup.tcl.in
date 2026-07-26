@@ -8,8 +8,8 @@
 proc ical_init {} {
     set tv [info tclversion]
     if {[package vcompare $tv 7.5] < 0} {
-	puts stderr "Ical requires at least Tcl version 7.5"
-	exit 1
+        puts stderr "Ical requires at least Tcl version 7.5"
+        exit 1
     }
 
     # Make sure there is "HOME" environment variable so that
@@ -19,31 +19,31 @@ proc ical_init {} {
 
     # Initialize options
     global ical
-    set ical(author)		{sanjay@pa.dec.com}
-    set ical(version)		{@ICAL_VERSION@}
-    set ical(mailer)		{@MAILER@}
-    set ical(prefix)		{@prefix@}
-    set ical(libparent)		{@prefix@/lib/ical}
-    set ical(library)   	{@prefix@/lib/ical/v@ICAL_VERSION@}
-    set ical(startdate)		[date today]
-    set ical(iconic)		0
-    set ical(prefs)		{}
-    set ical(geometry)		{}
-    set ical(iconposition)	{}
+    set ical(author)            {sanjay@pa.dec.com}
+    set ical(version)           {@ICAL_VERSION@}
+    set ical(mailer)            {@MAILER@}
+    set ical(prefix)            {@prefix@}
+    set ical(libparent)         {@prefix@/lib/ical}
+    set ical(library)           {@prefix@/lib/ical/v@ICAL_VERSION@}
+    set ical(startdate)         [date today]
+    set ical(iconic)            0
+    set ical(prefs)             {}
+    set ical(geometry)          {}
+    set ical(iconposition)      {}
 
     # Handle environment variables
     if [info exists env(ICAL_LIBRARY)] {set ical(library) $env(ICAL_LIBRARY)}
     if [info exists env(CALENDAR)] {
-	set ical(calendar) $env(CALENDAR)
+        set ical(calendar) $env(CALENDAR)
     } else {
-	set ical(calendar) [ical_expand_file_name ~/.calendar]
+        set ical(calendar) [ical_expand_file_name ~/.calendar]
     }
 
     # Auto-loading path
     global auto_path
     set auto_path [concat\
-		   [list $ical(library) $ical(library)/tcllib]\
-		   $auto_path]
+                   [list $ical(library) $ical(library)/tcllib]\
+                   $auto_path]
 
     set have_tk [string compare [info commands tk] ""]
     support_init
@@ -53,8 +53,8 @@ proc ical_init {} {
 proc ical_tk_init {} {
     global tk_version
     if {[package vcompare $tk_version 4.1] < 0} {
-	puts stderr "Ical requires at least Tk version 4.1"
-	exit 1
+        puts stderr "Ical requires at least Tk version 4.1"
+        exit 1
     }
 
     # Handle geometry value already parsed by Tk

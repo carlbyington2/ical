@@ -4,8 +4,8 @@
 append-hook dayview-startup {view} {
     set c [$view window].al.c
     $c create line -1 -1 -1 -1 -arrow last\
-	-arrowshape {2m 4m 2m}\
-	-fill [pref apptLineColor] -tags {tod}
+        -arrowshape {2m 4m 2m}\
+        -fill [pref apptLineColor] -tags {tod}
 
     position_tod [$view appt_list] $c
 }

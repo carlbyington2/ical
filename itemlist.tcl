@@ -19,7 +19,7 @@ class ItemListing {} {
 
     # Done button
     make_buttons .$self.bot 0\
-	[list [list {Okay} [list class_kill $self]]]
+        [list [list {Okay} [list class_kill $self]]]
 
     # Move button to extreme right hand side.
     # XXX This depends on the internals of "make_buttons".
@@ -27,15 +27,15 @@ class ItemListing {} {
 
     # Display
     scrollbar .$self.scroll -orient vertical\
-	-command [list .$self.display yview]
+        -command [list .$self.display yview]
     text .$self.display\
-	-setgrid 1\
-	-relief raised\
-	-bd 1\
-	-yscrollcommand [list .$self.scroll set]\
-	-width 50\
-	-height 4\
-	-wrap word
+        -setgrid 1\
+        -relief raised\
+        -bd 1\
+        -yscrollcommand [list .$self.scroll set]\
+        -width 50\
+        -height 4\
+        -wrap word
 
     # Pack it all up
     pack .$self.bot     -side bottom -fill x
@@ -58,14 +58,14 @@ class ItemListing {} {
 
 method ItemListing destructor {} {
     if $slot(mainwindow) {
-	destroy .
+        destroy .
     } else {
-	destroy .$self
+        destroy .$self
     }
 }
 
 # effects - Mark itemlisting as main window.  This causes the
-#	    program to finish when the itemlisting is dismissed
+#           program to finish when the itemlisting is dismissed
 method ItemListing mainwindow {} {
     set slot(mainwindow) 1
 }
@@ -82,15 +82,15 @@ method ItemListing dayrange {start finish} {
     set sep  ""
     set date ""
     cal listing $start $finish i d {
-	$self insert {} $sep
-	if {$date != $d} {
-	    # New date
-	    set date $d
-	    $self insert {-date} "[date2text $date]\n"
-	}
+        $self insert {} $sep
+        if {$date != $d} {
+            # New date
+            set date $d
+            $self insert {-date} "[date2text $date]\n"
+        }
 
-	$self insert {-item} [item2text $i "" "" 10000]
-	set sep "\n"
+        $self insert {-item} [item2text $d $i "" "" 10000]
+        set sep "\n"
     }
 
     # No more editing
@@ -105,19 +105,19 @@ method ItemListing calendar {calendar} {
 
     set sep ""
     cal incalendar $calendar i {
-	if [catch {set date [$i first]}] {
-	    continue
-	}
+        if [catch {set date [$i first]}] {
+            continue
+        }
 
-	set tag tag.$slot(nexttag)
-	incr slot(nexttag)
+        set tag tag.$slot(nexttag)
+        incr slot(nexttag)
 
-	$self insert {} $sep
-	$self insert [list -date $tag] "[$i describe_repeat]\n"
-	$self insert [list $tag] "[item2text $i "" "" 10000]"
-	set sep "\n"
+        $self insert {} $sep
+        $self insert [list -date $tag] "[$i describe_repeat]\n"
+        $self insert [list $tag] "[item2text $date $i {} {} 10000]"
+        set sep "\n"
 
-	.$self.display tag bind $tag <Double-Button-1> [list $self view $date]
+        .$self.display tag bind $tag <Double-Button-1> [list $self view $date]
     }
 
     # No more editing
@@ -129,17 +129,17 @@ method ItemListing calendar {calendar} {
 method ItemListing resize {} {
     set end [.$self.display index end]
     if ![regexp {^([0-9]+)\.([0-9]+)$} $end junk line char] {
-	# Could not get text size!
-	# Use default height
-	set height 20
+        # Could not get text size!
+        # Use default height
+        set height 20
     } else {
-	set height $line
-	if {$height < 4} {
-	    set height 4
-	}
-	if {$height > 20} {
-	    set height 20
-	}
+        set height $line
+        if {$height < 4} {
+            set height 4
+        }
+        if {$height > 20} {
+            set height 20
+        }
     }
     .$self.display configure -height $height
 }
@@ -156,12 +156,12 @@ method ItemListing insert {tags str} {
 
     # Remove existing tags
     foreach t [.$self.display tag names $start] {
-	.$self.display tag remove $t $start insert
+        .$self.display tag remove $t $start insert
     }
 
     # Add new tags
     foreach t $tags {
-	.$self.display tag add $t $start insert
+        .$self.display tag add $t $start insert
     }
 }
 

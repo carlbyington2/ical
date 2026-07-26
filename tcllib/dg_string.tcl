@@ -4,14 +4,14 @@
 #
 # Commands
 #
-#	get_string <leader> <title> <message> <init> <var>
-#		Get string from user.  The string is stored in <var>.
-#		Returns true iff user does not cancel operation.
+#       get_string <leader> <title> <message> <init> <var>
+#               Get string from user.  The string is stored in <var>.
+#               Returns true iff user does not cancel operation.
 
 # Hidden global variables
 #
-#	str_done		Is str interaction finished
-#	str_value		String value
+#       str_done                Is str interaction finished
+#       str_value               String value
 
 set str_done 0
 set str_value {}
@@ -23,8 +23,8 @@ proc get_string {leader title message init var} {
     set str_value $init
     set result [str_interact $leader $title $message]
     if $result {
-	upvar $var returnVar
-	set returnVar $str_value
+        upvar $var returnVar
+        set returnVar $str_value
     }
     return $result
 }
@@ -43,8 +43,8 @@ proc str_make {} {
     message $f.text -aspect 400 -text {Uninitialized message}
     entry $f.entry -textvariable str_value -width 30
     make_buttons $f.bot 1 {
-	{Cancel		{set str_done 0}}
-	{Okay		{set str_done 1}}
+        {Cancel         {set str_done 0}}
+        {Okay           {set str_done 1}}
     }
 
     pack $f.text -in $f.top -side top -expand 1 -fill both -padx 5m -pady 5m

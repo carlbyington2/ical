@@ -13,30 +13,30 @@ class IntMapRep {
   private:
     enum { empty = INT_MIN, del = INT_MIN+1, full = INT_MIN+2 };
     struct Entry {
-	int		key;
-	char const*	val;
+        int             key;
+        char const*     val;
     };
     Entry* list;
   public:
     IntMapRep(int entries) {
-	list = new Entry[entries];
-	for (int i = entries-1; i >= 0; i--) {
-	    list[i].key = empty;
-	}
+        list = new Entry[entries];
+        for (int i = entries-1; i >= 0; i--) {
+            list[i].key = empty;
+        }
     }
 
     inline ~IntMapRep() {
-	delete [] list;
+        delete [] list;
     }
 
-    inline int& key(int i) const	{ return list[i].key; }
-    inline char const*& val(int i)const	{ return list[i].val; }
-    inline int is_full(int i) const	{ return (list[i].key >= full); }
-    inline int is_empty(int i) const	{ return (list[i].key == empty); }
-    inline int is_del(int i) const	{ return (list[i].key == del); }
-    inline void clear(int i)		{ list[i].key = empty; }
-    inline void kill(int i)		{ list[i].key = del; }
-    inline void store(int i, int k)	{ list[i].key = k; }
+    inline int& key(int i) const        { return list[i].key; }
+    inline char const*& val(int i)const { return list[i].val; }
+    inline int is_full(int i) const     { return (list[i].key >= full); }
+    inline int is_empty(int i) const    { return (list[i].key == empty); }
+    inline int is_del(int i) const      { return (list[i].key == del); }
+    inline void clear(int i)            { list[i].key = empty; }
+    inline void kill(int i)             { list[i].key = del; }
+    inline void store(int i, int k)     { list[i].key = k; }
 };
 
 // Declare and implement int->string map
@@ -74,15 +74,15 @@ static int subset(IMap& m1, IMap& m2) {
 
     IMap::Elements i = &m1;
     while (i.get(k, v)) {
-	if (! m2.contains(k)) {
-	    return 0;
-	}
+        if (! m2.contains(k)) {
+            return 0;
+        }
 
-	char const* v2;
-	m2.find(k, v2);
-	if (v != v2) {
-	    return 0;
-	}
+        char const* v2;
+        m2.find(k, v2);
+        if (v != v2) {
+            return 0;
+        }
     }
     return 1;
 }
@@ -106,7 +106,7 @@ static void copy(IMap& m1, IMap& m2) {
     char const* v;
     IMap::Elements iter = &m1;
     while (iter.get(k, v)) {
-	m2.insert(k, v);
+        m2.insert(k, v);
     }
 }
 
@@ -119,7 +119,7 @@ static int num_iterations(const IMap& m) {
     char const* v;
     IMap::Elements iter = &m;
     while (iter.get(k, v)) {
-	count++;
+        count++;
     }
     return count;
 }
@@ -132,10 +132,10 @@ static int iteration_contains(const IMap& m, int key, const char* value) {
     char const* v;
     IMap::Elements iter = &m;
     while (iter.get(k, v)) {
-	if (k == key) {
-	    ASSERT(v == value);
-	    return 1;
-	}
+        if (k == key) {
+            ASSERT(v == value);
+            return 1;
+        }
     }
     return 0;
 }
@@ -143,27 +143,27 @@ static int iteration_contains(const IMap& m, int key, const char* value) {
 /* Check deletion from iterator */
 static void check_del_iter(const IMap& m) {
     for (int n = 1; n <= m.size(); n++) {
-	// Delete the first "n" elements of set via iterator
-	IMap copy = m;
-	int c = 0;
-	int k;
-	char const* v;
-	IMap::Elements i = &copy;
-	while (i.get(k, v)) {
-	    c++;
-	    if (c <= n) i.del();
-	}
-	ASSERT(copy.size() == (m.size() - n));
+        // Delete the first "n" elements of set via iterator
+        IMap copy = m;
+        int c = 0;
+        int k;
+        char const* v;
+        IMap::Elements i = &copy;
+        while (i.get(k, v)) {
+            c++;
+            if (c <= n) i.del();
+        }
+        ASSERT(copy.size() == (m.size() - n));
 
-	// Delete the last "n" elements of set via iterator
-	copy = m;
-	c = m.size();
-	i = &copy;
-	while (i.get(k, v)) {
-	    if (c <= n) i.del();
-	    c--;
-	}
-	ASSERT(copy.size() == (m.size() - n));
+        // Delete the last "n" elements of set via iterator
+        copy = m;
+        c = m.size();
+        i = &copy;
+        while (i.get(k, v)) {
+            if (c <= n) i.del();
+            c--;
+        }
+        ASSERT(copy.size() == (m.size() - n));
     }
 }
 
@@ -208,62 +208,62 @@ static void black_empty() {
 
     /* Check contains */
     for (i = -3; i <= 3; i++) {
-	ASSERT(! empty.contains(i));
+        ASSERT(! empty.contains(i));
     }
 
     /* Cannot check unary find because of requires clause */
 
     /* Check find */
     for (i = -5; i <= 5; i++) {
-	ASSERT(! empty.find(i, value));
+        ASSERT(! empty.find(i, value));
     }
 
     /* Check iterator */
     {
-	check_del_iter(empty);
-	ASSERT(num_iterations(empty) == 0);
+        check_del_iter(empty);
+        ASSERT(num_iterations(empty) == 0);
 
-	IMap::Elements iter = &empty;
-	int k;
-	char const* v;
-	ASSERT(! iter.get(k, v));
+        IMap::Elements iter = &empty;
+        int k;
+        char const* v;
+        ASSERT(! iter.get(k, v));
     }
 
     /* Check store */
     {
-	IMap single;
-	single.check();
-	single.insert(1, one);
-	single.check();
+        IMap single;
+        single.check();
+        single.insert(1, one);
+        single.check();
 
-	ASSERT(single.size() == 1);
-	ASSERT(single.contains(1));
-	ASSERT(single.find(1, value));
-	ASSERT(value == one);
+        ASSERT(single.size() == 1);
+        ASSERT(single.contains(1));
+        ASSERT(single.find(1, value));
+        ASSERT(value == one);
     }
 
     /* Check insert */
     {
-	IMap single;
-	single.check();
-	single.insert(1, one);
-	single.check();
-	
-	ASSERT(single.size() == 1);
-	ASSERT(single.contains(1));
-	ASSERT(single.find(1, value));
-	ASSERT(value == one);
+        IMap single;
+        single.check();
+        single.insert(1, one);
+        single.check();
+        
+        ASSERT(single.size() == 1);
+        ASSERT(single.contains(1));
+        ASSERT(single.find(1, value));
+        ASSERT(value == one);
     }
 
     /* Check remove */
     {
-	IMap empty2;
-	empty2.check();
+        IMap empty2;
+        empty2.check();
 
-	ASSERT(empty2.size() == 0);
-	empty2.remove(1);
-	empty2.check();
-	ASSERT(empty2.size() == 0);
+        ASSERT(empty2.size() == 0);
+        empty2.remove(1);
+        empty2.check();
+        ASSERT(empty2.size() == 0);
     }
 }
 
@@ -282,7 +282,7 @@ static void black_single() {
 
     /* Check contains */
     for (i = -3; i <= 3; i++) {
-	ASSERT(single.contains(i) == (i == 2));
+        ASSERT(single.contains(i) == (i == 2));
     }
 
     /* Check find */
@@ -290,81 +290,81 @@ static void black_single() {
 
     /* Check find */
     for (i = -5; i <= 5; i++) {
-	ASSERT(single.find(i, value) == ((i == 2) && (value == two)));
+        ASSERT(single.find(i, value) == ((i == 2) && (value == two)));
     }
 
     /* Check iterator */
     {
-	check_del_iter(single);
-	ASSERT(num_iterations(single) == 1);
-	ASSERT(iteration_contains(single, 2, two));
+        check_del_iter(single);
+        ASSERT(num_iterations(single) == 1);
+        ASSERT(iteration_contains(single, 2, two));
     }
 
     /* Check store */
     {
-	IMap temp;
-	temp.check();
-	copy(single, temp);
-	temp.check();
+        IMap temp;
+        temp.check();
+        copy(single, temp);
+        temp.check();
 
-	ASSERT(temp.size() == 1);
-	temp.insert(2, three);
-	temp.check();
-	ASSERT(temp.size() == 1);
-	ASSERT(temp.contains(2));
-	ASSERT(fetch(temp, 2) == three);
+        ASSERT(temp.size() == 1);
+        temp.insert(2, three);
+        temp.check();
+        ASSERT(temp.size() == 1);
+        ASSERT(temp.contains(2));
+        ASSERT(fetch(temp, 2) == three);
 
-	copy(single, temp);
-	ASSERT(temp.size() == 1);
-	temp.insert(3, three);
-	temp.check();
-	ASSERT(temp.size() == 2);
-	ASSERT(temp.contains(2));
-	ASSERT(temp.contains(3));
-	ASSERT(fetch(temp, 2) == two);
-	ASSERT(fetch(temp, 3) == three);
+        copy(single, temp);
+        ASSERT(temp.size() == 1);
+        temp.insert(3, three);
+        temp.check();
+        ASSERT(temp.size() == 2);
+        ASSERT(temp.contains(2));
+        ASSERT(temp.contains(3));
+        ASSERT(fetch(temp, 2) == two);
+        ASSERT(fetch(temp, 3) == three);
 
-	ASSERT(num_iterations(temp) == 2);
-	ASSERT(iteration_contains(temp, 2, two));
-	ASSERT(iteration_contains(temp, 3, three));
+        ASSERT(num_iterations(temp) == 2);
+        ASSERT(iteration_contains(temp, 2, two));
+        ASSERT(iteration_contains(temp, 3, three));
     }
 
     /* Check insert */
     {
-	IMap temp;
-	temp.check();
-	copy(single, temp);
-	temp.check();
+        IMap temp;
+        temp.check();
+        copy(single, temp);
+        temp.check();
 
-	ASSERT(temp.size() == 1);
-	temp.insert(3, three);
-	temp.check();
-	ASSERT(temp.size() == 2);
-	ASSERT(temp.contains(2));
-	ASSERT(temp.contains(3));
-	ASSERT(fetch(temp, 2) == two);
-	ASSERT(fetch(temp, 3) == three);
+        ASSERT(temp.size() == 1);
+        temp.insert(3, three);
+        temp.check();
+        ASSERT(temp.size() == 2);
+        ASSERT(temp.contains(2));
+        ASSERT(temp.contains(3));
+        ASSERT(fetch(temp, 2) == two);
+        ASSERT(fetch(temp, 3) == three);
 
-	ASSERT(num_iterations(temp) == 2);
-	ASSERT(iteration_contains(temp, 2, two));
-	ASSERT(iteration_contains(temp, 3, three));
+        ASSERT(num_iterations(temp) == 2);
+        ASSERT(iteration_contains(temp, 2, two));
+        ASSERT(iteration_contains(temp, 3, three));
     }
 
     /* Check remove */
     {
-	IMap temp;
-	temp.check();
-	copy(single, temp);
-	temp.check();
+        IMap temp;
+        temp.check();
+        copy(single, temp);
+        temp.check();
 
-	temp.remove(5);
-	temp.check();
-	ASSERT(compare(temp, single));
+        temp.remove(5);
+        temp.check();
+        ASSERT(compare(temp, single));
 
-	temp.remove(2);
-	temp.check();
-	ASSERT(temp.size() == 0);
-	ASSERT(! temp.contains(2));
+        temp.remove(2);
+        temp.check();
+        ASSERT(temp.size() == 0);
+        ASSERT(! temp.contains(2));
     }
 }
 
@@ -442,9 +442,9 @@ static void black_multiple() {
 
     /* Check find */
     for (i = -5; i <= 0; i++) {
-	ASSERT(! multi3.find(i, value));
-	ASSERT(! multi4.find(i, value));
-	ASSERT(! multi5.find(i, value));
+        ASSERT(! multi3.find(i, value));
+        ASSERT(! multi4.find(i, value));
+        ASSERT(! multi5.find(i, value));
     }
     ASSERT(multi3.find(1, value) && (value == one));
     ASSERT(multi3.find(2, value) && (value == two));
@@ -466,200 +466,200 @@ static void black_multiple() {
 
     /* Check iterator */
     {
-	check_del_iter(multi3);
-	check_del_iter(multi4);
-	check_del_iter(multi5);
+        check_del_iter(multi3);
+        check_del_iter(multi4);
+        check_del_iter(multi5);
 
-	ASSERT(num_iterations(multi3) == 3);
-	ASSERT(iteration_contains(multi3, 1, one));
-	ASSERT(iteration_contains(multi3, 2, two));
-	ASSERT(iteration_contains(multi3, 3, three));
+        ASSERT(num_iterations(multi3) == 3);
+        ASSERT(iteration_contains(multi3, 1, one));
+        ASSERT(iteration_contains(multi3, 2, two));
+        ASSERT(iteration_contains(multi3, 3, three));
 
-	ASSERT(num_iterations(multi4) == 4);
-	ASSERT(iteration_contains(multi4, 1, one));
-	ASSERT(iteration_contains(multi4, 2, two));
-	ASSERT(iteration_contains(multi4, 3, three));
-	ASSERT(iteration_contains(multi4, 4, four));
+        ASSERT(num_iterations(multi4) == 4);
+        ASSERT(iteration_contains(multi4, 1, one));
+        ASSERT(iteration_contains(multi4, 2, two));
+        ASSERT(iteration_contains(multi4, 3, three));
+        ASSERT(iteration_contains(multi4, 4, four));
 
-	ASSERT(num_iterations(multi5) == 5);
-	ASSERT(iteration_contains(multi5, 1, one));
-	ASSERT(iteration_contains(multi5, 2, two));
-	ASSERT(iteration_contains(multi5, 3, three));
-	ASSERT(iteration_contains(multi5, 4, four));
-	ASSERT(iteration_contains(multi5, 5, five));
+        ASSERT(num_iterations(multi5) == 5);
+        ASSERT(iteration_contains(multi5, 1, one));
+        ASSERT(iteration_contains(multi5, 2, two));
+        ASSERT(iteration_contains(multi5, 3, three));
+        ASSERT(iteration_contains(multi5, 4, four));
+        ASSERT(iteration_contains(multi5, 5, five));
     }
 
     /* Check store */
     {
-	IMap temp;
-	temp.check();
-	copy(multi3, temp);
-	temp.check();
+        IMap temp;
+        temp.check();
+        copy(multi3, temp);
+        temp.check();
 
-	ASSERT(compare(multi3, temp));
+        ASSERT(compare(multi3, temp));
 
-	/* Store existing element */
-	temp.insert(2, five);
-	temp.check();
-	ASSERT(temp.size() == multi3.size());
-	ASSERT(temp.contains(2));
-	ASSERT(fetch(temp, 2) == five);
-	temp.remove(2);
-	temp.check();
-	temp.insert(2, fetch(multi3, 2));
-	temp.check();
-	ASSERT(compare(multi3, temp));
+        /* Store existing element */
+        temp.insert(2, five);
+        temp.check();
+        ASSERT(temp.size() == multi3.size());
+        ASSERT(temp.contains(2));
+        ASSERT(fetch(temp, 2) == five);
+        temp.remove(2);
+        temp.check();
+        temp.insert(2, fetch(multi3, 2));
+        temp.check();
+        ASSERT(compare(multi3, temp));
 
-	/* Store non-existent element */
-	copy(multi4, temp);
-	temp.check();
-	ASSERT(compare(multi4, temp));
-	temp.insert(5, five);
-	temp.check();
-	ASSERT(compare(multi5, temp));
-	temp.remove(5);
-	temp.check();
-	ASSERT(compare(multi4, temp));
+        /* Store non-existent element */
+        copy(multi4, temp);
+        temp.check();
+        ASSERT(compare(multi4, temp));
+        temp.insert(5, five);
+        temp.check();
+        ASSERT(compare(multi5, temp));
+        temp.remove(5);
+        temp.check();
+        ASSERT(compare(multi4, temp));
     }
 
     /* Check insert */
     {
-	IMap temp;
-	temp.check();
-	copy(multi4, temp);
-	temp.check();
+        IMap temp;
+        temp.check();
+        copy(multi4, temp);
+        temp.check();
 
-	ASSERT(compare(multi4, temp));
-	ASSERT(temp.size() == 4);
-	temp.insert(5, five);
-	temp.check();
-	ASSERT(compare(multi5, temp));
+        ASSERT(compare(multi4, temp));
+        ASSERT(temp.size() == 4);
+        temp.insert(5, five);
+        temp.check();
+        ASSERT(compare(multi5, temp));
 
-	copy(multi3, temp);
-	temp.insert(4, four);
-	temp.check();
-	temp.insert(5, five);
-	temp.check();
-	ASSERT(compare(multi5, temp));
+        copy(multi3, temp);
+        temp.insert(4, four);
+        temp.check();
+        temp.insert(5, five);
+        temp.check();
+        ASSERT(compare(multi5, temp));
     }
 
     /* Check remove */
     {
-	IMap temp, empty;
+        IMap temp, empty;
 
-	/* Check removal of existing elements */
-	temp.check();
-	copy(multi3, temp);
-	temp.check();
-	ASSERT(compare(multi3, temp));
-	temp.remove(1);
-	temp.check();
-	temp.remove(2);
-	temp.check();
-	temp.remove(3);
-	temp.check();
-	ASSERT(compare(empty, temp));
+        /* Check removal of existing elements */
+        temp.check();
+        copy(multi3, temp);
+        temp.check();
+        ASSERT(compare(multi3, temp));
+        temp.remove(1);
+        temp.check();
+        temp.remove(2);
+        temp.check();
+        temp.remove(3);
+        temp.check();
+        ASSERT(compare(empty, temp));
 
-	copy(multi3, temp);
-	temp.check();
-	ASSERT(compare(multi3, temp));
-	temp.remove(3);
-	temp.check();
-	temp.remove(2);
-	temp.check();
-	temp.remove(1);
-	temp.check();
-	ASSERT(compare(empty, temp));
+        copy(multi3, temp);
+        temp.check();
+        ASSERT(compare(multi3, temp));
+        temp.remove(3);
+        temp.check();
+        temp.remove(2);
+        temp.check();
+        temp.remove(1);
+        temp.check();
+        ASSERT(compare(empty, temp));
 
-	copy(multi5, temp);
-	temp.check();
-	ASSERT(compare(multi5, temp));
-	temp.remove(5);
-	temp.check();
-	ASSERT(compare(multi4, temp));
-	temp.remove(4);
-	temp.check();
-	ASSERT(compare(multi3, temp));
-	temp.remove(1);
-	temp.check();
-	temp.remove(2);
-	temp.check();
-	temp.remove(3);
-	temp.check();
-	ASSERT(compare(empty, temp));
+        copy(multi5, temp);
+        temp.check();
+        ASSERT(compare(multi5, temp));
+        temp.remove(5);
+        temp.check();
+        ASSERT(compare(multi4, temp));
+        temp.remove(4);
+        temp.check();
+        ASSERT(compare(multi3, temp));
+        temp.remove(1);
+        temp.check();
+        temp.remove(2);
+        temp.check();
+        temp.remove(3);
+        temp.check();
+        ASSERT(compare(empty, temp));
 
-	/* Check removal of non-existent elements */
-	copy(multi4, temp);
-	temp.check();
-	for (i = -5; i <= 0; i++) {
-	    temp.remove(i);
-	    temp.check();
-	    ASSERT(compare(multi4, temp));
-	}
-	for (i = 5; i <= 10; i++) {
-	    temp.remove(i);
-	    temp.check();
-	    ASSERT(compare(multi4, temp));
-	}
+        /* Check removal of non-existent elements */
+        copy(multi4, temp);
+        temp.check();
+        for (i = -5; i <= 0; i++) {
+            temp.remove(i);
+            temp.check();
+            ASSERT(compare(multi4, temp));
+        }
+        for (i = 5; i <= 10; i++) {
+            temp.remove(i);
+            temp.check();
+            ASSERT(compare(multi4, temp));
+        }
     }
 
     /* Check large number of entries */
     {
-	IMap map;
+        IMap map;
 
-	map.check();
-	for (i = 0; i < 1000; i++) {
-	    char* val = new char[20];
-	    sprintf(val, "%d", i);
-	    map.insert(i, val);
-	    ASSERT(num_iterations(map) == i+1);
-	}
-	map.check();
+        map.check();
+        for (i = 0; i < 1000; i++) {
+            char* val = new char[20];
+            sprintf(val, "%d", i);
+            map.insert(i, val);
+            ASSERT(num_iterations(map) == i+1);
+        }
+        map.check();
 
-	char* copy = new char[20];
-	for (i = 0; i < 1000; i++) {
-	    char const* val = fetch(map, i);
-	    sprintf(copy, "%d", i);
-	    ASSERT(strcmp(copy, val) == 0);
-	}
-	delete copy;
+        char* copy = new char[20];
+        for (i = 0; i < 1000; i++) {
+            char const* val = fetch(map, i);
+            sprintf(copy, "%d", i);
+            ASSERT(strcmp(copy, val) == 0);
+        }
+        delete copy;
 
-	for (i = 0; i < 1000; i++) {
-	    delete [] (char*)fetch(map, i);
-	    map.remove(i);
-	    ASSERT(num_iterations(map) == (999-i));
-	}
-	map.check();
+        for (i = 0; i < 1000; i++) {
+            delete [] (char*)fetch(map, i);
+            map.remove(i);
+            ASSERT(num_iterations(map) == (999-i));
+        }
+        map.check();
     }
 
     /* Check prediction */
     {
-	IMap map;
-	map.predict(1000);
+        IMap map;
+        map.predict(1000);
 
-	map.check();
-	for (i = 0; i < 1000; i++) {
-	    char* val = new char[20];
-	    sprintf(val, "%d", i);
-	    map.insert(i, val);
-	    ASSERT(num_iterations(map) == i+1);
-	}
-	map.check();
+        map.check();
+        for (i = 0; i < 1000; i++) {
+            char* val = new char[20];
+            sprintf(val, "%d", i);
+            map.insert(i, val);
+            ASSERT(num_iterations(map) == i+1);
+        }
+        map.check();
 
-	char* copy = new char[20];
-	for (i = 0; i < 1000; i++) {
-	    char const* val = fetch(map, i);
-	    sprintf(copy, "%d", i);
-	    ASSERT(strcmp(copy, val) == 0);
-	}
-	delete copy;
+        char* copy = new char[20];
+        for (i = 0; i < 1000; i++) {
+            char const* val = fetch(map, i);
+            sprintf(copy, "%d", i);
+            ASSERT(strcmp(copy, val) == 0);
+        }
+        delete copy;
 
-	for (i = 0; i < 1000; i++) {
-	    delete [] (char*)fetch(map, i);
-	    map.remove(i);
-	    ASSERT(num_iterations(map) == (999-i));
-	}
-	map.check();
+        for (i = 0; i < 1000; i++) {
+            delete [] (char*)fetch(map, i);
+            map.remove(i);
+            ASSERT(num_iterations(map) == (999-i));
+        }
+        map.check();
     }
 }
 

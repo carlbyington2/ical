@@ -26,17 +26,17 @@ class Month {
     static Month Last();
 
     /* Observers */
-    char const*	Name() const;
-    char const*	ShortName() const;
-    int		Index() const;
+    char const* Name() const;
+    char const* ShortName() const;
+    int         Index() const;
 
-    int		NormalSize() const;	/* Size in non-leap years */
-    int		LeapSize() const;	/* Size in leap years */
-    int		Size(int y) const;	/* Size in given year */
+    int         NormalSize() const;     /* Size in non-leap years */
+    int         LeapSize() const;       /* Size in leap years */
+    int         Size(int y) const;      /* Size in given year */
 
-    int		NormalOffset() const;	/* Offset within non-leap year */
-    int		LeapOffset() const;	/* Offset within leap year */
-    int		Offset(int y) const;	/* Offset within given year */
+    int         NormalOffset() const;   /* Offset within non-leap year */
+    int         LeapOffset() const;     /* Offset within leap year */
+    int         Offset(int y) const;    /* Offset within given year */
 
     /* Arithemtic - wraps around. */
     Month& operator += (int);

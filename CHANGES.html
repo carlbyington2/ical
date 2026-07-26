@@ -10,8 +10,8 @@
 <HR>
 <H1><A NAME="toc">Table of Contents</A></H1>
 <UL>
-<li> <A HREF="#mine">Unreleased changes</A>
-<li> <A HREF="#2.2">Version 2.2</A>
+<LI> <A HREF="#3.0"><b>Version 3.0</b></A>
+<LI> <A HREF="#2.2">Version 2.2</A>
 <LI> <A HREF="#2.1">Version 2.1</A>
      <UL>
      <LI> <A HREF="#2.1b2">Version 2.1b2</A>
@@ -36,9 +36,16 @@
 </UL>
 <HR>
 
-<h1><A NAME="mine">Unreleased changes</A></h1>
+<h1><A NAME="3.0">Version 3.0</A></h1>
 <ul>
-<li> None yet...
+<li> Web browser (to show web links) is now configurable.
+<li> Fixed printing to force iso8859-1 in the output, to match the iso8859-1 as hard-coded in the postscript header.
+<li> Uploaded to launchpad (<a href="https://launchpad.net/ical-tcl">Ical on launchpad</a>)
+<li> Timezone support
+<li> Enabled "Link" menu items and configurable key bindings (commented out in the original sources)
+<li> Added support for <code>$item describe_repeat -terse</code> (based on Ethan Blanton patch)
+<li> Added support for context menus (by Ethan Blanton &lt;elb@elitists.net&gt;)
+<li> Imported Ubuntu's "alarm-arrow" patch (easier to add an alarm arrow on the alarm ruler).
 </ul>
 <hr>
 
@@ -70,13 +77,13 @@
      <li> More uniform text/include-file encoding.
      <li> Still reads and writes old format calendars compatibly.
      <li> <strong>New calendars are written in the new format, which cannot
-	  be read by old ical versions.</strong>
+          be read by old ical versions.</strong>
      <li> The recommended way to upgrade to the new calendar format is to
-	  make sure that all copies of ical at your site are upgraded to
-	  the new version at the same time.  If you miss a few copies,
-	  they will continue to work fine for any existing calendars,
-	  but they will not be able to read any brand-new calendars created
-	  by the new version of ical.
+          make sure that all copies of ical at your site are upgraded to
+          the new version at the same time.  If you miss a few copies,
+          they will continue to work fine for any existing calendars,
+          but they will not be able to read any brand-new calendars created
+          by the new version of ical.
      </ul>
 <li> Changes in the Tcl interface to Ical
      <ul>
@@ -85,7 +92,7 @@
      <li> Renamed the <code>time</code> command to <code>ical_time</code>
           to avoid conflicting with the Tcl <code>time</code> command.
           <strong>This is a potential incompatibility for ical
-	  scripts.</strong>
+          scripts.</strong>
 </ul>
 
 <h2><A NAME="2.1b2">Version 2.1b2</A></h1>
@@ -103,7 +110,7 @@
      to avoid conflicting with the Tcl <code>time</code> command.
      <ul>
      <li> <strong>This is a potential incompatibility for ical
-	  scripts.</strong>
+          scripts.</strong>
      </ul>
 <li> Added resize handles on selected appointments.
 <li> Added icon bitmap for calendar windows.
@@ -120,13 +127,13 @@
      <li> More uniform text/include-file encoding.
      <li> Still reads and writes old format calendars compatibly.
      <li> <strong>New calendars are written in the new format, which cannot
-	  be read by old ical versions.</strong>
+          be read by old ical versions.</strong>
      <li> The recommended way to upgrade to the new calendar format is to
-	  make sure that all copies of ical at your site are upgraded to
-	  the new version at the same time.  If you miss a few copies,
-	  they will continue to work fine for any existing calendars,
-	  but they will not be able to read any brand-new calendars created
-	  by the new version of ical.
+          make sure that all copies of ical at your site are upgraded to
+          the new version at the same time.  If you miss a few copies,
+          they will continue to work fine for any existing calendars,
+          but they will not be able to read any brand-new calendars created
+          by the new version of ical.
      </ul>
 </ul>
 <p>
@@ -155,7 +162,7 @@
      <li> <code>ical_action</code> does not take a view argument
      <li> Added <code>item-select</code> and <code>item-unselect</code> hooks
      <li> Removed <code>dayview-focus</code> and <code>dayview-unfocus</code>
-	  hooks
+          hooks
      </ul>
 
 <li> The <code>-bg</code> command line option is now handled
@@ -239,10 +246,10 @@
 <li> Changed the Tcl class system to support single inheritance.
 <li> Added more hooks
      <pre>
-	dayview-focus
-	dayview-unfocus
-	dayview-set-date
-	alarm-fire
+        dayview-focus
+        dayview-unfocus
+        dayview-set-date
+        alarm-fire
      </pre>
 </ul>
 
@@ -254,7 +261,7 @@
      or without worrying about the location of ical's ".tcl" files.  Use
      the following method to build a standalone executable.
      <pre>
-	make ical-bundle
+        make ical-bundle
      </pre>
 <li> The ical library directory now includes the version number.
      Therefore different versions of ical will not trounce each
@@ -345,10 +352,10 @@
   The "children" list was also made a little wider.
 
 <LI> Added more hooks
-	dayview-focus<BR>
-	dayview-unfocus<BR>
-	dayview-set-date<BR>
-	alarm-fire
+        dayview-focus<BR>
+        dayview-unfocus<BR>
+        dayview-set-date<BR>
+        alarm-fire
 
 <LI> Adapted the ruler demo from the Tk demo set for selecting a set of
   alarm times.
@@ -365,7 +372,7 @@
   or without worrying about the location of ical's ".tcl" files.  Use
   the following method to build a standalone executable.
   <pre>
-	make ical-bundle
+        make ical-bundle
   </pre>
 
 <LI> The ical library directory now includes the version number.
@@ -443,9 +450,9 @@
 <LI> Removed vertical-layout options.  It is probably used very rarely
   and is easy to set-up via a hook in <samp>~/.tk/ical/user.tcl</samp>.
   <pre>
-	append-hook dayview-startup {view} {<BR>
-	    pack .$view.al -side bottom<BR>
-	}
+        append-hook dayview-startup {view} {<BR>
+            pack .$view.al -side bottom<BR>
+        }
   </pre>
 
 </UL>

@@ -3,7 +3,7 @@
 # Various manipulations of a canvas
 
 # effects - Foreach item "i" in canvas "c" with both tags "tag1" and "tag2",
-#	    add tag "newtag" to "i".
+#           add tag "newtag" to "i".
 proc canvas_intersect_tags {c tag1 tag2 newtag} {
     set tmp __tmp_tag
 
@@ -24,7 +24,7 @@ proc canvas_linestart {c x i} {
     set t [lindex [$c itemconfigure $x -text] 4]
     set p [expr [$c index $x $i]-1]
     while {($p >= 0) && ([string index $t $p] != "\n")} {
-	incr p -1
+        incr p -1
     }
     incr p
     return $p
@@ -36,7 +36,7 @@ proc canvas_lineend {c x i} {
     set p [$c index $x $i]
     set e [$c index $x end]
     while {($p < $e) && ([string index $t $p] != "\n")} {
-	incr p
+        incr p
     }
     return $p
 }

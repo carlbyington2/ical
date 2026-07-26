@@ -4,32 +4,32 @@
 #
 # Commands
 #
-#	create-hook	<hook>
-#	run-hook	<hook> [<args>...]
-#	append-hook	<hook> {<argspec>} {<body>}
-#	prepend-hook	<hook> {<argspec>} {<body>}
+#       create-hook     <hook>
+#       run-hook        <hook> [<args>...]
+#       append-hook     <hook> {<argspec>} {<body>}
+#       prepend-hook    <hook> {<argspec>} {<body>}
 #
-#	obsolete-hook	<hook> [explanation]
+#       obsolete-hook   <hook> [explanation]
 #
 # Example
 #
-#	create-hook dayview-startup
-#	...
-#	append-hook dayview-startup {view} {
-#	    wm title [$view window] SpecialTitle
-#	}
-#	...
-#	run-hook dayview-startup $view
+#       create-hook dayview-startup
+#       ...
+#       append-hook dayview-startup {view} {
+#           wm title [$view window] SpecialTitle
+#       }
+#       ...
+#       run-hook dayview-startup $view
 #
 # Global Variables
 #
-#	hook		Array of hook lists.  Each hook list is a list
-#			of procedure names.
+#       hook            Array of hook lists.  Each hook list is a list
+#                       of procedure names.
 #
-#	hook_obsolete	Array indexed by hook names.  Each hook
-#			with an entry in this array is considered obsolete.
+#       hook_obsolete   Array indexed by hook names.  Each hook
+#                       with an entry in this array is considered obsolete.
 #
-#	hookid		Integer for generating unique procedure names.
+#       hookid          Integer for generating unique procedure names.
 
 catch {unset hook}
 catch {unset hookid}
@@ -76,9 +76,9 @@ proc run-hook {name args} {
     if ![info exists hook($name)] {error "no hook named $name"}
 
     foreach h $hook($name) {
-	if [catch {eval $h $args} msg] {
-	    error_notify "" "Error running hook \"$name\"\n\n$msg"
-	}
+        if [catch {eval $h $args} msg] {
+            error_notify "" "Error running hook \"$name\"\n\n$msg"
+        }
     }
 }
 
@@ -90,12 +90,12 @@ proc obsolete-hook {name {explain {}}} {
 proc _hook_check {name} {
     global hook_obsolete
     if [info exists hook_obsolete($name)] {
-	set msg "Hook $name is obsolete."
-	if [string compare $hook_obsolete($name) ""] {
-	    set msg "$msg  $hook_obsolete($name)."
-	}
-	error $msg
-	return 0
+        set msg "Hook $name is obsolete."
+        if [string compare $hook_obsolete($name) ""] {
+            set msg "$msg  $hook_obsolete($name)."
+        }
+        error $msg
+        return 0
     }
     return 1
 }

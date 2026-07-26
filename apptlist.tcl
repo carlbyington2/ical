@@ -2,7 +2,7 @@
 ##############################################################################
 # ApptList
 #
-#	Maintains list of appointments for a certain date.
+#       Maintains list of appointments for a certain date.
 #
 # Description
 # ===========
@@ -25,7 +25,7 @@ class ApptList {name view} {
     # Get font for this window
     set slot(font) [option get $name.c itemFont Font]
     if ![string compare $slot(font) ""] {
-	set slot(font) [pref itemFont]
+        set slot(font) [pref itemFont]
     }
 
     # Get font dimensions
@@ -45,14 +45,14 @@ class ApptList {name view} {
     bindtags $name.c [list IcalUser $name.c IcalItemEditBindings IcalItem IcalCommand]
 
     # Handle triggers
-    trigger on add	[list $self change]
-    trigger on delete	[list $self remove]
-    trigger on change	[list $self change]
-    trigger on text	[list $self textchange]
-    trigger on flush	[list $self rescan]
-    trigger on midnight	[list $self rescan]
-    trigger on reconfig	[list $self reconfig]
-    trigger on select	[list $self check_selection]
+    trigger on add      [list $self change]
+    trigger on delete   [list $self remove]
+    trigger on change   [list $self change]
+    trigger on text     [list $self textchange]
+    trigger on flush    [list $self rescan]
+    trigger on midnight [list $self rescan]
+    trigger on reconfig [list $self reconfig]
+    trigger on select   [list $self check_selection]
 }
 
 method ApptList set_date {date} {
@@ -67,21 +67,21 @@ method ApptList destructor {} {
     # not occur in the wrong place (i.e. on already deleted objects).
 
     # Remove triggers as soon as possible
-    trigger remove add		[list $self change]
-    trigger remove delete	[list $self remove]
-    trigger remove change	[list $self change]
-    trigger remove text		[list $self textchange]
-    trigger remove flush	[list $self rescan]
-    trigger remove midnight	[list $self rescan]
-    trigger remove reconfig	[list $self reconfig]
-    trigger remove select	[list $self check_selection]
+    trigger remove add          [list $self change]
+    trigger remove delete       [list $self remove]
+    trigger remove change       [list $self change]
+    trigger remove text         [list $self textchange]
+    trigger remove flush        [list $self rescan]
+    trigger remove midnight     [list $self rescan]
+    trigger remove reconfig     [list $self reconfig]
+    trigger remove select       [list $self check_selection]
 
     # Trim item list
     set list $slot(items)
     set slot(items) {}
 
     foreach item $list {
-	catch {class_kill $slot(window.$item)}
+        catch {class_kill $slot(window.$item)}
     }
 
     destroy $slot(window)
@@ -117,10 +117,10 @@ method ApptList background {} {
     # Set canvas geometry
 
     $c configure\
-	-width $width\
-	-height [expr $lines * $slot(font_height)]\
-	-confine 1\
-	-scrollregion [list 0 0 $width $height]		    
+        -width $width\
+        -height [expr $lines * $slot(font_height)]\
+        -confine 1\
+        -scrollregion [list 0 0 $width $height]             
 
     # Set scrolling increment and initial position
     $c configure -xscrollincrement $slot(font_height)
@@ -130,41 +130,41 @@ method ApptList background {} {
 
     # Create background
     $c create rectangle 0 0 $width $height\
-	-fill ""\
-	-outline ""\
-	-width 0\
-	-tags [list bg rest]
+        -fill ""\
+        -outline ""\
+        -width 0\
+        -tags [list bg rest]
 
     # Draw vertical separator line
     $c create line $slot(label_width) 0 $slot(label_width) $height\
-	-fill [pref apptLineColor]\
-	-tags rest
+        -fill [pref apptLineColor]\
+        -tags rest
 
     set time 0
     for {set i 0} {$i < 48} {incr i} {
-	set ypos [expr $i * $slot(font_height) - 1]
+        set ypos [expr $i * $slot(font_height) - 1]
 
-	if {($i % 2) != 0} {
-	    set stipple gray50
-	    set xpos $slot(label_width)
-	} else {
-	    set stipple ""
-	    set xpos 0
+        if {($i % 2) != 0} {
+            set stipple gray50
+            set xpos $slot(label_width)
+        } else {
+            set stipple ""
+            set xpos 0
 
-	    $c create text\
-		[expr $slot(label_width) - [pref itemPad]]\
-		[expr $ypos + $slot(font_height) - [pref itemPad]]\
-		-text [time2text $time]\
-		-fill [pref apptLineColor]\
-		-font $slot(font)\
-		-anchor se\
-		-tags rest
-	}
+            $c create text\
+                [expr $slot(label_width) - [pref itemPad]]\
+                [expr $ypos + $slot(font_height) - [pref itemPad]]\
+                -text [time2text $time]\
+                -fill [pref apptLineColor]\
+                -font $slot(font)\
+                -anchor se\
+                -tags rest
+        }
 
-	$c create line $xpos $ypos [expr 3*$width] $ypos -stipple $stipple\
-	    -fill [pref apptLineColor]\
-	    -tags rest
-	incr time 30
+        $c create line $xpos $ypos [expr 3*$width] $ypos -stipple $stipple\
+            -fill [pref apptLineColor]\
+            -tags rest
+        incr time 30
     }
 
     $c lower rest
@@ -173,18 +173,18 @@ method ApptList background {} {
 method ApptList new {y} {
     # Check if something already selected on this view
     if ![catch {set i [ical_find_selection]}] {
-	ical_unselect
-	return
+        ical_unselect
+        return
     }
 
     if [cal readonly] {
-	error_notify [winfo toplevel $slot(window)] "Permission denied"
-	return
+        error_notify [winfo toplevel $slot(window)] "Permission denied"
+        return
     }
 
     set y [$slot(window).c canvasy $y]
     set id [appointment]
-    $id starttime [expr "([$self time $y]/30)*30"]
+    $id starttime $slot(date) [expr "([$self time $y]/30)*30"]
     $id length 30
     $id date $slot(date)
     $id earlywarning [cal option DefaultEarlyWarning]
@@ -194,21 +194,21 @@ method ApptList new {y} {
     ical_with_view $slot(view) {run-hook item-create $id}
 
     if [info exists slot(window.$id)] {
-	ical_select $id $slot(date)
+        ical_select $id $slot(date)
     }
 }
 
 method ApptList change {item} {
     if {[$item is appt] && [$item contains $slot(date)]} {
-	if [info exists slot(window.$item)] {
-	    $slot(window.$item) read
-	} else {
-	    # Add item
-	    lappend slot(items) $item
-	    $self make_window $item
-	}
-	$self layout
-	return
+        if [info exists slot(window.$item)] {
+            $slot(window.$item) read
+        } else {
+            # Add item
+            lappend slot(items) $item
+            $self make_window $item
+        }
+        $self layout
+        return
     }
 
     $self remove $item
@@ -216,16 +216,16 @@ method ApptList change {item} {
 
 method ApptList textchange {item} {
     if [info exists slot(window.$item)] {
-	$slot(window.$item) read
+        $slot(window.$item) read
     }
 }
 
 method ApptList remove {item} {
     set list $slot(items)
     if [lremove list $item] {
-	set slot(items) $list
-	$self kill $item
-	$self layout
+        set slot(items) $list
+        $self kill $item
+        $self layout
     }
 }
 
@@ -243,15 +243,15 @@ method ApptList rescan {args} {
     set slot(items) ""
 
     foreach appt $list {
-	$self kill $appt
+        $self kill $appt
     }
 
     set list {}
     cal query $slot(date) $slot(date) item d {
-	if [$item is appt] {
-	    lappend list $item
-	    $self make_window $item
-	}
+        if [$item is appt] {
+            lappend list $item
+            $self make_window $item
+        }
     }
     set slot(items) $list
     $self layout
@@ -261,10 +261,10 @@ method ApptList scroll_default {} {
     set min [expr 24*60]
     set max 0
     foreach a $slot(items) {
-	set st [$a starttime]
-	set fi [expr [$a starttime]+[$a length]-1]
-	if {$st < $min} {set min $st}
-	if {$fi > $max} {set max $fi}
+        set st [$a starttime $slot(date)]
+        set fi [expr [$a starttime $slot(date)]+[$a length]-1]
+        if {$st < $min} {set min $st}
+        if {$fi > $max} {set max $fi}
     }
 
     set minLine [expr $min/30]
@@ -276,10 +276,10 @@ method ApptList scroll_default {} {
     # Try to make all appointments visible
     set start [expr $slot(start) * 2]
     if {($start + $windowSize - 1) < $maxLine} {
-	set start [expr $maxLine-($slot(finish) - $slot(start))*2+1]
+        set start [expr $maxLine-($slot(finish) - $slot(start))*2+1]
     }
     if {$start > $minLine} {
-	set start $minLine
+        set start $minLine
     }
 
     $slot(window).c yview moveto [expr double($start)/48]
@@ -297,14 +297,14 @@ method ApptList check_selection {args} {
     # Get newly selected item if it belongs to this window
     set newsel {}
     if ![string compare [ical_focus] [winfo toplevel $slot(window)]] {
-	# This window is active, try to get the selected item
-	catch {set newsel [ical_find_selection]}
+        # This window is active, try to get the selected item
+        catch {set newsel [ical_find_selection]}
     }
 
     if [string compare $newsel $slot(sel)] {
-	# Selection has changed
-	set slot(sel) $newsel
-	$self layout
+        # Selection has changed
+        set slot(sel) $newsel
+        $self layout
     }
 }
 
@@ -313,11 +313,11 @@ method ApptList layout {} {
 
     # Move current appt to end of list so it appears at top
     if {$slot(sel) != ""} {
-	set list $slot(items)
-	if [lremove list $slot(sel)] {
-	    lappend list $slot(sel)
-	}
-	set slot(items) $list
+        set list $slot(items)
+        if [lremove list $slot(sel)] {
+            lappend list $slot(sel)
+        }
+        set slot(items) $list
     }
 
     # Compute offset for each child (15 minute units?)
@@ -325,33 +325,33 @@ method ApptList layout {} {
     # offset(i) for slot i keeps track of the current horizontal
     # adjustment for slot i
     for {set i 0} {$i < 24*4} {incr i} {
-	set offset($i) 0
+        set offset($i) 0
     }
 
     foreach a $slot(items) {
-	set start [expr [$a starttime]/15]
-	set finish [expr ([$a starttime]+[$a length]-1)/15]
-	if {$finish >= 24*4} {
-	    set finish [expr 24*4-1]
-	}
+        set start [expr [$a starttime $slot(date)]/15]
+        set finish [expr ([$a starttime $slot(date)]+[$a length]-1)/15]
+        if {$finish >= 24*4} {
+            set finish [expr 24*4-1]
+        }
 
-	set adjust 0
-	for {set i $start} {$i <= $finish} {incr i} {
-	    if {$adjust < $offset($i)} {
-		set adjust $offset($i)
-	    }
-	}
-	for {set i $start} {$i <= $finish} {incr i} {
-	    set offset($i) [expr $adjust+1]
-	}
+        set adjust 0
+        for {set i $start} {$i <= $finish} {incr i} {
+            if {$adjust < $offset($i)} {
+                set adjust $offset($i)
+            }
+        }
+        for {set i $start} {$i <= $finish} {incr i} {
+            set offset($i) [expr $adjust+1]
+        }
 
-	# Place the child
-	set slot(adjust.$a) $adjust
-	$self place $a
+        # Place the child
+        set slot(adjust.$a) $adjust
+        $self place $a
 
-	if {$adjust > 0} {
-	    $slot(window.$a) raise
-	}
+        if {$adjust > 0} {
+            $slot(window.$a) raise
+        }
     }
 }
 
@@ -360,12 +360,12 @@ method ApptList sortitems {} {
     # Construct list of pairs <time,item>
     set list ""
     foreach item $slot(items) {
-	lappend list [list [$item starttime] $item]
+        lappend list [list [$item starttime $slot(date)] $item]
     }
 
     set items ""
     foreach pair [lsort $list] {
-	lappend items [lindex $pair 1]
+        lappend items [lindex $pair 1]
     }
     set slot(items) $items
 }
@@ -374,16 +374,16 @@ method ApptList sortitems {} {
 method ApptList make_window {item} {
     set slot(adjust.$item) 0
     set slot(window.$item) [ApptItemWindow\
-				$slot(window).c\
-				$slot(font)\
-				$item $slot(date)\
-				[list $self move]\
-				[list $self resize]]
+                                $slot(window).c\
+                                $slot(font)\
+                                $item $slot(date)\
+                                [list $self move]\
+                                [list $self resize]]
 }
 
 # effects - Place window for item
 method ApptList place {a} {
-    $self set_geometry $a [$a starttime] [$a length]
+    $self set_geometry $a [$a starttime $slot(date)] [$a length]
 }
 
 # effects - Set item window geometry from "start/length"
@@ -408,9 +408,9 @@ method ApptList canvas_resize {w h} {
 
 method ApptList move {item y} {
     if {$y == "done"} {
-	$item starttime $slot(itemstart)
-	unset slot(itemstart)
-	return
+        $item starttime $slot(date) $slot(itemstart)
+        unset slot(itemstart)
+        return
     }
 
     set st [expr "([$self time $y]/15)*15"]
@@ -423,16 +423,16 @@ method ApptList move {item y} {
 
 method ApptList resize {item top bot} {
     if {$top == "done"} {
-	# slot(itemstart) or slot(itemlength) may not have been set yet.
-	if {[info exists slot(itemstart)] && [info exists slot(itemlength)]} {
-	    $item starttime $slot(itemstart)
-	    $item length $slot(itemlength)
-	}
+        # slot(itemstart) or slot(itemlength) may not have been set yet.
+        if {[info exists slot(itemstart)] && [info exists slot(itemlength)]} {
+            $item starttime $slot(date) $slot(itemstart)
+            $item length $slot(itemlength)
+        }
 
-	catch {unset slot(itemstart)}
-	catch {unset slot(itemlength)}
+        catch {unset slot(itemstart)}
+        catch {unset slot(itemlength)}
 
-	return
+        return
     }
 
     set st [expr "([$self time $top]/15)*15"]
@@ -443,8 +443,8 @@ method ApptList resize {item top bot} {
 
     set len [expr $fi - $st]
     if {$len >= 30} {
-	set slot(itemstart) $st
-	set slot(itemlength) $len
-	$self set_geometry $item $st $len
+        set slot(itemstart) $st
+        set slot(itemlength) $len
+        $self set_geometry $item $st $len
     }
 }

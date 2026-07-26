@@ -18,32 +18,32 @@ class HandleTable {
     ~HandleTable();
 
     /*
-     * requires	*this does not contain mapping for handle or object.
-     * modifies	*this
-     * effects	Adds binding (handle <-> object) to *this.
+     * requires *this does not contain mapping for handle or object.
+     * modifies *this
+     * effects  Adds binding (handle <-> object) to *this.
      */
     void bind(char* handle, void* object);
 
     /*
-     * effects	If *this contains binding (handle <-> x), returns x,
-     *		else returns 0.
+     * effects  If *this contains binding (handle <-> x), returns x,
+     *          else returns 0.
      */
     void* object(char* handle);
 
     /*
-     * effects	If *this contains binding (x <-> object), returns x,
-     *		else returns 0.
+     * effects  If *this contains binding (x <-> object), returns x,
+     *          else returns 0.
      */
     char* handle(void* object);
 
     /*
-     * modifies	*this
-     * effects	If *this contains (handle <-> object), removes it.
+     * modifies *this
+     * effects  If *this contains (handle <-> object), removes it.
      */
     void remove(char* handle, void* object);
   private:
-    Tcl_HashTable handleMap;	/* Map from handle to object */
-    Tcl_HashTable objectMap;	/* Map from object to handle */
+    Tcl_HashTable handleMap;    /* Map from handle to object */
+    Tcl_HashTable objectMap;    /* Map from object to handle */
 };
 
 #endif /* _HANDLE_H */

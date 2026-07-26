@@ -11,20 +11,20 @@ extern "C" {
  *
  * Tcl invocation takes form --
  *
- *	<command> <subcommand> <args...>
+ *      <command> <subcommand> <args...>
  *
  * The dispatch is based on <subcommand>.
  */
 
 struct Dispatch_Entry {
-    char const* command;	/* Sub-command to dispatch on */
+    char const* command;        /* Sub-command to dispatch on */
 
     /*
      * Argument count limits -- these counts apply after <command>
      * and <subcommand> are removed from argc/argv.
      */
-    int  min_arg_count;		/* Minimum argument count */
-    int  max_arg_count;		/* Maximum argument count. -1 means no max */
+    int  min_arg_count;         /* Minimum argument count */
+    int  max_arg_count;         /* Maximum argument count. -1 means no max */
 
     /*
      * The handler procedure.  <command> and <subcommand> are stripped

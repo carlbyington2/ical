@@ -64,10 +64,10 @@ class SmallIntSet {
     SmallIntSet(unsigned long rep);
 };
 
-inline SmallIntSet::SmallIntSet()			{ bits = 0; }
-inline SmallIntSet::SmallIntSet(const SmallIntSet& s)	{ bits = s.bits; }
-inline SmallIntSet::SmallIntSet(unsigned long rep)	{ bits = rep; }
-inline SmallIntSet::~SmallIntSet()			{ }
+inline SmallIntSet::SmallIntSet()                       { bits = 0; }
+inline SmallIntSet::SmallIntSet(const SmallIntSet& s)   { bits = s.bits; }
+inline SmallIntSet::SmallIntSet(unsigned long rep)      { bits = rep; }
+inline SmallIntSet::~SmallIntSet()                      { }
 inline SmallIntSet& SmallIntSet::operator=(const SmallIntSet& s) {
     bits = s.bits;
     return *this;
@@ -79,7 +79,7 @@ inline void SmallIntSet::Clear() {
 
 inline void SmallIntSet::Insert(unsigned int x) {
     if (x <= SISetLargestMember)
-	bits |= (1 << x);
+        bits |= (1 << x);
 }
 
 inline void SmallIntSet::Remove(unsigned int x) {

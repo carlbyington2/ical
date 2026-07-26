@@ -13,7 +13,7 @@
 # major hash marks on every multiple of 5, and minor hash marks on
 # every multiple of 1.  Minor hash marks are separated by 2mm.
 #
-#	ruler .c {Select positions} 0 60 5 1 2m
+#       ruler .c {Select positions} 0 60 5 1 2m
 
 proc ruler {c label min max major minor unit} {
     upvar #0 ruler_$c v
@@ -51,7 +51,7 @@ proc ruler {c label min max major minor unit} {
     set textoptions [list -fill $nfg]
     set o [option get $c itemFont Font]
     if [string compare $o ""] {
-	lappend textoptions -font $o
+        lappend textoptions -font $o
     }
 
     # Create label
@@ -65,17 +65,17 @@ proc ruler {c label min max major minor unit} {
     set x $v(left)
     set off 0
     for {set i $min} {$i <= $max} {incr i $minor} {
-	if {($off % $major) == 0} {
-	    # Major hash mark
-	    $c create line $x 2c $x 1.5c -fill $nfg
-	    eval $c create text $x 1.4c -text $i -anchor s $textoptions
-	} else {
-	    # Minor hash mark
-	    $c create line $x 2c $x 1.75c -fill $nfg
-	}
+        if {($off % $major) == 0} {
+            # Major hash mark
+            $c create line $x 2c $x 1.5c -fill $nfg
+            eval $c create text $x 1.4c -text $i -anchor s $textoptions
+        } else {
+            # Minor hash mark
+            $c create line $x 2c $x 1.75c -fill $nfg
+        }
 
-	incr off $minor
-	incr x $v(unit)
+        incr off $minor
+        incr x $v(unit)
     }
 
     set wl [expr $v(right) + [winfo pixels $c .2c]]
@@ -83,14 +83,14 @@ proc ruler {c label min max major minor unit} {
     set wr [expr $v(right) + [winfo pixels $c 1c]]
 
     $c addtag well withtag [$c create rect $wl 2c $wr 1.5c\
-			    -outline $nfg -fill [lindex [$c config -bg] 4]]
+                            -outline $nfg -fill [lindex [$c config -bg] 4]]
     $c addtag well withtag [ruler_tab $c $wc [winfo pixels $c 1.65c]]
 
     foreach d {1 2 3} {
-	$c bind well <$d>		[list ruler_newtab $c %x %y]
-	$c bind tab <$d>		[list ruler_select $c %x %y]
-	bind $c <B$d-Motion>		[list ruler_move $c %x %y]
-	bind $c <ButtonRelease-$d>	[list ruler_release $c]
+        $c bind well <$d>               [list ruler_newtab $c %x %y]
+        $c bind tab <$d>                [list ruler_select $c %x %y]
+        bind $c <B$d-Motion>            [list ruler_move $c %x %y]
+        bind $c <ButtonRelease-$d>      [list ruler_release $c]
     }
 }
 
@@ -107,8 +107,8 @@ proc ruler_settabs {c pos} {
 
     set y [expr $v(top)+2]
     foreach p $pos {
-	set x [ruler_canvas_coord $c $p]
-	$c addtag tab withtag [ruler_tab $c $x $y]
+        set x [ruler_canvas_coord $c $p]
+        $c addtag tab withtag [ruler_tab $c $x $y]
     }
 }
 
@@ -118,10 +118,10 @@ proc ruler_tabs {c} {
 
     set result {}
     foreach i [$c find withtag tab] {
-	set coords [$c coords $i]
-	if {[llength $coords] < 6} continue
-	set x [lindex $coords 0]
-	lappend result [ruler_user_coord $c $x]
+        set coords [$c coords $i]
+        if {[llength $coords] < 6} continue
+        set x [lindex $coords 0]
+        lappend result [ruler_user_coord $c $x]
     }
     return [lsort -integer $result]
 }
@@ -142,7 +142,7 @@ proc ruler_canvas_coord {c x} {
 proc ruler_tab {c x y} {
     upvar #0 ruler_$c v
     return [eval $c create polygon $x $y [expr $x+$v(size)] [expr $y+$v(size)]\
-	    [expr $x-$v(size)] [expr $y+$v(size)] $v(normalStyle)]
+            [expr $x-$v(size)] [expr $y+$v(size)] $v(normalStyle)]
 }
 
 proc ruler_newtab {c x y} {
@@ -163,11 +163,11 @@ proc ruler_move {c x y} {
 
     # Is tab in active region?
     if {($cy >= $v(top)) && ($cy <= $v(bottom))} {
-	set cy [expr $v(top)+2]
-	eval "$c itemconf active $v(activeStyle)"
+        set cy [expr $v(top)+2]
+        eval "$c itemconf active $v(activeStyle)"
     } else {
-	set cy [expr $cy-$v(size)-2]
-	eval "$c itemconf active $v(deleteStyle)"
+        set cy [expr $cy-$v(size)-2]
+        eval "$c itemconf active $v(deleteStyle)"
     }
 
     # Translate X coordinate to grid
@@ -192,17 +192,17 @@ proc ruler_select {c x y} {
 proc ruler_release c {
     upvar #0 ruler_$c v
     if {[$c find withtag active] == {}} {
-	return
+        return
     }
 
     set coords [$c coords active]
     if {[llength $coords] < 6} return
     set v_y [lindex $coords 1]
 
-    if {$v_y != [expr $v(top)+2]} {
-	$c delete active
+    if {($v_y < [expr $v(top)+1]) || ($v_y > [expr $v(top)+3])} {
+        $c delete active
     } else {
-	eval "$c itemconf active $v(normalStyle)"
-	$c dtag active
+        eval "$c itemconf active $v(normalStyle)"
+        $c dtag active
     }
 }

@@ -26,13 +26,13 @@ struct Occurrence {
 
     Occurrence() { }
     Occurrence(Occurrence const& o) {
-	item = o.item;
-	date = o.date;
+        item = o.item;
+        date = o.date;
     }
     Occurrence& operator = (Occurrence const& o) {
-	item = o.item;
-	date = o.date;
-	return *this;
+        item = o.item;
+        date = o.date;
+        return *this;
     }
 };
 
@@ -40,13 +40,13 @@ declareArray(ItemList,Item_Tcl*)
 declareArray(Occurrences,Occurrence)
 
 extern void collect_all(Calendar_Tcl*, ItemList& list);
-// modifies	list
-// effects	Collect together all of the items contained in
-//		all of the calendar files and append them to "list".
+// modifies     list
+// effects      Collect together all of the items contained in
+//              all of the calendar files and append them to "list".
 
 extern void collect_calendar(Calendar_Tcl*, Calendar* cal, ItemList& list);
-// modifies	list
-// effects	Append all of the items contained in "cal" to "list".
+// modifies     list
+// effects      Append all of the items contained in "cal" to "list".
 
 /*
  * Fill list with any occurrences in specified range of the items
@@ -56,11 +56,11 @@ extern void collect_calendar(Calendar_Tcl*, Calendar* cal, ItemList& list);
  * period falls in the specified range.
  */
 extern void collect_occurrences(Calendar_Tcl* tcl,
-				ItemList const& items,
-				Occurrences& list,
-				Date start,
-				Date finish,
-				int  earlywarning);
+                                ItemList const& items,
+                                Occurrences& list,
+                                Date start,
+                                Date finish,
+                                int  earlywarning);
 
 /*
  * Sort occurrences.

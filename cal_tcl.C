@@ -28,8 +28,8 @@ Calendar_Tcl::Calendar_Tcl(Tcl_Interp* tcl, char const* h, char const* f)
     clear_error();
 
     if (! main->Read()) {
-	add_error(main->GetName(), CalFile::LastError());
-	return;
+        add_error(main->GetName(), CalFile::LastError());
+        return;
     }
     add_item_handles(main);
 
@@ -38,9 +38,9 @@ Calendar_Tcl::Calendar_Tcl(Tcl_Interp* tcl, char const* h, char const* f)
 
 Calendar_Tcl::~Calendar_Tcl() {
     for (int i = 0; i < includes->size(); i++) {
-	CalFile* file = includes->slot(i);
-	remove_item_handles(file->GetCalendar());
-	delete file;
+        CalFile* file = includes->slot(i);
+        remove_item_handles(file->GetCalendar());
+        delete file;
     }
     remove_item_handles(main->GetCalendar());
 
@@ -52,50 +52,50 @@ Calendar_Tcl::~Calendar_Tcl() {
 void Calendar_Tcl::add_item_handles(CalFile* cal) {
     int count = cal->GetCalendar()->Size();
     for (int i = 0; i < count; i++) {
-	new Item_Tcl(tcl(), cal->GetCalendar()->Get(i), cal);
+        new Item_Tcl(tcl(), cal->GetCalendar()->Get(i), cal);
     }
 }
 
 void Calendar_Tcl::remove_item_handles(Calendar* cal) {
     int count = cal->Size();
     for (int i = 0; i < count; i++) {
-	Item_Tcl* item = Item_Tcl::find(cal->Get(i));
-	if (item != 0)
-	    delete item;
+        Item_Tcl* item = Item_Tcl::find(cal->Get(i));
+        if (item != 0)
+            delete item;
     }
 }
 
 CalFile* Calendar_Tcl::name2file(char const* name) {
     if (name == 0) {
-	return main;
+        return main;
     }
 
     if (strcmp(name, main->GetName()) == 0) {
-	return main;
+        return main;
     }
 
     for (int i = 0; i < includes->size(); i++) {
-	/* Extra check for name2file use in fix_includes */
-	if (includes->slot(i) == 0) {
-	    continue;
-	}
+        /* Extra check for name2file use in fix_includes */
+        if (includes->slot(i) == 0) {
+            continue;
+        }
 
-	if (strcmp(includes->slot(i)->GetName(), name) == 0) {
-	    return includes->slot(i);
-	}
+        if (strcmp(includes->slot(i)->GetName(), name) == 0) {
+            return includes->slot(i);
+        }
     }
     return 0;
 }
 
 CalFile* Calendar_Tcl::cal2file(Calendar* c) {
     if (c == main->GetCalendar()) {
-	return main;
+        return main;
     }
 
     for (int i = 0; i < includes->size(); i++) {
-	if (includes->slot(i)->GetCalendar() == c) {
-	    return includes->slot(i);
-	}
+        if (includes->slot(i)->GetCalendar() == c) {
+            return includes->slot(i);
+        }
     }
     return 0;
 }
@@ -104,14 +104,14 @@ void Calendar_Tcl::purge() {
     // Collect all active uids
     UidSet* elements = new UidSet;
     for (int i = 0; i <= includes->size(); i++) {
-	// Iterate once more than necessary to scan the main calendar as well
-	Calendar* calendar = ((i >= includes->size())
-			      ? main
-			      : includes->slot(i))->GetCalendar();
+        // Iterate once more than necessary to scan the main calendar as well
+        Calendar* calendar = ((i >= includes->size())
+                              ? main
+                              : includes->slot(i))->GetCalendar();
 
-	for (int j = 0; j < calendar->Size(); j++) {
-	    elements->insert(calendar->Get(j)->GetUid());
-	}
+        for (int j = 0; j < calendar->Size(); j++) {
+            elements->insert(calendar->Get(j)->GetUid());
+        }
     }
 
     // Remove hide entries for all non-active items
@@ -126,43 +126,43 @@ void Calendar_Tcl::fix_includes() {
     FileList* new_includes = new FileList;
 
     for (i = 0; i < main->GetCalendar()->NumIncludes(); i++) {
-	char const* name = main->GetCalendar()->GetInclude(i);
+        char const* name = main->GetCalendar()->GetInclude(i);
 
-	/* Try to reuse file from old include list */
-	CalFile* file = name2file(name);
-	if (file == 0) {
-	    /* Create new file */
-	    file = new CalFile(0, name);
-	    if (! file->Read())
-		add_error(file->GetName(), CalFile::LastError());
-	    add_item_handles(file);
-	}
-	else {
-	    /* Reuse old calendar - need to mark old include list */
-	    for (int j = 0; j < includes->size(); j++) {
-		if (includes->slot(j) == file)
-		    includes->slot(j) = 0;
-	    }
-	}
+        /* Try to reuse file from old include list */
+        CalFile* file = name2file(name);
+        if (file == 0) {
+            /* Create new file */
+            file = new CalFile(0, name);
+            if (! file->Read())
+                add_error(file->GetName(), CalFile::LastError());
+            add_item_handles(file);
+        }
+        else {
+            /* Reuse old calendar - need to mark old include list */
+            for (int j = 0; j < includes->size(); j++) {
+                if (includes->slot(j) == file)
+                    includes->slot(j) = 0;
+            }
+        }
 
-	new_includes->append(file);
+        new_includes->append(file);
     }
 
     /* Remove old includes that were not reused */
     for (i = 0; i < includes->size(); i++) {
-	CalFile* file = includes->slot(i);
+        CalFile* file = includes->slot(i);
 
-	// Still included in main calendar?
-	if (file == 0) continue;
+        // Still included in main calendar?
+        if (file == 0) continue;
 
-	// Get rid of it
-	if (file->IsModified()) {
-	    if (! file->Write())
-		add_error(file->GetName(), CalFile::LastError());
-	}
+        // Get rid of it
+        if (file->IsModified()) {
+            if (! file->Write())
+                add_error(file->GetName(), CalFile::LastError());
+        }
 
-	remove_item_handles(file->GetCalendar());
-	delete file;
+        remove_item_handles(file->GetCalendar());
+        delete file;
     }
 
     delete includes;
@@ -191,116 +191,116 @@ void Calendar_Tcl::add_error(char const* t1, char const* t2) {
 /*
  * Forward declaration of handler procedures.
  */
-static int cal_delete	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_main	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_include	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_exclude	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_forincs	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_add	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_remove	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_hide	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_ronly	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_dirty	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_stale	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_save	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_reread	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_query	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_listing	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_loop	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_incal	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_option	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_doption	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_loopf	(ClientData, Tcl_Interp*, int, const char*[]);
-static int cal_loopb	(ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_delete   (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_main     (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_include  (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_exclude  (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_forincs  (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_add      (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_remove   (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_hide     (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_ronly    (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_dirty    (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_stale    (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_save     (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_reread   (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_query    (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_listing  (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_loop     (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_incal    (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_option   (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_doption  (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_loopf    (ClientData, Tcl_Interp*, int, const char*[]);
+static int cal_loopb    (ClientData, Tcl_Interp*, int, const char*[]);
 
 static Dispatch_Entry calendar_dispatch[] = {
-    { "delete",		0, 0, cal_delete	},
-    { "main",		0, 0, cal_main		},
-    { "include",	1, 1, cal_include	},
-    { "exclude",	1, 1, cal_exclude	},
-    { "forincludes",	2, 2, cal_forincs	},
-    { "add",		1, 2, cal_add		},
-    { "remove",		1, 1, cal_remove	},
-    { "hide",		1, 1, cal_hide		},
-    { "readonly",	0, 1, cal_ronly		},
-    { "dirty",		0, 1, cal_dirty		},
-    { "stale",		0, 1, cal_stale		},
-    { "save",		0, 1, cal_save		},
-    { "reread",		0, 1, cal_reread	},
-    { "query",		5, 7, cal_query		},
-    { "listing",	5, 7, cal_listing	},
-    { "loop",		2, 4, cal_loop		},
-    { "incalendar",	3, 3, cal_incal		},
-    { "option",		1, 4, cal_option	},
-    { "delete_option",	1, 3, cal_doption	},
-    { "loop_forward",	5, 7, cal_loopf		},
-    { "loop_backward",	5, 7, cal_loopb		},
-    { 0,		0, 0, 0			}
+    { "delete",         0, 0, cal_delete        },
+    { "main",           0, 0, cal_main          },
+    { "include",        1, 1, cal_include       },
+    { "exclude",        1, 1, cal_exclude       },
+    { "forincludes",    2, 2, cal_forincs       },
+    { "add",            1, 2, cal_add           },
+    { "remove",         1, 1, cal_remove        },
+    { "hide",           1, 1, cal_hide          },
+    { "readonly",       0, 1, cal_ronly         },
+    { "dirty",          0, 1, cal_dirty         },
+    { "stale",          0, 1, cal_stale         },
+    { "save",           0, 1, cal_save          },
+    { "reread",         0, 1, cal_reread        },
+    { "query",          5, 7, cal_query         },
+    { "listing",        5, 7, cal_listing       },
+    { "loop",           2, 4, cal_loop          },
+    { "incalendar",     3, 3, cal_incal         },
+    { "option",         1, 4, cal_option        },
+    { "delete_option",  1, 3, cal_doption       },
+    { "loop_forward",   5, 7, cal_loopf         },
+    { "loop_backward",  5, 7, cal_loopb         },
+    { 0,                0, 0, 0                 }
 };
 
 // Helper routine for parsing set of items that will be covered by
 // query operations.
 
 static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,
-		       int& argc, const char**& argv)
+                       int& argc, const char**& argv)
 {
-    // modifies	items, argc, argv
-    // effects	If "argc/argv" starts with "-all", then strips off
-    //		that option and appends all items to "items".
-    //		If "argc/argv" starts with "-calendar <calname>", then
-    //		strips off that option and appends all items from named
-    //		calendar to "items".
-    //		If "argc/argv" starts with "-items <list of items>", then
-    //		strips off that option and appends all listed items
-    //		to "items".
-    //		Otherwise, does not modify "argc/argv" and appends all
-    //		items to "items".
+    // modifies items, argc, argv
+    // effects  If "argc/argv" starts with "-all", then strips off
+    //          that option and appends all items to "items".
+    //          If "argc/argv" starts with "-calendar <calname>", then
+    //          strips off that option and appends all items from named
+    //          calendar to "items".
+    //          If "argc/argv" starts with "-items <list of items>", then
+    //          strips off that option and appends all listed items
+    //          to "items".
+    //          Otherwise, does not modify "argc/argv" and appends all
+    //          items to "items".
     //
-    //		Normally returns TCL_OK, but if there is an error parsing
-    //		the calendar name or the list of items, then sets the
-    //		TCL return value to an error message and returns TCL_ERROR.
+    //          Normally returns TCL_OK, but if there is an error parsing
+    //          the calendar name or the list of items, then sets the
+    //          TCL return value to an error message and returns TCL_ERROR.
 
     if ((argc >= 1) && (strcmp(argv[0], "-all") == 0)) {
-	collect_all(cal, items);
-	argc--;
-	argv++;
-	return TCL_OK;
+        collect_all(cal, items);
+        argc--;
+        argv++;
+        return TCL_OK;
     }
 
     if ((argc >= 2) && (strcmp(argv[0], "-calendar") == 0)) {
-	CalFile* file = cal->name2file(argv[1]);
-	if (file == 0) {
-	    TCL_Error(tcl, "no such calendar");
-	}
+        CalFile* file = cal->name2file(argv[1]);
+        if (file == 0) {
+            TCL_Error(tcl, "no such calendar");
+        }
 
-	collect_calendar(cal, file->GetCalendar(), items);
-	argc -= 2;
-	argv += 2;
-	return TCL_OK;
+        collect_calendar(cal, file->GetCalendar(), items);
+        argc -= 2;
+        argv += 2;
+        return TCL_OK;
     }
 
     if ((argc >= 2) && (strcmp(argv[0], "-items") == 0)) {
-	int count;
-	const char** list;
-	if (Tcl_SplitList(tcl, argv[1], &count, &list) != TCL_OK) {
-	    TCL_Error(tcl, "invalid item list");
-	}
+        int count;
+        const char** list;
+        if (Tcl_SplitList(tcl, argv[1], &count, &list) != TCL_OK) {
+            TCL_Error(tcl, "invalid item list");
+        }
 
-	// Stash initial array size so we can abort on error
-	int isize = items.size();
-	for (int i = 0; i < count; i++) {
-	    Object* obj = Object::find(tcl, list[i]);
-	    if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
-		Tcl_Free((char*) list);
-		items.remove(items.size() - isize);
-		TCL_Error(tcl, "no such item");
-	    }
-	    items.append((Item_Tcl*) obj);
-	}
+        // Stash initial array size so we can abort on error
+        int isize = items.size();
+        for (int i = 0; i < count; i++) {
+            Object* obj = Object::find(tcl, list[i]);
+            if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
+                Tcl_Free((char*) list);
+                items.remove(items.size() - isize);
+                TCL_Error(tcl, "no such item");
+            }
+            items.append((Item_Tcl*) obj);
+        }
 
-	argc -= 2;
-	argv += 2;
-	return TCL_OK;
+        argc -= 2;
+        argv += 2;
+        return TCL_OK;
     }
 
     // Default behavior is to return all items
@@ -328,13 +328,13 @@ static int cal_include(ClientData c, Tcl_Interp* tcl, int argc, const char* argv
     Calendar_Tcl* cal = (Calendar_Tcl*) c;
 
     if (cal->main->GetCalendar()->ReadOnly()) {
-	TCL_Error(tcl, "permission denied");
+        TCL_Error(tcl, "permission denied");
     }
 
     CalFile* newFile = new CalFile(0, argv[0]);
     if (! newFile->Read()) {
-	delete newFile;
-	TCL_Error(tcl, (char*) CalFile::LastError());
+        delete newFile;
+        TCL_Error(tcl, (char*) CalFile::LastError());
     }
     cal->add_item_handles(newFile);
 
@@ -351,30 +351,30 @@ static int cal_exclude(ClientData c, Tcl_Interp* tcl, int argc, const char* argv
     Calendar_Tcl* cal = (Calendar_Tcl*) c;
 
     if (cal->main->GetCalendar()->ReadOnly()) {
-	TCL_Error(tcl, "permission denied");
+        TCL_Error(tcl, "permission denied");
     }
 
     for (int i = 0; i < cal->includes->size(); i++) {
-	CalFile* f = cal->includes->slot(i);
-	if (strcmp(f->GetName(), argv[0]) == 0) {
-	    if (f->IsModified()) {
-		TCL_Error(tcl, "cannot exclude dirty calendar");
-	    }
+        CalFile* f = cal->includes->slot(i);
+        if (strcmp(f->GetName(), argv[0]) == 0) {
+            if (f->IsModified()) {
+                TCL_Error(tcl, "cannot exclude dirty calendar");
+            }
 
-	    /* Remove it */
-	    cal->remove_item_handles(f->GetCalendar());
-	    delete f;
+            /* Remove it */
+            cal->remove_item_handles(f->GetCalendar());
+            delete f;
 
-	    cal->main->GetCalendar()->Exclude(argv[0]);
-	    for (int j = i+1; j < cal->includes->size(); j++)
-		cal->includes->slot(j-1) = cal->includes->slot(j);
-	    cal->includes->remove();
-	    cal->main->Modified();
+            cal->main->GetCalendar()->Exclude(argv[0]);
+            for (int j = i+1; j < cal->includes->size(); j++)
+                cal->includes->slot(j-1) = cal->includes->slot(j);
+            cal->includes->remove();
+            cal->main->Modified();
 
-	    trigger(tcl, "flush", 0);
+            trigger(tcl, "flush", 0);
 
-	    TCL_Return(tcl, "");
-	}
+            TCL_Return(tcl, "");
+        }
     }
 
     TCL_Error(tcl, "no such calendar");
@@ -386,15 +386,15 @@ static int cal_forincs(ClientData c, Tcl_Interp* tcl, int argc, const char* argv
     const char* var = argv[0];
     const char* body = argv[1];
     for (int i = 0; i < cal->includes->size(); i++) {
-	if (Tcl_SetVar(tcl, var, (char*) (cal->includes->slot(i)->GetName()),
-		       0) == NULL) {
-	    TCL_Error(tcl, "could not set loop variable");
-	}
+        if (Tcl_SetVar(tcl, var, (char*) (cal->includes->slot(i)->GetName()),
+                       0) == NULL) {
+            TCL_Error(tcl, "could not set loop variable");
+        }
 
-	int result = Tcl_Eval(tcl, body);
-	if (result == TCL_BREAK) break;
-	if ((result == TCL_OK) || (result == TCL_CONTINUE)) continue;
-	return result;
+        int result = Tcl_Eval(tcl, body);
+        if (result == TCL_BREAK) break;
+        if ((result == TCL_OK) || (result == TCL_CONTINUE)) continue;
+        return result;
     }
 
     TCL_Return(tcl, "");
@@ -406,23 +406,23 @@ static int cal_add(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){
     // Find item
     Object* obj = Object::find(tcl, argv[0]);
     if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
-	TCL_Error(tcl, "no such item");
+        TCL_Error(tcl, "no such item");
     }
     Item_Tcl* item = (Item_Tcl*) obj;
 
     CalFile* file = cal->name2file(argv[1]);
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     // Permission checks on old and new calendars
     CalFile* old = item->calendar();
     if ((old != 0) && old->GetCalendar()->ReadOnly()) {
-	TCL_Error(tcl, "permission denied");
+        TCL_Error(tcl, "permission denied");
     }
 
     if (file->GetCalendar()->ReadOnly()) {
-	TCL_Error(tcl, "permission denied");
+        TCL_Error(tcl, "permission denied");
     }
 
     // Mark item as moved
@@ -430,8 +430,8 @@ static int cal_add(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){
 
     // Remove from old calendar
     if (old != 0) {
-	old->GetCalendar()->Remove(item->value());
-	old->Modified();
+        old->GetCalendar()->Remove(item->value());
+        old->Modified();
     }
 
     // Put in new calendar
@@ -449,7 +449,7 @@ static int cal_remove(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[
     // Find item
     Object* obj = Object::find(tcl, argv[0]);
     if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
-	TCL_Error(tcl, "no such item");
+        TCL_Error(tcl, "no such item");
     }
     Item_Tcl* item = (Item_Tcl*) obj;
 
@@ -458,7 +458,7 @@ static int cal_remove(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[
     if (file == 0) TCL_Error(tcl, "no such calendar");
 
     if (file->GetCalendar()->ReadOnly()) {
-	TCL_Error(tcl, "permission denied");
+        TCL_Error(tcl, "permission denied");
     }
 
     item->set_calendar(0);
@@ -476,19 +476,19 @@ static int cal_hide(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[])
     // Find item
     Object* obj = Object::find(tcl, argv[0]);
     if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
-	TCL_Error(tcl, "no such item");
+        TCL_Error(tcl, "no such item");
     }
     Item_Tcl* item = (Item_Tcl*) obj;
 
     CalFile* file = item->calendar();
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     CalFile* mainFile = cal->main;
 
     if (mainFile->GetCalendar()->ReadOnly()) {
-	TCL_Error(tcl, "permission denied");
+        TCL_Error(tcl, "permission denied");
     }
     mainFile->GetCalendar()->Hide(item->value()->GetUid());
     mainFile->Modified();
@@ -499,8 +499,8 @@ static int cal_hide(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[])
     // assigned.
 
     if (!item->value()->IsUidPersistent() &&
-	!file->GetCalendar()->ReadOnly()) {
-	file->Modified();
+        !file->GetCalendar()->ReadOnly()) {
+        file->Modified();
     }
 
     trigger(tcl, "delete", item->handle());
@@ -513,7 +513,7 @@ static int cal_ronly(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
 
     CalFile* file = cal->name2file(argv[0]);
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     TCL_Return(tcl, file->GetCalendar()->ReadOnly() ? "1" : "0");
@@ -524,7 +524,7 @@ static int cal_dirty(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
 
     CalFile* file = cal->name2file(argv[0]);
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     TCL_Return(tcl, (file->IsModified() ? "1" : "0"));
@@ -535,7 +535,7 @@ static int cal_stale(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
 
     CalFile* file = cal->name2file(argv[0]);
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     TCL_Return(tcl, (file->FileHasChanged() ? "1" : "0"));
@@ -546,16 +546,16 @@ static int cal_save(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[])
 
     CalFile* file = cal->name2file(argv[0]);
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     if (file == cal->main) {
-	// Purge unnecessary hidden entries.
-	cal->purge();
+        // Purge unnecessary hidden entries.
+        cal->purge();
     }
 
     if (! file->Write()) {
-	TCL_Error(tcl, (char*) CalFile::LastError());
+        TCL_Error(tcl, (char*) CalFile::LastError());
     }
     TCL_Return(tcl, "");
 }
@@ -565,12 +565,12 @@ static int cal_reread(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[
 
     CalFile* file = cal->name2file(argv[0]);
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     Calendar* old = file->ReRead();
     if (old == 0) {
-	TCL_Error(tcl, (char*) CalFile::LastError());
+        TCL_Error(tcl, (char*) CalFile::LastError());
     }
 
     /* Fixup items */
@@ -579,9 +579,9 @@ static int cal_reread(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[
     delete old;
 
     if (file == cal->main) {
-	cal->clear_error();
-	cal->fix_includes();
-	/* XXX Report error??? */
+        cal->clear_error();
+        cal->fix_includes();
+        /* XXX Report error??? */
     }
 
     trigger(tcl, "flush", 0);
@@ -591,34 +591,34 @@ static int cal_reread(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[
 
 // Common routine for looping over itesm
 //
-// effects	For each "item" in "list",
-//		    set "ivar" to "item" handle
-//		    set "dvar" to corresponding date if "dvar" is not null
-//		    execute "body" within "tcl".
-//		If executions succeed, clear "tcl->result" and return TCL_OK.
-//		If executions fail, set "tcl->result" and return TCL_ERROR.
-//		If "body" says "break", interrupt the iteration.
-//		If "body" says "continue", move to the next iteration
+// effects      For each "item" in "list",
+//                  set "ivar" to "item" handle
+//                  set "dvar" to corresponding date if "dvar" is not null
+//                  execute "body" within "tcl".
+//              If executions succeed, clear "tcl->result" and return TCL_OK.
+//              If executions fail, set "tcl->result" and return TCL_ERROR.
+//              If "body" says "break", interrupt the iteration.
+//              If "body" says "continue", move to the next iteration
 
 static int item_loop(Tcl_Interp* tcl, Occurrences const& list,
-		     const char* ivar, const char* dvar, const char* body) {
+                     const char* ivar, const char* dvar, const char* body) {
     for (int i = 0; i < list.size(); i++) {
-	if (Tcl_SetVar(tcl, ivar, (char*) list[i].item->handle(), 0) == NULL) {
-	    TCL_Error(tcl, "could not set loop variable");
-	}
+        if (Tcl_SetVar(tcl, ivar, (char*) list[i].item->handle(), 0) == NULL) {
+            TCL_Error(tcl, "could not set loop variable");
+        }
 
-	if (dvar != 0) {
-	    char buffer[20];
-	    sprintf(buffer, "%d", list[i].date.EpochDays());
-	    if (Tcl_SetVar(tcl, dvar, buffer, 0) == NULL) {
-		TCL_Error(tcl, "could not set loop variable");
-	    }
-	}
+        if (dvar != 0) {
+            char buffer[20];
+            sprintf(buffer, "%d", list[i].date.EpochDays());
+            if (Tcl_SetVar(tcl, dvar, buffer, 0) == NULL) {
+                TCL_Error(tcl, "could not set loop variable");
+            }
+        }
 
-	int result = Tcl_Eval(tcl, body);
-	if (result == TCL_BREAK) break;
-	if ((result == TCL_OK) || (result == TCL_CONTINUE)) continue;
-	return result;
+        int result = Tcl_Eval(tcl, body);
+        if (result == TCL_BREAK) break;
+        if ((result == TCL_OK) || (result == TCL_CONTINUE)) continue;
+        return result;
     }
     TCL_Return(tcl, "");
 }
@@ -633,13 +633,13 @@ static int cal_query(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
 
     int startDays;
     if (Tcl_GetInt(tcl, argv[0], &startDays) != TCL_OK) {
-	TCL_Error(tcl, "illegal start date");
+        TCL_Error(tcl, "illegal start date");
     }
     Date start(startDays);
 
     int finishDays;
     if (Tcl_GetInt(tcl, argv[1], &finishDays) != TCL_OK) {
-	TCL_Error(tcl, "illegal finish date");
+        TCL_Error(tcl, "illegal finish date");
     }
     Date finish(finishDays);
 
@@ -661,16 +661,16 @@ static int cal_loopf(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
     // Find starting item
     Item_Tcl* item = 0;
     if (strcmp(argv[0], "") != 0) {
-	Object* obj = Object::find(tcl, argv[0]);
-	if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
-	    TCL_Error(tcl, "no such item");
-	}
-	item = (Item_Tcl*) obj;
+        Object* obj = Object::find(tcl, argv[0]);
+        if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
+            TCL_Error(tcl, "no such item");
+        }
+        item = (Item_Tcl*) obj;
     }
 
     int startDays;
     if (Tcl_GetInt(tcl, argv[1], &startDays) != TCL_OK) {
-	TCL_Error(tcl, "illegal start date");
+        TCL_Error(tcl, "illegal start date");
     }
     Date start(startDays);
     Date finish = Date::Last();
@@ -679,39 +679,39 @@ static int cal_loopf(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
     // Special case handling if only some of the items from the first
     // date should be returned.
     if (item != 0) {
-	Occurrences tmp;
-	collect_occurrences(cal, items, tmp, start, start, 0);
-	sort_occurrences(tmp);
+        Occurrences tmp;
+        collect_occurrences(cal, items, tmp, start, start, 0);
+        sort_occurrences(tmp);
 
-	int i = 0;
-	while ((i < tmp.size()) && (tmp[i].item != item))
-	    i++;
-	i++;
-	while (i < tmp.size()) {
-	    list.append(tmp[i]);
-	    i++;
-	}
+        int i = 0;
+        while ((i < tmp.size()) && (tmp[i].item != item))
+            i++;
+        i++;
+        while (i < tmp.size()) {
+            list.append(tmp[i]);
+            i++;
+        }
 
-	int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
-	if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
+        int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
+        if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
 
-	start = start + 1;
+        start = start + 1;
     }
 
     Date date = start;
     int days = 1;
     while (date <= finish) {
-	Date limit = (((finish-date) + 1) < days) ? finish : (date+days - 1);
-	collect_occurrences(cal, items, list, date, limit, 0);
-	sort_occurrences(list);
-	int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
-	if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
+        Date limit = (((finish-date) + 1) < days) ? finish : (date+days - 1);
+        collect_occurrences(cal, items, list, date, limit, 0);
+        sort_occurrences(list);
+        int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
+        if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
 
-	date = date + days;
-	if (list.size() == 0) {
-	    // No items found in last "days".  Increase searching span.
-	    days *= 2;
-	}
+        date = date + days;
+        if (list.size() == 0) {
+            // No items found in last "days".  Increase searching span.
+            days *= 2;
+        }
     }
 
     TCL_Return(tcl, "");
@@ -728,16 +728,16 @@ static int cal_loopb(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
     // Find starting item
     Item_Tcl* item = 0;
     if (strcmp(argv[0], "") != 0) {
-	Object* obj = Object::find(tcl, argv[0]);
-	if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
-	    TCL_Error(tcl, "no such item");
-	}
-	item = (Item_Tcl*) obj;
+        Object* obj = Object::find(tcl, argv[0]);
+        if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
+            TCL_Error(tcl, "no such item");
+        }
+        item = (Item_Tcl*) obj;
     }
 
     int startDays;
     if (Tcl_GetInt(tcl, argv[1], &startDays) != TCL_OK) {
-	TCL_Error(tcl, "illegal start date");
+        TCL_Error(tcl, "illegal start date");
     }
     Date start(startDays);
     Date finish = Date::First();
@@ -746,39 +746,39 @@ static int cal_loopb(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
     // Special case handling if only some of the items from the first
     // date should be returned.
     if (item != 0) {
-	Occurrences tmp;
-	collect_occurrences(cal, items, tmp, start, start, 0);
-	sort_occurrences(tmp);
+        Occurrences tmp;
+        collect_occurrences(cal, items, tmp, start, start, 0);
+        sort_occurrences(tmp);
 
-	int i = 0;
-	while ((i < tmp.size()) && (tmp[i].item != item)) {
-	    list.append(tmp[i]);
-	    i++;
-	}
-	reverse(list);
+        int i = 0;
+        while ((i < tmp.size()) && (tmp[i].item != item)) {
+            list.append(tmp[i]);
+            i++;
+        }
+        reverse(list);
 
-	int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
-	if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
+        int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
+        if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
 
-	start = start - 1;
+        start = start - 1;
     }
 
     Date date = start;
     int days = 1;
     while (date >= finish) {
-	Date limit = (((date-finish) + 1) < days) ? finish : (date + 1 - days);
-	collect_occurrences(cal, items, list, limit, date, 0);
-	sort_occurrences(list);
-	reverse(list);
+        Date limit = (((date-finish) + 1) < days) ? finish : (date + 1 - days);
+        collect_occurrences(cal, items, list, limit, date, 0);
+        sort_occurrences(list);
+        reverse(list);
 
-	int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
-	if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
+        int result = item_loop(tcl, list, argv[2], argv[3], argv[4]);
+        if ((result != TCL_OK) && (result != TCL_CONTINUE)) return result;
 
-	date = date - days;
-	if (list.size() == 0) {
-	    // No items found in last "days".  Increase searching span.
-	    days *= 2;
-	}
+        date = date - days;
+        if (list.size() == 0) {
+            // No items found in last "days".  Increase searching span.
+            days *= 2;
+        }
     }
 
     TCL_Return(tcl, "");
@@ -794,13 +794,13 @@ static int cal_listing(ClientData c, Tcl_Interp* tcl, int argc, const char* argv
 
     int startDays;
     if (Tcl_GetInt(tcl, argv[0], &startDays) != TCL_OK) {
-	TCL_Error(tcl, "illegal start date");
+        TCL_Error(tcl, "illegal start date");
     }
     Date start(startDays);
 
     int finishDays;
     if (Tcl_GetInt(tcl, argv[1], &finishDays) != TCL_OK) {
-	TCL_Error(tcl, "illegal finish date");
+        TCL_Error(tcl, "illegal finish date");
     }
     Date finish(finishDays);
 
@@ -822,15 +822,15 @@ static int cal_loop(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[])
     // Generate first occurrence of each item
     Occurrences list;
     for (int i = 0; i < items.size(); i++) {
-	Item_Tcl* item = items[i];
+        Item_Tcl* item = items[i];
 
-	Date d;
-	if (item->value()->first(d)) {
-	    Occurrence o;
-	    o.item = item;
-	    o.date = d;
-	    list.append(o);
-	}
+        Date d;
+        if (item->value()->first(d)) {
+            Occurrence o;
+            o.item = item;
+            o.date = d;
+            list.append(o);
+        }
     }
 
     sort_occurrences(list);
@@ -842,7 +842,7 @@ static int cal_incal(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
 
     CalFile* file = cal->name2file(argv[0]);
     if (file == 0) {
-	TCL_Error(tcl, "no such calendar");
+        TCL_Error(tcl, "no such calendar");
     }
 
     /* Collect items */
@@ -852,15 +852,15 @@ static int cal_incal(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]
     // Generate first occurrence of each item
     Occurrences list;
     for (int i = 0; i < items.size(); i++) {
-	Item_Tcl* item = items[i];
+        Item_Tcl* item = items[i];
 
-	Date d;
-	if (item->value()->first(d)) {
-	    Occurrence o;
-	    o.item = item;
-	    o.date = d;
-	    list.append(o);
-	}
+        Date d;
+        if (item->value()->first(d)) {
+            Occurrence o;
+            o.item = item;
+            o.date = d;
+            list.append(o);
+        }
     }
 
     sort_occurrences(list);
@@ -873,25 +873,25 @@ static int cal_option(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[
 
     // See if a specific calendar is mentioned.
     if ((argc > 2) && (strcmp(argv[0], "-calendar") == 0)) {
-	file = cal->name2file(argv[1]);
-	if (file == 0) TCL_Error(tcl, "no such calendar");
-	argv += 2;
-	argc -= 2;
+        file = cal->name2file(argv[1]);
+        if (file == 0) TCL_Error(tcl, "no such calendar");
+        argv += 2;
+        argc -= 2;
     }
 
     if (argc > 2) TCL_Error(tcl, "too many arguments");
 
     if (argc == 1) {
-	char const* val = file->GetCalendar()->GetOption(argv[0]);
-	if (val != 0) {
-	    Tcl_SetResult(tcl, (char*)val, TCL_VOLATILE);
-	    return TCL_OK;
-	}
-	TCL_Error(tcl, "unknown calendar option");
+        char const* val = file->GetCalendar()->GetOption(argv[0]);
+        if (val != 0) {
+            Tcl_SetResult(tcl, (char*)val, TCL_VOLATILE);
+            return TCL_OK;
+        }
+        TCL_Error(tcl, "unknown calendar option");
     }
 
     if (file->GetCalendar()->ReadOnly())
-	TCL_Error(tcl, "permission denied");
+        TCL_Error(tcl, "permission denied");
 
     file->GetCalendar()->SetOption(argv[0], argv[1]);
     file->Modified();
@@ -904,10 +904,10 @@ static int cal_doption(ClientData c, Tcl_Interp* tcl, int argc, const char* argv
 
     // See if a specific calendar is mentioned.
     if ((argc > 1) && (strcmp(argv[0], "-calendar") == 0)) {
-	file = cal->name2file(argv[1]);
-	if (file == 0) TCL_Error(tcl, "no such calendar");
-	argv += 2;
-	argc -= 2;
+        file = cal->name2file(argv[1]);
+        if (file == 0) TCL_Error(tcl, "no such calendar");
+        argv += 2;
+        argc -= 2;
     }
     if (argc > 1) TCL_Error(tcl, "too many arguments");
 

@@ -1,9 +1,0 @@
-ical
-config.cache
-config.log
-config.status
-config.h
-Makefile
-startup.tcl
-*.gen
-icaltest.cal

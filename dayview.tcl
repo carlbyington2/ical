@@ -35,13 +35,13 @@ class DayView {} {
     $self build_menu
 
     # Pack windows
-    pack $n.cal		-in $n.status -side left
-    pack $n.rep		-in $n.status -side right
-    pack $n.menu	-side top -fill x
-    pack $n.status	-side bottom -fill x
-    pack $n.al		-side right -expand 1 -fill both
-    pack $n.nl		-side bottom -expand 1 -fill both
-    pack $n.de		-side top -fill x
+    pack $n.cal         -in $n.status -side left
+    pack $n.rep         -in $n.status -side right
+    pack $n.menu        -side top -fill x
+    pack $n.status      -side bottom -fill x
+    pack $n.al          -side right -expand 1 -fill both
+    pack $n.nl          -side bottom -expand 1 -fill both
+    pack $n.de          -side top -fill x
 
     $self reconfig
 
@@ -64,8 +64,8 @@ class DayView {} {
     # can obey option changes.  We also need to listen for "midnight"
     # to automatically switch to next day.
 
-    trigger on change	[list $self change]
-    trigger on reconfig	[list $self reconfig]
+    trigger on change   [list $self change]
+    trigger on reconfig [list $self reconfig]
     trigger on midnight [list $self midnight]
     trigger on keybind  [list $self update_menu_accelerators]
     trigger on select   [list $self check_selection]
@@ -125,28 +125,28 @@ method DayView set_date {date} {
 
 method DayView check_selection {args} {
     if [string compare [ical_view] $self] {
-	# This is not the current view
-	$self clear_selection
-	return
+        # This is not the current view
+        $self clear_selection
+        return
     }
 
     if [catch {set i [ical_find_selection]}] {
-	# No current selection
-	$self clear_selection
-	return
+        # No current selection
+        $self clear_selection
+        return
     }
 
     if ![string compare $i $slot(sel)] {
-	# Already selected
-	return
+        # Already selected
+        return
     }
 
     # Need to clear old selection
     $self clear_selection
 
     if [$i contains $slot(date)] {
-	# Item exists on current date
-	$self set_selection $i
+        # Item exists on current date
+        $self set_selection $i
     }
 }
 
@@ -175,7 +175,7 @@ method DayView midnight {} {
 
 method DayView change {item} {
     if {$slot(sel) == $item} {
-	$self config_status
+        $self config_status
     }
 }
 
@@ -188,10 +188,10 @@ method DayView reconfig {} {
     set start [cal option DayviewTimeStart]
     set finish [cal option DayviewTimeFinish]
     wm grid $name\
-	1\
-	[expr ($finish - $start) * 2]\
-	$width\
-	[$slot(apptlist) line_height]
+        1\
+        [expr ($finish - $start) * 2]\
+        $width\
+        [$slot(apptlist) line_height]
     wm minsize $name 1 10
     wm maxsize $name 1 48
 }
@@ -202,57 +202,57 @@ method DayView reconfig {} {
 method DayView config_status {} {
     set item $slot(sel)
     if {$item == ""} {
-	$slot(window).cal configure -text ""
-	$slot(window).rep configure -text ""
+        $slot(window).cal configure -text ""
+        $slot(window).rep configure -text ""
     } else {
-	set disp ""
-	catch {set disp [ical_title [$item calendar]]}
+        set disp ""
+        catch {set disp [ical_title [$item calendar]]}
 
-	if {[$item hilite] == "holiday"} {
-	    set disp [format {%s Holiday} $disp]
-	}
+        if {[$item hilite] == "holiday"} {
+            set disp [format {%s Holiday} $disp]
+        }
 
-	set owner [$item owner]
-	if {$owner != ""} {
-	    set disp [format {%s [Owner %s]} $disp $owner]
-	}
+        set owner [$item owner]
+        if {$owner != ""} {
+            set disp [format {%s [Owner %s]} $disp $owner]
+        }
 
-	set type ""
-	if [string compare [$item type] ""] {
-	    set type [$item describe_repeat]
-	    if {[string length $type] > 30} {
-		set type "[string range $type 0 26]..."
-	    }
-	}
+        set type ""
+        if [string compare [$item type] ""] {
+            set type [$item describe_repeat]
+            if {[string length $type] > 30} {
+                set type "[string range $type 0 26]..."
+            }
+        }
 
-	$slot(window).cal configure -text $disp
-	$slot(window).rep configure -text $type
+        $slot(window).cal configure -text $disp
+        $slot(window).rep configure -text $type
     }
 }
 
 # Update menu accelerator keys
 method DayView update_menu_accelerators {} {
     global keymap
-    foreach {seq cmd} $keymap(command)	{set key([lindex $cmd 0]) $seq}
-    foreach {seq cmd} $keymap(item)	{set key([lindex $cmd 0]) $seq}
+    foreach {seq cmd} $keymap(command)  {set key([lindex $cmd 0]) $seq}
+    foreach {seq cmd} $keymap(item)     {set key([lindex $cmd 0]) $seq}
 
     # Also collect user defined key bindings
     catch {
-	foreach {seq cmd} [cal option Keybindings] {
-	    set key([lindex $cmd 0]) $seq
-	}
+        foreach {seq cmd} [cal option Keybindings] {
+            set key([lindex $cmd 0]) $seq
+        }
     }
 
     foreach m [winfo children $slot(window).menu] {
-	set last [$m.m index last]
-	for {set i 0} {$i <= $last} {incr i} {
-	    catch {
-		set act [lindex [$m.m entrycget $i -command] 0]
-		set seq {}
-		catch {set seq "  [key_shortform $key($act)]"}
-		$m.m entryconfig $i -acc $seq
-	    }
-	}
+        set last [$m.m index last]
+        for {set i 0} {$i <= $last} {incr i} {
+            catch {
+                set act [lindex [$m.m entrycget $i -command] 0]
+                set seq {}
+                catch {set seq "  [key_shortform $key($act)]"}
+                $m.m entryconfig $i -acc $seq
+            }
+        }
     }
 }
 
@@ -260,91 +260,93 @@ method DayView update_menu_accelerators {} {
 method DayView build_menu {} {
     set b $slot(window).menu
 
-    menu-entry	$b File	Save			{ical_save}
-    menu-entry	$b File	Re-Read			{ical_reread}
-    menu-entry	$b File	Print			{ical_print}
-    menu-sep	$b File
-    menu-entry	$b File	{Include Calendar}	{ical_addinclude}
-    menu-pull	$b File	{Remove Include}	{ical_fill_reminc}
-    menu-sep	$b File
-    menu-entry	$b File	{New Window}		{ical_newview}
-    menu-entry	$b File	{Close Window}		{ical_close}
-    menu-sep	$b File
-    menu-entry	$b File	Exit			{ical_exit}
+    menu-entry  $b File Save                    {ical_save}
+    menu-entry  $b File Re-Read                 {ical_reread}
+    menu-entry  $b File Print                   {ical_print}
+    menu-sep    $b File
+    menu-entry  $b File {Include Calendar}      {ical_addinclude}
+    #per-calendar config is not implemented yet
+    #menu-pull   $b File {Configure Calendar}    {ical_fill_config}
+    menu-pull   $b File {Remove Include}        {ical_fill_reminc}
+    menu-sep    $b File
+    menu-entry  $b File {New Window}            {ical_newview}
+    menu-entry  $b File {Close Window}          {ical_close}
+    menu-sep    $b File
+    menu-entry  $b File Exit                    {ical_exit}
 
-    menu-entry	$b Edit	{Cut Item}		{ical_cut_or_hide}
-    menu-entry	$b Edit	{Copy Item}		{ical_copy}
-    menu-entry	$b Edit	{Paste Item}		{ical_paste}
-    menu-sep	$b Edit
-    menu-entry	$b Edit	{Delete Text}		{ical_delete_selection}
-    menu-entry	$b Edit	{Insert Text}		{ical_insert_selection}
-    menu-sep	$b Edit
-    menu-entry	$b Edit	{Import Text as Item}	{ical_import}
+    menu-entry  $b Edit {Cut Item}              {ical_cut_or_hide}
+    menu-entry  $b Edit {Copy Item}             {ical_copy}
+    menu-entry  $b Edit {Paste Item}            {ical_paste}
+    menu-sep    $b Edit
+    menu-entry  $b Edit {Delete Text}           {ical_delete_selection}
+    menu-entry  $b Edit {Insert Text}           {ical_insert_selection}
+    menu-sep    $b Edit
+    menu-entry  $b Edit {Import Text as Item}   {ical_import}
 
-    menu-bool	$b Item	Todo			{ical_toggle_todo}\
-	dv_state(state:todo)
-    menu-sep	$b Item
+    menu-bool   $b Item Todo                    {ical_toggle_todo}\
+        dv_state(state:todo)
+    menu-sep    $b Item
     $self fill_hilite $b Item
-    #menu-sep	$b Item
-    #menu-entry  $b Item {Link to Web Document}	{ical_link_to_uri}
-    #menu-entry  $b Item {Link to File}		{ical_link_to_file}
-    #menu-entry  $b Item {Remove Link}		{ical_remove_link}
-    menu-sep	$b Item
-    menu-entry	$b Item	{Change Alarms...}	{ical_alarms}
-    menu-entry	$b Item	{Early Warning...}	{ical_set_remind}
-    #menu-pull	$b Item	{Move Item To}		{ical_fill_move}
-    menu-sep	$b Item
-    menu-entry	$b Item	{Properties...}		{ical_edit_item}
-    menu-sep	$b Item
-    menu-entry	$b Item	{Search Forward}	{ical_search_forward}
-    menu-entry	$b Item	{Search Backard}	{ical_search_backward}
+    menu-sep    $b Item
+    menu-entry  $b Item {Link to Web Document}  {ical_link_to_uri}
+    menu-entry  $b Item {Link to Local File}    {ical_link_to_file}
+    menu-entry  $b Item {Remove Link}           {ical_remove_link}
+    menu-sep    $b Item
+    menu-entry  $b Item {Change Alarms...}      {ical_alarms}
+    menu-entry  $b Item {Early Warning...}      {ical_set_remind}
+    #menu-pull  $b Item {Move Item To}          {ical_fill_move}
+    menu-sep    $b Item
+    menu-entry  $b Item {Properties...}         {ical_edit_item}
+    menu-sep    $b Item
+    menu-entry  $b Item {Search Forward}        {ical_search_forward}
+    menu-entry  $b Item {Search Backard}        {ical_search_backward}
 
-    menu-entry	$b Repeat {Don't Repeat}	{ical_norepeat}
-    menu-sep	$b Repeat
-    menu-entry	$b Repeat {Daily}		{ical_daily}
-    menu-entry	$b Repeat {Weekly}		{ical_weekly}
-    menu-entry  $b Repeat {Monthly}		{ical_monthly}
-    menu-entry  $b Repeat {Annually}		{ical_annual}
-    menu-sep	$b Repeat
-    menu-entry	$b Repeat {Edit Weekly...}	{ical_edit_weekly}
-    menu-entry  $b Repeat {Edit Monthly...}	{ical_edit_monthly}
-    menu-entry	$b Repeat {Set Range...}	{ical_set_range}
-    menu-sep	$b Repeat
-    menu-entry	$b Repeat {Last Occurrence}	{ical_last_date}
-    menu-entry	$b Repeat {Make Unique}		{ical_makeunique}
+    menu-entry  $b Repeat {Don't Repeat}        {ical_norepeat}
+    menu-sep    $b Repeat
+    menu-entry  $b Repeat {Daily}               {ical_daily}
+    menu-entry  $b Repeat {Weekly}              {ical_weekly}
+    menu-entry  $b Repeat {Monthly}             {ical_monthly}
+    menu-entry  $b Repeat {Annually}            {ical_annual}
+    menu-sep    $b Repeat
+    menu-entry  $b Repeat {Edit Weekly...}      {ical_edit_weekly}
+    menu-entry  $b Repeat {Edit Monthly...}     {ical_edit_monthly}
+    menu-entry  $b Repeat {Set Range...}        {ical_set_range}
+    menu-sep    $b Repeat
+    menu-entry  $b Repeat {Last Occurrence}     {ical_last_date}
+    menu-entry  $b Repeat {Make Unique}         {ical_makeunique}
 
-    menu-entry	$b List	{One Day}		{ical_list 1}
-    menu-entry	$b List	{Seven Days}		{ical_list 7}
-    menu-entry	$b List	{Ten Days}		{ical_list 10}
-    menu-entry	$b List	{Thirty Days}		{ical_list 30}
-    menu-sep	$b List
-    menu-entry	$b List	{Week}			{ical_list week}
-    menu-entry	$b List	{Month}			{ical_list month}
-    menu-entry	$b List	{Year}			{ical_list year}
-    menu-sep	$b List
-    menu-pull	$b List	{From Calendar}		{ical_fill_listinc}
+    menu-entry  $b List {One Day}               {ical_list 1}
+    menu-entry  $b List {Seven Days}            {ical_list 7}
+    menu-entry  $b List {Ten Days}              {ical_list 10}
+    menu-entry  $b List {Thirty Days}           {ical_list 30}
+    menu-sep    $b List
+    menu-entry  $b List {Week}                  {ical_list week}
+    menu-entry  $b List {Month}                 {ical_list month}
+    menu-entry  $b List {Year}                  {ical_list year}
+    menu-sep    $b List
+    menu-pull   $b List {From Calendar}         {ical_fill_listinc}
 
-    menu-entry	$b Options {Appointment Range}	  {ical_timerange}
-    menu-entry	$b Options {Notice Window Height} {ical_noticeheight}
-    menu-entry	$b Options {Item Width}		  {ical_itemwidth}
-    menu-sep	$b Options
-    menu-bool	$b Options {Allow Text Overflow}  {ical_toggle_overflow}\
-	dv_state(state:overflow)
-    menu-bool	$b Options {Display Am/Pm}	  {ical_toggle_ampm}\
-	dv_state(state:ampm)
-    menu-bool	$b Options {Start Week On Monday} {ical_toggle_monday}\
-	dv_state(state:mondayfirst)
-    menu-sep	$b Options
-    menu-entry	$b Options {Default Alarms...}	  {ical_defalarms}
-    menu-entry	$b Options {Default Listings...}  {ical_deflistings}
+    menu-entry  $b Options {Appointment Range}    {ical_timerange}
+    menu-entry  $b Options {Notice Window Height} {ical_noticeheight}
+    menu-entry  $b Options {Item Width}           {ical_itemwidth}
+    menu-entry  $b Options {Web Browser}          {ical_webbrowser}
+    menu-sep    $b Options
+    menu-bool   $b Options {Allow Text Overflow}  {ical_toggle_overflow}\
+        dv_state(state:overflow)
+    menu-bool   $b Options {Display Am/Pm}        {ical_toggle_ampm}\
+        dv_state(state:ampm)
+    menu-bool   $b Options {Start Week On Monday} {ical_toggle_monday}\
+        dv_state(state:mondayfirst)
+    menu-sep    $b Options
+    menu-entry  $b Options {Default Alarms...}    {ical_defalarms}
+    menu-entry  $b Options {Default Listings...}  {ical_deflistings}
 
-    # XXX Disable this now because I am not sure about the interface
-    #menu-sep	$b Options
-    #menu-entry	$b Options {Define a Command Key} {ical_cmdkey}
+    menu-sep    $b Options
+    menu-entry  $b Options {Define a Command Key} {ical_edit_key}
 
-    menu-entry	$b Help	{About Ical}		  {ical_about}
-    menu-entry	$b Help {User Guide}		  {ical_help}
-    menu-entry	$b Help {Tcl Interface to Ical}	  {ical_tcl_interface}
+    menu-entry  $b Help {About Ical}              {ical_about}
+    menu-entry  $b Help {User Guide}              {ical_help}
+    menu-entry  $b Help {Tcl Interface to Ical}   {ical_tcl_interface}
 
     # Move "Help" menu all the way to the right
     pack configure $b.help -side right
@@ -353,78 +355,102 @@ method DayView build_menu {} {
 #############################################################################
 # Commands to fill cascading menus
 
-# effects - Fill menu with calendar names.
-#	    Invoke "<action> <calendar file>" when
-#	    menu entry is selected.
+proc add_menu_command {menu title cmd} {
+    $menu add command -label $title -command $cmd
+}
+proc add_menu_cascade {menu title cmd} {
+    set m $menu.submenu[string map {" " _} [string tolower $title]]
+    destroy $m
+    menu $m -postcommand [concat $cmd $m] -tearoff 0
+    $menu add cascade -label $title -menu $m
+}
 
-proc ical_fill_includes {menu action} {
+# effects - Fill menu with calendar names.
+#           Invoke "<action> <calendar file>" when
+#           menu entry is selected.
+
+proc ical_fill_includes {add menu action {exclude_main ""}} {
     set list {}
     cal forincludes file {
-	lappend list $file
+        lappend list $file
+    }
+
+    $menu delete 0 last
+
+    if ![string length $exclude_main] {
+      $add $menu "Main Calendar" [list $action [cal main]]
+      $menu add separator
     }
 
     # Add menu separator whenever directory changes.
     set last_dir {}
     foreach f [lsort $list] {
-	set d [file dirname $f]
-	if [string compare $last_dir $d] {
-	    if [string compare $last_dir {}] {$menu add separator}
-	    set last_dir $d
-	}
-	$menu add command -label [ical_title $f]\
-	    -command [list $action $f]
+        set d [file dirname $f]
+        if [string compare $last_dir $d] {
+            if [string compare $last_dir {}] {$menu add separator}
+            set last_dir $d
+        }
+        $add $menu [ical_title $f] [list $action $f]
     }
 }
 
 # effects - Fill remove-include menu
 proc ical_fill_reminc {menu} {
-    $menu delete 0 last
-    ical_fill_includes $menu ical_removeinc
+    ical_fill_includes add_menu_command $menu ical_removeinc exclude_main
+}
 
-    # XXX Work-around Tk 4.1 bug related to empty menu items
-    if ![string compare [$menu index last] none] {
-	$menu add separator
+# effects - fill config-menu for one calendar
+proc fill_cal_config {cal menu} {
+    $menu delete 0 last
+    $menu add checkbutton       -label "Enabled"
+    $menu add checkbutton       -label "Read Only"
+    $menu add checkbutton       -label "Ignore Alarms"
+    $menu add command           -label "Color..."
+    $menu add command           -label "Assumed Highlight..."
+    $menu add command           -label "Assumed Time Zone..."
+    set name [ical_title $cal]
+    if {$name != "Main Calendar"} {
+        $menu add separator
+        $menu add command           -label "Remove $name" -command [list ical_removeinc $cal]
     }
+}
+
+# effects - Fill configure-include menu
+proc ical_fill_config {menu} {
+    ical_fill_includes add_menu_cascade $menu fill_cal_config
 }
 
 # effects - Fill move-to-include menu
 proc ical_fill_move {menu} {
-    $menu delete 0 last
-    $menu add command -label {Main Calendar}\
-	-command [list ical_moveitem [cal main]]
-    $menu add separator
-    ical_fill_includes $menu ical_moveitem
+    ical_fill_includes add_menu_command $menu ical_moveitem
 }
 
 # effects - Fill list-include menu
 proc ical_fill_listinc {menu} {
-    $menu delete 0 last
-    $menu add command -label {Main Calendar}\
-	-command [list ical_viewitems [cal main]]
-    $menu add separator
-    ical_fill_includes $menu ical_viewitems
+    ical_fill_includes add_menu_command $menu ical_viewitems
 }
 
 # effects Fill hilite menu entries
 method DayView fill_hilite {b m} {
     set entries {
-	{ {Always Highlight}	{always}	}
-	{ {Never Highlight}	{never}		}
-	{ {Highlight Future}	{expire}	}
-	{ {Holiday}		{holiday}	}
+        { {Always Highlight}    {always}        }
+        { {Never Highlight}     {never}         }
+        { {Highlight Future}    {expire}        }
+        { {Holiday}             {holiday}       }
     }
 
     foreach e $entries {
-	menu-oneof $b $m\
-	    [lindex $e 0]\
-	    [list ical_hilite [lindex $e 1]]\
-	    dv_state(state:hilite)\
-	    [lindex $e 1]
+        menu-oneof $b $m\
+            [lindex $e 0]\
+            [list ical_hilite [lindex $e 1]]\
+            dv_state(state:hilite)\
+            [lindex $e 1]
     }
 }
 
 #### Special code to set enablers for cascade menus ####
 global ical_action_enabler
-set ical_action_enabler(ical_fill_reminc)	writable
-set ical_action_enabler(ical_fill_move)		witem
-set ical_action_enabler(ical_fill_listinc)	always
+set ical_action_enabler(ical_fill_reminc)       writable
+set ical_action_enabler(ical_fill_config)       writable
+set ical_action_enabler(ical_fill_move)         witem
+set ical_action_enabler(ical_fill_listinc)      always

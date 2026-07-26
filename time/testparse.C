@@ -12,21 +12,21 @@ static void debug_date(char const* str) {
     int start, length;
 
     while (find_date(str, result, start, length)) {
-	char* spec = new char[length+1];
-	strncpy(spec, str+start, length);
-	spec[length] = '\0';
+        char* spec = new char[length+1];
+        strncpy(spec, str+start, length);
+        spec[length] = '\0';
 
-	int day, year;
-	WeekDay wday;
-	Month month;
-	result.BreakDown(day, wday, month, year);
+        int day, year;
+        WeekDay wday;
+        Month month;
+        result.BreakDown(day, wday, month, year);
 
- 	printf("%-30s = [%s %s %d, %d]\n",
- 	       spec, wday.Name(), month.Name(), day, year);
+        printf("%-30s = [%s %s %d, %d]\n",
+               spec, wday.Name(), month.Name(), day, year);
 
-	delete [] spec;
+        delete [] spec;
 
-	str += start + length;
+        str += start + length;
     }
 }
 
@@ -50,17 +50,17 @@ static void debug_time(char const* str) {
     int start, length;
 
     while (find_timeofday(str, result, start, length)) {
-	char* spec = new char[length+1];
-	strncpy(spec, str+start, length);
-	spec[length] = '\0';
+        char* spec = new char[length+1];
+        strncpy(spec, str+start, length);
+        spec[length] = '\0';
 
- 	printf("%-30s = [", spec);
-	print_tod(result);
-	printf("]\n");
+        printf("%-30s = [", spec);
+        print_tod(result);
+        printf("]\n");
 
-	delete [] spec;
+        delete [] spec;
 
-	str += start + length;
+        str += start + length;
     }
 }
 
@@ -69,19 +69,19 @@ static void debug_range(char const* str) {
     int tstart, tfinish;
 
     while (find_timerange(str, tstart, tfinish, start, length)) {
-	char* spec = new char[length+1];
-	strncpy(spec, str+start, length);
-	spec[length] = '\0';
+        char* spec = new char[length+1];
+        strncpy(spec, str+start, length);
+        spec[length] = '\0';
 
- 	printf("%-30s = [", spec);
-	print_tod(tstart);
-	printf(" -- ");
-	print_tod(tfinish);
-	printf("]\n");
+        printf("%-30s = [", spec);
+        print_tod(tstart);
+        printf(" -- ");
+        print_tod(tfinish);
+        printf("]\n");
 
-	delete [] spec;
+        delete [] spec;
 
-	str += start + length;
+        str += start + length;
     }
 }
 
@@ -90,17 +90,17 @@ main() {
     char line[1000];
 
     while (gets(line) != 0) {
-	if (strncmp(line, "date", 4) == 0)
-	    debug_date(line);
-	else if (strncmp(line, "time", 4) == 0)
-	    debug_time(line);
-	else if (strncmp(line, "range", 5) == 0)
-	    debug_range(line);
-	else {
-	    debug_date(line);
-	    debug_time(line);
-	    debug_range(line);
-	}
+        if (strncmp(line, "date", 4) == 0)
+            debug_date(line);
+        else if (strncmp(line, "time", 4) == 0)
+            debug_time(line);
+        else if (strncmp(line, "range", 5) == 0)
+            debug_range(line);
+        else {
+            debug_date(line);
+            debug_time(line);
+            debug_range(line);
+        }
     }
 
     return 0;

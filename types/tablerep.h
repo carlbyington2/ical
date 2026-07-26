@@ -29,12 +29,12 @@ class TableRep {
 // "TableRep" signature.
 //
 // Array of tagged structures
-//	StructTable1<K>
-//	StructTable2<K,V>
+//      StructTable1<K>
+//      StructTable2<K,V>
 //
 // Split array for tags (to reduce space wastage for alignment
-//	SplitTable1<K>
-//	SplitTable1<K,V>
+//      SplitTable1<K>
+//      SplitTable1<K,V>
 
 // An array of structures.
 template <class K>
@@ -43,31 +43,31 @@ class StructTable1 {
     enum Tag { full, empty, del };
   private:
     struct Entry {
-	Tag	tag;
-	K	key;
+        Tag     tag;
+        K       key;
     };
     Entry* table;
   public:
     StructTable1(int entries) {
-	table = new Entry[entries];
-	for (int i = entries-1; i >= 0; i--) {
-	    table[i].tag = empty;
-	}
+        table = new Entry[entries];
+        for (int i = entries-1; i >= 0; i--) {
+            table[i].tag = empty;
+        }
     }
 
     inline ~StructTable1() {
-	delete [] table;
+        delete [] table;
     }
 
-    inline K& key(int i) const		{ return table[i].key; }
-    inline int is_full(int i) const	{ return (table[i].tag == full); }
-    inline int is_empty(int i) const	{ return (table[i].tag == empty); }
-    inline int is_del(int i) const	{ return (table[i].tag == del); }
-    inline void clear(int i)		{ table[i].tag = empty; }
-    inline void kill(int i)		{ table[i].tag = del; }
+    inline K& key(int i) const          { return table[i].key; }
+    inline int is_full(int i) const     { return (table[i].tag == full); }
+    inline int is_empty(int i) const    { return (table[i].tag == empty); }
+    inline int is_del(int i) const      { return (table[i].tag == del); }
+    inline void clear(int i)            { table[i].tag = empty; }
+    inline void kill(int i)             { table[i].tag = del; }
     inline void store(int i, K k) {
-	table[i].key = k;
-	table[i].tag = full;
+        table[i].key = k;
+        table[i].tag = full;
     }
 };
 
@@ -78,33 +78,33 @@ class StructTable2 {
     enum Tag { full, empty, del };
   private:
     struct Entry {
-	Tag	tag;
-	K	key;
-	V	val;
+        Tag     tag;
+        K       key;
+        V       val;
     };
     Entry* table;
   public:
     StructTable2(int entries) {
-	table = new Entry[entries];
-	for (int i = entries-1; i >= 0; i--) {
-	    table[i].tag = empty;
-	}
+        table = new Entry[entries];
+        for (int i = entries-1; i >= 0; i--) {
+            table[i].tag = empty;
+        }
     }
 
     inline ~StructTable2() {
-	delete [] table;
+        delete [] table;
     }
 
-    inline K& key(int i) const		{ return table[i].key; }
-    inline V& val(int i) const	{ return table[i].val; }
-    inline int is_full(int i) const	{ return (table[i].tag == full); }
-    inline int is_empty(int i) const	{ return (table[i].tag == empty); }
-    inline int is_del(int i) const	{ return (table[i].tag == del); }
-    inline void clear(int i)		{ table[i].tag = empty; }
-    inline void kill(int i)		{ table[i].tag = del; }
+    inline K& key(int i) const          { return table[i].key; }
+    inline V& val(int i) const  { return table[i].val; }
+    inline int is_full(int i) const     { return (table[i].tag == full); }
+    inline int is_empty(int i) const    { return (table[i].tag == empty); }
+    inline int is_del(int i) const      { return (table[i].tag == del); }
+    inline void clear(int i)            { table[i].tag = empty; }
+    inline void kill(int i)             { table[i].tag = del; }
     inline void store(int i, K k) {
-	table[i].key = k;
-	table[i].tag = full;
+        table[i].key = k;
+        table[i].tag = full;
     }
 };
 
@@ -113,31 +113,31 @@ template <class K>
 class SplitTable1 {
   private:
     enum Tag { full, empty, del };
-    char*	tag;		// List of tags
-    K*		list;		// List of values
+    char*       tag;            // List of tags
+    K*          list;           // List of values
   public:
     SplitTable1(int entries) {
-	list = new K[entries];
-	tag  = new char[entries];
-	for (int i = entries-1; i >= 0; i--) {
-	    tag[i] = empty;
-	}
+        list = new K[entries];
+        tag  = new char[entries];
+        for (int i = entries-1; i >= 0; i--) {
+            tag[i] = empty;
+        }
     }
 
     inline ~SplitTable1() {
-	delete [] list;
-	delete [] tag;
+        delete [] list;
+        delete [] tag;
     }
 
-    inline K& key(int i) const		{ return list[i]; }
-    inline int is_full(int i) const	{ return (tag[i] == full); }
-    inline int is_empty(int i) const	{ return (tag[i] == empty); }
-    inline int is_del(int i) const	{ return (tag[i] == del); }
-    inline void clear(int i)		{ tag[i] = empty; }
-    inline void kill(int i)		{ tag[i] = del; }
+    inline K& key(int i) const          { return list[i]; }
+    inline int is_full(int i) const     { return (tag[i] == full); }
+    inline int is_empty(int i) const    { return (tag[i] == empty); }
+    inline int is_del(int i) const      { return (tag[i] == del); }
+    inline void clear(int i)            { tag[i] = empty; }
+    inline void kill(int i)             { tag[i] = del; }
     inline void store(int i, K k) {
-	list[i] = k;
-	tag[i] = full;
+        list[i] = k;
+        tag[i] = full;
     }
 };
 
@@ -147,35 +147,35 @@ class SplitTable2 {
   private:
     enum Tag { full, empty, del };
     struct Entry {
-	K	key;
-	V	val;
+        K       key;
+        V       val;
     };
-    char*	tag;		// List of tags
-    Entry*	list;		// List of key,value pairs
+    char*       tag;            // List of tags
+    Entry*      list;           // List of key,value pairs
   public:
     SplitTable2(int entries) {
-	list = new Entry[entries];
-	tag  = new char[entries];
-	for (int i = entries-1; i >= 0; i--) {
-	    tag[i] = empty;
-	}
+        list = new Entry[entries];
+        tag  = new char[entries];
+        for (int i = entries-1; i >= 0; i--) {
+            tag[i] = empty;
+        }
     }
 
     inline ~SplitTable2() {
-	delete [] list;
-	delete [] tag;
+        delete [] list;
+        delete [] tag;
     }
 
-    inline K& key(int i) const		{ return list[i].key; }
-    inline V& val(int i) const		{ return list[i].val; }
-    inline int is_full(int i) const	{ return (tag[i] == full); }
-    inline int is_empty(int i) const	{ return (tag[i] == empty); }
-    inline int is_del(int i) const	{ return (tag[i] == del); }
-    inline void clear(int i)		{ tag[i] = empty; }
-    inline void kill(int i)		{ tag[i] = del; }
+    inline K& key(int i) const          { return list[i].key; }
+    inline V& val(int i) const          { return list[i].val; }
+    inline int is_full(int i) const     { return (tag[i] == full); }
+    inline int is_empty(int i) const    { return (tag[i] == empty); }
+    inline int is_del(int i) const      { return (tag[i] == del); }
+    inline void clear(int i)            { tag[i] = empty; }
+    inline void kill(int i)             { tag[i] = del; }
     inline void store(int i, K k) {
-	list[i].key = k;
-	tag[i] = full;
+        list[i].key = k;
+        tag[i] = full;
     }
 };
 

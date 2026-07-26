@@ -84,8 +84,8 @@ static const int count = 100000;
 
 static void report(char const* title, double t) {
     printf("%-20s %8.2f usec\n",
-	   title,
-	   ((double) (t * 1000000.0 / count)));
+           title,
+           ((double) (t * 1000000.0 / count)));
 }
 
 // Generate stamp for this run
@@ -119,7 +119,7 @@ static void time_fixed_store() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	map[i] = 0;
+        map[i] = 0;
     }
     double ut = t.UserTime();
 
@@ -135,13 +135,13 @@ static void time_fixed_fetch() {
     int i;
 
     for (i = 0; i < count; i++) {
-	map[i] = 0;
+        map[i] = 0;
     }
 
     r = 1;
     t.Reset();
     for (i = 0; i < count; i++) {
-	r ^= map[i];
+        r ^= map[i];
     }
     double ut = t.UserTime();
 
@@ -170,7 +170,7 @@ static void time_array_grow() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	array.append(0);
+        array.append(0);
     }
     double ut = t.UserTime();
 
@@ -183,7 +183,7 @@ static void time_array_grow_predicted() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	array.append(0);
+        array.append(0);
     }
     double ut = t.UserTime();
 
@@ -196,12 +196,12 @@ static void time_array_replace() {
     int i;
 
     for (i = 0; i < count; i++) {
-	array.append(0);
+        array.append(0);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	array[i] = 1;
+        array[i] = 1;
     }
     double ut = t.UserTime();
 
@@ -215,13 +215,13 @@ static void time_array_fetch() {
     int i;
 
     for (i = 0; i < count; i++) {
-	array.append(0);
+        array.append(0);
     }
 
     r = 1;
     t.Reset();
     for (i = 0; i < count; i++) {
-	r ^= array[i];
+        r ^= array[i];
     }
     double ut = t.UserTime();
 
@@ -234,12 +234,12 @@ static void time_array_remove() {
     int i;
 
     for (i = 0; i < count; i++) {
-	array.append(0);
+        array.append(0);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	array.remove();
+        array.remove();
     }
     double ut = t.UserTime();
 
@@ -252,7 +252,7 @@ static void time_array_store() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	array.append(0);
+        array.append(0);
     }
     double ut = t.UserTime();
 
@@ -287,7 +287,7 @@ static void time_old_map_grow() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	map.store(i, 0);
+        map.store(i, 0);
     }
     double ut = t.UserTime();
 
@@ -300,7 +300,7 @@ static void time_old_map_grow_predicted() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	map.store(i, 0);
+        map.store(i, 0);
     }
     double ut = t.UserTime();
 
@@ -313,12 +313,12 @@ static void time_old_map_replace() {
     int i;
 
     for (i = 0; i < count; i++) {
-	map.store(i, 0);
+        map.store(i, 0);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	map.store(i, 0);
+        map.store(i, 0);
     }
     double ut = t.UserTime();
 
@@ -331,13 +331,13 @@ static void time_old_map_fetch() {
     int i;
 
     for (i = 0; i < count; i++) {
-	map.store(i, 0);
+        map.store(i, 0);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	char const* val;
-	map.fetch(i, val);
+        char const* val;
+        map.fetch(i, val);
     }
     double ut = t.UserTime();
 
@@ -350,12 +350,12 @@ static void time_old_map_remove() {
     int i;
 
     for (i = 0; i < count; i++) {
-	map.store(i, 0);
+        map.store(i, 0);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	map.remove(i);
+        map.remove(i);
     }
     double ut = t.UserTime();
 
@@ -385,7 +385,7 @@ static void time_old_set_grow() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -398,7 +398,7 @@ static void time_old_set_grow_predicted() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -411,12 +411,12 @@ static void time_old_set_replace() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -430,13 +430,13 @@ static void time_old_set_fetch() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
 
     r = 1;
     t.Reset();
     for (i = 0; i < count; i++) {
-	r ^= set.contains(i);
+        r ^= set.contains(i);
     }
     double ut = t.UserTime();
 
@@ -449,12 +449,12 @@ static void time_old_set_remove() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.remove(i);
+        set.remove(i);
     }
     double ut = t.UserTime();
 
@@ -485,7 +485,7 @@ static void time_set_grow() {
 
     t.Reset();
     COUNT_TIMES(i) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -501,7 +501,7 @@ static void time_set_grow_predicted() {
 
     t.Reset();
     COUNT_TIMES(i) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -515,12 +515,12 @@ static void time_set_replace() {
     int i;
 
     COUNT_TIMES(i) {
-	set.insert(i);
+        set.insert(i);
     }
 
     t.Reset();
     COUNT_TIMES(i) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -535,13 +535,13 @@ static void time_set_fetch() {
     int i;
 
     COUNT_TIMES(i) {
-	set.insert(i);
+        set.insert(i);
     }
 
     r = 1;
     t.Reset();
     COUNT_TIMES(i) {
-	r ^= set.contains(i);
+        r ^= set.contains(i);
     }
     double ut = t.UserTime();
 
@@ -556,12 +556,12 @@ static void time_set_remove() {
     int i;
 
     COUNT_TIMES(i) {
-	set.insert(i);
+        set.insert(i);
     }
 
     t.Reset();
     COUNT_TIMES(i) {
-	set.remove(i);
+        set.remove(i);
     }
     double ut = t.UserTime();
 
@@ -594,7 +594,7 @@ static void time_map_grow() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(i, i);
+        set.insert(i, i);
     }
     double ut = t.UserTime();
 
@@ -609,7 +609,7 @@ static void time_map_grow_predicted() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(i, i);
+        set.insert(i, i);
     }
     double ut = t.UserTime();
 
@@ -622,12 +622,12 @@ static void time_map_replace() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(i, i);
+        set.insert(i, i);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.insert(i, i);
+        set.insert(i, i);
     }
     double ut = t.UserTime();
 
@@ -641,13 +641,13 @@ static void time_map_fetch() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(i, i);
+        set.insert(i, i);
     }
 
     r = 1;
     t.Reset();
     for (i = 0; i < count; i++) {
-	r ^= set.contains(i);
+        r ^= set.contains(i);
     }
     double ut = t.UserTime();
 
@@ -660,12 +660,12 @@ static void time_map_remove() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(i, i);
+        set.insert(i, i);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.remove(i);
+        set.remove(i);
     }
     double ut = t.UserTime();
 
@@ -695,7 +695,7 @@ static void time_sp_set_grow() {
     set.set_occupancy(sparse);
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -711,7 +711,7 @@ static void time_sp_set_grow_predicted() {
     set.set_occupancy(sparse);
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -725,12 +725,12 @@ static void time_sp_set_replace() {
 
     set.set_occupancy(sparse);
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
     double ut = t.UserTime();
 
@@ -745,13 +745,13 @@ static void time_sp_set_fetch() {
 
     set.set_occupancy(sparse);
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
 
     r = 1;
     t.Reset();
     for (i = 0; i < count; i++) {
-	r ^= set.contains(i);
+        r ^= set.contains(i);
     }
     double ut = t.UserTime();
 
@@ -766,12 +766,12 @@ static void time_sp_set_remove() {
 
     set.set_occupancy(sparse);
     for (i = 0; i < count; i++) {
-	set.insert(i);
+        set.insert(i);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.remove(i);
+        set.remove(i);
     }
     double ut = t.UserTime();
 
@@ -803,9 +803,9 @@ static void str_init() {
 
     char* buffer = new char[count * 12];
     for (int i = 0; i < count; i++) {
-	sprintf(buffer, "str%d", i);
-	strings[i] = buffer;
-	buffer += 12;
+        sprintf(buffer, "str%d", i);
+        strings[i] = buffer;
+        buffer += 12;
     }
 }
 
@@ -815,7 +815,7 @@ static void time_sset_grow() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(strings[i]);
+        set.insert(strings[i]);
     }
     double ut = t.UserTime();
 
@@ -828,7 +828,7 @@ static void time_sset_grow_predicted() {
 
     t.Reset();
     for (int i = 0; i < count; i++) {
-	set.insert(strings[i]);
+        set.insert(strings[i]);
     }
     double ut = t.UserTime();
 
@@ -841,12 +841,12 @@ static void time_sset_replace() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(strings[i]);
+        set.insert(strings[i]);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.insert(strings[i]);
+        set.insert(strings[i]);
     }
     double ut = t.UserTime();
 
@@ -860,13 +860,13 @@ static void time_sset_fetch() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(strings[i]);
+        set.insert(strings[i]);
     }
 
     r = 1;
     t.Reset();
     for (i = 0; i < count; i++) {
-	r ^= set.contains(strings[i]);
+        r ^= set.contains(strings[i]);
     }
     double ut = t.UserTime();
 
@@ -879,12 +879,12 @@ static void time_sset_remove() {
     int i;
 
     for (i = 0; i < count; i++) {
-	set.insert(strings[i]);
+        set.insert(strings[i]);
     }
 
     t.Reset();
     for (i = 0; i < count; i++) {
-	set.remove(strings[i]);
+        set.remove(strings[i]);
     }
     double ut = t.UserTime();
 

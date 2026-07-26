@@ -17,9 +17,9 @@ HandleTable::~HandleTable() {
     Tcl_HashEntry* i;
 
     for (i = Tcl_FirstHashEntry(&handleMap, &search);
-	 i != NULL;
-	 i = Tcl_NextHashEntry(&search)) {
-	delete [] Tcl_GetHashKey(&handleMap, i);
+         i != NULL;
+         i = Tcl_NextHashEntry(&search)) {
+        delete [] Tcl_GetHashKey(&handleMap, i);
     }
 
     Tcl_DeleteHashTable(&handleMap);
@@ -48,20 +48,20 @@ void HandleTable::bind(char* handle, void* object) {
 void* HandleTable::object(char* handle) {
     Tcl_HashEntry* entry = Tcl_FindHashEntry(&handleMap, handle);
     if (entry != NULL) {
-	return (void*) Tcl_GetHashValue(entry);
+        return (void*) Tcl_GetHashValue(entry);
     }
     else {
-	return 0;
+        return 0;
     }
 }
 
 char* HandleTable::handle(void* object) {
     Tcl_HashEntry* entry = Tcl_FindHashEntry(&objectMap, (char*) object);
     if (entry != NULL) {
-	return (char*) Tcl_GetHashValue(entry);
+        return (char*) Tcl_GetHashValue(entry);
     }
     else {
-	return 0;
+        return 0;
     }
 }
 
@@ -70,12 +70,12 @@ void HandleTable::remove(char* handle, void* object) {
 
     entry = Tcl_FindHashEntry(&objectMap, (char*) object);
     if (entry != NULL) {
-	Tcl_DeleteHashEntry(entry);
+        Tcl_DeleteHashEntry(entry);
     }
 
     entry = Tcl_FindHashEntry(&handleMap, handle);
     if (entry != NULL) {
-	delete [] Tcl_GetHashKey(&handleMap, entry);
-	Tcl_DeleteHashEntry(entry);
+        delete [] Tcl_GetHashKey(&handleMap, entry);
+        Tcl_DeleteHashEntry(entry);
     }
 }

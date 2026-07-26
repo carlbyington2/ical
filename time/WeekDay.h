@@ -25,8 +25,8 @@ class WeekDay {
     static WeekDay Last();
 
     /* Observers */
-    char const*	Name() const;
-    char const*	ShortName() const;
+    char const* Name() const;
+    char const* ShortName() const;
     int Index() const;
 
     /* Arithemtic - wraps around */

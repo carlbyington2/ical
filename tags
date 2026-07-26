@@ -1,0 +1,1832 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+$class.$selector	tcllib/class.tcl	/^    proc $class.$selector [linsert $arglist 0 selfclass self] [format {$/;"	p
+$name	actions.tcl	/^    proc $name $formals $body$/;"	p
+$name	tcllib/class.tcl	/^    class $name $arglist $body$/;"	c
+$name	tcllib/class.tcl	/^    proc $name {args} [format {$/;"	p
+$name-with-name	tcllib/class.tcl	/^    proc $name-with-name {self args} [format {$/;"	p
+$object	alarm.tcl	/^            class_kill $object$/;"	c
+$proc	tcllib/support.tcl	/^    proc $proc $args $code$/;"	p
+$self	tcllib/class.tcl	/^    proc $self {sel args} [format {$/;"	p
+$slot(apptlist)	dayview.tcl	/^    class_kill $slot(apptlist)$/;"	c
+$slot(dateeditor)	dayview.tcl	/^    class_kill $slot(dateeditor)$/;"	c
+$slot(notelist)	dayview.tcl	/^    class_kill $slot(notelist)$/;"	c
+$stack	tcllib/tests/ctest.tcl	/^class_kill $stack$/;"	c
+1.7	CHANGES.html	/^<h1><A NAME="1.7">Version 1.7<\/A><\/h1>$/;"	a
+1.7b1	CHANGES.html	/^<h1><A NAME="1.7b1">Version 1.7b1<\/A><\/h1>$/;"	a
+1.8	CHANGES.html	/^<h1><A NAME="1.8">Version 1.8<\/A><\/h1>$/;"	a
+1.8b1	CHANGES.html	/^<h1><A NAME="1.8b1">Version 1.8b1<\/A><\/h1>$/;"	a
+1.8b2	CHANGES.html	/^<h1><A NAME="1.8b2">Version 1.8b2<\/A><\/h1>$/;"	a
+1.8b3	CHANGES.html	/^<h1><A NAME="1.8b3">Version 1.8b3<\/A><\/h1>$/;"	a
+1.9	CHANGES.html	/^<h1><A NAME="1.9">Version 1.9<\/A><\/h1>$/;"	a
+1.9b1	CHANGES.html	/^<h1><A NAME="1.9b1">Version 1.9b1<\/A><\/h1>$/;"	a
+1.9b2	CHANGES.html	/^<h1><A NAME="1.9b2">Version 1.9b2<\/A><\/h1>$/;"	a
+2.0	CHANGES.html	/^<h1><A NAME="2.0">Version 2.0<\/A><\/h1>$/;"	a
+2.1	CHANGES.html	/^<h1><A NAME="2.1">Version 2.1<\/A><\/h1>$/;"	a
+2.1b1	CHANGES.html	/^<h2><A NAME="2.1b1">Version 2.1b1<\/A><\/h1>$/;"	a
+2.1b2	CHANGES.html	/^<h2><A NAME="2.1b2">Version 2.1b2<\/A><\/h1>$/;"	a
+2.2	CHANGES.html	/^<h1><A NAME="2.2">Version 2.2<\/A><\/h1>$/;"	a
+3.0	CHANGES.html	/^<h1><A NAME="3.0">Version 3.0<\/A><\/h1>$/;"	a
+ABS	calendar/dateset.C	/^static inline int ABS(int x) {$/;"	f	file:
+AMPM_TOKEN	time/parse.C	/^    AMPM_TOKEN,$/;"	e	enum:Token_Type	file:
+AN_check_kill	alarm.tcl	/^proc AN_check_kill {object} {$/;"	p
+AN_item_kill	alarm.tcl	/^proc AN_item_kill {object item} {$/;"	p
+AN_shutup	alarm.tcl	/^proc AN_shutup {object} {$/;"	p
+AR	Makefile	/^           AR = ar$/;"	m
+AR	calendar/Makefile	/^           AR = ar$/;"	m
+AR	time/Makefile	/^           AR = ar$/;"	m
+AR	types/Makefile	/^           AR = ar$/;"	m
+ASSERT	types/testbv.C	/^#define ASSERT(/;"	d	file:
+ASSERT	types/testhash.C	/^#define ASSERT(/;"	d	file:
+ASSERT	types/testmap.C	/^#define ASSERT(/;"	d	file:
+ASSERT	types/testomap.C	/^#define ASSERT(/;"	d	file:
+ASSERT	types/testoset.C	/^#define ASSERT(/;"	d	file:
+Add	calendar/calendar.C	/^void Calendar::Add(Item* item) {$/;"	f	class:Calendar
+Advance	calendar/lexer.h	/^inline int Lexer::Advance(char& c) {$/;"	f	class:Lexer
+AlarmNotice	alarm.tcl	/^class AlarmNotice {item starttime} {$/;"	c
+Alarmer	alarm.tcl	/^class Alarmer {} {$/;"	c
+Annual	calendar/dateset.h	/^        Annual,$/;"	e	enum:DateSet::RepeatType
+Appointment	calendar/item.h	/^    Appointment() : start(30), length(30), alarms(0)$/;"	f	class:Appointment
+Appointment	calendar/item.h	/^class Appointment : public Item {$/;"	c
+ApptList	apptlist.tcl	/^class ApptList {name view} {$/;"	c
+April	time/Month.h	/^inline Month Month::April() {$/;"	f	class:Month
+ArrayNoAssert	types/Array.h	/^#define ArrayNoAssert(/;"	d
+AsAppointment	calendar/item.h	/^    virtual Appointment* AsAppointment() { return 0; }$/;"	f	class:Item
+AsAppointment	calendar/item.h	/^    virtual Appointment* AsAppointment() { return this; }$/;"	f	class:Appointment
+AsNotice	calendar/item.h	/^    virtual Notice* AsNotice() { return 0; }$/;"	f	class:Item
+AsNotice	calendar/item.h	/^    virtual Notice* AsNotice() { return this; }$/;"	f	class:Notice
+August	time/Month.h	/^inline Month Month::August() {$/;"	f	class:Month
+BINDIR	Makefile	/^       BINDIR = $(exec_prefix)\/bin$/;"	m
+BITVEC_WSHIFT	types/bitvec.h	/^#define BITVEC_WSHIFT /;"	d
+BITVEC_WSHIFT	types/bitvec.h	/^#undef BITVEC_WSHIFT$/;"	d
+BITVEC_WSIZE	types/bitvec.h	/^#define BITVEC_WSIZE /;"	d
+BITVEC_WSIZE	types/bitvec.h	/^#undef BITVEC_WSIZE$/;"	d
+BLIBS	Makefile	/^      BLIBS = $(LIBS)$/;"	m
+BiWeekly	calendar/dateset.h	/^        BiWeekly,$/;"	e	enum:DateSet::RepeatType
+BitVec	types/bitvec.C	/^BitVec::BitVec(BitVec const& v) {$/;"	f	class:BitVec
+BitVec	types/bitvec.C	/^BitVec::BitVec(int l) {$/;"	f	class:BitVec
+BitVec	types/bitvec.h	/^class BitVec {$/;"	c
+BreakDown	time/Date.C	/^void Date::BreakDown(int& d, WeekDay& wd, Month& m, int& y) const {$/;"	f	class:Date
+BreakDown	time/Time.C	/^void Time::BreakDown(int& mday, WeekDay& wday, Month& month, int& year,$/;"	f	class:Time
+BreakDownClock	time/Time.C	/^void Time::BreakDownClock(int& hour, int& min, int& sec, int& milli) const {$/;"	f	class:Time
+BreakDownDate	time/Time.C	/^void Time::BreakDownDate(int& mday,WeekDay& wday,Month& month, int& year) const$/;"	f	class:Time
+ByDay	calendar/dateset.C	/^    ByDay,$/;"	e	enum:MType	file:
+ByWeek	calendar/dateset.C	/^    ByWeek$/;"	e	enum:MType	file:
+ByWorkDay	calendar/dateset.C	/^    ByWorkDay,$/;"	e	enum:MType	file:
+CC	Makefile	/^           CC = cc$/;"	m
+CFLAGS	Makefile	/^     CFLAGS =  -I. -I$(srcdir) $(X_CFLAGS)$/;"	m
+CHMOD	Makefile	/^        CHMOD = chmod$/;"	m
+COLON_TOKEN	time/parse.C	/^    COLON_TOKEN,$/;"	e	enum:Token_Type	file:
+CONFFILES	Makefile	/^ CONFFILES    = $(srcdir)\/configure.in$/;"	m
+CONFIGURE	Makefile	/^ CONFIGURE    = .\/configure $/;"	m
+CONFIGURED	Makefile	/^ CONFIGURED   = Makefile startup.tcl calendar\/Makefile time\/Makefile$/;"	m
+CONFIGURE_IN	Makefile	/^ CONFIGURE_IN =  .\/Makefile.in .\/startup.tcl.in .\/calendar\/Makefile.in .\/time\/Makefile.in$/;"	m
+COUNT_TIMES	types/timemap.C	/^#define COUNT_TIMES(/;"	d	file:
+CXX	Makefile	/^          CXX = g++$/;"	m
+CXX	calendar/Makefile	/^          CXX = g++$/;"	m
+CXX	time/Makefile	/^          CXX = g++$/;"	m
+CXX	types/Makefile	/^          CXX = g++$/;"	m
+CXXFLAGS	Makefile	/^   CXXFLAGS = $/;"	m
+CXXFLAGS	calendar/Makefile	/^   CXXFLAGS = $/;"	m
+CXXFLAGS	time/Makefile	/^     CXXFLAGS = $/;"	m
+CXXFLAGS	types/Makefile	/^     CXXFLAGS =  $(DEFS)$/;"	m
+CXXINCS	Makefile	/^    CXXINCS = -I. -I$(srcdir) -I$(srcdir)\/calendar \\$/;"	m
+CXXINCS	calendar/Makefile	/^    CXXINCS = -I.. -I$(srcdir) -I$(srcdir)\/..\/types -I$(srcdir)\/..\/time$/;"	m
+CXXINCS	time/Makefile	/^      CXXINCS = -I.. -I$(srcdir)$/;"	m
+CXXINCS	types/Makefile	/^      CXXINCS = -I$(srcdir)$/;"	m
+CXXLINKER	Makefile	/^    CXXLINKER = $(CXX)$/;"	m
+CXXLINKER	calendar/Makefile	/^    CXXLINKER = @CXXLINKER@$/;"	m
+CXXLINKER	time/Makefile	/^    CXXLINKER = @CXXLINKER@$/;"	m
+CXXLINKER	types/Makefile	/^    CXXLINKER = $(CXX)$/;"	m
+CXXOBJS	calendar/Makefile	/^    CXXOBJS = arrays.o calendar.o calfile.o dateset.o item.o\\$/;"	m
+CalFile	calendar/calfile.C	/^CalFile::CalFile(int ro, const char* name) {$/;"	f	class:CalFile
+CalFile	calendar/calfile.h	/^class CalFile {$/;"	c
+CalFile_Result	calendar/calfile.h	/^    enum CalFile_Result {$/;"	g	class:CalFile
+Calendar	calendar/calendar.C	/^Calendar::Calendar()$/;"	f	class:Calendar
+Calendar	calendar/calendar.h	/^class Calendar {$/;"	c
+Calendar_Tcl	cal_tcl.C	/^Calendar_Tcl::Calendar_Tcl(Tcl_Interp* tcl, char const* h, char const* f)$/;"	f	class:Calendar_Tcl
+Calendar_Tcl	cal_tcl.h	/^class Calendar_Tcl : public Object {$/;"	c
+Cancel	calendar/calfile.h	/^        Cancel,$/;"	e	enum:CalFile::CalFile_Result
+Century_Offset	time/Year.C	/^long Year::Century_Offset(int c) {$/;"	f	class:Year
+Century_Size	time/Year.C	/^unsigned long Year::Century_Size(int c) {$/;"	f	class:Year
+Clear	calendar/smallintset.h	/^inline void SmallIntSet::Clear() {$/;"	f	class:SmallIntSet
+Clone	calendar/item.C	/^Item* Appointment::Clone() const {$/;"	f	class:Appointment
+Clone	calendar/item.C	/^Item* Notice::Clone() const {$/;"	f	class:Notice
+Cmd_CreateAppt	ical_tcl.C	/^int Cmd_CreateAppt(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+Cmd_CreateCalendar	ical_tcl.C	/^int Cmd_CreateCalendar(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+Cmd_CreateNotice	ical_tcl.C	/^int Cmd_CreateNotice(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+Cmd_Date	time_tcl.C	/^int Cmd_Date(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+Cmd_ExpandFileName	ical_tcl.C	/^int Cmd_ExpandFileName(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+Cmd_HiliteLoop	dateeditor.C	/^int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+Cmd_MonthDays	dateeditor.C	/^int Cmd_MonthDays(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+Cmd_Time	time_tcl.C	/^int Cmd_Time(ClientData, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f
+Convert	time/Time.C	/^void Duration::Convert(struct timeval& tv) const {$/;"	f	class:Duration
+Convert	time/Time.C	/^void Time::Convert(struct timeval& tv) const {$/;"	f	class:Time
+CopyBackup	calendar/calfile.C	/^int CalFile::CopyBackup(long mode) {$/;"	f	class:CalFile
+CopyTo	calendar/item.C	/^void Item::CopyTo(Item* item) const {$/;"	f	class:Item
+DEFS	types/Makefile	/^         DEFS = -DPACKAGE_NAME=\\"\\" -DPACKAGE_TARNAME=\\"\\" -DPACKAGE_VERSION=\\"\\" -DPACKAGE_STRING=\\"\\" -DPACKAGE_BUGREPORT=\\"\\"$/;"	m
+DOCDEST	Makefile	/^DOCDEST = \/udir\/sanjay\/pkg\/srcweb\/sanjay.bio\/external-web\/ical$/;"	m
+Daily	calendar/dateset.h	/^        Daily,$/;"	e	enum:DateSet::RepeatType
+Date	time/Date.C	/^Date::Date(Time t) {$/;"	f	class:Date
+Date	time/Date.h	/^    Date() : rep(0) {}$/;"	f	class:Date
+Date	time/Date.h	/^    Date(Date const& d) : rep(d.rep){}$/;"	f	class:Date
+Date	time/Date.h	/^    Date(int day, Month month, int year) { rep = GetRep(day, month, year); }$/;"	f	class:Date
+Date	time/Date.h	/^    Date(long days) : rep(days) {}$/;"	f	class:Date
+Date	time/Date.h	/^class Date {$/;"	c
+DateEditor	dateeditor.tcl	/^class DateEditor {name date view} {$/;"	c
+DateSet	calendar/dateset.C	/^DateSet::DateSet() : normalized(1) {$/;"	f	class:DateSet
+DateSet	calendar/dateset.C	/^DateSet::DateSet(DateSet const& d) {$/;"	f	class:DateSet
+DateSet	calendar/dateset.h	/^class DateSet {$/;"	c
+DateSetRep	calendar/dateset.C	/^DateSetRep::DateSetRep() {$/;"	f	class:DateSetRep
+DateSetRep	calendar/dateset.C	/^class DateSetRep {$/;"	c	file:
+Day	time/Time.h	/^inline Duration Duration::Day() {$/;"	f	class:Duration
+DayBasedDateSetRep	calendar/dateset.C	/^DayBasedDateSetRep::DayBasedDateSetRep(int i, Date a) {$/;"	f	class:DayBasedDateSetRep
+DayBasedDateSetRep	calendar/dateset.C	/^class DayBasedDateSetRep : public DateSetRep {$/;"	c	file:
+DayView	dayview.tcl	/^class DayView {} {$/;"	c
+Days	time/Time.h	/^inline double Duration::Days() const {$/;"	f	class:Duration
+December	time/Month.h	/^inline Month Month::December() {$/;"	f	class:Month
+Deleted	calendar/item.h	/^    int Deleted() { return deleted; }$/;"	f	class:Item
+Dispatch	dispatch.C	/^int Dispatch(Dispatch_Entry* table, ClientData c, Tcl_Interp* tcl,$/;"	f
+Dispatch_Entry	dispatch.h	/^struct Dispatch_Entry {$/;"	s
+Duration	time/Time.C	/^Duration::Duration(const struct timeval& tv) {$/;"	f	class:Duration
+Duration	time/Time.h	/^class Duration {$/;"	c
+Duration	time/Time.h	/^inline Duration::Duration() { }$/;"	f	class:Duration
+Duration	time/Time.h	/^inline Duration::Duration(Duration const& src) {$/;"	f	class:Duration
+Duration	time/Time.h	/^inline Duration::Duration(double r) {$/;"	f	class:Duration
+ECHO	Makefile	/^         ECHO = echo$/;"	m
+ECHO	calendar/Makefile	/^         ECHO = echo$/;"	m
+ECHO	time/Makefile	/^         ECHO = echo$/;"	m
+ECHO	types/Makefile	/^         ECHO = echo$/;"	m
+EXTRALIBS	Makefile	/^  EXTRALIBS = $/;"	m
+Elements	types/htable.h	/^    class Elements {$/;"	c	class:HTABLE
+Elements	types/htable.h	/^inline HTABLE::Elements::Elements(HTABLE const* t) {$/;"	f	class:HTABLE::Elements
+EmptyDateSetRep	calendar/dateset.C	/^EmptyDateSetRep::EmptyDateSetRep() {$/;"	f	class:EmptyDateSetRep
+EmptyDateSetRep	calendar/dateset.C	/^class EmptyDateSetRep : public DateSetRep {$/;"	c	file:
+Entry	types/longmap.h	/^    struct Entry {$/;"	s	class:LongMapRep
+Entry	types/tablerep.h	/^    struct Entry {$/;"	s	class:SplitTable2
+Entry	types/tablerep.h	/^    struct Entry {$/;"	s	class:StructTable1
+Entry	types/tablerep.h	/^    struct Entry {$/;"	s	class:StructTable2
+Entry	types/testmap.C	/^    struct Entry {$/;"	s	class:IntMapRep	file:
+Eof	calendar/lexer.h	/^        Eof,$/;"	e	enum:Lexer::StatusType
+EpochDays	time/Date.h	/^    long EpochDays() const { return rep; }$/;"	f	class:Date
+EpochSeconds	time/Time.h	/^inline double Time::EpochSeconds() const {$/;"	f	class:Time
+Error	calendar/lexer.h	/^        Error$/;"	e	enum:Lexer::StatusType
+Exclude	calendar/calendar.C	/^void Calendar::Exclude(char const* name) {$/;"	f	class:Calendar
+FALSE	types/basic.h	/^#define FALSE /;"	d
+FILE2H	Makefile	/^       FILE2H = $(srcdir)\/f2h$/;"	m
+FIRST_CENTURY	time/Year.C	/^#define FIRST_CENTURY /;"	d	file:
+FIRST_YEAR	time/Year.C	/^#define FIRST_YEAR /;"	d	file:
+FIRST_YEAR_OFF	time/Year.C	/^#define FIRST_YEAR_OFF /;"	d	file:
+Failure	calendar/calfile.h	/^        Failure$/;"	e	enum:CalFile::CalFile_Result
+February	time/Month.h	/^inline Month Month::February() {$/;"	f	class:Month
+FileHasChanged	calendar/calfile.C	/^int CalFile::FileHasChanged() {$/;"	f	class:CalFile
+FileSelector	tcllib/filesel.tcl	/^proc FileSelector {n} {$/;"	p
+First	time/Date.h	/^    static Date First() { return Date(1, Month::First(), Year::First()); }$/;"	f	class:Date
+First	time/Month.h	/^inline Month Month::First() {$/;"	f	class:Month
+First	time/WeekDay.h	/^inline WeekDay WeekDay::First() {$/;"	f	class:WeekDay
+First	time/Year.h	/^inline int Year::First() {$/;"	f	class:Year
+FirstCentury	time/Year.h	/^inline int Year::FirstCentury() {$/;"	f	class:Year
+FourMonthly	calendar/dateset.h	/^        FourMonthly,$/;"	e	enum:DateSet::RepeatType
+FourWeekly	calendar/dateset.h	/^        FourWeekly,$/;"	e	enum:DateSet::RepeatType
+Friday	time/WeekDay.h	/^inline WeekDay WeekDay::Friday() {$/;"	f	class:WeekDay
+GEN1	Makefile	/^GEN1 = tcl_lib.gen tk_lib.gen tcllib.gen ical_lib.gen$/;"	m
+GEN2	Makefile	/^GEN2 = ical_start.gen psheader.gen icaldoc.gen tcldoc.gen$/;"	m
+Get	calendar/calendar.C	/^Item* Calendar::Get(int i) const {$/;"	f	class:Calendar
+GetAlarms	calendar/item.h	/^    intArray* GetAlarms() const { return alarms; }$/;"	f	class:Appointment
+GetCalendar	calendar/calfile.h	/^inline Calendar* CalFile::GetCalendar() {$/;"	f	class:CalFile
+GetId	calendar/lexer.C	/^int Lexer::GetId(char const*& x) {$/;"	f	class:Lexer
+GetInclude	calendar/calendar.C	/^char const* Calendar::GetInclude(int i) const {$/;"	f	class:Calendar
+GetLength	calendar/item.h	/^    int GetLength() const { return length; }$/;"	f	class:Appointment
+GetMDay	time/Date.C	/^int Date::GetMDay() const {$/;"	f	class:Date
+GetModifyTime	calendar/calfile.C	/^int CalFile::GetModifyTime(char const* file, Time& t) {$/;"	f	class:CalFile
+GetMonth	time/Date.C	/^Month Date::GetMonth() const {$/;"	f	class:Date
+GetName	calendar/calfile.h	/^inline char const* CalFile::GetName() {$/;"	f	class:CalFile
+GetNumber	calendar/lexer.C	/^int Lexer::GetNumber(int& x) {$/;"	f	class:Lexer
+GetOption	calendar/calendar.C	/^char const* Calendar::GetOption(char const* key) const {$/;"	f	class:Calendar
+GetOption	calendar/item.C	/^char const* Item::GetOption(char const* key) const {$/;"	f	class:Item
+GetOwner	calendar/item.h	/^    const char* GetOwner() const { return owner; }$/;"	f	class:Item
+GetRemindStart	calendar/item.h	/^    int GetRemindStart() const { return remindStart; }$/;"	f	class:Item
+GetRep	time/Date.h	/^    static int GetRep(int d, Month m, int y)$/;"	f	class:Date
+GetStart	calendar/item.h	/^    int GetStart(int d) const { return d < 0 ? start : time_from_tz(Date(d), start); }$/;"	f	class:Appointment
+GetString	calendar/lexer.C	/^int Lexer::GetString(char const*& x) {$/;"	f	class:Lexer
+GetText	calendar/item.h	/^    const char* GetText() const { return text; }$/;"	f	class:Item
+GetText	calendar/lexer.C	/^int Lexer::GetText(char* result, int len) {$/;"	f	class:Lexer
+GetTimezone	calendar/item.h	/^    const char* GetTimezone() const { return timezone; }$/;"	f	class:Appointment
+GetUid	calendar/item.h	/^    char const* GetUid() const { return uid; }$/;"	f	class:Item
+GetUntil	calendar/lexer.C	/^int Lexer::GetUntil(char terminator, char const*& x) {$/;"	f	class:Lexer
+GetWDay	time/Date.C	/^WeekDay Date::GetWDay() const {$/;"	f	class:Date
+GetYear	time/Date.C	/^int Date::GetYear() const {$/;"	f	class:Date
+HASHER	calendar/itemmap.h	/^#define HASHER /;"	d
+HASHER	types/htable.h	/^#undef HASHER$/;"	d
+HASHER	types/intset.h	/^#define HASHER(/;"	d
+HASHER	types/longmap.h	/^#define HASHER(/;"	d
+HASHER	types/testhash.C	/^#define HASHER(/;"	d	file:
+HASHER	types/testmap.C	/^#define HASHER(/;"	d	file:
+HASHER	types/timemap.C	/^#define HASHER(/;"	d	file:
+HASHMAP_PRECBITS	types/ohashmap.h	/^#define HASHMAP_PRECBITS /;"	d
+HASHMAP_PRECMASK	types/ohashmap.h	/^#define HASHMAP_PRECMASK /;"	d
+HASHSET_PRECBITS	types/ohashset.h	/^#define HASHSET_PRECBITS /;"	d
+HASHSET_PRECMASK	types/ohashset.h	/^#define HASHSET_PRECMASK /;"	d
+HAS_STDARG	dateeditor.C	/^#define HAS_STDARG$/;"	d	file:
+HAVE_FSYNC	config.h	/^#define HAVE_FSYNC /;"	d
+HAVE_GETHOSTNAME	config.h	/^#define HAVE_GETHOSTNAME /;"	d
+HAVE_LIMITS_H	config.h	/^#define HAVE_LIMITS_H /;"	d
+HAVE_STRERROR	config.h	/^#define HAVE_STRERROR /;"	d
+HAVE_SYS_UTSNAME_H	config.h	/^#define HAVE_SYS_UTSNAME_H /;"	d
+HAVE_UNAME	config.h	/^#define HAVE_UNAME /;"	d
+HEQUAL	calendar/itemmap.h	/^#define HEQUAL /;"	d
+HEQUAL	types/htable.h	/^#define HEQUAL(/;"	d
+HEQUAL	types/htable.h	/^#undef HEQUAL$/;"	d
+HKEY	calendar/itemmap.h	/^#define HKEY /;"	d
+HKEY	types/htable.h	/^#undef HKEY$/;"	d
+HKEY	types/intset.h	/^#define HKEY /;"	d
+HKEY	types/longmap.h	/^#define HKEY /;"	d
+HKEY	types/testhash.C	/^#define HKEY /;"	d	file:
+HKEY	types/testmap.C	/^#define HKEY /;"	d	file:
+HKEY	types/timemap.C	/^#define HKEY /;"	d	file:
+HTABLE	calendar/itemmap.h	/^#define HTABLE /;"	d
+HTABLE	types/htable.h	/^#undef HTABLE$/;"	d
+HTABLE	types/htable.h	/^class HTABLE {$/;"	c
+HTABLE	types/htable_p.h	/^HTABLE::HTABLE() {$/;"	f	class:HTABLE
+HTABLE	types/htable_p.h	/^HTABLE::HTABLE(HTABLE const& x) {$/;"	f	class:HTABLE
+HTABLE	types/intset.h	/^#define HTABLE /;"	d
+HTABLE	types/longmap.h	/^#define HTABLE /;"	d
+HTABLE	types/testhash.C	/^#define HTABLE /;"	d	file:
+HTABLE	types/testmap.C	/^#define HTABLE /;"	d	file:
+HTABLE	types/timemap.C	/^#define HTABLE /;"	d	file:
+HTABLEREP	calendar/itemmap.h	/^#define HTABLEREP /;"	d
+HTABLEREP	types/htable.h	/^#define HTABLEREP /;"	d
+HTABLEREP	types/htable.h	/^#undef HTABLEREP$/;"	d
+HTABLEREP	types/intset.h	/^#define HTABLEREP /;"	d
+HTABLEREP	types/longmap.h	/^#define HTABLEREP /;"	d
+HTABLEREP	types/testmap.C	/^#define HTABLEREP /;"	d	file:
+HTABLE_IMPLEMENT	calendar/item.C	/^#define HTABLE_IMPLEMENT$/;"	d	file:
+HTABLE_IMPLEMENT	types/htable.h	/^#undef HTABLE_IMPLEMENT$/;"	d
+HTABLE_IMPLEMENT	types/intset.C	/^#define HTABLE_IMPLEMENT$/;"	d	file:
+HTABLE_IMPLEMENT	types/longmap.C	/^#define HTABLE_IMPLEMENT$/;"	d	file:
+HTABLE_IMPLEMENT	types/testhash.C	/^#define HTABLE_IMPLEMENT$/;"	d	file:
+HTABLE_IMPLEMENT	types/testmap.C	/^#define HTABLE_IMPLEMENT$/;"	d	file:
+HTABLE_IMPLEMENT	types/timemap.C	/^#define HTABLE_IMPLEMENT$/;"	d	file:
+HTABLE_STATICS	types/htable_p.h	/^#define HTABLE_STATICS$/;"	d
+HVAL	calendar/itemmap.h	/^#define HVAL /;"	d
+HVAL	types/htable.h	/^#undef HVAL$/;"	d
+HVAL	types/longmap.h	/^#define HVAL /;"	d
+HVAL	types/testmap.C	/^#define HVAL /;"	d	file:
+HVAL	types/timemap.C	/^#define HVAL /;"	d	file:
+HandleTable	handle.C	/^HandleTable::HandleTable() {$/;"	f	class:HandleTable
+HandleTable	handle.h	/^class HandleTable {$/;"	c
+Hidden	calendar/calendar.C	/^int Calendar::Hidden(char const* uid) const {$/;"	f	class:Calendar
+Hide	calendar/calendar.C	/^void Calendar::Hide(char const* uid) {$/;"	f	class:Calendar
+Hilite	calendar/item.h	/^    char const* Hilite() const { return hilite; }$/;"	f	class:Item
+Hilite	calendar/item.h	/^    void Hilite(char const* s) { delete [] hilite; hilite = copy_string(s); }$/;"	f	class:Item
+Hour	time/Time.h	/^inline Duration Duration::Hour() {$/;"	f	class:Duration
+Hours	time/Time.h	/^inline double Duration::Hours() const {$/;"	f	class:Duration
+ICAL_FILES	Makefile	/^ ICAL_FILES =  .\/actions.tcl .\/alarm.tcl .\/apptlist.tcl .\/canvsup.tcl .\/dateeditor.tcl .\/dayview.tcl .\/dg_alarms.tcl .\/dg_item.tcl .\/dg_key.tcl .\/dg_monthr.tcl .\/dg_print.tcl .\/dg_range.tcl .\/dg_wdays.tcl .\/help.tcl .\/ical_text.tcl .\/ical_x.tcl .\/io.tcl .\/itemlist.tcl .\/itemwindow.tcl .\/link.tcl .\/listing.tcl .\/notelist.tcl .\/parse.tcl .\/pref.tcl .\/print.tcl .\/startup.tcl .\/support.tcl .\/timerange.tcl .\/trigger.tcl$/;"	m
+ICAL_PATCH_LEVEL	patchlevel.h	/^#define ICAL_PATCH_LEVEL /;"	d
+ILIBDIR	Makefile	/^      ILIBDIR = $(LIBDIR)\/ical\/v3.0$/;"	m
+INSTALL	Makefile	/^      INSTALL = \/usr\/bin\/install -c$/;"	m
+INSTALL_DATA	Makefile	/^ INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INT_TOKEN	time/parse.C	/^    INT_TOKEN,$/;"	e	enum:Token_Type	file:
+ISet	types/testhash.C	/^typedef IntSet ISet;$/;"	t	file:
+ISet_Elements	types/testhash.C	/^typedef IntSet::Elements ISet_Elements;$/;"	t	file:
+Ical_Doc	help.tcl	/^class Ical_Doc {doc} {$/;"	c
+Ical_Init	main.C	/^int Ical_Init(Tcl_Interp* tcl) {$/;"	f
+Include	calendar/calendar.C	/^void Calendar::Include(char const* name) {$/;"	f	class:Calendar
+Index	calendar/lexer.h	/^inline int Lexer::Index() {$/;"	f	class:Lexer
+Index	time/Month.h	/^inline int Month::Index() const {$/;"	f	class:Month
+Index	time/WeekDay.h	/^inline int WeekDay::Index() const {$/;"	f	class:WeekDay
+Initialize	time/Time.C	/^void Time::Initialize() {$/;"	f	class:Time
+Insert	calendar/smallintset.h	/^inline void SmallIntSet::Insert(unsigned int x) {$/;"	f	class:SmallIntSet
+IntMapRep	types/testmap.C	/^    IntMapRep(int entries) {$/;"	f	class:IntMapRep
+IntMapRep	types/testmap.C	/^class IntMapRep {$/;"	c	file:
+IsDone	calendar/item.h	/^    int IsDone() const { return done; }$/;"	f	class:Item
+IsLeap	time/Year.h	/^inline int Year::IsLeap(int y) {$/;"	f	class:Year
+IsMine	calendar/item.h	/^    int IsMine() const { strcmp(my_name(), owner) == 0; }$/;"	f	class:Item
+IsModified	calendar/calfile.h	/^inline int CalFile::IsModified() {$/;"	f	class:CalFile
+IsTodo	calendar/item.h	/^    int IsTodo() const { return todo; }$/;"	f	class:Item
+IsUidPersistent	calendar/item.h	/^    int IsUidPersistent() const { return uid_persistent; }$/;"	f	class:Item
+Item	calendar/item.C	/^Item::Item() {$/;"	f	class:Item
+Item	calendar/item.h	/^class Item {$/;"	c
+ItemListing	itemlist.tcl	/^class ItemListing {} {$/;"	c
+ItemMapRep	calendar/itemmap.h	/^    ItemMapRep(int entries) {$/;"	f	class:ItemMapRep
+ItemMapRep	calendar/itemmap.h	/^class ItemMapRep {$/;"	c
+ItemWindow	itemwindow.tcl	/^class ItemWindow {canvas font item date} {$/;"	c
+Item_OldDates	calendar/item.C	/^struct Item_OldDates {$/;"	s	file:
+Item_Tcl	item_tcl.C	/^Item_Tcl::Item_Tcl(Tcl_Interp* tcl, Item* i, CalFile* c)$/;"	f	class:Item_Tcl
+Item_Tcl	item_tcl.h	/^class Item_Tcl : public Object {$/;"	c
+January	time/Month.h	/^inline Month Month::January() {$/;"	f	class:Month
+July	time/Month.h	/^inline Month Month::July() {$/;"	f	class:Month
+June	time/Month.h	/^inline Month Month::June() {$/;"	f	class:Month
+LAST_TOKEN	time/parse.C	/^    LAST_TOKEN$/;"	e	enum:Token_Type	file:
+LAST_YEAR	time/Year.C	/^#define LAST_YEAR /;"	d	file:
+LIB	calendar/Makefile	/^        LIB = libcalendar.a$/;"	m
+LIB1	Makefile	/^       LIB1 = calendar\/libcalendar.a$/;"	m
+LIB2	Makefile	/^       LIB2 = time\/libtime.a$/;"	m
+LIB3	Makefile	/^       LIB3 = types\/libtypes.a$/;"	m
+LIB4	Makefile	/^       LIB4 = -L\/usr\/lib64 -ltk8.4 -L\/usr\/lib64 -ltcl8.4${TCL_DBGX}$/;"	m
+LIBDIR	Makefile	/^       LIBDIR = $(prefix)\/lib$/;"	m
+LIBS	Makefile	/^       LIBS = $(LIB1) $(LIB2) $(LIB3) $(LIB4) $(EXTRALIBS) $(X_LIBS)$/;"	m
+LIB_FILES	Makefile	/^  LIB_FILES =  .\/tcllib\/canvas.tcl .\/tcllib\/class.tcl .\/tcllib\/dg_bug.tcl .\/tcllib\/dg_error.tcl .\/tcllib\/dg_file.tcl .\/tcllib\/dg_num.tcl .\/tcllib\/dg_string.tcl .\/tcllib\/dg_yn.tcl .\/tcllib\/dg_ync.tcl .\/tcllib\/filesel.tcl .\/tcllib\/hooks.tcl .\/tcllib\/key.tcl .\/tcllib\/label.tcl .\/tcllib\/menus.tcl .\/tcllib\/ruler.tcl .\/tcllib\/support.tcl .\/tcllib\/textwin.tcl$/;"	m
+LN_S	Makefile	/^         LN_S = ln -s$/;"	m
+Last	time/Date.C	/^Date Date::Last() {$/;"	f	class:Date
+Last	time/Month.h	/^inline Month Month::Last() {$/;"	f	class:Month
+Last	time/WeekDay.h	/^inline WeekDay WeekDay::Last() {$/;"	f	class:WeekDay
+Last	time/Year.h	/^inline int Year::Last() {$/;"	f	class:Year
+LastError	calendar/calfile.h	/^inline const char* CalFile::LastError() {$/;"	f	class:CalFile
+LastError	calendar/lexer.h	/^inline char const* Lexer::LastError() {$/;"	f	class:Lexer
+LeapOffset	time/Month.h	/^inline int Month::LeapOffset() const {$/;"	f	class:Month
+LeapSize	time/Month.h	/^inline int Month::LeapSize() const {$/;"	f	class:Month
+Lexer	calendar/lexer.C	/^Lexer::Lexer(char const* file) {$/;"	f	class:Lexer
+Lexer	calendar/lexer.C	/^Lexer::Lexer(charArray* text) {$/;"	f	class:Lexer
+Lexer	calendar/lexer.h	/^class Lexer {$/;"	c
+LongMapRep	types/longmap.h	/^    LongMapRep(int entries) {$/;"	f	class:LongMapRep
+LongMapRep	types/longmap.h	/^class LongMapRep {$/;"	c
+MAKE_BITMAP	main.C	/^#define MAKE_BITMAP(/;"	d	file:
+MANDIR	Makefile	/^       MANDIR = $(prefix)\/man$/;"	m
+MAXHOSTNAMELEN	calendar/uid.C	/^#define MAXHOSTNAMELEN /;"	d	file:
+MEASURE_MAP	types/timemap.C	/^#define MEASURE_MAP$/;"	d	file:
+MEASURE_SET	types/timemap.C	/^#define MEASURE_SET$/;"	d	file:
+MIDNIGHT_TOKEN	time/parse.C	/^    MIDNIGHT_TOKEN,$/;"	e	enum:Token_Type	file:
+MKDIR	Makefile	/^        MKDIR = mkdir$/;"	m
+MONTH_TOKEN	time/parse.C	/^    MONTH_TOKEN,$/;"	e	enum:Token_Type	file:
+MType	calendar/dateset.C	/^enum MType {$/;"	g	file:
+MakeOwner	calendar/item.h	/^    void MakeOwner() { SetOwner(my_name()); }$/;"	f	class:Item
+March	time/Month.h	/^inline Month Month::March() {$/;"	f	class:Month
+MarkDeleted	calendar/item.h	/^    void MarkDeleted() { deleted = 1; }$/;"	f	class:Item
+May	time/Month.h	/^inline Month Month::May() {$/;"	f	class:Month
+Member	calendar/smallintset.h	/^inline int SmallIntSet::Member(unsigned int x) const {$/;"	f	class:SmallIntSet
+MicroSecond	time/Time.h	/^inline Duration Duration::MicroSecond() {$/;"	f	class:Duration
+MicroSeconds	time/Time.h	/^inline double Duration::MicroSeconds() const {$/;"	f	class:Duration
+MilliSecond	time/Time.h	/^inline Duration Duration::MilliSecond() {$/;"	f	class:Duration
+MilliSeconds	time/Time.h	/^inline double Duration::MilliSeconds() const {$/;"	f	class:Duration
+Minute	time/Time.h	/^inline Duration Duration::Minute() {$/;"	f	class:Duration
+Minutes	time/Time.h	/^inline double Duration::Minutes() const {$/;"	f	class:Duration
+Modified	calendar/calfile.C	/^void CalFile::Modified() {$/;"	f	class:CalFile
+Monday	time/WeekDay.h	/^inline WeekDay WeekDay::Monday() {$/;"	f	class:WeekDay
+Month	time/Month.h	/^class Month {$/;"	c
+Month	time/Month.h	/^inline Month::Month() { }$/;"	f	class:Month
+Month	time/Month.h	/^inline Month::Month(Month const& x) {$/;"	f	class:Month
+Month	time/Month.h	/^inline Month::Month(int number) {$/;"	f	class:Month
+MonthBasedDateSetRep	calendar/dateset.C	/^MonthBasedDateSetRep::MonthBasedDateSetRep(int c, int i, Date a, MType t,$/;"	f	class:MonthBasedDateSetRep
+MonthBasedDateSetRep	calendar/dateset.C	/^class MonthBasedDateSetRep : public DateSetRep {$/;"	c	file:
+MonthDateSetRep	calendar/dateset.C	/^MonthDateSetRep::MonthDateSetRep(int i, Date a)$/;"	f	class:MonthDateSetRep
+MonthDateSetRep	calendar/dateset.C	/^class MonthDateSetRep : public MonthBasedDateSetRep {$/;"	c	file:
+MonthSetDateSetRep	calendar/dateset.C	/^MonthSetDateSetRep::MonthSetDateSetRep(SmallIntSet d, SmallIntSet m) {$/;"	f	class:MonthSetDateSetRep
+MonthSetDateSetRep	calendar/dateset.C	/^class MonthSetDateSetRep : public DateSetRep {$/;"	c	file:
+Monthly	calendar/dateset.h	/^        Monthly,$/;"	e	enum:DateSet::RepeatType
+MyTcl_Init	main.C	/^#define MyTcl_Init /;"	d	file:
+MyTcl_Init	main.C	/^extern "C" int MyTcl_Init(Tcl_Interp* tcl) {$/;"	f
+NOON_TOKEN	time/parse.C	/^    NOON_TOKEN,$/;"	e	enum:Token_Type	file:
+Name	time/Month.h	/^inline char const* Month::Name() const {$/;"	f	class:Month
+Name	time/WeekDay.h	/^inline char const* WeekDay::Name() const {$/;"	f	class:WeekDay
+Next	calendar/lexer.h	/^inline int Lexer::Next(char& c) {$/;"	f	class:Lexer
+None	calendar/dateset.h	/^        None,$/;"	e	enum:DateSet::RepeatType
+NormalOffset	time/Month.h	/^inline int Month::NormalOffset() const {$/;"	f	class:Month
+NormalSize	time/Month.h	/^inline int Month::NormalSize() const {$/;"	f	class:Month
+Normalize	time/Month.C	/^void Month::Normalize() {$/;"	f	class:Month
+Normalize	time/WeekDay.C	/^void WeekDay::Normalize() {$/;"	f	class:WeekDay
+NoteList	notelist.tcl	/^class NoteList {name view} {$/;"	c
+Notice	calendar/item.h	/^    Notice()  {}$/;"	f	class:Notice
+Notice	calendar/item.h	/^class Notice : public Item {$/;"	c
+November	time/Month.h	/^inline Month Month::November() {$/;"	f	class:Month
+Now	time/Time.C	/^Time Time::Now() {$/;"	f	class:Time
+NumIncludes	calendar/calendar.C	/^int Calendar::NumIncludes() const {$/;"	f	class:Calendar
+Number	time/Month.h	/^inline int Month::Number() const {$/;"	f	class:Month
+Number	time/WeekDay.h	/^inline int WeekDay::Number() const {$/;"	f	class:WeekDay
+OBJS	Makefile	/^OBJS = cal_tcl.o dateeditor.o dispatch.o ical.o ical_tcl.o \\$/;"	m
+OBJS	time/Makefile	/^         OBJS = Date.o Month.o Time.o WeekDay.o Year.o parse.o$/;"	m
+OBJS	types/Makefile	/^         OBJS = bitvec.o hashfuncs.o intset.o$/;"	m
+OTHER_TOKEN	time/parse.C	/^    OTHER_TOKEN,$/;"	e	enum:Token_Type	file:
+Object	object.C	/^Object::Object(Tcl_Interp* t, char const* type) {$/;"	f	class:Object
+Object	object.C	/^Object::Object(Tcl_Interp* t, char const* type, char const* h) {$/;"	f	class:Object
+Object	object.h	/^class Object {$/;"	c
+Occurrence	collect.h	/^    Occurrence() { }$/;"	f	struct:Occurrence
+Occurrence	collect.h	/^    Occurrence(Occurrence const& o) {$/;"	f	struct:Occurrence
+Occurrence	collect.h	/^struct Occurrence {$/;"	s
+October	time/Month.h	/^inline Month Month::October() {$/;"	f	class:Month
+Offset	time/Month.C	/^int Month::Offset(int year) const {$/;"	f	class:Month
+Offset	time/Year.C	/^long Year::Offset(int year) {$/;"	f	class:Year
+OptionDesc	calendar/calendar.C	/^struct OptionDesc {$/;"	s	file:
+OptionMap	calendar/options.h	/^class OptionMap {$/;"	c
+OptionMap	calendar/options.h	/^inline OptionMap::OptionMap() {$/;"	f	class:OptionMap
+OptionMap_Bindings	calendar/options.h	/^typedef OptionMapRep_Bindings OptionMap_Bindings;$/;"	t
+Other	calendar/dateset.h	/^        Other$/;"	e	enum:DateSet::RepeatType
+PACKAGE_BUGREPORT	config.h	/^#define PACKAGE_BUGREPORT /;"	d
+PACKAGE_NAME	config.h	/^#define PACKAGE_NAME /;"	d
+PACKAGE_STRING	config.h	/^#define PACKAGE_STRING /;"	d
+PACKAGE_TARNAME	config.h	/^#define PACKAGE_TARNAME /;"	d
+PACKAGE_VERSION	config.h	/^#define PACKAGE_VERSION /;"	d
+Parse	calendar/item.C	/^int Appointment::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {$/;"	f	class:Appointment
+Parse	calendar/item.C	/^int Item::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {$/;"	f	class:Item
+Peek	calendar/lexer.h	/^inline int Lexer::Peek(char& c) {$/;"	f	class:Lexer
+PerformAccessCheck	calendar/calfile.C	/^void CalFile::PerformAccessCheck() {$/;"	f	class:CalFile
+PutString	calendar/lexer.C	/^void Lexer::PutString(charArray* out, char const* x) {$/;"	f	class:Lexer
+RANLIB	Makefile	/^       RANLIB = ranlib$/;"	m
+RANLIB	calendar/Makefile	/^       RANLIB = ranlib$/;"	m
+RANLIB	time/Makefile	/^       RANLIB = ranlib$/;"	m
+RANLIB	types/Makefile	/^       RANLIB = ranlib$/;"	m
+RM	Makefile	/^           RM = rm$/;"	m
+RM	calendar/Makefile	/^           RM = rm$/;"	m
+RM	time/Makefile	/^           RM = rm$/;"	m
+RM	types/Makefile	/^           RM = rm$/;"	m
+ReRead	calendar/calfile.C	/^Calendar* CalFile::ReRead() {$/;"	f	class:CalFile
+Read	calendar/calendar.C	/^int Calendar::Read(Lexer* lex) {$/;"	f	class:Calendar
+Read	calendar/calfile.C	/^int CalFile::Read() {$/;"	f	class:CalFile
+Read	calendar/item.C	/^int Item::Read(Lexer* lex) {$/;"	f	class:Item
+Read	calendar/smallintset.C	/^int SmallIntSet::Read(Lexer* lex) {$/;"	f	class:SmallIntSet
+ReadFrom	calendar/calfile.C	/^Calendar* CalFile::ReadFrom(const char* name) {$/;"	f	class:CalFile
+ReadOnly	calendar/calendar.h	/^inline int Calendar::ReadOnly() const {$/;"	f	class:Calendar
+Remove	calendar/calendar.C	/^void Calendar::Remove(Item* item) {$/;"	f	class:Calendar
+Remove	calendar/smallintset.h	/^inline void SmallIntSet::Remove(unsigned int x) {$/;"	f	class:SmallIntSet
+RemoveOption	calendar/calendar.C	/^void Calendar::RemoveOption(char const* key) {$/;"	f	class:Calendar
+RemoveOption	calendar/item.C	/^void Item::RemoveOption(char const* key) {$/;"	f	class:Item
+RepeatType	calendar/dateset.h	/^    enum RepeatType {$/;"	g	class:DateSet
+Reset	calendar/lexer.h	/^inline void Lexer::Reset(int i) {$/;"	f	class:Lexer
+Reset	types/timemap.C	/^inline void Rusage::Reset() {$/;"	f	class:Rusage
+RestrictHidden	calendar/calendar.C	/^void Calendar::RestrictHidden(UidSet const* set) {$/;"	f	class:Calendar
+Rusage	types/timemap.C	/^class Rusage {$/;"	c	file:
+Rusage	types/timemap.C	/^inline Rusage::Rusage() {$/;"	f	class:Rusage
+SHELL	Makefile	/^        SHELL = \/bin\/sh$/;"	m
+SISetLargestMember	calendar/smallintset.h	/^static const int SISetLargestMember = 31;$/;"	v
+SLASH_TOKEN	time/parse.C	/^    SLASH_TOKEN,$/;"	e	enum:Token_Type	file:
+SMALLINTSETH	calendar/smallintset.h	/^#define SMALLINTSETH$/;"	d
+S_ISLNK	calendar/statfix.h	/^#               define S_ISLNK(/;"	d
+S_ISLNK	calendar/statfix.h	/^#           define S_ISLNK(/;"	d
+S_ISLNK	calendar/statfix.h	/^#       define S_ISLNK(/;"	d
+S_ISLNK	calendar/statfix.h	/^#   undef S_ISLNK$/;"	d
+Saturday	time/WeekDay.h	/^inline WeekDay WeekDay::Saturday() {$/;"	f	class:WeekDay
+Second	time/Time.h	/^inline Duration Duration::Second() {$/;"	f	class:Duration
+Seconds	time/Time.h	/^inline double Duration::Seconds() const {$/;"	f	class:Duration
+September	time/Month.h	/^inline Month Month::September() {$/;"	f	class:Month
+SetAlarms	calendar/item.h	/^    void SetAlarms(intArray* list) {$/;"	f	class:Appointment
+SetDone	calendar/item.h	/^    void SetDone(int d) { done = todo && d; }$/;"	f	class:Item
+SetError	calendar/lexer.h	/^inline void Lexer::SetError(char const* msg) {$/;"	f	class:Lexer
+SetLength	calendar/item.h	/^    void SetLength(int l) { length = l; }$/;"	f	class:Appointment
+SetOption	calendar/calendar.C	/^void Calendar::SetOption(char const* key, char const* val) {$/;"	f	class:Calendar
+SetOption	calendar/item.C	/^void Item::SetOption(char const* key, char const* val) {$/;"	f	class:Item
+SetOwner	calendar/item.h	/^    void SetOwner(char const* o) { delete [] owner; owner = copy_string(o); }$/;"	f	class:Item
+SetReadOnly	calendar/calendar.h	/^inline void Calendar::SetReadOnly(int t) {$/;"	f	class:Calendar
+SetRemindStart	calendar/item.h	/^    void SetRemindStart(int r) { remindStart = r; }$/;"	f	class:Item
+SetStart	calendar/item.h	/^    void SetStart(int d, int s) { start = d < 0 ? s : time_to_tz(Date(d), s); }$/;"	f	class:Appointment
+SetText	calendar/item.h	/^    void SetText(const char*s) { delete [] text; text = copy_string(s); }$/;"	f	class:Item
+SetTimezone	calendar/item.h	/^    void SetTimezone(const char*tz, bool convert_remote) {$/;"	f	class:Appointment
+SetTodo	calendar/item.h	/^    void SetTodo(int t) { todo = t; if (!t) done = 0; }$/;"	f	class:Item
+ShortName	time/Month.h	/^inline char const* Month::ShortName() const {$/;"	f	class:Month
+ShortName	time/WeekDay.h	/^inline char const* WeekDay::ShortName() const {$/;"	f	class:WeekDay
+SingleDateSetRep	calendar/dateset.C	/^SingleDateSetRep::SingleDateSetRep(Date d) {$/;"	f	class:SingleDateSetRep
+SingleDateSetRep	calendar/dateset.C	/^class SingleDateSetRep : public DateSetRep {$/;"	c	file:
+SixMonthly	calendar/dateset.h	/^        SixMonthly,$/;"	e	enum:DateSet::RepeatType
+Size	calendar/calendar.C	/^int Calendar::Size() const {$/;"	f	class:Calendar
+Size	calendar/smallintset.C	/^unsigned int SmallIntSet::Size() const {$/;"	f	class:SmallIntSet
+Size	time/Month.C	/^int Month::Size(int year) const {$/;"	f	class:Month
+Size	time/Year.h	/^inline int Year::Size(int y) {$/;"	f	class:Year
+Skip	calendar/lexer.C	/^int Lexer::Skip(char const* str) {$/;"	f	class:Lexer
+Skip	calendar/lexer.h	/^inline int Lexer::Skip(char c) {$/;"	f	class:Lexer
+SkipWS	calendar/lexer.C	/^int Lexer::SkipWS() {$/;"	f	class:Lexer
+SmallIntSet	calendar/smallintset.h	/^class SmallIntSet {$/;"	c
+SmallIntSet	calendar/smallintset.h	/^inline SmallIntSet::SmallIntSet()                       { bits = 0; }$/;"	f	class:SmallIntSet
+SmallIntSet	calendar/smallintset.h	/^inline SmallIntSet::SmallIntSet(const SmallIntSet& s)   { bits = s.bits; }$/;"	f	class:SmallIntSet
+SmallIntSet	calendar/smallintset.h	/^inline SmallIntSet::SmallIntSet(unsigned long rep)      { bits = rep; }$/;"	f	class:SmallIntSet
+SplitTable1	types/tablerep.h	/^    SplitTable1(int entries) {$/;"	f	class:SplitTable1
+SplitTable1	types/tablerep.h	/^class SplitTable1 {$/;"	c
+SplitTable2	types/tablerep.h	/^    SplitTable2(int entries) {$/;"	f	class:SplitTable2
+SplitTable2	types/tablerep.h	/^class SplitTable2 {$/;"	c
+Stack	tcllib/tests/ctest.tcl	/^class Stack {} {$/;"	c
+Status	calendar/lexer.h	/^inline Lexer::StatusType Lexer::Status() {$/;"	f	class:Lexer
+StatusType	calendar/lexer.h	/^    enum StatusType {$/;"	g	class:Lexer
+StructTable1	types/tablerep.h	/^    StructTable1(int entries) {$/;"	f	class:StructTable1
+StructTable1	types/tablerep.h	/^class StructTable1 {$/;"	c
+StructTable2	types/tablerep.h	/^    StructTable2(int entries) {$/;"	f	class:StructTable2
+StructTable2	types/tablerep.h	/^class StructTable2 {$/;"	c
+Success	calendar/calfile.h	/^        Success,$/;"	e	enum:CalFile::CalFile_Result
+Sunday	time/WeekDay.h	/^inline WeekDay WeekDay::Sunday() {$/;"	f	class:WeekDay
+SystemTime	types/timemap.C	/^inline double Rusage::SystemTime() {$/;"	f	class:Rusage
+TCLSCRIPTS	Makefile	/^ TCLSCRIPTS =  \/usr\/lib\/tcl8.4\/auto.tcl \/usr\/lib\/tcl8.4\/history.tcl \/usr\/lib\/tcl8.4\/init.tcl \/usr\/lib\/tcl8.4\/ldAout.tcl \/usr\/lib\/tcl8.4\/package.tcl \/usr\/lib\/tcl8.4\/parray.tcl \/usr\/lib\/tcl8.4\/safe.tcl \/usr\/lib\/tcl8.4\/word.tcl$/;"	m
+TCL_Error	ical.h	/^#define TCL_Error(/;"	d
+TCL_Return	ical.h	/^#define TCL_Return(/;"	d
+TESTS	time/Makefile	/^        TESTS = testparse$/;"	m
+TESTS	types/Makefile	/^        TESTS = testarray testbv testomap testoset timemap testhash testmap\\$/;"	m
+TIMEH	time/Time.h	/^#define TIMEH$/;"	d
+TINY_BLIBS	Makefile	/^ TINY_BLIBS = $(LIBS)$/;"	m
+TKSCRIPTS	Makefile	/^  TKSCRIPTS = \/usr\/lib\/tk8.4\/tk.tcl  \/usr\/lib\/tk8.4\/bgerror.tcl \/usr\/lib\/tk8.4\/button.tcl \/usr\/lib\/tk8.4\/choosedir.tcl \/usr\/lib\/tk8.4\/clrpick.tcl \/usr\/lib\/tk8.4\/comdlg.tcl \/usr\/lib\/tk8.4\/dialog.tcl \/usr\/lib\/tk8.4\/entry.tcl \/usr\/lib\/tk8.4\/focus.tcl \/usr\/lib\/tk8.4\/listbox.tcl \/usr\/lib\/tk8.4\/menu.tcl \/usr\/lib\/tk8.4\/mkpsenc.tcl \/usr\/lib\/tk8.4\/msgbox.tcl \/usr\/lib\/tk8.4\/obsolete.tcl \/usr\/lib\/tk8.4\/optMenu.tcl \/usr\/lib\/tk8.4\/palette.tcl \/usr\/lib\/tk8.4\/panedwindow.tcl \/usr\/lib\/tk8.4\/pkgIndex.tcl \/usr\/lib\/tk8.4\/safetk.tcl \/usr\/lib\/tk8.4\/scale.tcl \/usr\/lib\/tk8.4\/scrlbar.tcl \/usr\/lib\/tk8.4\/spinbox.tcl \/usr\/lib\/tk8.4\/tearoff.tcl \/usr\/lib\/tk8.4\/text.tcl \/usr\/lib\/tk8.4\/tkfbox.tcl \/usr\/lib\/tk8.4\/unsupported.tcl \/usr\/lib\/tk8.4\/xmfbox.tcl$/;"	m
+TODAY_TOKEN	time/parse.C	/^    TODAY_TOKEN,$/;"	e	enum:Token_Type	file:
+TOMORROW_TOKEN	time/parse.C	/^    TOMORROW_TOKEN,$/;"	e	enum:Token_Type	file:
+TO_TOKEN	time/parse.C	/^    TO_TOKEN,$/;"	e	enum:Token_Type	file:
+TRUE	types/basic.h	/^#define TRUE /;"	d
+Tag	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	g	class:SplitTable1
+Tag	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	g	class:SplitTable2
+Tag	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	g	class:StructTable1
+Tag	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	g	class:StructTable2
+ThreeMonthly	calendar/dateset.h	/^        ThreeMonthly,$/;"	e	enum:DateSet::RepeatType
+ThreeWeekly	calendar/dateset.h	/^        ThreeWeekly,$/;"	e	enum:DateSet::RepeatType
+Thursday	time/WeekDay.h	/^inline WeekDay WeekDay::Thursday() {$/;"	f	class:WeekDay
+Time	time/Time.C	/^Time::Time(const struct timeval& tv) {$/;"	f	class:Time
+Time	time/Time.h	/^class Time {$/;"	c
+Time	time/Time.h	/^inline Time::Time() { }$/;"	f	class:Time
+Time	time/Time.h	/^inline Time::Time(const Time& src) {$/;"	f	class:Time
+Time	time/Time.h	/^inline Time::Time(double r) {$/;"	f	class:Time
+TkPlatformInit	main.C	/^extern "C" int TkPlatformInit(Tcl_Interp* tcl) {$/;"	f
+Today	time/Date.h	/^    static Date Today() { return Date(Time::Now()); }$/;"	f	class:Date
+Token	time/parse.C	/^struct Token {$/;"	s	file:
+Token_Type	time/parse.C	/^enum Token_Type {$/;"	g	file:
+Tuesday	time/WeekDay.h	/^inline WeekDay WeekDay::Tuesday() {$/;"	f	class:WeekDay
+TwoMonthly	calendar/dateset.h	/^        TwoMonthly,$/;"	e	enum:DateSet::RepeatType
+UserTime	types/timemap.C	/^inline double Rusage::UserTime() {$/;"	f	class:Rusage
+Valid	calendar/lexer.h	/^        Valid,$/;"	e	enum:Lexer::StatusType
+VersionMajor	calendar/version.h	/^static const int VersionMajor = 2;$/;"	v
+VersionMinor	calendar/version.h	/^static const int VersionMinor = 0;$/;"	v
+WEEKDAY_TOKEN	time/parse.C	/^    WEEKDAY_TOKEN,$/;"	e	enum:Token_Type	file:
+Wednesday	time/WeekDay.h	/^inline WeekDay WeekDay::Wednesday() {$/;"	f	class:WeekDay
+Week	time/Time.h	/^inline Duration Duration::Week() {$/;"	f	class:Duration
+WeekDay	time/WeekDay.h	/^class WeekDay {$/;"	c
+WeekDay	time/WeekDay.h	/^inline WeekDay::WeekDay() { }$/;"	f	class:WeekDay
+WeekDay	time/WeekDay.h	/^inline WeekDay::WeekDay(WeekDay const& x) {$/;"	f	class:WeekDay
+WeekDay	time/WeekDay.h	/^inline WeekDay::WeekDay(int number) {$/;"	f	class:WeekDay
+WeekSetDateSetRep	calendar/dateset.C	/^WeekSetDateSetRep::WeekSetDateSetRep(SmallIntSet d, SmallIntSet m) {$/;"	f	class:WeekSetDateSetRep
+WeekSetDateSetRep	calendar/dateset.C	/^class WeekSetDateSetRep : public DateSetRep {$/;"	c	file:
+Weekly	calendar/dateset.h	/^        Weekly,$/;"	e	enum:DateSet::RepeatType
+Weeks	time/Time.h	/^inline double Duration::Weeks() const {$/;"	f	class:Duration
+Write	calendar/calendar.C	/^void Calendar::Write(FILE* file) const {$/;"	f	class:Calendar
+Write	calendar/calfile.C	/^int CalFile::Write() {$/;"	f	class:CalFile
+Write	calendar/item.C	/^void Appointment::Write(charArray* out, int major, int minor) const {$/;"	f	class:Appointment
+Write	calendar/item.C	/^void Item::Write(charArray* out, int major, int minor) const {$/;"	f	class:Item
+Write	calendar/smallintset.C	/^void SmallIntSet::Write(charArray* out) const {$/;"	f	class:SmallIntSet
+WriteCommon	calendar/calendar.C	/^void Calendar::WriteCommon(charArray* out) const {$/;"	f	class:Calendar
+WriteInPlace	calendar/calfile.C	/^int CalFile::WriteInPlace(long mode) {$/;"	f	class:CalFile
+WriteLatestVersion	calendar/calendar.C	/^void Calendar::WriteLatestVersion(charArray* out) const {$/;"	f	class:Calendar
+WriteNew	calendar/calfile.C	/^int CalFile::WriteNew(long mode) {$/;"	f	class:CalFile
+WriteTo	calendar/calfile.C	/^int CalFile::WriteTo(Calendar* cal, const char* name) {$/;"	f	class:CalFile
+WriteV1	calendar/calendar.C	/^void Calendar::WriteV1(charArray* out) const {$/;"	f	class:Calendar
+X_CFLAGS	Makefile	/^   X_CFLAGS = $/;"	m
+X_LIBS	Makefile	/^     X_LIBS = -L\/usr\/lib64 -lX11 -ldl  -lieee -lm$/;"	m
+YESTERDAY_TOKEN	time/parse.C	/^    YESTERDAY_TOKEN,$/;"	e	enum:Token_Type	file:
+Year	time/Year.h	/^class Year {$/;"	c
+ZONE_TOKEN	time/parse.C	/^    ZONE_TOKEN,$/;"	e	enum:Token_Type	file:
+[ical_view]	actions.tcl	/^        class_kill [ical_view]$/;"	c
+_ARRAYH	types/Array.h	/^#define _ARRAYH$/;"	d
+_ARRAYS_H	calendar/arrays.h	/^#define _ARRAYS_H$/;"	d
+_BASIC_H	types/basic.h	/^#define _BASIC_H$/;"	d
+_BITVEC_H	types/bitvec.h	/^#define _BITVEC_H$/;"	d
+_CALENDARH	calendar/calendar.h	/^#define _CALENDARH$/;"	d
+_CALFILEH	calendar/calfile.h	/^#define _CALFILEH$/;"	d
+_CAL_TCL_H	cal_tcl.h	/^#define _CAL_TCL_H$/;"	d
+_COLLECT_H	collect.h	/^#define _COLLECT_H$/;"	d
+_DATEH	time/Date.h	/^#define _DATEH$/;"	d
+_DATESET_H	calendar/dateset.h	/^#define _DATESET_H$/;"	d
+_DISPATCH_H	dispatch.h	/^#define _DISPATCH_H$/;"	d
+_HANDLE_H	handle.h	/^#define _HANDLE_H$/;"	d
+_HASHFUNCS_H	types/hashfuncs.h	/^#define _HASHFUNCS_H$/;"	d
+_ICAL_H	ical.h	/^#define _ICAL_H$/;"	d
+_INTSET_H	types/intset.h	/^#define _INTSET_H$/;"	d
+_ITEMH	calendar/item.h	/^#define _ITEMH$/;"	d
+_ITEMMAP_H	calendar/itemmap.h	/^#define _ITEMMAP_H$/;"	d
+_ITEM_TCL_H	item_tcl.h	/^#define _ITEM_TCL_H$/;"	d
+_LEXERH	calendar/lexer.h	/^#define _LEXERH$/;"	d
+_LONGMAP_H	types/longmap.h	/^#define _LONGMAP_H$/;"	d
+_MISC_H	calendar/misc.h	/^#define _MISC_H$/;"	d
+_MONTHH	time/Month.h	/^#define _MONTHH$/;"	d
+_OBJECT_H	object.h	/^#define _OBJECT_H$/;"	d
+_OHASHMAP_H	types/ohashmap.h	/^#define _OHASHMAP_H$/;"	d
+_OHASHSET_H	types/ohashset.h	/^#define _OHASHSET_H$/;"	d
+_OPTIONS_H	calendar/options.h	/^#define _OPTIONS_H$/;"	d
+_PARSE_H	time/parse.h	/^#define _PARSE_H$/;"	d
+_PATCHLEVEL_H	patchlevel.h	/^#define _PATCHLEVEL_H$/;"	d
+_STATFIX_H	calendar/statfix.h	/^#define _STATFIX_H$/;"	d
+_TABLEREP_H	types/tablerep.h	/^#define _TABLEREP_H$/;"	d
+_UID_H	calendar/uid.h	/^#define _UID_H$/;"	d
+_VERSION_H	calendar/version.h	/^#define _VERSION_H$/;"	d
+_WEEKDAYH	time/WeekDay.h	/^#define _WEEKDAYH$/;"	d
+_YEARH	time/Year.h	/^#define _YEARH$/;"	d
+_fs_canonicalize	tcllib/filesel.tcl	/^proc _fs_canonicalize {n dir} {$/;"	p
+_fs_cd	tcllib/filesel.tcl	/^proc _fs_cd {n dir} {$/;"	p
+_fs_change_file	tcllib/filesel.tcl	/^proc _fs_change_file {n} {$/;"	p
+_fs_cleanup	tcllib/filesel.tcl	/^proc _fs_cleanup {n} {$/;"	p
+_fs_complete	tcllib/filesel.tcl	/^proc _fs_complete {n} {$/;"	p
+_fs_complete_slash	tcllib/filesel.tcl	/^proc _fs_complete_slash {n} {$/;"	p
+_fs_descend	tcllib/filesel.tcl	/^proc _fs_descend {dir child} {$/;"	p
+_fs_parent	tcllib/filesel.tcl	/^proc _fs_parent {n} {$/;"	p
+_fs_rescan	tcllib/filesel.tcl	/^proc _fs_rescan {n} {$/;"	p
+_fs_scroll_child	tcllib/filesel.tcl	/^proc _fs_scroll_child {n str} {$/;"	p
+_fs_setentry	tcllib/filesel.tcl	/^proc _fs_setentry {n} {$/;"	p
+_hook_$hookid	tcllib/hooks.tcl	/^    proc _hook_$hookid $argspec $body$/;"	p
+_hook_check	tcllib/hooks.tcl	/^proc _hook_check {name} {$/;"	p
+_menu_find	tcllib/menus.tcl	/^proc _menu_find {menubar title} {$/;"	p
+_o_class_create	tcllib/class.tcl	/^proc _o_class_create {C self} {$/;"	p
+action	actions.tcl	/^proc action {name enabler title formals body} {$/;"	p
+add_cal	dayview.tcl	/^    proc add_cal {menu name cmd} {$/;"	p
+add_error	cal_tcl.C	/^void Calendar_Tcl::add_error(char const* t1, char const* t2) {$/;"	f	class:Calendar_Tcl
+add_item_handles	cal_tcl.C	/^void Calendar_Tcl::add_item_handles(CalFile* cal) {$/;"	f	class:Calendar_Tcl
+advance_months	calendar/dateset.C	/^static void advance_months(Month& month, int& year, int delta) {$/;"	f	file:
+after_proc	tcllib/support.tcl	/^proc after_proc {proc code} {$/;"	p
+alarm_set	dg_alarms.tcl	/^proc alarm_set {leader label var init} {$/;"	p
+alarms	calendar/item.h	/^    intArray* alarms;           \/* Alarm times *\/$/;"	m	class:Appointment
+alarms	doc/ical.html	/^<H2><A NAME="alarms">Alarms<\/A><\/H2>$/;"	a
+alloc	types/bitvec.h	/^    int alloc;          \/\/ Number of allocated words$/;"	m	class:BitVec
+anchor	calendar/dateset.C	/^    Date        anchor;                 \/\/ Anchor date$/;"	m	class:MonthBasedDateSetRep	file:
+anchor	calendar/dateset.C	/^    Date anchor;$/;"	m	class:DayBasedDateSetRep	file:
+anchorMonth	calendar/dateset.C	/^    Month       anchorMonth;            \/\/ Anchor month$/;"	m	class:MonthBasedDateSetRep	file:
+anchorYear	calendar/dateset.C	/^    int         anchorYear;             \/\/ Anchor year$/;"	m	class:MonthBasedDateSetRep	file:
+app_init	main.C	/^static int app_init(Tcl_Interp* tcl) {$/;"	f	file:
+append-hook	tcllib/hooks.tcl	/^proc append-hook {name argspec body} {$/;"	p
+append_date	calendar/dateset.C	/^static void append_date(charArray* buffer, Date date) {$/;"	f	file:
+append_int	calendar/dateset.C	/^static void append_int(charArray* buffer, int i) {$/;"	f	file:
+append_string	calendar/misc.C	/^void append_string(charArray* cbuf, char const* str) {$/;"	f
+appts	doc/ical.html	/^<H2><A NAME="appts">Appointments<\/A><\/H2>$/;"	a
+as_func_failure	configure	/^as_func_failure () {$/;"	f
+as_func_failure	types/configure	/^as_func_failure () {$/;"	f
+as_func_ret_failure	configure	/^as_func_ret_failure () {$/;"	f
+as_func_ret_failure	types/configure	/^as_func_ret_failure () {$/;"	f
+as_func_ret_success	configure	/^as_func_ret_success () {$/;"	f
+as_func_ret_success	types/configure	/^as_func_ret_success () {$/;"	f
+as_func_success	configure	/^as_func_success () {$/;"	f
+as_func_success	types/configure	/^as_func_success () {$/;"	f
+as_help_toggle	dg_alarms.tcl	/^proc as_help_toggle {} {$/;"	p
+as_interact	dg_alarms.tcl	/^proc as_interact {leader label init} {$/;"	p
+as_make	dg_alarms.tcl	/^proc as_make {} {$/;"	p
+attach_vscrollbar	tcllib/label.tcl	/^proc attach_vscrollbar {w {side right}} {$/;"	p
+backupName	calendar/calfile.h	/^    char* backupName;           \/* Backup file name *\/$/;"	m	class:CalFile
+backup_file	calendar/calfile.C	/^static int backup_file(char const* src, char const* dst, long mode) {$/;"	f	file:
+backward	calendar/dateset.C	/^    int         backward;               \/\/ Search from end of month?$/;"	m	class:MonthBasedDateSetRep	file:
+before_proc	tcllib/support.tcl	/^proc before_proc {proc code} {$/;"	p
+bgerror	ical_x.tcl	/^proc bgerror {message} {$/;"	p
+bind	handle.C	/^void HandleTable::bind(char* handle, void* object) {$/;"	f	class:HandleTable
+bind_icon_window	contrib/calicon.tcl	/^proc bind_icon_window { view } {$/;"	p
+bindings	calendar/options.h	/^inline OptionMap_Bindings OptionMap::bindings() const {$/;"	f	class:OptionMap
+bits	calendar/smallintset.h	/^    unsigned long bits;$/;"	m	class:SmallIntSet
+bitvword	types/bitvec.h	/^typedef unsigned long int bitvword;$/;"	t
+black_box	types/testhash.C	/^static void black_box() {$/;"	f	file:
+black_box	types/testmap.C	/^static void black_box() {$/;"	f	file:
+black_box	types/testomap.C	/^static void black_box() {$/;"	f	file:
+black_box	types/testoset.C	/^static void black_box() {$/;"	f	file:
+black_empty	types/testhash.C	/^static void black_empty() {$/;"	f	file:
+black_empty	types/testmap.C	/^static void black_empty() {$/;"	f	file:
+black_empty	types/testomap.C	/^static void black_empty() {$/;"	f	file:
+black_empty	types/testoset.C	/^static void black_empty() {$/;"	f	file:
+black_multiple	types/testhash.C	/^static void black_multiple() {$/;"	f	file:
+black_multiple	types/testmap.C	/^static void black_multiple() {$/;"	f	file:
+black_multiple	types/testomap.C	/^static void black_multiple() {$/;"	f	file:
+black_multiple	types/testoset.C	/^static void black_multiple() {$/;"	f	file:
+black_single	types/testhash.C	/^static void black_single() {$/;"	f	file:
+black_single	types/testmap.C	/^static void black_single() {$/;"	f	file:
+black_single	types/testomap.C	/^static void black_single() {$/;"	f	file:
+black_single	types/testoset.C	/^static void black_single() {$/;"	f	file:
+bool	types/basic.h	/^#define bool /;"	d
+bool	types/basic.h	/^typedef unsigned char bool;$/;"	t
+buf	calendar/lexer.h	/^    char*       buf;            \/* Contents of entire file *\/$/;"	m	class:Lexer
+bug_extract	tcllib/dg_bug.tcl	/^proc bug_extract {} {$/;"	p
+bug_interact	tcllib/dg_bug.tcl	/^proc bug_interact {mailer email message} {$/;"	p
+bug_mail1	tcllib/dg_bug.tcl	/^proc bug_mail1 {mailer email text} {$/;"	p
+bug_mail2	tcllib/dg_bug.tcl	/^proc bug_mail2 {mailer email text} {$/;"	p
+bug_make	tcllib/dg_bug.tcl	/^proc bug_make {} {$/;"	p
+bug_notify	tcllib/dg_bug.tcl	/^proc bug_notify {mailer email message} {$/;"	p
+bug_save	tcllib/dg_bug.tcl	/^proc bug_save {email text} {$/;"	p
+bug_textwin	tcllib/dg_bug.tcl	/^proc bug_textwin {w l} {$/;"	p
+build_date	time/parse.C	/^static int build_date(int m, int d, int y, Date& result) {$/;"	f	file:
+build_time_range	timerange.tcl	/^proc build_time_range {w gvar} {$/;"	p
+cache	calendar/item.h	/^    } cache;$/;"	m	class:Appointment	typeref:struct:Appointment::__anon1
+cal	item_tcl.h	/^    CalFile* cal;       \/\/ Associated calendar$/;"	m	class:Item_Tcl
+cal2file	cal_tcl.C	/^CalFile* Calendar_Tcl::cal2file(Calendar* c) {$/;"	f	class:Calendar_Tcl
+cal_add	cal_tcl.C	/^static int cal_add(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_delete	cal_tcl.C	/^static int cal_delete(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_dirty	cal_tcl.C	/^static int cal_dirty(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_doption	cal_tcl.C	/^static int cal_doption(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f	file:
+cal_exclude	cal_tcl.C	/^static int cal_exclude(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_forincs	cal_tcl.C	/^static int cal_forincs(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_hide	cal_tcl.C	/^static int cal_hide(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_incal	cal_tcl.C	/^static int cal_incal(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_include	cal_tcl.C	/^static int cal_include(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_listing	cal_tcl.C	/^static int cal_listing(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_loop	cal_tcl.C	/^static int cal_loop(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_loopb	cal_tcl.C	/^static int cal_loopb(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_loopf	cal_tcl.C	/^static int cal_loopf(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_main	cal_tcl.C	/^static int cal_main(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_option	cal_tcl.C	/^static int cal_option(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f	file:
+cal_query	cal_tcl.C	/^static int cal_query(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_remove	cal_tcl.C	/^static int cal_remove(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_reread	cal_tcl.C	/^static int cal_reread(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_ronly	cal_tcl.C	/^static int cal_ronly(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_save	cal_tcl.C	/^static int cal_save(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+cal_stale	cal_tcl.C	/^static int cal_stale(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]){$/;"	f	file:
+calendar	calendar/calfile.h	/^    Calendar* calendar;         \/* Volatile calendar state *\/$/;"	m	class:CalFile
+calendar	item_tcl.h	/^inline CalFile* Item_Tcl::calendar() {$/;"	f	class:Item_Tcl
+calendar_dispatch	cal_tcl.C	/^static Dispatch_Entry calendar_dispatch[] = {$/;"	v	file:
+calendar_file	doc/ical.html	/^<H1><A NAME=calendar_file>Calendar Files<\/A><\/H1>$/;"	a
+canvas_intersect_tags	canvsup.tcl	/^proc canvas_intersect_tags {c tag1 tag2 newtag} {$/;"	p
+canvas_lineend	canvsup.tcl	/^proc canvas_lineend {c x i} {$/;"	p
+canvas_linestart	canvsup.tcl	/^proc canvas_linestart {c x i} {$/;"	p
+cfile1	tests/cfile.tcl	/^proc cfile1 {} {$/;"	p
+cfile2	tests/cfile.tcl	/^proc cfile2 {} {$/;"	p
+cfile3	tests/cfile.tcl	/^proc cfile3 {} {$/;"	p
+cfile4	tests/cfile.tcl	/^proc cfile4 {} {$/;"	p
+cfile5	tests/cfile.tcl	/^proc cfile5 {} {$/;"	p
+cfile6	tests/cfile.tcl	/^proc cfile6 {} {$/;"	p
+cfile7	tests/cfile.tcl	/^proc cfile7 {} {$/;"	p
+cfile8	tests/cfile.tcl	/^proc cfile8 {} {$/;"	p
+cfile9	tests/cfile.tcl	/^proc cfile9 {} {$/;"	p
+cfile_tests	tests/cfile.tcl	/^proc cfile_tests {} {$/;"	p
+check	types/htable_p.h	/^void HTABLE::check() const {$/;"	f	class:HTABLE
+check	types/testhash.C	/^static void check(ISet& s) {s.check();}$/;"	f	file:
+check	types/testhash.C	/^static void check(ISet& s) {}$/;"	f	file:
+check_calendar	tests/cfile.tcl	/^proc check_calendar {fname propvalue} {$/;"	p
+check_del_iter	types/testmap.C	/^static void check_del_iter(const IMap& m) {$/;"	f	file:
+check_del_iter	types/testomap.C	/^static void check_del_iter(const IMap& m) {$/;"	f	file:
+check_del_iter	types/testoset.C	/^static void check_del_iter(const ISet& m) {$/;"	f	file:
+check_enlarge	types/htable_p.h	/^void HTABLE::check_enlarge() {$/;"	f	class:HTABLE
+check_ops	types/testbv.C	/^static void check_ops(int size) {$/;"	f	file:
+check_permission	item_tcl.C	/^static int check_permission(Tcl_Interp* tcl, Item_Tcl* item) {$/;"	f	file:
+class	tcllib/class.tcl	/^proc class {name arglist body} {$/;"	p
+class_kill	tcllib/class.tcl	/^proc class_kill {object} {$/;"	p
+cleanup	release	/^sub cleanup {$/;"	s
+cleanup_tests	tests/scaffold.tcl	/^proc cleanup_tests {} {$/;"	p
+clear	calendar/calendar.C	/^void Calendar::clear() {$/;"	f	class:Calendar
+clear	calendar/itemmap.h	/^    inline void clear(int i) {$/;"	f	class:ItemMapRep
+clear	types/bitvec.C	/^void BitVec::clear() {$/;"	f	class:BitVec
+clear	types/bitvec.h	/^inline void BitVec::clear(int i) {$/;"	f	class:BitVec
+clear	types/htable_p.h	/^void HTABLE::clear() {$/;"	f	class:HTABLE
+clear	types/longmap.h	/^    inline void clear(int i)            { list[i].key = LONG_MIN; }$/;"	f	class:LongMapRep
+clear	types/tablerep.h	/^    inline void clear(int i)            { table[i].tag = empty; }$/;"	f	class:StructTable1
+clear	types/tablerep.h	/^    inline void clear(int i)            { table[i].tag = empty; }$/;"	f	class:StructTable2
+clear	types/tablerep.h	/^    inline void clear(int i)            { tag[i] = empty; }$/;"	f	class:SplitTable1
+clear	types/tablerep.h	/^    inline void clear(int i)            { tag[i] = empty; }$/;"	f	class:SplitTable2
+clear	types/testmap.C	/^    inline void clear(int i)            { list[i].key = empty; }$/;"	f	class:IntMapRep
+clear_error	cal_tcl.C	/^void Calendar_Tcl::clear_error() {$/;"	f	class:Calendar_Tcl
+closer	calendar/calendar.C	/^static const char closer = ']';$/;"	v	file:
+closer	calendar/item.C	/^static const char closer = ']';$/;"	v	file:
+cmp_int	types/hashfuncs.h	/^#define cmp_int(/;"	d
+cmp_ptr	types/hashfuncs.h	/^#define cmp_ptr(/;"	d
+cmp_string	types/hashfuncs.h	/^#define cmp_string(/;"	d
+cmp_string_lowercase	types/hashfuncs.h	/^#define cmp_string_lowercase(/;"	d
+collect_all	ical.C	/^void collect_all(Calendar_Tcl* cal, ItemList& list) {$/;"	f
+collect_calendar	ical.C	/^void collect_calendar(Calendar_Tcl* cal, Calendar* calendar, ItemList& list) {$/;"	f
+collect_occurrences	ical.C	/^void collect_occurrences(Calendar_Tcl* cal, ItemList const& items,$/;"	f
+color_exists	tcllib/support.tcl	/^proc color_exists {color} {$/;"	p
+command	dispatch.h	/^    char const* command;        \/* Sub-command to dispatch on *\/$/;"	m	struct:Dispatch_Entry
+compare	calendar/dstest.C	/^static void compare(DateSet const& d1, DateSet const& d2) {$/;"	f	file:
+compare	types/testarray.C	/^static void compare(array& a1, array& a2) {$/;"	f	file:
+compare	types/testarray.C	/^static void compare(int i1, int i2) {$/;"	f	file:
+compare	types/testhash.C	/^static int compare(ISet& m1, ISet& m2) {$/;"	f	file:
+compare	types/testmap.C	/^static int compare(IMap& m1, IMap& m2) {$/;"	f	file:
+compare	types/testomap.C	/^static int compare(IMap& m1, IMap& m2) {$/;"	f	file:
+compare	types/testoset.C	/^static int compare(ISet& m1, ISet& m2) {$/;"	f	file:
+contains	calendar/dateset.C	/^int DateSet::contains(Date d) const {$/;"	f	class:DateSet
+contains	calendar/dateset.C	/^int DayBasedDateSetRep::contains(Date d) const {$/;"	f	class:DayBasedDateSetRep
+contains	calendar/dateset.C	/^int EmptyDateSetRep::contains(Date) const {$/;"	f	class:EmptyDateSetRep
+contains	calendar/dateset.C	/^int MonthBasedDateSetRep::contains(Date d) const {$/;"	f	class:MonthBasedDateSetRep
+contains	calendar/dateset.C	/^int MonthSetDateSetRep::contains(Date date) const {$/;"	f	class:MonthSetDateSetRep
+contains	calendar/dateset.C	/^int SingleDateSetRep::contains(Date d) const {$/;"	f	class:SingleDateSetRep
+contains	calendar/dateset.C	/^int WeekSetDateSetRep::contains(Date date) const {$/;"	f	class:WeekSetDateSetRep
+contains	calendar/item.C	/^int Appointment::contains(Date d) const {$/;"	f	class:Appointment
+contains	calendar/item.C	/^int Item::contains(Date d) const {$/;"	f	class:Item
+contains	calendar/options.h	/^inline bool OptionMap::contains(char const* key) const {$/;"	f	class:OptionMap
+contains	dateeditor.C	/^static int contains(HiliteList const& list, char const* hilite) {$/;"	f	file:
+contains	types/htable_p.h	/^int HTABLE::contains(HKEY x) const {$/;"	f	class:HTABLE
+contains_date	calendar/dateset.C	/^static int contains_date(DateList const& list, Date d) {$/;"	f	file:
+convert_tz	calendar/item.C	/^void Appointment::convert_tz(Date &d, int &min, bool to_tz) const {$/;"	f	class:Appointment
+copt1	tests/coption.tcl	/^proc copt1 {} {$/;"	p
+copt2	tests/coption.tcl	/^proc copt2 {} {$/;"	p
+copt3	tests/coption.tcl	/^proc copt3 {} {$/;"	p
+copt4	tests/coption.tcl	/^proc copt4 {} {$/;"	p
+copt_tests	tests/coption.tcl	/^proc copt_tests {} {$/;"	p
+copy	calendar/dateset.C	/^DateSetRep* DayBasedDateSetRep::copy() const {$/;"	f	class:DayBasedDateSetRep
+copy	calendar/dateset.C	/^DateSetRep* EmptyDateSetRep::copy() const {$/;"	f	class:EmptyDateSetRep
+copy	calendar/dateset.C	/^DateSetRep* MonthBasedDateSetRep::copy() const {$/;"	f	class:MonthBasedDateSetRep
+copy	calendar/dateset.C	/^DateSetRep* MonthDateSetRep::copy() const {$/;"	f	class:MonthDateSetRep
+copy	calendar/dateset.C	/^DateSetRep* MonthSetDateSetRep::copy() const {$/;"	f	class:MonthSetDateSetRep
+copy	calendar/dateset.C	/^DateSetRep* SingleDateSetRep::copy() const {$/;"	f	class:SingleDateSetRep
+copy	calendar/dateset.C	/^DateSetRep* WeekSetDateSetRep::copy() const {$/;"	f	class:WeekSetDateSetRep
+copy	types/testhash.C	/^static void copy(ISet& m1, ISet& m2) {$/;"	f	file:
+copy	types/testmap.C	/^static void copy(IMap& m1, IMap& m2) {$/;"	f	file:
+copy	types/testomap.C	/^static void copy(IMap& m1, IMap& m2) {$/;"	f	file:
+copy	types/testoset.C	/^static void copy(ISet& m1, ISet& m2) {$/;"	f	file:
+copy_file	calendar/misc.C	/^int copy_file(char const* src, char const* dst) {$/;"	f
+copy_string	calendar/misc.C	/^char* copy_string(char const* str) {$/;"	f
+count	calendar/dateset.C	/^    int         count;                  \/\/ Count of days|workdays|weeks$/;"	m	class:MonthBasedDateSetRep	file:
+count	types/htable.h	/^    unsigned int  count;                \/\/ Total # of full entries$/;"	m	class:HTABLE
+count	types/timemap.C	/^static const int count = 100000;$/;"	v	file:
+count_ranges	calendar/dateset.C	/^static int count_ranges(SmallIntSet set) {$/;"	f	file:
+create-hook	tcllib/hooks.tcl	/^proc create-hook {name} {$/;"	p
+date	calendar/dateset.C	/^    Date date;          \/* Actual date *\/$/;"	m	class:SingleDateSetRep	file:
+date	calendar/item.h	/^    DateSet*    date;$/;"	m	class:Item
+date	collect.h	/^    Date      date;$/;"	m	struct:Occurrence
+date2text	listing.tcl	/^proc date2text {date} {$/;"	p
+date2text_no_weekday	listing.tcl	/^proc date2text_no_weekday {date} {$/;"	p
+date_parse	support.tcl	/^proc date_parse {spec} {$/;"	p
+datetime_to_tz	calendar/item.h	/^    void datetime_to_tz(Date &d, int &t) const$/;"	f	class:Appointment
+days	calendar/dateset.C	/^    SmallIntSet days;$/;"	m	class:MonthSetDateSetRep	file:
+days	calendar/dateset.C	/^    SmallIntSet days;$/;"	m	class:WeekSetDateSetRep	file:
+days	calendar/item.C	/^    SmallIntSet days;$/;"	m	struct:Item_OldDates	file:
+de_calc_run	dateeditor.tcl	/^proc de_calc_run {obj} {$/;"	p
+de_check	dateeditor.tcl	/^proc de_check {obj} {$/;"	p
+de_trigger_set	dateeditor.tcl	/^proc de_trigger_set {de args} {$/;"	p
+debug_date	time/testparse.C	/^static void debug_date(char const* str) {$/;"	f	file:
+debug_range	time/testparse.C	/^static void debug_range(char const* str) {$/;"	f	file:
+debug_time	time/testparse.C	/^static void debug_time(char const* str) {$/;"	f	file:
+declareArray	types/Array.h	/^#define declareArray(/;"	d
+declareArrayType	types/Array.h	/^#define declareArrayType(/;"	d
+declareOpenHashMap	types/ohashmap.h	/^#define declareOpenHashMap(/;"	d
+declareOpenHashSet	types/ohashset.h	/^#define declareOpenHashSet(/;"	d
+declareUncheckedArray	types/Array.h	/^#define declareUncheckedArray(/;"	d
+defaultRemindStart	calendar/item.C	/^const int Item::defaultRemindStart = 1;$/;"	m	class:Item	file:
+defaultRemindStart	calendar/item.h	/^    static const int defaultRemindStart;$/;"	m	class:Item
+define_key	dg_key.tcl	/^proc define_key {leader var} {$/;"	p
+defkey_changed_command	dg_key.tcl	/^proc defkey_changed_command {args} {$/;"	p
+defkey_clear_key	dg_key.tcl	/^proc defkey_clear_key {} {$/;"	p
+defkey_help_toggle	dg_key.tcl	/^proc defkey_help_toggle {} {$/;"	p
+defkey_interact	dg_key.tcl	/^proc defkey_interact {leader} {$/;"	p
+defkey_make	dg_key.tcl	/^proc defkey_make {} {$/;"	p
+defkey_select_command	dg_key.tcl	/^proc defkey_select_command {} {$/;"	p
+del	types/htable_p.h	/^void HTABLE::Elements::del() {$/;"	f	class:HTABLE::Elements
+del	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:SplitTable1::Tag
+del	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:SplitTable2::Tag
+del	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:StructTable1::Tag
+del	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:StructTable2::Tag
+del	types/testmap.C	/^    enum { empty = INT_MIN, del = INT_MIN+1, full = INT_MIN+2 };$/;"	e	enum:IntMapRep::__anon2	file:
+delcount	types/htable.h	/^    unsigned int  delcount;             \/\/ Number of deleted entries$/;"	m	class:HTABLE
+deleteList	calendar/item.C	/^    DateList    deleteList;$/;"	m	struct:Item_OldDates	file:
+delete_icon_window	contrib/calicon.tcl	/^proc delete_icon_window { view } {$/;"	p
+delete_occurrence	calendar/dateset.h	/^    void delete_occurrence(Date d) { deleted.append(d); normalized = 0; }$/;"	f	class:DateSet
+delete_occurrence	calendar/item.C	/^void Item::delete_occurrence(Date d) {$/;"	f	class:Item
+deleted	calendar/dateset.C	/^    int  deleted;       \/* Has date been deleted? *\/$/;"	m	class:SingleDateSetRep	file:
+deleted	calendar/dateset.h	/^    DateList    deleted;        \/* List of deleted dates *\/$/;"	m	class:DateSet
+deleted	calendar/item.h	/^    int         deleted;$/;"	m	class:Item
+describe	calendar/dateset.C	/^void DateSet::describe(charArray* buffer) const {$/;"	f	class:DateSet
+describe	calendar/dateset.C	/^void DayBasedDateSetRep::describe(charArray* buffer) const {$/;"	f	class:DayBasedDateSetRep
+describe	calendar/dateset.C	/^void EmptyDateSetRep::describe(charArray* buffer) const {$/;"	f	class:EmptyDateSetRep
+describe	calendar/dateset.C	/^void MonthBasedDateSetRep::describe(charArray* buffer) const {$/;"	f	class:MonthBasedDateSetRep
+describe	calendar/dateset.C	/^void MonthSetDateSetRep::describe(charArray* buffer) const {$/;"	f	class:MonthSetDateSetRep
+describe	calendar/dateset.C	/^void SingleDateSetRep::describe(charArray* buffer) const {$/;"	f	class:SingleDateSetRep
+describe	calendar/dateset.C	/^void WeekSetDateSetRep::describe(charArray* buffer) const {$/;"	f	class:WeekSetDateSetRep
+describe	calendar/item.h	/^    void describe(charArray* buffer) const { date->describe(buffer); }$/;"	f	class:Item
+describe_terse	calendar/dateset.C	/^void DateSet::describe_terse(charArray* buffer) const {$/;"	f	class:DateSet
+describe_terse	calendar/dateset.C	/^void DayBasedDateSetRep::describe_terse(charArray* buffer) const {$/;"	f	class:DayBasedDateSetRep
+describe_terse	calendar/dateset.C	/^void EmptyDateSetRep::describe_terse(charArray* buffer) const {$/;"	f	class:EmptyDateSetRep
+describe_terse	calendar/dateset.C	/^void MonthBasedDateSetRep::describe_terse(charArray* buffer) const {$/;"	f	class:MonthBasedDateSetRep
+describe_terse	calendar/dateset.C	/^void MonthSetDateSetRep::describe_terse(charArray* buffer) const {$/;"	f	class:MonthSetDateSetRep
+describe_terse	calendar/dateset.C	/^void SingleDateSetRep::describe_terse(charArray* buffer) const {$/;"	f	class:SingleDateSetRep
+describe_terse	calendar/dateset.C	/^void WeekSetDateSetRep::describe_terse(charArray* buffer) const {$/;"	f	class:WeekSetDateSetRep
+describe_terse	calendar/item.h	/^    void describe_terse(charArray* buffer) const {date->describe_terse(buffer); }$/;"	f	class:Item
+dg_bug	tests/dialog.tcl	/^proc dg_bug {} {$/;"	p
+dg_error	tests/dialog.tcl	/^proc dg_error {} {$/;"	p
+dg_file	tests/dialog.tcl	/^proc dg_file {} {$/;"	p
+dg_num	tests/dialog.tcl	/^proc dg_num {} {$/;"	p
+dg_string	tests/dialog.tcl	/^proc dg_string {} {$/;"	p
+dg_yn	tests/dialog.tcl	/^proc dg_yn {} {$/;"	p
+dg_ync	tests/dialog.tcl	/^proc dg_ync {} {$/;"	p
+dialog_run	tcllib/support.tcl	/^proc dialog_run {leader window var {focuswin ""}} {$/;"	p
+dialog_tests	tests/dialog.tcl	/^proc dialog_tests {} {$/;"	p
+dir	release	/^sub dir {$/;"	s
+dirName	calendar/calfile.h	/^    char* dirName;              \/* Directory name *\/$/;"	m	class:CalFile
+dleft_bits	bitmaps/dleft.xbm	/^static char dleft_bits[] = {$/;"	v	file:
+dleft_height	bitmaps/dleft.xbm	/^#define dleft_height /;"	d	file:
+dleft_width	bitmaps/dleft.xbm	/^#define dleft_width /;"	d	file:
+done	calendar/item.h	/^    int         done;$/;"	m	class:Item
+done_bits	bitmaps/done.xbm	/^static char done_bits[] = {$/;"	v	file:
+done_height	bitmaps/done.xbm	/^#define done_height /;"	d	file:
+done_width	bitmaps/done.xbm	/^#define done_width /;"	d	file:
+dr_init	dg_range.tcl	/^proc dr_init {} {$/;"	p
+dr_interact	dg_range.tcl	/^proc dr_interact {leader} {$/;"	p
+dr_validate	dg_range.tcl	/^proc dr_validate {args} {$/;"	p
+dright_bits	bitmaps/dright.xbm	/^static char dright_bits[] = {$/;"	v	file:
+dright_height	bitmaps/dright.xbm	/^#define dright_height /;"	d	file:
+dright_width	bitmaps/dright.xbm	/^#define dright_width /;"	d	file:
+edit_menu	doc/ical.html	/^<H2><A NAME="edit_menu">Edit Menu<\/A><\/H2>$/;"	a
+editing	doc/ical.html	/^<H1><A NAME="editing">Editing<\/A><\/H1>$/;"	a
+empty	calendar/dateset.C	/^int DateSet::empty() const {$/;"	f	class:DateSet
+empty	calendar/item.h	/^    int empty() const { return date->empty(); }$/;"	f	class:Item
+empty	types/bitvec.C	/^int BitVec::empty() const {$/;"	f	class:BitVec
+empty	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:SplitTable1::Tag
+empty	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:SplitTable2::Tag
+empty	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:StructTable1::Tag
+empty	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:StructTable2::Tag
+empty	types/testmap.C	/^    enum { empty = INT_MIN, del = INT_MIN+1, full = INT_MIN+2 };$/;"	e	enum:IntMapRep::__anon2	file:
+end_test	tests/scaffold.tcl	/^proc end_test {} {$/;"	p
+enlarge_size	types/htable.h	/^    unsigned int  enlarge_size;         \/\/ Resize when count bigger or equal$/;"	m	class:HTABLE
+epochRep	time/Date.C	/^int Date::epochRep = 25567; \/\/ 70*365.25$/;"	m	class:Date	file:
+epochRep	time/Date.h	/^    static int epochRep;$/;"	m	class:Date
+epochWDayIndex	time/Date.C	/^int Date::epochWDayIndex = 5;$/;"	m	class:Date	file:
+epochWDayIndex	time/Date.h	/^    static int epochWDayIndex;$/;"	m	class:Date
+error	cal_tcl.h	/^inline int Calendar_Tcl::error() {$/;"	f	class:Calendar_Tcl
+error_interact	tcllib/dg_error.tcl	/^proc error_interact {leader message title} {$/;"	p
+error_make	tcllib/dg_error.tcl	/^proc error_make {} {$/;"	p
+error_msg	cal_tcl.h	/^inline char const* Calendar_Tcl::error_msg() {$/;"	f	class:Calendar_Tcl
+error_notify	tcllib/dg_error.tcl	/^proc error_notify {leader message {title Error}} {$/;"	p
+eval_list	main.C	/^static int eval_list(Tcl_Interp* tcl, char** list) {$/;"	f	file:
+everyYear	calendar/item.C	/^    int         everyYear;$/;"	m	struct:Item_OldDates	file:
+every_minute	contrib/iconwindow.tcl	/^proc every_minute {cmd} {$/;"	p
+exec_prefix	Makefile	/^  exec_prefix = ${prefix}$/;"	m
+execute	release	/^sub execute {$/;"	s
+expect	tests/scaffold.tcl	/^proc expect {script value} {$/;"	p
+expect_error	tests/scaffold.tcl	/^proc expect_error {script error} {$/;"	p
+failed	tests/scaffold.tcl	/^proc failed {msg} {$/;"	p
+fetch	calendar/options.h	/^inline bool OptionMap::fetch(char const* key, char const*& value) const {$/;"	f	class:OptionMap
+fetch	types/testmap.C	/^char const* fetch(IMap const& m, int k) {$/;"	f
+fileName	calendar/calfile.h	/^    char* fileName;             \/* Calendar file name *\/$/;"	m	class:CalFile
+file_done_check	tcllib/dg_file.tcl	/^proc file_done_check {} {$/;"	p
+file_interact	tcllib/dg_file.tcl	/^proc file_interact {leader title message init} {$/;"	p
+file_make	tcllib/dg_file.tcl	/^proc file_make {} {$/;"	p
+file_menu	doc/ical.html	/^<H2><A NAME=file_menu>File Menu<\/A><\/H2>$/;"	a
+file_read	tcllib/support.tcl	/^proc file_read {file} {$/;"	p
+find	item_tcl.C	/^Item_Tcl* Item_Tcl::find(Item* item) {$/;"	f	class:Item_Tcl
+find	object.C	/^Object* Object::find(Tcl_Interp* tcl, char const* h) {$/;"	f	class:Object
+find	types/htable_p.h	/^int HTABLE::find(HKEY x, HVAL& result) const {$/;"	f	class:HTABLE
+find_cal	dateeditor.C	/^static Calendar_Tcl* find_cal(Tcl_Interp* tcl, char const* name) {$/;"	f	file:
+find_date	time/parse.C	/^int find_date(char const* string, Date& result, int& start, int& length) {$/;"	f
+find_in_month	calendar/dateset.C	/^int MonthBasedDateSetRep::find_in_month(Month m, int y) const {$/;"	f	class:MonthBasedDateSetRep
+find_index	types/htable_p.h	/^unsigned int HTABLE::find_index(HKEY key) const {$/;"	f	class:HTABLE
+find_timeofday	time/parse.C	/^int find_timeofday(char const* string, int& result, int& start, int& length) {$/;"	f
+find_timerange	time/parse.C	/^int find_timerange(char const* string,$/;"	f
+finish	calendar/dateset.h	/^    Date        finish;$/;"	m	class:DateSet
+first	calendar/dateset.C	/^int DateSet::first(Date& d) const {$/;"	f	class:DateSet
+first	calendar/item.C	/^int Item::first(Date& result) const {$/;"	f	class:Item
+first	time/Year.C	/^int Year::first                 = FIRST_YEAR;$/;"	m	class:Year	file:
+first	time/Year.h	/^    static int  first;$/;"	m	class:Year
+firstYear	calendar/item.C	/^    int         firstYear;$/;"	m	struct:Item_OldDates	file:
+first_century	time/Year.C	/^int Year::first_century         = FIRST_CENTURY;$/;"	m	class:Year	file:
+first_century	time/Year.h	/^    static int  first_century;$/;"	m	class:Year
+first_clear	types/bitvec.C	/^int BitVec::first_clear() const {$/;"	f	class:BitVec
+first_day_off	time/Year.C	/^long Year::first_day_off        = (long((FIRST_YEAR_OFF - 1) \/ 4) +$/;"	m	class:Year	file:
+first_day_off	time/Year.h	/^    static long first_day_off;$/;"	m	class:Year
+first_set	types/bitvec.C	/^int BitVec::first_set() const {$/;"	f	class:BitVec
+first_year_off	time/Year.C	/^int Year::first_year_off        = FIRST_YEAR_OFF;$/;"	m	class:Year	file:
+first_year_off	time/Year.h	/^    static int  first_year_off; \/* Diff between first, first_century *\/$/;"	m	class:Year
+five	types/testmap.C	/^static const char* five = "five";$/;"	v	file:
+five	types/testomap.C	/^static const char* five = "five";$/;"	v	file:
+fix_includes	cal_tcl.C	/^void Calendar_Tcl::fix_includes() {$/;"	f	class:Calendar_Tcl
+follow_file_link	link.tcl	/^proc follow_file_link {file} {$/;"	p
+follow_link	link.tcl	/^proc follow_link {uri} {$/;"	p
+font_exists	tcllib/support.tcl	/^proc font_exists {font} {$/;"	p
+format	calendar/misc.C	/^void format(charArray* cbuf, char const* format ...) {$/;"	f
+four	types/testmap.C	/^static const char* four = "four";$/;"	v	file:
+four	types/testomap.C	/^static const char* four = "four";$/;"	v	file:
+from_d	calendar/item.h	/^        Date from_d, to_d;$/;"	m	struct:Appointment::__anon1
+from_min	calendar/item.h	/^        int from_min, to_min;$/;"	m	struct:Appointment::__anon1
+fs_filename	tcllib/filesel.tcl	/^proc fs_filename {n} {$/;"	p
+fs_goto	tcllib/filesel.tcl	/^proc fs_goto {n str} {$/;"	p
+fsync	calendar/calfile.C	/^static int fsync(int) {return 0;}$/;"	f	file:
+full	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:SplitTable1::Tag
+full	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:SplitTable2::Tag
+full	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:StructTable1::Tag
+full	types/tablerep.h	/^    enum Tag { full, empty, del };$/;"	e	enum:StructTable2::Tag
+full	types/testmap.C	/^    enum { empty = INT_MIN, del = INT_MIN+1, full = INT_MIN+2 };$/;"	e	enum:IntMapRep::__anon2	file:
+get	types/bitvec.h	/^inline int BitVec::get(int i) const {$/;"	f	class:BitVec
+get	types/htable.h	/^inline int HTABLE::Elements::get(HKEY& key, HVAL& val)$/;"	f	class:HTABLE::Elements
+get_daterange	dg_range.tcl	/^proc get_daterange {leader svar fvar} {$/;"	p
+get_file_name	tcllib/dg_file.tcl	/^proc get_file_name {leader title message var {init {}}} {$/;"	p
+get_number	tcllib/dg_num.tcl	/^proc get_number {leader title label doc min max tick init var} {$/;"	p
+get_range	calendar/dateset.C	/^int DateSet::get_range(Date& s, Date& f) const {$/;"	f	class:DateSet
+get_string	tcllib/dg_string.tcl	/^proc get_string {leader title message init var} {$/;"	p
+get_time_range	timerange.tcl	/^proc get_time_range {leader msg varstart varfinish} {$/;"	p
+gethostname	gethostname.c	/^int gethostname(name, len)$/;"	f
+glass_box	types/testhash.C	/^static void glass_box() {$/;"	f	file:
+glass_box	types/testmap.C	/^static void glass_box() {$/;"	f	file:
+glass_box	types/testomap.C	/^static void glass_box() {$/;"	f	file:
+glass_box	types/testoset.C	/^static void glass_box() {$/;"	f	file:
+had_error	cal_tcl.h	/^    int had_error;$/;"	m	class:Calendar_Tcl
+handle	handle.C	/^char* HandleTable::handle(void* object) {$/;"	f	class:HandleTable
+handle	object.h	/^inline char const* Object::handle() {$/;"	f	class:Object
+handleMap	handle.h	/^    Tcl_HashTable handleMap;    \/* Map from handle to object *\/$/;"	m	class:HandleTable
+handler	dispatch.h	/^    Tcl_CmdProc* handler;$/;"	m	struct:Dispatch_Entry
+has_timezone	calendar/item.h	/^    bool has_timezone() const { return timezone[0] != '<'; }$/;"	f	class:Appointment
+hash_int	types/hashfuncs.C	/^int hash_int(int x) {$/;"	f
+hash_ptr	types/hashfuncs.C	/^int hash_ptr(void* x) {$/;"	f
+hash_string	types/hashfuncs.C	/^int hash_string(char const* x) {$/;"	f
+hash_string_lowercase	types/hashfuncs.C	/^int hash_string_lowercase(char const* x) {$/;"	f
+have_script	main.C	/^static int have_script;$/;"	v	file:
+have_tk	main.C	/^static int have_tk;$/;"	v	file:
+help_menu	doc/ical.html	/^<H2><A NAME="help_menu">Help Menu<\/A><\/H2>$/;"	a
+hidden	calendar/calendar.h	/^    UidSet*       hidden;               \/\/ Hidden items from other calendars$/;"	m	class:Calendar
+hilite	calendar/item.h	/^    char*       hilite;$/;"	m	class:Item
+home_backup_file	calendar/calfile.C	/^static char const* home_backup_file() {$/;"	f	file:
+htable_default_max_occupancy	types/htable_p.h	/^static const int htable_default_max_occupancy = 50;$/;"	v
+htable_hash	types/htable_p.h	/^inline unsigned int htable_hash(unsigned int h, unsigned int slot_bits) {$/;"	f
+htable_hash_elem	types/htable_p.h	/^inline unsigned int htable_hash_elem(HKEY x) {$/;"	f
+htable_min_occupancy_divisor	types/htable_p.h	/^static const int htable_min_occupancy_divisor = 4;$/;"	v
+ical_add_bind_breaks	support.tcl	/^proc ical_add_bind_breaks {tag} {$/;"	p
+ical_bits	bitmaps/ical.xbm	/^static char ical_bits[] = {$/;"	v	file:
+ical_bits	contrib/ical.xbm	/^static char ical_bits[] = {$/;"	v	file:
+ical_clip	actions.tcl	/^proc ical_clip {i} {$/;"	p
+ical_clipped	actions.tcl	/^proc ical_clipped {} {$/;"	p
+ical_close_view	actions.tcl	/^proc ical_close_view {window} {$/;"	p
+ical_config_menu	support.tcl	/^proc ical_config_menu {w} {$/;"	p
+ical_date	actions.tcl	/^proc ical_date {} {$/;"	p
+ical_define_key	actions.tcl	/^proc ical_define_key {key} {$/;"	p
+ical_doc_str	main.C	/^static char* ical_doc_str[] = {$/;"	v	file:
+ical_error	actions.tcl	/^proc ical_error {err} {$/;"	p
+ical_filenames	support.tcl	/^proc ical_filenames {} {$/;"	p
+ical_fill_config	dayview.tcl	/^proc ical_fill_config {menu} {$/;"	p
+ical_fill_includes	dayview.tcl	/^proc ical_fill_includes {menu action} {$/;"	p
+ical_fill_listinc	dayview.tcl	/^proc ical_fill_listinc {menu} {$/;"	p
+ical_fill_move	dayview.tcl	/^proc ical_fill_move {menu} {$/;"	p
+ical_fill_reminc	dayview.tcl	/^proc ical_fill_reminc {menu} {$/;"	p
+ical_find_selection	itemwindow.tcl	/^proc ical_find_selection {} {$/;"	p
+ical_focus	itemwindow.tcl	/^proc ical_focus {} {$/;"	p
+ical_focus_on	itemwindow.tcl	/^proc ical_focus_on {w} {$/;"	p
+ical_height	bitmaps/ical.xbm	/^#define ical_height /;"	d	file:
+ical_height	contrib/ical.xbm	/^#define ical_height /;"	d	file:
+ical_init	startup.tcl	/^proc ical_init {} {$/;"	p
+ical_init_bindings	support.tcl	/^proc ical_init_bindings {} {$/;"	p
+ical_leader	actions.tcl	/^proc ical_leader {} {$/;"	p
+ical_lib_str	main.C	/^static char* ical_lib_str[] = {$/;"	v	file:
+ical_load_file	support.tcl	/^proc ical_load_file {name} {$/;"	p
+ical_make_bindings	support.tcl	/^proc ical_make_bindings {tag bindings} {$/;"	p
+ical_no_tk_script	ical_text.tcl	/^proc ical_no_tk_script {} {$/;"	p
+ical_null_view	actions.tcl	/^proc ical_null_view {method args} {$/;"	p
+ical_parse_args	support.tcl	/^proc ical_parse_args {} {$/;"	p
+ical_parse_tk_args	support.tcl	/^proc ical_parse_tk_args {} {$/;"	p
+ical_recompute_bindings	support.tcl	/^proc ical_recompute_bindings {} {$/;"	p
+ical_reconfig_options	support.tcl	/^proc ical_reconfig_options {} {$/;"	p
+ical_select	itemwindow.tcl	/^proc ical_select {item date} {$/;"	p
+ical_set_date	actions.tcl	/^proc ical_set_date {d} {$/;"	p
+ical_startup	main.C	/^static char* ical_startup[] = {$/;"	v	file:
+ical_title	support.tcl	/^proc ical_title {calendar} {$/;"	p
+ical_tk_init	startup.tcl	/^proc ical_tk_init {} {$/;"	p
+ical_tk_script	ical_x.tcl	/^proc ical_tk_script {} {$/;"	p
+ical_unselect	itemwindow.tcl	/^proc ical_unselect {} {$/;"	p
+ical_usage	support.tcl	/^proc ical_usage {} {$/;"	p
+ical_view	actions.tcl	/^proc ical_view {} {$/;"	p
+ical_width	bitmaps/ical.xbm	/^#define ical_width /;"	d	file:
+ical_width	contrib/ical.xbm	/^#define ical_width /;"	d	file:
+ical_with_item	actions.tcl	/^proc ical_with_item {v} {$/;"	p
+ical_with_mod_item	actions.tcl	/^proc ical_with_mod_item {v} {$/;"	p
+ical_with_mod_single_item	actions.tcl	/^proc ical_with_mod_single_item {v} {$/;"	p
+ical_with_view	actions.tcl	/^proc ical_with_view {view body} {$/;"	p
+ical_xpm	contrib/ical.xpm	/^static char * ical_xpm[] = {$/;"	v	file:
+iedit_change_finish	dg_item.tcl	/^proc iedit_change_finish {n} {$/;"	p
+iedit_change_start	dg_item.tcl	/^proc iedit_change_start {n} {$/;"	p
+iedit_fill	dg_item.tcl	/^proc iedit_fill {item} {$/;"	p
+iedit_make	dg_item.tcl	/^proc iedit_make {} {$/;"	p
+iedit_make_editor	dg_item.tcl	/^proc iedit_make_editor {w label cmd} {$/;"	p
+iedit_make_tzselect	dg_item.tcl	/^proc iedit_make_tzselect {w label} {$/;"	p
+iedit_save	dg_item.tcl	/^proc iedit_save {} {$/;"	p
+implementArray	types/Array.h	/^#define implementArray(/;"	d
+implementOpenHashMap	types/ohashmap.h	/^#define implementOpenHashMap(/;"	d
+implementOpenHashSet	types/ohashset.h	/^#define implementOpenHashSet(/;"	d
+includes	cal_tcl.h	/^    FileList* includes;         \/* Included calendars *\/$/;"	m	class:Calendar_Tcl
+includes	calendar/calendar.h	/^    pointerArray& includes;             \/\/ Included calendars$/;"	m	class:Calendar
+index	calendar/lexer.h	/^    int         index;          \/* Index of next char in file *\/$/;"	m	class:Lexer
+index	types/htable.h	/^        int             index;$/;"	m	class:HTABLE::Elements
+init	object.C	/^void Object::init(Tcl_Interp* t, char const* ty, char const* h) {$/;"	f	class:Object
+init	types/bitvec.C	/^void BitVec::init(int l) {$/;"	f	class:BitVec
+init	types/htable_p.h	/^void HTABLE::init(int n) {$/;"	f	class:HTABLE
+init_tests	tests/scaffold.tcl	/^proc init_tests {} {$/;"	p
+inited	calendar/item.C	/^    int         inited;$/;"	m	struct:Item_OldDates	file:
+initialized	time/Time.C	/^int    Time::initialized = 0;   \/* Initialized yet? *\/$/;"	m	class:Time	file:
+initialized	time/Time.h	/^    static int    initialized;$/;"	m	class:Time
+insert	types/htable_p.h	/^int HTABLE::insert(HKEY key, HVAL val)$/;"	f	class:HTABLE
+interp	object.h	/^    Tcl_Interp* interp; \/* Interpreter *\/$/;"	m	class:Object
+interval	calendar/dateset.C	/^    int         interval;               \/\/ Month interval$/;"	m	class:MonthBasedDateSetRep	file:
+interval	calendar/dateset.C	/^    int interval;$/;"	m	class:DayBasedDateSetRep	file:
+invalidate	calendar/item.h	/^        void invalidate() { from_min=-1; }$/;"	f	struct:Appointment::__anon1
+invert	types/bitvec.C	/^void BitVec::invert() {$/;"	f	class:BitVec
+io_check	calendar/dstest.C	/^static void io_check(DateSet const& d) {$/;"	f	file:
+io_check1	calendar/dstest.C	/^static void io_check1 (DateSet const& d) {$/;"	f	file:
+io_loop	io.tcl	/^proc io_loop {cmd interval} {$/;"	p
+io_read	io.tcl	/^proc io_read {{leader {}}} {$/;"	p
+io_read_one	io.tcl	/^proc io_read_one {file leader} {$/;"	p
+io_save	io.tcl	/^proc io_save {{leader {}}} {$/;"	p
+io_thread	io.tcl	/^proc io_thread {} {$/;"	p
+isWeekly	calendar/item.C	/^    int         isWeekly;$/;"	m	struct:Item_OldDates	file:
+is_del	calendar/itemmap.h	/^    inline int is_del(int i) const {$/;"	f	class:ItemMapRep
+is_del	types/longmap.h	/^    inline int is_del(int i) const      { return (list[i].key == LONG_MIN+1); }$/;"	f	class:LongMapRep
+is_del	types/tablerep.h	/^    inline int is_del(int i) const      { return (table[i].tag == del); }$/;"	f	class:StructTable1
+is_del	types/tablerep.h	/^    inline int is_del(int i) const      { return (table[i].tag == del); }$/;"	f	class:StructTable2
+is_del	types/tablerep.h	/^    inline int is_del(int i) const      { return (tag[i] == del); }$/;"	f	class:SplitTable1
+is_del	types/tablerep.h	/^    inline int is_del(int i) const      { return (tag[i] == del); }$/;"	f	class:SplitTable2
+is_del	types/testmap.C	/^    inline int is_del(int i) const      { return (list[i].key == del); }$/;"	f	class:IntMapRep
+is_empty	calendar/itemmap.h	/^    inline int is_empty(int i) const {$/;"	f	class:ItemMapRep
+is_empty	types/longmap.h	/^    inline int is_empty(int i) const    { return (list[i].key == LONG_MIN); }$/;"	f	class:LongMapRep
+is_empty	types/tablerep.h	/^    inline int is_empty(int i) const    { return (table[i].tag == empty); }$/;"	f	class:StructTable1
+is_empty	types/tablerep.h	/^    inline int is_empty(int i) const    { return (table[i].tag == empty); }$/;"	f	class:StructTable2
+is_empty	types/tablerep.h	/^    inline int is_empty(int i) const    { return (tag[i] == empty); }$/;"	f	class:SplitTable1
+is_empty	types/tablerep.h	/^    inline int is_empty(int i) const    { return (tag[i] == empty); }$/;"	f	class:SplitTable2
+is_empty	types/testmap.C	/^    inline int is_empty(int i) const    { return (list[i].key == empty); }$/;"	f	class:IntMapRep
+is_full	calendar/itemmap.h	/^    inline int is_full(int i) const {$/;"	f	class:ItemMapRep
+is_full	types/longmap.h	/^    inline int is_full(int i) const     { return (list[i].key > LONG_MIN+1); }$/;"	f	class:LongMapRep
+is_full	types/tablerep.h	/^    inline int is_full(int i) const     { return (table[i].tag == full); }$/;"	f	class:StructTable1
+is_full	types/tablerep.h	/^    inline int is_full(int i) const     { return (table[i].tag == full); }$/;"	f	class:StructTable2
+is_full	types/tablerep.h	/^    inline int is_full(int i) const     { return (tag[i] == full); }$/;"	f	class:SplitTable1
+is_full	types/tablerep.h	/^    inline int is_full(int i) const     { return (tag[i] == full); }$/;"	f	class:SplitTable2
+is_full	types/testmap.C	/^    inline int is_full(int i) const     { return (list[i].key >= full); }$/;"	f	class:IntMapRep
+is_letter	calendar/lexer.C	/^static inline int is_letter(char c) {$/;"	f	file:
+is_numletter	calendar/lexer.C	/^static inline int is_numletter(char c) {$/;"	f	file:
+item	collect.h	/^    Item_Tcl* item;$/;"	m	struct:Occurrence
+item	item_tcl.h	/^    Item* item;         \/\/ Associated item$/;"	m	class:Item_Tcl
+item2text	listing.tcl	/^proc item2text {d item {header " * "} {indent "   "} {wrap 40}} {$/;"	p
+itemMap	item_tcl.C	/^static Tcl_HashTable itemMap;$/;"	v	file:
+itemMapInited	item_tcl.C	/^static int itemMapInited = 0;$/;"	v	file:
+item_alarms	item_tcl.C	/^static int item_alarms(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_cal	item_tcl.C	/^static int item_cal(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_clone	item_tcl.C	/^static int item_clone(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_cont	item_tcl.C	/^static int item_cont(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_date	item_tcl.C	/^static int item_date(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_dayr	item_tcl.C	/^static int item_dayr(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_delete	item_tcl.C	/^static int item_delete(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_desc	item_tcl.C	/^static int item_desc(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_dispatch	item_tcl.C	/^static Dispatch_Entry item_dispatch[] = {$/;"	v	file:
+item_done	item_tcl.C	/^static int item_done(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_doption	item_tcl.C	/^static int item_doption(ClientData c, Tcl_Interp* tcl, int argc,const char* argv[]) {$/;"	f	file:
+item_early	item_tcl.C	/^static int item_early(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_edit	dg_item.tcl	/^proc item_edit {leader item} {$/;"	p
+item_empty	item_tcl.C	/^static int item_empty(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_finish	item_tcl.C	/^static int item_finish(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_first	item_tcl.C	/^static int item_first(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_hilite	item_tcl.C	/^static int item_hilite(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_is	item_tcl.C	/^static int item_is(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_is_done	item_tcl.C	/^static int item_is_done(ClientData c, Tcl_Interp* tcl,int argc,const char* argv[]) {$/;"	f	file:
+item_length	item_tcl.C	/^static int item_length(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_loop	cal_tcl.C	/^static int item_loop(Tcl_Interp* tcl, Occurrences const& list,$/;"	f	file:
+item_mday	item_tcl.C	/^static int item_mday(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_menu	doc/ical.html	/^<H2><A NAME="item_menu">Item Menu<\/A><\/H2>$/;"	a
+item_mlday	item_tcl.C	/^static int item_mlday(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_mlweekday	item_tcl.C	/^static int item_mlweekday(ClientData c, Tcl_Interp* tcl,$/;"	f	file:
+item_mlworkday	item_tcl.C	/^static int item_mlworkday(ClientData c, Tcl_Interp* tcl,$/;"	f	file:
+item_monthr	item_tcl.C	/^static int item_monthr(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_mweekday	item_tcl.C	/^static int item_mweekday(ClientData c, Tcl_Interp* tcl,$/;"	f	file:
+item_mworkday	item_tcl.C	/^static int item_mworkday(ClientData c, Tcl_Interp* tcl,$/;"	f	file:
+item_next	item_tcl.C	/^static int item_next(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_ondel	item_tcl.C	/^static int item_ondel(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_option	item_tcl.C	/^static int item_option(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_own	item_tcl.C	/^static int item_own(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_owned	item_tcl.C	/^static int item_owned(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_owner	item_tcl.C	/^static int item_owner(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_parse	parse.tcl	/^proc item_parse {text {default_date ""}} {$/;"	p
+item_range	item_tcl.C	/^static int item_range(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_repeat	item_tcl.C	/^static int item_repeat(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_start	item_tcl.C	/^static int item_start(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_starttime	item_tcl.C	/^static int item_starttime(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_text	item_tcl.C	/^static int item_text(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_timezone	item_tcl.C	/^static int item_timezone(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_todo	item_tcl.C	/^static int item_todo(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_type	item_tcl.C	/^static int item_type(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_uid	item_tcl.C	/^static int item_uid(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+item_wdays	item_tcl.C	/^static int item_wdays(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {$/;"	f	file:
+items	calendar/calendar.h	/^    pointerArray& items;                \/\/ Items$/;"	m	class:Calendar
+items	doc/ical.html	/^<H1><A NAME="items">Items<\/A><\/H1>$/;"	a
+itemwindow_calendar	itemwindow.tcl	/^proc itemwindow_calendar {} {$/;"	p
+itemwindow_cut_selection	itemwindow.tcl	/^proc itemwindow_cut_selection {} {$/;"	p
+itemwindow_insert_selection	itemwindow.tcl	/^proc itemwindow_insert_selection {} {$/;"	p
+itemwindow_make_bindings	itemwindow.tcl	/^proc itemwindow_make_bindings {tag} {$/;"	p
+itemwindow_mod	itemwindow.tcl	/^proc itemwindow_mod {c args} {$/;"	p
+iteration_contains	types/testhash.C	/^static int iteration_contains(const ISet& m, int key) {$/;"	f	file:
+iteration_contains	types/testmap.C	/^static int iteration_contains(const IMap& m, int key, const char* value) {$/;"	f	file:
+iteration_contains	types/testomap.C	/^static int iteration_contains(const IMap& m, int key, const char* value) {$/;"	f	file:
+iteration_contains	types/testoset.C	/^static int iteration_contains(const ISet& m, int key) {$/;"	f	file:
+junkInt	time/Time.C	/^int    Time::junkInt = 0;$/;"	m	class:Time	file:
+junkInt	time/Time.h	/^    static int junkInt;$/;"	m	class:Time
+junk_ampm	time/parse.C	/^static int junk_ampm;$/;"	v	file:
+key	calendar/calendar.C	/^    char const* key;$/;"	m	struct:OptionDesc	file:
+key	calendar/itemmap.h	/^    inline char const* key(int i) const         { return list[i]->GetUid(); }$/;"	f	class:ItemMapRep
+key	types/longmap.h	/^        long    key;$/;"	m	struct:LongMapRep::Entry
+key	types/longmap.h	/^    inline long& key(int i) const       { return list[i].key; }$/;"	f	class:LongMapRep
+key	types/tablerep.h	/^        K       key;$/;"	m	struct:SplitTable2::Entry
+key	types/tablerep.h	/^        K       key;$/;"	m	struct:StructTable1::Entry
+key	types/tablerep.h	/^        K       key;$/;"	m	struct:StructTable2::Entry
+key	types/tablerep.h	/^    inline K& key(int i) const          { return list[i].key; }$/;"	f	class:SplitTable2
+key	types/tablerep.h	/^    inline K& key(int i) const          { return list[i]; }$/;"	f	class:SplitTable1
+key	types/tablerep.h	/^    inline K& key(int i) const          { return table[i].key; }$/;"	f	class:StructTable1
+key	types/tablerep.h	/^    inline K& key(int i) const          { return table[i].key; }$/;"	f	class:StructTable2
+key	types/testmap.C	/^        int             key;$/;"	m	struct:IntMapRep::Entry	file:
+key	types/testmap.C	/^    inline int& key(int i) const        { return list[i].key; }$/;"	f	class:IntMapRep
+key_shortform	tcllib/key.tcl	/^proc key_shortform {seq} {$/;"	p
+keyentry	tcllib/key.tcl	/^proc keyentry {n} {$/;"	p
+keyentry_get	tcllib/key.tcl	/^proc keyentry_get {n} {$/;"	p
+keyentry_key	tcllib/key.tcl	/^proc keyentry_key {name k} {$/;"	p
+keyentry_redisplay	tcllib/key.tcl	/^proc keyentry_redisplay {name} {$/;"	p
+keyentry_set	tcllib/key.tcl	/^proc keyentry_set {n value} {$/;"	p
+keys	doc/ical.html	/^<H1><A NAME="keys">Key Bindings<\/A><\/H1>$/;"	a
+kill	calendar/itemmap.h	/^    inline void kill(int i) {$/;"	f	class:ItemMapRep
+kill	types/longmap.h	/^    inline void kill(int i)             { list[i].key = LONG_MIN+1; }$/;"	f	class:LongMapRep
+kill	types/tablerep.h	/^    inline void kill(int i)             { table[i].tag = del; }$/;"	f	class:StructTable1
+kill	types/tablerep.h	/^    inline void kill(int i)             { table[i].tag = del; }$/;"	f	class:StructTable2
+kill	types/tablerep.h	/^    inline void kill(int i)             { tag[i] = del; }$/;"	f	class:SplitTable1
+kill	types/tablerep.h	/^    inline void kill(int i)             { tag[i] = del; }$/;"	f	class:SplitTable2
+kill	types/testmap.C	/^    inline void kill(int i)             { list[i].key = del; }$/;"	f	class:IntMapRep
+label_widget	tcllib/label.tcl	/^proc label_widget {widget text} {$/;"	p
+last	time/Year.C	/^int Year::last                  = LAST_YEAR;$/;"	m	class:Year	file:
+last	time/Year.h	/^    static int  last;$/;"	m	class:Year
+lastError	calendar/calfile.C	/^const char* CalFile::lastError = "no error";$/;"	m	class:CalFile	file:
+lastError	calendar/calfile.h	/^    static const char* lastError;$/;"	m	class:CalFile
+lastError	calendar/lexer.C	/^char const* Lexer::lastError = "";$/;"	m	class:Lexer	file:
+lastError	calendar/lexer.h	/^    static char const* lastError;$/;"	m	class:Lexer
+lastModifyTime	calendar/calfile.h	/^    Time  lastModifyTime;       \/* Last calendar file modify time *\/$/;"	m	class:CalFile
+lastModifyValid	calendar/calfile.h	/^    int   lastModifyValid;      \/* Is lastModifyTime valid? *\/$/;"	m	class:CalFile
+lastYear	calendar/item.C	/^    int         lastYear;$/;"	m	struct:Item_OldDates	file:
+leapOffset	time/Month.C	/^int Month::leapOffset[13] = {$/;"	m	class:Month	file:
+leapOffset	time/Month.h	/^    static int leapOffset[13];$/;"	m	class:Month
+leapSize	time/Month.C	/^int Month::leapSize[13]   = { 0,31,29,31,30,31,30,31,31,30,31,30,31 };$/;"	m	class:Month	file:
+leapSize	time/Month.h	/^    static int leapSize[13];$/;"	m	class:Month
+left_bits	bitmaps/left.xbm	/^static char left_bits[] = {$/;"	v	file:
+left_height	bitmaps/left.xbm	/^#define left_height /;"	d	file:
+left_width	bitmaps/left.xbm	/^#define left_width /;"	d	file:
+len	time/parse.C	/^    int         len;            \/\/ Length of this token$/;"	m	struct:Token	file:
+len	types/bitvec.h	/^    int len;            \/\/ Number of bits in vector$/;"	m	class:BitVec
+length	calendar/item.h	/^    int length;$/;"	m	class:Appointment
+length	calendar/lexer.h	/^    int         length;         \/* File length *\/$/;"	m	class:Lexer
+length	types/bitvec.h	/^inline int BitVec::length() const {$/;"	f	class:BitVec
+list	calendar/itemmap.h	/^    Item** list;$/;"	m	class:ItemMapRep
+list	types/longmap.h	/^    Entry* list;$/;"	m	class:LongMapRep
+list	types/tablerep.h	/^    Entry*      list;           \/\/ List of key,value pairs$/;"	m	class:SplitTable2
+list	types/tablerep.h	/^    K*          list;           \/\/ List of values$/;"	m	class:SplitTable1
+list	types/testmap.C	/^    Entry* list;$/;"	m	class:IntMapRep	file:
+list_menu	doc/ical.html	/^<H2><A NAME="list_menu">List Menu<\/A><\/H2>$/;"	a
+listing	doc/ical.html	/^<H1><A NAME=listing>Listing Items<\/A><\/H1>$/;"	a
+lremove	support.tcl	/^proc lremove {listName string} {$/;"	p
+main	cal_tcl.h	/^    CalFile*  main;             \/* Main calendar *\/$/;"	m	class:Calendar_Tcl
+main	calendar/dstest.C	/^main() {$/;"	f
+main	main.C	/^main(int argc, char* argv[]) {$/;"	f
+main	time/testparse.C	/^main() {$/;"	f
+main	types/hspeed.C	/^main(int argc, char *argv[]) {$/;"	f
+main	types/testarray.C	/^main(int argc, char* argv[]) {$/;"	f
+main	types/testbv.C	/^main() {$/;"	f
+main	types/testhash.C	/^main() {$/;"	f
+main	types/testmap.C	/^main() {$/;"	f
+main	types/testomap.C	/^main() {$/;"	f
+main	types/testoset.C	/^main() {$/;"	f
+main	types/timemap.C	/^main() {$/;"	f
+major	calendar/calendar.h	/^    int           major, minor;         \/\/ Calendar file version numbers$/;"	m	class:Calendar
+make_backup	tests/cfile.tcl	/^proc make_backup {fname} {$/;"	p
+make_buttons	tcllib/support.tcl	/^proc make_buttons {frame default spec} {$/;"	p
+make_calendar	tests/cfile.tcl	/^proc make_calendar {fname} {$/;"	p
+make_iconwindow	contrib/iconwindow.tcl	/^proc make_iconwindow {view} {$/;"	p
+make_scrolled_text	tcllib/textwin.tcl	/^proc make_scrolled_text {w} {$/;"	p
+make_selection_list	tcllib/label.tcl	/^proc make_selection_list {frame lbox label {side right}} {$/;"	p
+make_text_viewer	tcllib/textwin.tcl	/^proc make_text_viewer {title iconname} {$/;"	p
+mask	types/htable.h	/^    unsigned int  mask;                 \/\/ mask == tsize-1$/;"	m	class:HTABLE
+match_date	time/parse.C	/^static int match_date(Tokens& list, int index, Date& result) {$/;"	f	file:
+match_timeofday	time/parse.C	/^static int match_timeofday(Tokens& list, int index, int& result,$/;"	f	file:
+match_timerange	time/parse.C	/^static int match_timerange(Tokens& list, int index, int& start, int& finish) {$/;"	f	file:
+max_arg_count	dispatch.h	/^    int  max_arg_count;         \/* Maximum argument count. -1 means no max *\/$/;"	m	struct:Dispatch_Entry
+max_occupancy	types/htable.h	/^    unsigned int  max_occupancy;        \/\/ Percent maximum occupancy in table$/;"	m	class:HTABLE
+measure_array	types/timemap.C	/^static void measure_array() {$/;"	f	file:
+measure_array	types/timemap.C	/^static void measure_array() {}$/;"	f	file:
+measure_fixed	types/timemap.C	/^static void measure_fixed() {$/;"	f	file:
+measure_fixed	types/timemap.C	/^static void measure_fixed() {}$/;"	f	file:
+measure_map	types/timemap.C	/^static void measure_map() {$/;"	f	file:
+measure_map	types/timemap.C	/^static void measure_map() {}$/;"	f	file:
+measure_old_map	types/timemap.C	/^static void measure_old_map() {$/;"	f	file:
+measure_old_map	types/timemap.C	/^static void measure_old_map() {}$/;"	f	file:
+measure_old_set	types/timemap.C	/^static void measure_old_set() {$/;"	f	file:
+measure_old_set	types/timemap.C	/^static void measure_old_set() {}$/;"	f	file:
+measure_set	types/timemap.C	/^static void measure_set() {$/;"	f	file:
+measure_set	types/timemap.C	/^static void measure_set() {}$/;"	f	file:
+measure_sparse_set	types/timemap.C	/^static void measure_sparse_set() {$/;"	f	file:
+measure_sparse_set	types/timemap.C	/^static void measure_sparse_set() {}$/;"	f	file:
+measure_string_set	types/timemap.C	/^static void measure_string_set() {$/;"	f	file:
+measure_string_set	types/timemap.C	/^static void measure_string_set() {}$/;"	f	file:
+menu-bool	tcllib/menus.tcl	/^proc menu-bool {menubar title label command var} {$/;"	p
+menu-entry	tcllib/menus.tcl	/^proc menu-entry {menubar title label command} {$/;"	p
+menu-oneof	tcllib/menus.tcl	/^proc menu-oneof {menubar title label command var value} {$/;"	p
+menu-pull	tcllib/menus.tcl	/^proc menu-pull {menubar title label postcommand} {$/;"	p
+menu-sep	tcllib/menus.tcl	/^proc menu-sep {menubar title} {$/;"	p
+method	cal_tcl.C	/^int Calendar_Tcl::method(int argc, const char* argv[]) {$/;"	f	class:Calendar_Tcl
+method	item_tcl.C	/^int Item_Tcl::method(int argc, const char** argv) {$/;"	f	class:Item_Tcl
+method	object.C	/^int Object::method(int, const char*[]) {$/;"	f	class:Object
+method	tcllib/class.tcl	/^proc method {class selector arglist body} {$/;"	p
+min_arg_count	dispatch.h	/^    int  min_arg_count;         \/* Minimum argument count *\/$/;"	m	struct:Dispatch_Entry
+minor	calendar/calendar.h	/^    int           major, minor;         \/\/ Calendar file version numbers$/;"	m	class:Calendar
+modified	calendar/calfile.h	/^    int   modified;             \/* Has cal been modified since last write *\/$/;"	m	class:CalFile
+monday_first	dateeditor.C	/^static int monday_first(Calendar_Tcl* cal) {$/;"	f	file:
+monthrepeat	dg_monthr.tcl	/^proc monthrepeat {leader item anchor} {$/;"	p
+monthrepeat_init	dg_monthr.tcl	/^proc monthrepeat_init {} {$/;"	p
+monthrepeat_interact	dg_monthr.tcl	/^proc monthrepeat_interact {leader item anchor} {$/;"	p
+months	calendar/dateset.C	/^    SmallIntSet months;$/;"	m	class:MonthSetDateSetRep	file:
+months	calendar/dateset.C	/^    SmallIntSet months;$/;"	m	class:WeekSetDateSetRep	file:
+months	calendar/item.C	/^    SmallIntSet months;$/;"	m	struct:Item_OldDates	file:
+months_diff	calendar/dstest.C	/^static int months_diff(Date d1, Date d2) {$/;"	f	file:
+msg	cal_tcl.h	/^    charArray* msg;             \/* Always kept null terminated *\/$/;"	m	class:Calendar_Tcl
+mtype	calendar/dateset.C	/^    MType       mtype;                  \/\/ Repetition type$/;"	m	class:MonthBasedDateSetRep	file:
+my_name	calendar/misc.C	/^char const* my_name() {$/;"	f
+name	object.h	/^    char* name;         \/* Handle *\/$/;"	m	class:Object
+name	time/Month.C	/^char const* Month::name[13] = {$/;"	m	class:Month	file:
+name	time/Month.h	/^    static char const* name[13];$/;"	m	class:Month
+name	time/WeekDay.C	/^char const* WeekDay::name[8] = {$/;"	m	class:WeekDay	file:
+name	time/WeekDay.h	/^    static char const* name[8];$/;"	m	class:WeekDay
+name2file	cal_tcl.C	/^CalFile* Calendar_Tcl::name2file(char const* name) {$/;"	f	class:Calendar_Tcl
+next	calendar/dateset.C	/^int DateSet::next(Date d, Date& result) const {$/;"	f	class:DateSet
+next	calendar/item.C	/^int Item::next(Date d, Date& result) const {$/;"	f	class:Item
+normalOffset	time/Month.C	/^int Month::normalOffset[13] = {$/;"	m	class:Month	file:
+normalOffset	time/Month.h	/^    static int normalOffset[13];$/;"	m	class:Month
+normalSize	time/Month.C	/^int Month::normalSize[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };$/;"	m	class:Month	file:
+normalSize	time/Month.h	/^    static int normalSize[13];$/;"	m	class:Month
+normalize	calendar/dateset.C	/^DateSetRep* DateSetRep::normalize(Date&, Date&, DateList&) const {$/;"	f	class:DateSetRep
+normalize	calendar/dateset.C	/^DateSetRep* MonthSetDateSetRep::normalize(Date& start, Date& finish,$/;"	f	class:MonthSetDateSetRep
+normalize	calendar/dateset.C	/^DateSetRep* WeekSetDateSetRep::normalize(Date& start, Date& finish,$/;"	f	class:WeekSetDateSetRep
+normalize	calendar/dateset.C	/^void DateSet::normalize() const {$/;"	f	class:DateSet
+normalized	calendar/dateset.h	/^    int         normalized;     \/* Rep has been normalized? *\/$/;"	m	class:DateSet
+notes	doc/ical.html	/^<H2><A NAME="notes">Notices<\/A><\/H2>$/;"	a
+num2text	listing.tcl	/^proc num2text {num} {$/;"	p
+num_interact	tcllib/dg_num.tcl	/^proc num_interact {leader title label doc min max tick init} {$/;"	p
+num_iterations	types/testhash.C	/^static int num_iterations(const ISet& m) {$/;"	f	file:
+num_iterations	types/testmap.C	/^static int num_iterations(const IMap& m) {$/;"	f	file:
+num_iterations	types/testomap.C	/^static int num_iterations(const IMap& m) {$/;"	f	file:
+num_iterations	types/testoset.C	/^static int num_iterations(const ISet& m) {$/;"	f	file:
+num_make	tcllib/dg_num.tcl	/^proc num_make {} {$/;"	p
+obj_handle	object.C	/^int obj_handle(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]) {$/;"	f
+object	handle.C	/^void* HandleTable::object(char* handle) {$/;"	f	class:HandleTable
+objectMap	handle.h	/^    Tcl_HashTable objectMap;    \/* Map from object to handle *\/$/;"	m	class:HandleTable
+objtype	object.h	/^    char* objtype;      \/* My type *\/$/;"	m	class:Object
+obsolete-hook	tcllib/hooks.tcl	/^proc obsolete-hook {name {explain {}}} {$/;"	p
+occurs_before	calendar/dateset.C	/^int DateSet::occurs_before(DateSet const& d1, DateSet const& d2) {$/;"	f	class:DateSet
+occurs_before	ical.C	/^static int occurs_before(Occurrence const& xo, Occurrence const& yo) {$/;"	f	file:
+occurs_compare	calendar/dateset.C	/^int DateSet::occurs_compare(DateSet const& d1, DateSet const& d2) {$/;"	f	class:DateSet
+offset	time/Time.C	/^double Time::offset = 0.0;      \/* Offset for time values *\/$/;"	m	class:Time	file:
+offset	time/Time.h	/^    static double offset;$/;"	m	class:Time
+okay	tests/scaffold.tcl	/^proc okay {script} {$/;"	p
+old_mcheck	calendar/dstest.C	/^static void old_mcheck(DateSet const& d,$/;"	f	file:
+old_wcheck	calendar/dstest.C	/^static void old_wcheck(DateSet const& d,$/;"	f	file:
+one	types/testmap.C	/^static const char* one = "one";$/;"	v	file:
+one	types/testomap.C	/^static const char* one = "one";$/;"	v	file:
+opener	calendar/calendar.C	/^static const char opener = '[';$/;"	v	file:
+opener	calendar/item.C	/^static const char opener = '[';$/;"	v	file:
+operator !=	calendar/smallintset.h	/^inline int SmallIntSet::operator != (SmallIntSet s) {$/;"	f	class:SmallIntSet
+operator !=	time/Date.h	/^inline int  operator != (Date a, Date b) { return (a.rep != b.rep); }$/;"	f
+operator !=	time/Month.h	/^inline int operator != (Month a, Month b) {$/;"	f
+operator !=	time/Time.h	/^inline int operator != (Duration const& a, Duration const& b) {$/;"	f
+operator !=	time/Time.h	/^inline int operator != (Time const& a, Time const& b) {$/;"	f
+operator !=	time/WeekDay.h	/^inline int operator != (WeekDay a, WeekDay b) {$/;"	f
+operator *	calendar/smallintset.h	/^inline SmallIntSet operator*(const SmallIntSet a, const SmallIntSet b) {$/;"	f
+operator *	time/Time.h	/^inline Duration operator * (Duration const& d, double x) {$/;"	f
+operator *	time/Time.h	/^inline Duration operator * (Duration const& d, int x) {$/;"	f
+operator *=	time/Time.h	/^inline Duration& Duration::operator *= (double x) {$/;"	f	class:Duration
+operator *=	time/Time.h	/^inline Duration& Duration::operator *= (int x) {$/;"	f	class:Duration
+operator +	calendar/smallintset.h	/^inline SmallIntSet operator+(const SmallIntSet a, const SmallIntSet b) {$/;"	f
+operator +	time/Date.h	/^inline Date operator +  (Date d, int days) { return Date(d.rep + days); }$/;"	f
+operator +	time/Month.h	/^inline Month operator + (Month a, int i) {$/;"	f
+operator +	time/Time.h	/^inline Duration operator + (Duration const& a, Duration const& b) {$/;"	f
+operator +	time/Time.h	/^inline Time operator + (Time const& t, Duration const& d) {$/;"	f
+operator +	time/WeekDay.h	/^inline WeekDay operator + (WeekDay a, int i) {$/;"	f
+operator +=	time/Date.h	/^    Date& operator += (int days) { rep += days; return *this; }$/;"	f	class:Date
+operator +=	time/Month.h	/^inline Month& Month::operator += (int i) {$/;"	f	class:Month
+operator +=	time/Time.h	/^inline Duration& Duration::operator += (Duration const& d) {$/;"	f	class:Duration
+operator +=	time/Time.h	/^inline Time& Time::operator += (Duration const& d) {$/;"	f	class:Time
+operator +=	time/WeekDay.h	/^inline WeekDay& WeekDay::operator += (int i) {$/;"	f	class:WeekDay
+operator -	calendar/smallintset.h	/^inline SmallIntSet operator-(const SmallIntSet a, const SmallIntSet b) {$/;"	f
+operator -	time/Date.h	/^inline Date operator -  (Date d, int days) { return Date(d.rep - days); }$/;"	f
+operator -	time/Date.h	/^inline int  operator -  (Date a, Date b) { return (a.rep -  b.rep); }$/;"	f
+operator -	time/Month.h	/^inline Month operator - (Month a, int i) {$/;"	f
+operator -	time/Month.h	/^inline int operator - (Month a, Month b) {$/;"	f
+operator -	time/Time.h	/^inline Duration operator - (Duration const& a, Duration const& b) {$/;"	f
+operator -	time/Time.h	/^inline Duration operator - (Time const& a, Time const& b) {$/;"	f
+operator -	time/Time.h	/^inline Time operator - (Time const& t, Duration const& d) {$/;"	f
+operator -	time/WeekDay.h	/^inline WeekDay operator - (WeekDay a, int i) {$/;"	f
+operator -	time/WeekDay.h	/^inline int operator - (WeekDay a, WeekDay b) {$/;"	f
+operator -=	time/Date.h	/^    Date& operator -= (int days) { rep -= days; return *this; }$/;"	f	class:Date
+operator -=	time/Month.h	/^inline Month& Month::operator -= (int i) {$/;"	f	class:Month
+operator -=	time/Time.h	/^inline Duration& Duration::operator -= (Duration const& d) {$/;"	f	class:Duration
+operator -=	time/Time.h	/^inline Time& Time::operator -= (Duration const& d) {$/;"	f	class:Time
+operator -=	time/WeekDay.h	/^inline WeekDay& WeekDay::operator -= (int i) {$/;"	f	class:WeekDay
+operator /	time/Time.h	/^inline Duration operator \/ (Duration const& d, double x) {$/;"	f
+operator /	time/Time.h	/^inline Duration operator \/ (Duration const& d, int x) {$/;"	f
+operator /=	time/Time.h	/^inline Duration& Duration::operator \/= (double x) {$/;"	f	class:Duration
+operator /=	time/Time.h	/^inline Duration& Duration::operator \/= (int x) {$/;"	f	class:Duration
+operator <	time/Date.h	/^inline int  operator <  (Date a, Date b) { return (a.rep <  b.rep); }$/;"	f
+operator <	time/Time.h	/^inline int operator <  (Duration const& a, Duration const& b) {$/;"	f
+operator <	time/Time.h	/^inline int operator <  (Time const& a, Time const& b) {$/;"	f
+operator <=	time/Date.h	/^inline int  operator <= (Date a, Date b) { return (a.rep <= b.rep); }$/;"	f
+operator <=	time/Time.h	/^inline int operator <= (Duration const& a, Duration const& b) {$/;"	f
+operator <=	time/Time.h	/^inline int operator <= (Time const& a, Time const& b) {$/;"	f
+operator =	calendar/dateset.C	/^void DateSet::operator = (DateSet const& d) {$/;"	f	class:DateSet
+operator =	calendar/smallintset.h	/^inline SmallIntSet& SmallIntSet::operator=(const SmallIntSet& s) {$/;"	f	class:SmallIntSet
+operator =	collect.h	/^    Occurrence& operator = (Occurrence const& o) {$/;"	f	struct:Occurrence
+operator =	time/Date.h	/^    Date& operator=(Date const& d) { rep = d.rep; return *this; }$/;"	f	class:Date
+operator =	time/Month.h	/^inline Month& Month::operator = (Month x) {$/;"	f	class:Month
+operator =	time/Time.h	/^inline Duration& Duration::operator=(const Duration& src) {$/;"	f	class:Duration
+operator =	time/Time.h	/^inline Time& Time::operator=(Time const& src) {$/;"	f	class:Time
+operator =	time/WeekDay.h	/^inline WeekDay& WeekDay::operator = (WeekDay x) {$/;"	f	class:WeekDay
+operator =	types/bitvec.C	/^BitVec& BitVec::operator = (BitVec const& v) {$/;"	f	class:BitVec
+operator =	types/htable.h	/^inline void HTABLE::Elements::operator = (HTABLE const* t) {$/;"	f	class:HTABLE::Elements
+operator =	types/htable_p.h	/^HTABLE& HTABLE::operator = (HTABLE const& x) {$/;"	f	class:HTABLE
+operator ==	calendar/smallintset.h	/^inline int SmallIntSet::operator == (SmallIntSet s) {$/;"	f	class:SmallIntSet
+operator ==	time/Date.h	/^inline int  operator == (Date a, Date b) { return (a.rep == b.rep); }$/;"	f
+operator ==	time/Month.h	/^inline int operator == (Month a, Month b) {$/;"	f
+operator ==	time/Time.h	/^inline int operator == (Duration const& a, Duration const& b) {$/;"	f
+operator ==	time/Time.h	/^inline int operator == (Time const& a, Time const& b) {$/;"	f
+operator ==	time/WeekDay.h	/^inline int operator == (WeekDay a, WeekDay b) {$/;"	f
+operator >	time/Date.h	/^inline int  operator >  (Date a, Date b) { return (a.rep >  b.rep); }$/;"	f
+operator >	time/Time.h	/^inline int operator >  (Duration const& a, Duration const& b) {$/;"	f
+operator >	time/Time.h	/^inline int operator >  (Time const& a, Time const& b) {$/;"	f
+operator >=	time/Date.h	/^inline int  operator >= (Date a, Date b) { return (a.rep >= b.rep); }$/;"	f
+operator >=	time/Time.h	/^inline int operator >= (Duration const& a, Duration const& b) {$/;"	f
+operator >=	time/Time.h	/^inline int operator >= (Time const& a, Time const& b) {$/;"	f
+option_default	calendar/calendar.C	/^static OptionMap* option_default = 0;$/;"	v	file:
+option_list	calendar/calendar.C	/^static OptionDesc option_list[] = {$/;"	v	file:
+option_menu	doc/ical.html	/^<H2><A NAME="option_menu">Option Menu<\/A><\/H2>$/;"	a
+options	calendar/calendar.h	/^    OptionMap*    options;              \/\/ Calendar options$/;"	m	class:Calendar
+options	calendar/item.h	/^    OptionMap*  options;$/;"	m	class:Item
+owner	calendar/item.h	/^    char*       owner;$/;"	m	class:Item
+parse_items	cal_tcl.C	/^static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,$/;"	f	file:
+parse_month_args	item_tcl.C	/^static int parse_month_args(Tcl_Interp* tcl, int argc, const char* argv[],$/;"	f	file:
+parse_token	time/parse.C	/^static void parse_token(char const* string, Token& t) {$/;"	f	file:
+parse_tokens	time/parse.C	/^static void parse_tokens(char const* str, Tokens& list) {$/;"	f	file:
+parse_word	time/parse.C	/^static int parse_word(char const* str, int len, Token& t) {$/;"	f	file:
+pid_t	config.h	/^#define pid_t /;"	d
+position_tod	contrib/timeofday.tcl	/^proc position_tod {al c} {$/;"	p
+pr_bg	dg_print.tcl	/^proc pr_bg {cmd data} {$/;"	p
+pr_file	dg_print.tcl	/^proc pr_file {filespec data} {$/;"	p
+pr_interact	dg_print.tcl	/^proc pr_interact {leader date} {$/;"	p
+pr_make	dg_print.tcl	/^proc pr_make {} {$/;"	p
+pr_outfile	dg_print.tcl	/^proc pr_outfile {} {$/;"	p
+pr_output	dg_print.tcl	/^proc pr_output {date count papersize} {$/;"	p
+pr_update_entries	dg_print.tcl	/^proc pr_update_entries {} {$/;"	p
+predict	types/htable.h	/^inline void HTABLE::predict(int n) {$/;"	f	class:HTABLE
+pref	pref.tcl	/^proc pref {type} {$/;"	p
+pref_apptLineColor	pref.tcl	/^proc pref_apptLineColor {} {$/;"	p
+pref_boldFont	pref.tcl	/^proc pref_boldFont {} {return [pref_cf [option get . boldFont Font]]}$/;"	p
+pref_cf	pref.tcl	/^proc pref_cf {f} {$/;"	p
+pref_findcolor	pref.tcl	/^proc pref_findcolor {args} {$/;"	p
+pref_findfont	pref.tcl	/^proc pref_findfont {weight style size ff} {$/;"	p
+pref_fixfonts	pref.tcl	/^proc pref_fixfonts {} {$/;"	p
+pref_init	pref.tcl	/^proc pref_init {} {$/;"	p
+pref_interestColor	pref.tcl	/^proc pref_interestColor {} {$/;"	p
+pref_interestFont	pref.tcl	/^proc pref_interestFont {} {$/;"	p
+pref_italFont	pref.tcl	/^proc pref_italFont {} {return [pref_cf [option get . italFont Font]]}$/;"	p
+pref_itemBg	pref.tcl	/^proc pref_itemBg {} {$/;"	p
+pref_itemFg	pref.tcl	/^proc pref_itemFg {} {$/;"	p
+pref_itemFont	pref.tcl	/^proc pref_itemFont {} {$/;"	p
+pref_itemOverflowColor	pref.tcl	/^proc pref_itemOverflowColor {} {$/;"	p
+pref_itemOverflowStipple	pref.tcl	/^proc pref_itemOverflowStipple {} {$/;"	p
+pref_itemPad	pref.tcl	/^proc pref_itemPad {} {$/;"	p
+pref_itemSelectBg	pref.tcl	/^proc pref_itemSelectBg {} {$/;"	p
+pref_itemSelectFg	pref.tcl	/^proc pref_itemSelectFg {} {$/;"	p
+pref_itemSelectWidth	pref.tcl	/^proc pref_itemSelectWidth {} {$/;"	p
+pref_largeHeadingFont	pref.tcl	/^proc pref_largeHeadingFont {} {$/;"	p
+pref_load_color	pref.tcl	/^proc pref_load_color {} {$/;"	p
+pref_load_common	pref.tcl	/^proc pref_load_common {} {$/;"	p
+pref_load_mono	pref.tcl	/^proc pref_load_mono {} {$/;"	p
+pref_normFont	pref.tcl	/^proc pref_normFont {} {return [pref_cf [option get . normFont Font]]}$/;"	p
+pref_pollSeconds	pref.tcl	/^proc pref_pollSeconds {} {$/;"	p
+pref_saveSeconds	pref.tcl	/^proc pref_saveSeconds {} {$/;"	p
+pref_smallHeadingFont	pref.tcl	/^proc pref_smallHeadingFont {} {$/;"	p
+pref_weekdayColor	pref.tcl	/^proc pref_weekdayColor {} {$/;"	p
+pref_weekdayFont	pref.tcl	/^proc pref_weekdayFont {} {$/;"	p
+pref_weekendColor	pref.tcl	/^proc pref_weekendColor {} {$/;"	p
+pref_weekendFont	pref.tcl	/^proc pref_weekendFont {} {$/;"	p
+pref_weekendInterestColor	pref.tcl	/^proc pref_weekendInterestColor {} {$/;"	p
+pref_weekendInterestFont	pref.tcl	/^proc pref_weekendInterestFont {} {$/;"	p
+prefix	Makefile	/^       prefix = \/home\/serg\/Abk\/binaries$/;"	m
+prepend-hook	tcllib/hooks.tcl	/^proc prepend-hook {name argspec body} {$/;"	p
+print	doc/ical.html	/^<H1><A NAME="print">Printing<\/A><\/H1>$/;"	a
+print_calendar	dg_print.tcl	/^proc print_calendar {leader date} {$/;"	p
+print_tod	time/testparse.C	/^static void print_tod(int t) {$/;"	f	file:
+prototypes	configure	/^   function prototypes and stuff, but not '\\xHH' hex character constants.$/;"	f
+prototypes	types/configure	/^   function prototypes and stuff, but not '\\xHH' hex character constants.$/;"	f
+ps_printday	print.tcl	/^proc ps_printday {o date} {$/;"	p
+ps_printtime	print.tcl	/^proc ps_printtime {o} {$/;"	p
+psdays	print.tcl	/^proc psdays {start num cols landscape} {$/;"	p
+psheader_str	main.C	/^static char* psheader_str[] = {$/;"	v	file:
+psmonth	print.tcl	/^proc psmonth {date} {$/;"	p
+ptr	time/parse.C	/^    char const* ptr;            \/\/ Pointer into string$/;"	m	struct:Token	file:
+publical_cal_menu	contrib/public_item.tcl	/^proc publical_cal_menu {menu} {$/;"	p
+publical_toggle_cal_public	contrib/public_item.tcl	/^proc publical_toggle_cal_public {file} {$/;"	p
+purge	cal_tcl.C	/^void Calendar_Tcl::purge() {$/;"	f	class:Calendar_Tcl
+randomize	calendar/dstest.C	/^static void randomize(SmallIntSet& set, int min, int max) {$/;"	f	file:
+range	calendar/item.C	/^int Item::range(Date& s, Date& f) const {$/;"	f	class:Item
+read	calendar/dateset.C	/^int DateSet::read(Lexer* lexer) {$/;"	f	class:DateSet
+read	calendar/dateset.C	/^int DayBasedDateSetRep::read(Lexer* lexer) {$/;"	f	class:DayBasedDateSetRep
+read	calendar/dateset.C	/^int EmptyDateSetRep::read(Lexer* lexer) {$/;"	f	class:EmptyDateSetRep
+read	calendar/dateset.C	/^int MonthBasedDateSetRep::read(Lexer* lexer) {$/;"	f	class:MonthBasedDateSetRep
+read	calendar/dateset.C	/^int MonthDateSetRep::read(Lexer* lexer) {$/;"	f	class:MonthDateSetRep
+read	calendar/dateset.C	/^int MonthSetDateSetRep::read(Lexer* lexer) {$/;"	f	class:MonthSetDateSetRep
+read	calendar/dateset.C	/^int SingleDateSetRep::read(Lexer* lexer) {$/;"	f	class:SingleDateSetRep
+read	calendar/dateset.C	/^int WeekSetDateSetRep::read(Lexer* lexer) {$/;"	f	class:WeekSetDateSetRep
+readOnly	calendar/calfile.h	/^    int readOnly;               \/* Read-only mode? *\/$/;"	m	class:CalFile
+read_date	calendar/dateset.C	/^static int read_date(Lexer* lexer, Date& date) {$/;"	f	file:
+readonly	calendar/calendar.h	/^    int readonly;                       \/\/ Readonly calendar?$/;"	m	class:Calendar
+redefine_proc	tcllib/support.tcl	/^proc redefine_proc {proc code} {$/;"	p
+remindStart	calendar/item.h	/^    int         remindStart;    \/* Start reminding early *\/$/;"	m	class:Item
+remove	calendar/options.C	/^void OptionMap::remove(char const* key) {$/;"	f	class:OptionMap
+remove	handle.C	/^void HandleTable::remove(char* handle, void* object) {$/;"	f	class:HandleTable
+remove	types/htable_p.h	/^int HTABLE::remove(HKEY key) {$/;"	f	class:HTABLE
+remove_item_handles	cal_tcl.C	/^void Calendar_Tcl::remove_item_handles(Calendar* cal) {$/;"	f	class:Calendar_Tcl
+rename_method	contrib/weeknumber.tcl	/^    proc rename_method {class old new} {$/;"	p
+rename_method	tcllib/class.tcl	/^proc rename_method {class old new} {$/;"	p
+rep	calendar/dateset.h	/^    DateSetRep* rep;            \/* Type specific representation *\/$/;"	m	class:DateSet
+rep	calendar/options.h	/^    OptionMapRep* rep;$/;"	m	class:OptionMap
+rep	time/Date.h	/^    long rep;$/;"	m	class:Date
+rep	time/Month.h	/^    int rep;$/;"	m	class:Month
+rep	time/Time.h	/^    double rep;$/;"	m	class:Duration
+rep	time/Time.h	/^    double rep;$/;"	m	class:Time
+rep	time/WeekDay.h	/^    int rep;$/;"	m	class:WeekDay
+repeat	doc/ical.html	/^<H2><A NAME="repeat">Repeating Items<\/A><\/H2>$/;"	a
+repeat_check	support.tcl	/^proc repeat_check {leader item date} {$/;"	p
+repeat_menu	doc/ical.html	/^<H2><A NAME="repeat_menu">Repeat Menu<\/A><\/H2>$/;"	a
+repeat_type	calendar/item.h	/^    DateSet::RepeatType repeat_type() const { return date->type(); }$/;"	f	class:Item
+repeats	calendar/dateset.C	/^int DateSet::repeats() const {$/;"	f	class:DateSet
+repeats	calendar/item.h	/^    int repeats() const { return date->repeats(); }$/;"	f	class:Item
+report	types/timemap.C	/^static void report(char const* title, double t) {$/;"	f	file:
+report_stats	types/htable_p.h	/^void HTABLE::report_stats(char const* msg) const {$/;"	f	class:HTABLE
+require	contrib/weeknumber.tcl	/^    proc require {proc} {$/;"	p
+require	tcllib/class.tcl	/^proc require {procname} {$/;"	p
+require	tcllib/support.tcl	/^proc require {proc} {$/;"	p
+resize	types/htable_p.h	/^void HTABLE::resize(int n) {$/;"	f	class:HTABLE
+reverse	ical.C	/^void reverse(Occurrences& list) {$/;"	f
+right_bits	bitmaps/right.xbm	/^static char right_bits[] = {$/;"	v	file:
+right_height	bitmaps/right.xbm	/^#define right_height /;"	d	file:
+right_width	bitmaps/right.xbm	/^#define right_width /;"	d	file:
+ruler	tcllib/ruler.tcl	/^proc ruler {c label min max major minor unit} {$/;"	p
+ruler_canvas_coord	tcllib/ruler.tcl	/^proc ruler_canvas_coord {c x} {$/;"	p
+ruler_move	tcllib/ruler.tcl	/^proc ruler_move {c x y} {$/;"	p
+ruler_newtab	tcllib/ruler.tcl	/^proc ruler_newtab {c x y} {$/;"	p
+ruler_release	tcllib/ruler.tcl	/^proc ruler_release c {$/;"	p
+ruler_select	tcllib/ruler.tcl	/^proc ruler_select {c x y} {$/;"	p
+ruler_setlabel	tcllib/ruler.tcl	/^proc ruler_setlabel {c label} {$/;"	p
+ruler_settabs	tcllib/ruler.tcl	/^proc ruler_settabs {c pos} {$/;"	p
+ruler_tab	tcllib/ruler.tcl	/^proc ruler_tab {c x y} {$/;"	p
+ruler_tabs	tcllib/ruler.tcl	/^proc ruler_tabs {c} {$/;"	p
+ruler_user_coord	tcllib/ruler.tcl	/^proc ruler_user_coord {c x} {$/;"	p
+run	tests/scaffold.tcl	/^proc run {args} {$/;"	p
+run-hook	tcllib/hooks.tcl	/^proc run-hook {name args} {$/;"	p
+run_test	types/testarray.C	/^static void run_test() {$/;"	f	file:
+search	calendar/dateset.C	/^int DateSetRep::search(Date anchor, Date& result,$/;"	f	class:DateSetRep
+search	calendar/dateset.C	/^int DayBasedDateSetRep::search(Date d, Date& result) const {$/;"	f	class:DayBasedDateSetRep
+search	calendar/dateset.C	/^int EmptyDateSetRep::search(Date, Date&) const {$/;"	f	class:EmptyDateSetRep
+search	calendar/dateset.C	/^int MonthBasedDateSetRep::search(Date d, Date& result) const {$/;"	f	class:MonthBasedDateSetRep
+search	calendar/dateset.C	/^int MonthSetDateSetRep::search(Date date, Date& result) const {$/;"	f	class:MonthSetDateSetRep
+search	calendar/dateset.C	/^int SingleDateSetRep::search(Date d, Date& result) const {$/;"	f	class:SingleDateSetRep
+search	calendar/dateset.C	/^int WeekSetDateSetRep::search(Date date, Date& result) const {$/;"	f	class:WeekSetDateSetRep
+sec:calendars	doc/interface.html	/^<h1><a name="sec:calendars">Calendars<\/a><\/h1>$/;"	a
+sec:dayview	doc/interface.html	/^<h1><a name="sec:dayview">Day Windows<\/a><\/h1>$/;"	a
+sec:items	doc/interface.html	/^<h1><a name="sec:items">Items<\/a><\/h1>$/;"	a
+set	types/bitvec.h	/^inline void BitVec::set(int i) {$/;"	f	class:BitVec
+set_calendar	item_tcl.h	/^inline void Item_Tcl::set_calendar(CalFile* c) {$/;"	f	class:Item_Tcl
+set_date	calendar/dateset.C	/^void DateSet::set_date(Date d) {$/;"	f	class:DateSet
+set_date	calendar/item.h	/^    void set_date(Date d) { date->set_date(d); }$/;"	f	class:Item
+set_day_based_repeat	calendar/dateset.C	/^void DateSet::set_day_based_repeat(int i, Date a) {$/;"	f	class:DateSet
+set_day_based_repeat	calendar/item.h	/^    void set_day_based_repeat(int interval, Date anchor)$/;"	f	class:Item
+set_empty	calendar/dateset.C	/^void DateSet::set_empty() {$/;"	f	class:DateSet
+set_empty	calendar/item.h	/^    void set_empty() { date->set_empty(); }$/;"	f	class:Item
+set_finish	calendar/dateset.h	/^    void set_finish(Date f) { finish = f; normalized = 0; }$/;"	f	class:DateSet
+set_finish	calendar/item.C	/^void Item::set_finish(Date finish) {$/;"	f	class:Item
+set_geometry	tcllib/support.tcl	/^proc set_geometry {leader w g} {$/;"	p
+set_month_based_repeat	calendar/dateset.C	/^void DateSet::set_month_based_repeat(int i, Date a) {$/;"	f	class:DateSet
+set_month_based_repeat	calendar/item.h	/^    void set_month_based_repeat(int interval, Date anchor)$/;"	f	class:Item
+set_month_range	calendar/dateset.C	/^void set_month_range(Date& start, Date& finish, SmallIntSet months) {$/;"	f
+set_month_set	calendar/dateset.C	/^void DateSet::set_month_set(SmallIntSet days, SmallIntSet months) {$/;"	f	class:DateSet
+set_month_set	calendar/item.h	/^    void set_month_set(SmallIntSet days, SmallIntSet months)$/;"	f	class:Item
+set_monthly_by_days	calendar/dateset.C	/^void DateSet::set_monthly_by_days(int count, int i, Date a, int back) {$/;"	f	class:DateSet
+set_monthly_by_days	calendar/item.h	/^    void set_monthly_by_days(int c, int i, Date anchor, int back)$/;"	f	class:Item
+set_monthly_by_weeks	calendar/dateset.C	/^void DateSet::set_monthly_by_weeks(int count, WeekDay w, int i, Date a,$/;"	f	class:DateSet
+set_monthly_by_weeks	calendar/item.h	/^    void set_monthly_by_weeks(int c, WeekDay w, int i, Date anchor, int back)$/;"	f	class:Item
+set_monthly_by_workdays	calendar/dateset.C	/^void DateSet::set_monthly_by_workdays(int count, int i, Date a, int back) {$/;"	f	class:DateSet
+set_monthly_by_workdays	calendar/item.h	/^    void set_monthly_by_workdays(int c, int i, Date anchor, int back)$/;"	f	class:Item
+set_occupancy	types/htable_p.h	/^void HTABLE::set_occupancy(int x) {$/;"	f	class:HTABLE
+set_start	calendar/dateset.h	/^    void set_start(Date s) { start = s; normalized = 0; }$/;"	f	class:DateSet
+set_start	calendar/item.C	/^void Item::set_start(Date start) {$/;"	f	class:Item
+set_week_set	calendar/dateset.C	/^void DateSet::set_week_set(SmallIntSet days, SmallIntSet months) {$/;"	f	class:DateSet
+set_week_set	calendar/item.h	/^    void set_week_set(SmallIntSet days, SmallIntSet months)$/;"	f	class:Item
+shared	doc/ical.html	/^<H2><A NAME="shared">Including and Sharing Calendars<\/A><\/H2>$/;"	a
+shortName	time/Month.C	/^char const* Month::shortName[13] = {$/;"	m	class:Month	file:
+shortName	time/Month.h	/^    static char const* shortName[13];$/;"	m	class:Month
+shortName	time/WeekDay.C	/^char const* WeekDay::shortName[8] = {$/;"	m	class:WeekDay	file:
+shortName	time/WeekDay.h	/^    static char const* shortName[8];$/;"	m	class:WeekDay
+show_about	help.tcl	/^proc show_about {leader} {$/;"	p
+shrink_size	types/htable.h	/^    unsigned int  shrink_size;          \/\/ Resize when count bigger or equal$/;"	m	class:HTABLE
+similar	calendar/item.C	/^int Item::similar(Item const* x) const {$/;"	f	class:Item
+size	types/htable.h	/^inline int HTABLE::size() const {$/;"	f	class:HTABLE
+sleft_bits	bitmaps/sleft.xbm	/^static char sleft_bits[] = {$/;"	v	file:
+sleft_height	bitmaps/sleft.xbm	/^#define sleft_height /;"	d	file:
+sleft_width	bitmaps/sleft.xbm	/^#define sleft_width /;"	d	file:
+slot_bits	types/htable.h	/^    unsigned int  slot_bits;            \/\/ lg(tsize)$/;"	m	class:HTABLE
+sort_occurrences	ical.C	/^void sort_occurrences(Occurrences& list) {$/;"	f
+sparse	types/timemap.C	/^static const int sparse = 50;$/;"	v	file:
+srcdir	Makefile	/^       srcdir = .$/;"	m
+srcdir	calendar/Makefile	/^       srcdir = .$/;"	m
+srcdir	time/Makefile	/^       srcdir = .$/;"	m
+srcdir	types/Makefile	/^       srcdir = .$/;"	m
+sright_bits	bitmaps/sright.xbm	/^static char sright_bits[] = {$/;"	v	file:
+sright_height	bitmaps/sright.xbm	/^#define sright_height /;"	d	file:
+sright_width	bitmaps/sright.xbm	/^#define sright_width /;"	d	file:
+stack_trace	tcllib/support.tcl	/^proc stack_trace {} {$/;"	p
+stamp_run	types/timemap.C	/^static void stamp_run() {$/;"	f	file:
+start	calendar/dateset.h	/^    Date        start;$/;"	m	class:DateSet
+start	calendar/item.h	/^    int start;$/;"	m	class:Appointment
+start	types/timemap.C	/^    struct rusage start;$/;"	m	class:Rusage	typeref:struct:Rusage::rusage	file:
+start_alarmer	alarm.tcl	/^proc start_alarmer {} {$/;"	p
+start_midnight_thread	ical_x.tcl	/^proc start_midnight_thread {} {$/;"	p
+start_test	tests/scaffold.tcl	/^proc start_test {category} {$/;"	p
+store	calendar/itemmap.h	/^    inline void store(int i, char const* key) {$/;"	f	class:ItemMapRep
+store	calendar/options.C	/^void OptionMap::store(char const* key, char const* value) {$/;"	f	class:OptionMap
+store	types/longmap.h	/^    inline void store(int i, long k)    { list[i].key = k; }$/;"	f	class:LongMapRep
+store	types/tablerep.h	/^    inline void store(int i, K k) {$/;"	f	class:SplitTable1
+store	types/tablerep.h	/^    inline void store(int i, K k) {$/;"	f	class:SplitTable2
+store	types/tablerep.h	/^    inline void store(int i, K k) {$/;"	f	class:StructTable1
+store	types/tablerep.h	/^    inline void store(int i, K k) {$/;"	f	class:StructTable2
+store	types/testmap.C	/^    inline void store(int i, int k)     { list[i].key = k; }$/;"	f	class:IntMapRep
+str_init	types/timemap.C	/^static void str_init() {$/;"	f	file:
+str_interact	tcllib/dg_string.tcl	/^proc str_interact {leader title message} {$/;"	p
+str_make	tcllib/dg_string.tcl	/^proc str_make {} {$/;"	p
+strings	types/timemap.C	/^static char const** strings;$/;"	v	file:
+subclass	tcllib/class.tcl	/^proc subclass {name super arglist body} {$/;"	p
+subset	types/testhash.C	/^static int subset(ISet& m1, ISet& m2) {$/;"	f	file:
+subset	types/testmap.C	/^static int subset(IMap& m1, IMap& m2) {$/;"	f	file:
+subset	types/testomap.C	/^static int subset(IMap& m1, IMap& m2) {$/;"	f	file:
+subset	types/testoset.C	/^static int subset(ISet& m1, ISet& m2) {$/;"	f	file:
+super	tcllib/class.tcl	/^proc super {selector args} {$/;"	p
+support_init	support.tcl	/^proc support_init {} {$/;"	p
+support_init_tk	support.tcl	/^proc support_init_tk {} {$/;"	p
+t_convert	calendar/dstest.C	/^static void t_convert() {$/;"	f	file:
+t_days	calendar/dstest.C	/^static void t_days() {$/;"	f	file:
+t_empty	calendar/dstest.C	/^static void t_empty() {$/;"	f	file:
+t_io	calendar/dstest.C	/^static void t_io() {$/;"	f	file:
+t_months	calendar/dstest.C	/^static void t_months() {$/;"	f	file:
+t_months_by_day	calendar/dstest.C	/^static void t_months_by_day() {$/;"	f	file:
+t_months_by_week	calendar/dstest.C	/^static void t_months_by_week() {$/;"	f	file:
+t_months_by_workday	calendar/dstest.C	/^static void t_months_by_workday() {$/;"	f	file:
+t_old	calendar/dstest.C	/^static void t_old() {$/;"	f	file:
+t_single	calendar/dstest.C	/^static void t_single() {$/;"	f	file:
+table	types/htable.h	/^        HTABLE const*   table;$/;"	m	class:HTABLE::Elements
+table	types/htable.h	/^    HTABLEREP*  table;                  \/\/ Tagged list of entries$/;"	m	class:HTABLE
+table	types/tablerep.h	/^    Entry* table;$/;"	m	class:StructTable1
+table	types/tablerep.h	/^    Entry* table;$/;"	m	class:StructTable2
+table_size	types/htable_p.h	/^unsigned int HTABLE::table_size(unsigned int n) const {$/;"	f	class:HTABLE
+tag	types/tablerep.h	/^        Tag     tag;$/;"	m	struct:StructTable1::Entry
+tag	types/tablerep.h	/^        Tag     tag;$/;"	m	struct:StructTable2::Entry
+tag	types/tablerep.h	/^    char*       tag;            \/\/ List of tags$/;"	m	class:SplitTable1
+tag	types/tablerep.h	/^    char*       tag;            \/\/ List of tags$/;"	m	class:SplitTable2
+tcl	object.h	/^inline Tcl_Interp* Object::tcl() {$/;"	f	class:Object
+tcl_doc_str	main.C	/^static char* tcl_doc_str[] = {$/;"	v	file:
+tcl_lib_str	main.C	/^static char* tcl_lib_str[] = {$/;"	v	file:
+tcllib_load_options	tcllib/support.tcl	/^proc tcllib_load_options {} {$/;"	p
+tcllib_str	main.C	/^static char* tcllib_str[] = {$/;"	v	file:
+text	calendar/item.h	/^    char*       text;$/;"	m	class:Item
+text_cache_load	tcllib/support.tcl	/^proc text_cache_load {font text} {$/;"	p
+text_height	tcllib/support.tcl	/^proc text_height {font text {pad 0}} {$/;"	p
+text_width	tcllib/support.tcl	/^proc text_width {font text {pad 0}} {$/;"	p
+three	types/testmap.C	/^static const char* three = "three";$/;"	v	file:
+three	types/testomap.C	/^static const char* three = "three";$/;"	v	file:
+time2text	listing.tcl	/^proc time2text {time} {$/;"	p
+time_array_fetch	types/timemap.C	/^static void time_array_fetch() {$/;"	f	file:
+time_array_grow	types/timemap.C	/^static void time_array_grow() {$/;"	f	file:
+time_array_grow_predicted	types/timemap.C	/^static void time_array_grow_predicted() {$/;"	f	file:
+time_array_remove	types/timemap.C	/^static void time_array_remove() {$/;"	f	file:
+time_array_replace	types/timemap.C	/^static void time_array_replace() {$/;"	f	file:
+time_array_store	types/timemap.C	/^static void time_array_store() {$/;"	f	file:
+time_fixed_fetch	types/timemap.C	/^static void time_fixed_fetch() {$/;"	f	file:
+time_fixed_store	types/timemap.C	/^static void time_fixed_store() {$/;"	f	file:
+time_from_tz	calendar/item.h	/^    int time_from_tz(Date d, int t) const$/;"	f	class:Appointment
+time_map_fetch	types/timemap.C	/^static void time_map_fetch() {$/;"	f	file:
+time_map_grow	types/timemap.C	/^static void time_map_grow() {$/;"	f	file:
+time_map_grow_predicted	types/timemap.C	/^static void time_map_grow_predicted() {$/;"	f	file:
+time_map_remove	types/timemap.C	/^static void time_map_remove() {$/;"	f	file:
+time_map_replace	types/timemap.C	/^static void time_map_replace() {$/;"	f	file:
+time_old_map_fetch	types/timemap.C	/^static void time_old_map_fetch() {$/;"	f	file:
+time_old_map_grow	types/timemap.C	/^static void time_old_map_grow() {$/;"	f	file:
+time_old_map_grow_predicted	types/timemap.C	/^static void time_old_map_grow_predicted() {$/;"	f	file:
+time_old_map_remove	types/timemap.C	/^static void time_old_map_remove() {$/;"	f	file:
+time_old_map_replace	types/timemap.C	/^static void time_old_map_replace() {$/;"	f	file:
+time_old_set_fetch	types/timemap.C	/^static void time_old_set_fetch() {$/;"	f	file:
+time_old_set_grow	types/timemap.C	/^static void time_old_set_grow() {$/;"	f	file:
+time_old_set_grow_predicted	types/timemap.C	/^static void time_old_set_grow_predicted() {$/;"	f	file:
+time_old_set_remove	types/timemap.C	/^static void time_old_set_remove() {$/;"	f	file:
+time_old_set_replace	types/timemap.C	/^static void time_old_set_replace() {$/;"	f	file:
+time_range_edit	timerange.tcl	/^proc time_range_edit {w start finish } {$/;"	p
+time_range_finish	timerange.tcl	/^proc time_range_finish {w value} {  $/;"	p
+time_range_start	timerange.tcl	/^proc time_range_start {w value} {$/;"	p
+time_set_fetch	types/timemap.C	/^static void time_set_fetch() {$/;"	f	file:
+time_set_grow	types/timemap.C	/^static void time_set_grow() {$/;"	f	file:
+time_set_grow_predicted	types/timemap.C	/^static void time_set_grow_predicted() {$/;"	f	file:
+time_set_remove	types/timemap.C	/^static void time_set_remove() {$/;"	f	file:
+time_set_replace	types/timemap.C	/^static void time_set_replace() {$/;"	f	file:
+time_sp_set_fetch	types/timemap.C	/^static void time_sp_set_fetch() {$/;"	f	file:
+time_sp_set_grow	types/timemap.C	/^static void time_sp_set_grow() {$/;"	f	file:
+time_sp_set_grow_predicted	types/timemap.C	/^static void time_sp_set_grow_predicted() {$/;"	f	file:
+time_sp_set_remove	types/timemap.C	/^static void time_sp_set_remove() {$/;"	f	file:
+time_sp_set_replace	types/timemap.C	/^static void time_sp_set_replace() {$/;"	f	file:
+time_sset_fetch	types/timemap.C	/^static void time_sset_fetch() {$/;"	f	file:
+time_sset_grow	types/timemap.C	/^static void time_sset_grow() {$/;"	f	file:
+time_sset_grow_predicted	types/timemap.C	/^static void time_sset_grow_predicted() {$/;"	f	file:
+time_sset_remove	types/timemap.C	/^static void time_sset_remove() {$/;"	f	file:
+time_sset_replace	types/timemap.C	/^static void time_sset_replace() {$/;"	f	file:
+time_to_tz	calendar/item.h	/^    int time_to_tz(Date d, int t) const$/;"	f	class:Appointment
+timezone	calendar/item.h	/^    const char *timezone;$/;"	m	class:Appointment
+tkCanvasBindings	tcllib/canvas.tcl	/^proc tkCanvasBindings {tag} {$/;"	p
+tkCanvasBol	tcllib/canvas.tcl	/^proc tkCanvasBol {w} {$/;"	p
+tkCanvasCopyRegion	tcllib/canvas.tcl	/^proc tkCanvasCopyRegion {w} {$/;"	p
+tkCanvasCutRegion	tcllib/canvas.tcl	/^proc tkCanvasCutRegion {w} {$/;"	p
+tkCanvasDeleteCharBackward	tcllib/canvas.tcl	/^proc tkCanvasDeleteCharBackward {w} {$/;"	p
+tkCanvasDeleteCharForward	tcllib/canvas.tcl	/^proc tkCanvasDeleteCharForward {w} {$/;"	p
+tkCanvasDeleteWordBackward	tcllib/canvas.tcl	/^proc tkCanvasDeleteWordBackward {w} {$/;"	p
+tkCanvasDeleteWordForward	tcllib/canvas.tcl	/^proc tkCanvasDeleteWordForward {w} {$/;"	p
+tkCanvasEmacsKillLine	tcllib/canvas.tcl	/^proc tkCanvasEmacsKillLine {w} {$/;"	p
+tkCanvasEol	tcllib/canvas.tcl	/^proc tkCanvasEol {w} {$/;"	p
+tkCanvasIndex	tcllib/canvas.tcl	/^proc tkCanvasIndex {w} {$/;"	p
+tkCanvasInsert	tcllib/canvas.tcl	/^proc tkCanvasInsert {w str} {$/;"	p
+tkCanvasMod	tcllib/canvas.tcl	/^proc tkCanvasMod {w args} {$/;"	p
+tkCanvasMoveLine	tcllib/canvas.tcl	/^proc tkCanvasMoveLine {w n} {$/;"	p
+tkCanvasMoveTo	tcllib/canvas.tcl	/^proc tkCanvasMoveTo {w index} {$/;"	p
+tkCanvasMoveWord	tcllib/canvas.tcl	/^proc tkCanvasMoveWord {w n} {$/;"	p
+tkCanvasOpenLine	tcllib/canvas.tcl	/^proc tkCanvasOpenLine {w} {$/;"	p
+tkCanvasPaste	tcllib/canvas.tcl	/^proc tkCanvasPaste {w} {$/;"	p
+tk_lib_str	main.C	/^static char* tk_lib_str[] = {$/;"	v	file:
+tk_support_init	support.tcl	/^proc tk_support_init {} {$/;"	p
+tmp	calendar/lexer.h	/^    charArray*  tmp;            \/* Temporary buffer *\/$/;"	m	class:Lexer
+tmpName	calendar/calfile.h	/^    char* tmpName;              \/* Tmp file name *\/$/;"	m	class:CalFile
+tmp_backup_file	calendar/calfile.C	/^static char const* tmp_backup_file() {$/;"	f	file:
+to_d	calendar/item.h	/^        Date from_d, to_d;$/;"	m	struct:Appointment::__anon1
+to_min	calendar/item.h	/^        int from_min, to_min;$/;"	m	struct:Appointment::__anon1
+to_tz	calendar/item.h	/^        bool to_tz;$/;"	m	struct:Appointment::__anon1
+toc	CHANGES.html	/^<H1><A NAME="toc">Table of Contents<\/A><\/H1>$/;"	a
+todo	calendar/item.h	/^    int         todo;$/;"	m	class:Item
+todo_bits	bitmaps/todo.xbm	/^static char todo_bits[] = {$/;"	v	file:
+todo_height	bitmaps/todo.xbm	/^#define todo_height /;"	d	file:
+todo_width	bitmaps/todo.xbm	/^#define todo_width /;"	d	file:
+trigger	ical.C	/^void trigger(Tcl_Interp* tcl, char const* ttype, char const* id) {$/;"	f
+trigger	trigger.tcl	/^proc trigger {cmd type args} {$/;"	p
+trigger_item	item_tcl.C	/^static void trigger_item(Tcl_Interp* tcl, Item_Tcl* item, char const* t) {$/;"	f	file:
+tsize	types/htable.h	/^    unsigned int  tsize;                \/\/ Size of the table (power of two)$/;"	m	class:HTABLE
+ttype	time/parse.C	/^    Token_Type  ttype;          \/\/ The type of this token$/;"	m	struct:Token	file:
+tvalue	time/parse.C	/^    long        tvalue;         \/\/ Any value associated with this token$/;"	m	struct:Token	file:
+two	types/testmap.C	/^static const char* two = "two";$/;"	v	file:
+two	types/testomap.C	/^static const char* two = "two";$/;"	v	file:
+type	calendar/dateset.C	/^DateSet::RepeatType DateSet::type() const {$/;"	f	class:DateSet
+type	calendar/dateset.C	/^DateSet::RepeatType DayBasedDateSetRep::type() const {$/;"	f	class:DayBasedDateSetRep
+type	calendar/dateset.C	/^DateSet::RepeatType EmptyDateSetRep::type() const {$/;"	f	class:EmptyDateSetRep
+type	calendar/dateset.C	/^DateSet::RepeatType MonthBasedDateSetRep::type() const {$/;"	f	class:MonthBasedDateSetRep
+type	calendar/dateset.C	/^DateSet::RepeatType MonthSetDateSetRep::type() const {$/;"	f	class:MonthSetDateSetRep
+type	calendar/dateset.C	/^DateSet::RepeatType SingleDateSetRep::type() const {$/;"	f	class:SingleDateSetRep
+type	calendar/dateset.C	/^DateSet::RepeatType WeekSetDateSetRep::type() const {$/;"	f	class:WeekSetDateSetRep
+type	object.h	/^inline char const* Object::type() {$/;"	f	class:Object
+uid	calendar/item.h	/^    char*       uid;$/;"	m	class:Item
+uid_new	calendar/uid.C	/^char const* uid_new() {$/;"	f
+uid_persistent	calendar/item.h	/^    int         uid_persistent;$/;"	m	class:Item
+unsafe_insert	types/htable_p.h	/^void HTABLE::unsafe_insert(HKEY key, HVAL val, unsigned int h)$/;"	f	class:HTABLE
+update_icon_window	contrib/calicon.tcl	/^proc update_icon_window { view } {$/;"	p
+update_icon_window	contrib/iconwindow.tcl	/^proc update_icon_window {i} {$/;"	p
+update_tz	dg_item.tcl	/^proc update_tz {mb tz} {$/;"	p
+usage	release	/^sub usage {$/;"	s
+usage	types/testarray.C	/^static void usage() {$/;"	f	file:
+val	calendar/calendar.C	/^    char const* val;$/;"	m	struct:OptionDesc	file:
+val	calendar/itemmap.h	/^    inline Item*&      val(int i) const         { return list[i]; }$/;"	f	class:ItemMapRep
+val	types/longmap.h	/^        long    val;$/;"	m	struct:LongMapRep::Entry
+val	types/longmap.h	/^    inline long& val(int i) const       { return list[i].val; }$/;"	f	class:LongMapRep
+val	types/tablerep.h	/^        V       val;$/;"	m	struct:SplitTable2::Entry
+val	types/tablerep.h	/^        V       val;$/;"	m	struct:StructTable2::Entry
+val	types/tablerep.h	/^    inline V& val(int i) const          { return list[i].val; }$/;"	f	class:SplitTable2
+val	types/tablerep.h	/^    inline V& val(int i) const  { return table[i].val; }$/;"	f	class:StructTable2
+val	types/testmap.C	/^        char const*     val;$/;"	m	struct:IntMapRep::Entry	file:
+val	types/testmap.C	/^    inline char const*& val(int i)const { return list[i].val; }$/;"	f	class:IntMapRep
+value	item_tcl.h	/^inline Item* Item_Tcl::value() {$/;"	f	class:Item_Tcl
+wd_first	contrib/weeknumber.tcl	/^proc wd_first {date} {$/;"	p
+wd_last	contrib/weeknumber.tcl	/^proc wd_last {date} {$/;"	p
+weekday	calendar/dateset.C	/^    WeekDay     weekday;                \/\/ Week day for repeat by week$/;"	m	class:MonthBasedDateSetRep	file:
+weekrepeat	dg_wdays.tcl	/^proc weekrepeat {leader item anchor} {$/;"	p
+word	types/bitvec.h	/^    bitvword* word;     \/\/ Word array$/;"	m	class:BitVec
+word_mask	types/bitvec.h	/^inline bitvword BitVec::word_mask(int n) const {$/;"	f	class:BitVec
+word_numb	types/bitvec.h	/^inline int BitVec::word_numb(int n) const  { return (n >> BITVEC_WSHIFT); }$/;"	f	class:BitVec
+word_offs	types/bitvec.h	/^inline int BitVec::word_offs(int n) const  { return (n & (BITVEC_WSIZE-1)); }$/;"	f	class:BitVec
+word_size	types/bitvec.h	/^inline int BitVec::word_size() const       { return BITVEC_WSIZE; }$/;"	f	class:BitVec
+words	time/parse.C	/^static Token words[] = {$/;"	v	file:
+wrapline	listing.tcl	/^proc wrapline {line width} {$/;"	p
+write	calendar/dateset.C	/^void DateSet::write(charArray* output) const {$/;"	f	class:DateSet
+write	calendar/dateset.C	/^void DayBasedDateSetRep::write(charArray* output) const {$/;"	f	class:DayBasedDateSetRep
+write	calendar/dateset.C	/^void EmptyDateSetRep::write(charArray* output) const {$/;"	f	class:EmptyDateSetRep
+write	calendar/dateset.C	/^void MonthBasedDateSetRep::write(charArray* output) const {$/;"	f	class:MonthBasedDateSetRep
+write	calendar/dateset.C	/^void MonthDateSetRep::write(charArray* output) const {$/;"	f	class:MonthDateSetRep
+write	calendar/dateset.C	/^void MonthSetDateSetRep::write(charArray* output) const {$/;"	f	class:MonthSetDateSetRep
+write	calendar/dateset.C	/^void SingleDateSetRep::write(charArray* output) const {$/;"	f	class:SingleDateSetRep
+write	calendar/dateset.C	/^void WeekSetDateSetRep::write(charArray* output) const {$/;"	f	class:WeekSetDateSetRep
+write	calendar/options.C	/^void OptionMap::write(charArray* out) const {$/;"	f	class:OptionMap
+write_date	calendar/dateset.C	/^static void write_date(charArray* output, Date date) {$/;"	f	file:
+written	calendar/calfile.C	/^void CalFile::written() {$/;"	f	class:CalFile
+ws_interact	dg_wdays.tcl	/^proc ws_interact {leader item anchor} {$/;"	p
+ws_make	dg_wdays.tcl	/^proc ws_make {} {$/;"	p
+ws_reconfig	dg_wdays.tcl	/^proc ws_reconfig {} {$/;"	p
+yes_no_cancel	tcllib/dg_ync.tcl	/^proc yes_no_cancel {leader message {y Yes} {n No} {c Cancel}} {$/;"	p
+yes_or_no	tcllib/dg_yn.tcl	/^proc yes_or_no {leader message {y Okay} {n Cancel}} {$/;"	p
+yn_interact	tcllib/dg_yn.tcl	/^proc yn_interact {leader message y n} {$/;"	p
+yn_make	tcllib/dg_yn.tcl	/^proc yn_make {} {$/;"	p
+ync_interact	tcllib/dg_ync.tcl	/^proc ync_interact {leader message y n c} {$/;"	p
+ync_make	tcllib/dg_ync.tcl	/^proc ync_make {} {$/;"	p
+~Appointment	calendar/item.h	/^    ~Appointment() {$/;"	f	class:Appointment
+~BitVec	types/bitvec.C	/^BitVec::~BitVec() {$/;"	f	class:BitVec
+~CalFile	calendar/calfile.C	/^CalFile::~CalFile() {$/;"	f	class:CalFile
+~Calendar	calendar/calendar.C	/^Calendar::~Calendar() {$/;"	f	class:Calendar
+~Calendar_Tcl	cal_tcl.C	/^Calendar_Tcl::~Calendar_Tcl() {$/;"	f	class:Calendar_Tcl
+~DateSet	calendar/dateset.C	/^DateSet::~DateSet() {$/;"	f	class:DateSet
+~DateSetRep	calendar/dateset.C	/^DateSetRep::~DateSetRep() {$/;"	f	class:DateSetRep
+~DayBasedDateSetRep	calendar/dateset.C	/^DayBasedDateSetRep::~DayBasedDateSetRep() {$/;"	f	class:DayBasedDateSetRep
+~EmptyDateSetRep	calendar/dateset.C	/^EmptyDateSetRep::~EmptyDateSetRep() {$/;"	f	class:EmptyDateSetRep
+~HTABLE	types/htable_p.h	/^HTABLE::~HTABLE() {$/;"	f	class:HTABLE
+~HandleTable	handle.C	/^HandleTable::~HandleTable() {$/;"	f	class:HandleTable
+~IntMapRep	types/testmap.C	/^    inline ~IntMapRep() {$/;"	f	class:IntMapRep
+~Item	calendar/item.C	/^Item::~Item() {$/;"	f	class:Item
+~ItemMapRep	calendar/itemmap.h	/^    inline ~ItemMapRep() {$/;"	f	class:ItemMapRep
+~Item_Tcl	item_tcl.C	/^Item_Tcl::~Item_Tcl() {$/;"	f	class:Item_Tcl
+~Lexer	calendar/lexer.C	/^Lexer::~Lexer() {$/;"	f	class:Lexer
+~LongMapRep	types/longmap.h	/^    inline ~LongMapRep() {$/;"	f	class:LongMapRep
+~MonthBasedDateSetRep	calendar/dateset.C	/^MonthBasedDateSetRep::~MonthBasedDateSetRep() {$/;"	f	class:MonthBasedDateSetRep
+~MonthSetDateSetRep	calendar/dateset.C	/^MonthSetDateSetRep::~MonthSetDateSetRep() {$/;"	f	class:MonthSetDateSetRep
+~Notice	calendar/item.h	/^    ~Notice() {}$/;"	f	class:Notice
+~Object	object.C	/^Object::~Object() {$/;"	f	class:Object
+~OptionMap	calendar/options.C	/^OptionMap::~OptionMap() {$/;"	f	class:OptionMap
+~SingleDateSetRep	calendar/dateset.C	/^SingleDateSetRep::~SingleDateSetRep() {$/;"	f	class:SingleDateSetRep
+~SmallIntSet	calendar/smallintset.h	/^inline SmallIntSet::~SmallIntSet()                      { }$/;"	f	class:SmallIntSet
+~SplitTable1	types/tablerep.h	/^    inline ~SplitTable1() {$/;"	f	class:SplitTable1
+~SplitTable2	types/tablerep.h	/^    inline ~SplitTable2() {$/;"	f	class:SplitTable2
+~StructTable1	types/tablerep.h	/^    inline ~StructTable1() {$/;"	f	class:StructTable1
+~StructTable2	types/tablerep.h	/^    inline ~StructTable2() {$/;"	f	class:StructTable2
+~WeekSetDateSetRep	calendar/dateset.C	/^WeekSetDateSetRep::~WeekSetDateSetRep() {$/;"	f	class:WeekSetDateSetRep

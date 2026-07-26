@@ -1,0 +1,18 @@
+/* Copyright (c) 1993 Sanjay Ghemawat */
+#ifndef _CONFIG_H_IN
+#define _CONFIG_H_IN
+
+#undef pid_t
+
+#undef SIZEOF_LONG
+#undef HAVE_STRING_H
+#undef HAVE_LIMITS_H
+
+#undef HAVE_FSYNC
+
+#undef HAVE_STRERROR
+
+#undef HAVE_UNAME
+#undef HAVE_SYS_UTSNAME_H
+
+#endif /* _CONFIG_H_IN */

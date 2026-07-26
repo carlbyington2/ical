@@ -12,16 +12,16 @@ extern char const* my_name();
 
 extern int copy_file(char const* src, char const* dst);
     // effects - Copy file named by "src" to file named by "dst"
-    //		 Return true iff successful.
+    //           Return true iff successful.
 
 class charArray;
 
 extern void append_string(charArray*, char const* str);
     // effects - Append string to end of a buffer.  No null character
-    //		 is ever appended or removed.
+    //           is ever appended or removed.
 
 extern void format(charArray*, char const* format, ...);
     // effects - sprintf to the end of a buffer.  No null character
-    //		 is ever appended or removed.
+    //           is ever appended or removed.
 
 #endif /* _MISC_H */

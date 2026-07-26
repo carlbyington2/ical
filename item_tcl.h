@@ -16,25 +16,25 @@ class Item_Tcl : public Object {
     Item_Tcl(Tcl_Interp*, Item*, CalFile*);
     virtual ~Item_Tcl();
 
-    // effects	Return associated item */
+    // effects  Return associated item */
     Item* value();
 
-    // effects	Return associated calendar file
+    // effects  Return associated calendar file
     CalFile* calendar();
 
-    // effects	Set associated calendar fi;
+    // effects  Set associated calendar fi;
     void set_calendar(CalFile*);
 
-    // effects	Returns Item_Tcl for specified item.  If no such
-    //		Item_Tcl exists, returns 0.
+    // effects  Returns Item_Tcl for specified item.  If no such
+    //          Item_Tcl exists, returns 0.
     //
     static Item_Tcl* find(Item*);
 
-    // effects	Handle TCL commands
+    // effects  Handle TCL commands
     virtual int method(int, const char*[]);
   private:
-    Item* item;		// Associated item
-    CalFile* cal;	// Associated calendar
+    Item* item;         // Associated item
+    CalFile* cal;       // Associated calendar
 };
 
 inline Item* Item_Tcl::value() {

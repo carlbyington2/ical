@@ -4,21 +4,21 @@
 # Alarms
 #
 # Rep
-#	alarms		list of alarm times in minutes
-#	pending		list of pending alarms;
-#			    [<item> <fire time> <appt start time>]*
-#	shutlist	list of item uids for which we said "shutup" in
-#			the last hour
+#       alarms          list of alarm times in minutes
+#       pending         list of pending alarms;
+#                           [<item> <fire time> <appt start time>]*
+#       shutlist        list of item uids for which we said "shutup" in
+#                       the last hour
 
 class Alarmer {} {
-    set slot(alarms)	[list 0 5 10 15]
-    set slot(pending)	""
-    set slot(shutlist)	""
+    set slot(alarms)    [list 0 5 10 15]
+    set slot(pending)   ""
+    set slot(shutlist)  ""
 
-    trigger on add	[list $self add]
-    trigger on delete	[list $self remove]
-    trigger on change	[list $self change]
-    trigger on flush	[list $self recompute]
+    trigger on add      [list $self add]
+    trigger on delete   [list $self remove]
+    trigger on change   [list $self change]
+    trigger on flush    [list $self recompute]
 
     # Start various threads
     $self recompute_thread
@@ -43,13 +43,13 @@ method Alarmer fire_thread {} {
 method Alarmer clear_shutup_thread {} {
     # Remove all shutup flags
     foreach n [array names slot shutup:*] {
-	unset slot($n)
+        unset slot($n)
     }
 
     # Restore shutup flags set within the last hour so that we do
     # not lose recent shutups
     foreach uid $slot(shutlist) {
-	set slot(shutup:$uid) 1
+        set slot(shutup:$uid) 1
     }
 
     # Forget the shutup list for this past hour.  When this thread
@@ -72,15 +72,15 @@ method Alarmer recompute {} {
     set midnight [$self midnight]
 
     cal query $today $today i d {
-	if [$i is appt] {
-	    $self appt $i [expr $midnight+[$i starttime]*60] $now
-	}
+        if [$i is appt] {
+            $self appt $i [expr $midnight+[$i starttime $today]*60] $now
+        }
     }
 
     cal query [expr $today+1] [expr $today+1] i d {
-	if [$i is appt] {
-	    $self appt $i [expr $midnight+(24*60*60)+[$i starttime]*60] $now
-	}
+        if [$i is appt] {
+            $self appt $i [expr $midnight+(24*60*60)+[$i starttime [expr $today+1]]*60] $now
+        }
     }
 }
 
@@ -93,11 +93,11 @@ method Alarmer add {item} {
 
     set today [date today]
     if [$item contains $today] {
-	$self appt $item [expr $midnight+[$item starttime]*60] $now
+        $self appt $item [expr $midnight+[$item starttime $today]*60] $now
     }
 
     if [$item contains [expr $today+1]] {
-	$self appt $item [expr $midnight+(24*60*60)+[$item starttime]*60] $now
+        $self appt $item [expr $midnight+(24*60*60)+[$item starttime [expr $today+1]]*60] $now
     }
 }
 
@@ -112,28 +112,28 @@ method Alarmer midnight {} {
     set now [ical_time now]
     set split [ical_time split $now]
     set offset [expr "([lindex $split 0]*60*60 +\
-		       [lindex $split 1]*60 +\
-		       [lindex $split 2])"]
+                       [lindex $split 1]*60 +\
+                       [lindex $split 2])"]
 
     return [expr $now-$offset]
 }
 
 # effects - Add appt to pending list
-#	appt		appointment handle
-#	time		time of occurrence
-#	now		current time
+#       appt            appointment handle
+#       time            time of occurrence
+#       now             current time
 method Alarmer appt {appt time now} {
     if [catch {set alarms [$appt alarms]}] {
-	set alarms $slot(alarms)
+        set alarms $slot(alarms)
     }
 
     foreach a $alarms {
-	set t [expr $time-($a*60)]
-	if {$t < $now} {
-	    continue
-	}
+        set t [expr $time-($a*60)]
+        if {$t < $now} {
+            continue
+        }
 
-	lappend slot(pending) $appt $t $time
+        lappend slot(pending) $appt $t $time
     }
 }
 
@@ -141,9 +141,9 @@ method Alarmer appt {appt time now} {
 method Alarmer remove {item} {
     set pending ""
     foreach {x fire start} $slot(pending) {
-	if {$x != $item} {
-	    lappend pending $x $fire $start
-	}
+        if {$x != $item} {
+            lappend pending $x $fire $start
+        }
     }
     set slot(pending) $pending
 }
@@ -153,7 +153,7 @@ method Alarmer shutup {item} {
     # We set the shutup flag for this item, and also add it
     # to "shutlist" so that the shutup clearing thread will
     # leave this shutup flag alone the next time it runs
-    set uid [list [$item uid] [$item text] [$item starttime]]
+    set uid [list [$item uid] [$item text] [$item starttime [date today]]]
     set slot(shutup:$uid) 1
     lappend slot(shutlist) $uid
 }
@@ -166,24 +166,24 @@ method Alarmer fire {} {
     set now [expr [ical_time now]+5]
 
     foreach {item fire start} $slot(pending) {
-	if {$fire > $now} {
-	    # Not time to fire yet
-	    lappend pending $item $fire $start
-	    continue
-	}
+        if {$fire > $now} {
+            # Not time to fire yet
+            lappend pending $item $fire $start
+            continue
+        }
 
-	# If alarms are shut off for this item, then ignore
-	set uid [list [$item uid] [$item text] [$item starttime]]
-	if [info exists slot(shutup:$uid)] {
-	    continue
-	}
+        # If alarms are shut off for this item, then ignore
+        set uid [list [$item uid] [$item text] [$item starttime [date today]]]
+        if [info exists slot(shutup:$uid)] {
+            continue
+        }
 
-	# Close active notices
-	trigger fire kill_alarm $item
+        # Close active notices
+        trigger fire kill_alarm $item
 
-	# Create alarm
-	AlarmNotice $item $start
-	run-hook alarm-fire $item
+        # Create alarm
+        AlarmNotice $item $start
+        run-hook alarm-fire $item
     }
 
     set slot(pending) $pending
@@ -210,18 +210,18 @@ class AlarmNotice {item starttime} {
 
     # Buttons
     make_buttons .$self.bot 0\
-	[list\
-	     [list {Snooze}		[list AN_check_kill $self]]\
-	     [list {No More Alarms}	[list AN_shutup $self]]]
-				   
+        [list\
+             [list {Snooze}             [list AN_check_kill $self]]\
+             [list {No More Alarms}     [list AN_shutup $self]]]
+                                   
     # Display
     set str [$item text]
     regsub -all "\n\$" $str "" str
     set lines [llength [split $str "\n"]]
     if {$lines < 4} {set lines 4}
 
-    set st [time2text [$item starttime]]
-    set fi [time2text [expr [$item starttime]+[$item length]]]
+    set st [time2text [$item starttime [date today]]]
+    set fi [time2text [expr [$item starttime [date today]]+[$item length]]]
 
 
     frame .$self.top -class Pane
@@ -248,21 +248,21 @@ class AlarmNotice {item starttime} {
     # bind .$self <Return> [list AN_check_kill $self]
 
     # Triggers
-    trigger on delete		[list AN_item_kill $self]
-    trigger on change		[list AN_item_kill $self]
-    trigger on kill_alarm	[list AN_item_kill $self]
-    trigger on flush		[list AN_check_kill $self]
-    trigger on update_alarms	[list $self countdown]
+    trigger on delete           [list AN_item_kill $self]
+    trigger on change           [list AN_item_kill $self]
+    trigger on kill_alarm       [list AN_item_kill $self]
+    trigger on flush            [list AN_check_kill $self]
+    trigger on update_alarms    [list $self countdown]
 
     bell
 }
 
 method AlarmNotice destructor {} {
-    trigger remove delete		[list AN_item_kill $self]
-    trigger remove change		[list AN_item_kill $self]
-    trigger remove kill_alarm		[list AN_item_kill $self]
-    trigger remove flush		[list AN_check_kill $self]
-    trigger remove update_alarms	[list $self countdown]
+    trigger remove delete               [list AN_item_kill $self]
+    trigger remove change               [list AN_item_kill $self]
+    trigger remove kill_alarm           [list AN_item_kill $self]
+    trigger remove flush                [list AN_check_kill $self]
+    trigger remove update_alarms        [list $self countdown]
 
     destroy .$self
 }
@@ -270,24 +270,24 @@ method AlarmNotice destructor {} {
 # These are not methods because they need to delete the notice
 
 # effects  Kill the specified alarm notice and also remove any
-#	   pending alarms for the same item.
+#          pending alarms for the same item.
 proc AN_shutup {object} {
     catch {alarmer shutup [$object item]}
     catch {class_kill $object}
 }
 
 # effects  Kill the specified alarm notice if it belongs to the
-#	   specified item.
+#          specified item.
 proc AN_item_kill {object item} {
     catch {
-	if ![string compare [$object item] $item] {
-	    class_kill $object
-	}
+        if ![string compare [$object item] $item] {
+            class_kill $object
+        }
     }
 }
 
 # effects  Kill the specified alarm notice if its corresponding item
-#	   no longer exists.
+#          no longer exists.
 proc AN_check_kill {object} {
     # XXX Check whether or not item exists before killing.
     # XXX Check by uid/item contents instead of item handle to
@@ -302,13 +302,13 @@ method AlarmNotice item {} {
 method AlarmNotice countdown {} {
     set now [ical_time now]
     if {$now > $slot(starttime)} {
-	catch {.$self.foot configure -text "Late for Appointment"}
+        catch {.$self.foot configure -text "Late for Appointment"}
 
-	# No more need for countdown triggers
-	catch {trigger remove update_alarms [list $self countdown]}
+        # No more need for countdown triggers
+        catch {trigger remove update_alarms [list $self countdown]}
     } else {
-	set min [format "%.f" [expr ($slot(starttime)-$now)/60]]
-	catch {.$self.foot configure -text "in $min minutes"}
+        set min [format "%.f" [expr ($slot(starttime)-$now)/60]]
+        catch {.$self.foot configure -text "in $min minutes"}
     }
 }
 

@@ -12,12 +12,12 @@ class Ical_Doc {doc} {
     make_scrolled_text .$self.display
     set t .$self.display.text
     $t configure -setgrid 1 -wrap word -width 50 -height 30\
-	-cursor top_left_arrow
+        -cursor top_left_arrow
 
     focus .$self
-    bind .$self <Tab>	    {break}
+    bind .$self <Tab>       {break}
     bind .$self <Control-c> [list class_kill $self]
-    bind .$self <space>	    [list tkTextScrollPages $t 1]
+    bind .$self <space>     [list tkTextScrollPages $t 1]
     bind .$self <Control-f> [list tkTextScrollPages $t 1]
     bind .$self <Control-v> [list tkTextScrollPages $t 1]
     bind .$self <Control-b> [list tkTextScrollPages $t -1]
@@ -28,30 +28,30 @@ class Ical_Doc {doc} {
     # Set-up indentation
     set m [winfo pixels $t 20p]
     foreach i {1 2 3 4} {
-	set i1 [expr ($i-1) * $m]
-	set i2 [expr $i * $m]
-	$t tag configure indent${i}h  -lmargin1 $i1 -lmargin2 $i2
-	$t tag configure indent${i}   -lmargin1 $i2 -lmargin2 $i2
+        set i1 [expr ($i-1) * $m]
+        set i2 [expr $i * $m]
+        $t tag configure indent${i}h  -lmargin1 $i1 -lmargin2 $i2
+        $t tag configure indent${i}   -lmargin1 $i2 -lmargin2 $i2
     }
 
     # Headers
-    $t tag configure header1	-font [pref largeHeadingFont]
-    $t tag configure header2	-font [pref smallHeadingFont] -underline 1
-    $t tag configure header3	-font [pref smallHeadingFont]
+    $t tag configure header1    -font [pref largeHeadingFont]
+    $t tag configure header2    -font [pref smallHeadingFont] -underline 1
+    $t tag configure header3    -font [pref smallHeadingFont]
 
     # Fonts
-    $t tag configure norm	-font [pref normFont]
-    $t tag configure bold	-font [pref boldFont]
-    $t tag configure italic	-font [pref italFont]
-    $t tag configure fixed	-font [option get . normFixedFont Font]
-    $t tag configure boldfixed	-font [option get . boldFixedFont Font]
-    $t tag configure pre	-font [option get . normFixedFont Font]\
-				-wrap none
+    $t tag configure norm       -font [pref normFont]
+    $t tag configure bold       -font [pref boldFont]
+    $t tag configure italic     -font [pref italFont]
+    $t tag configure fixed      -font [option get . normFixedFont Font]
+    $t tag configure boldfixed  -font [option get . boldFixedFont Font]
+    $t tag configure pre        -font [option get . normFixedFont Font]\
+                                -wrap none
 
     # References
-    $t tag configure ref	-font [pref italFont]\
-				-foreground [pref interestColor]\
-				-underline 1
+    $t tag configure ref        -font [pref italFont]\
+                                -foreground [pref interestColor]\
+                                -underline 1
 
     # Insert documentation into text widget
     set text $t
@@ -73,21 +73,21 @@ method Ical_Doc destructor {} {
 
 method Ical_Doc goto_toc {} {
     catch {
-	.$self.display.text yview header_[lindex [.$self.toc curselection] 0]
+        .$self.display.text yview header_[lindex [.$self.toc curselection] 0]
     }
 }
 
 # effects Generate table of contents in listbox from the contents of
-#	  a text widget.
+#         a text widget.
 method Ical_Doc make_toc {} {
     set t .$self.display.text
     set l .$self.toc
 
     listbox $l -relief raised -borderwidth 2 -exportselection 0\
-	-font [pref boldFont]
+        -font [pref boldFont]
 
-    bind $l <ButtonRelease-1>	[list $self goto_toc]
-    bind $l <B1-Motion>		[list $self goto_toc]
+    bind $l <ButtonRelease-1>   [list $self goto_toc]
+    bind $l <B1-Motion>         [list $self goto_toc]
 
     # Prevent horizontal scrolling in toc
     bindtags $l [list YScan Listbox $l [winfo toplevel $l] all]
@@ -99,15 +99,15 @@ method Ical_Doc make_toc {} {
     set headers {}
 
     foreach level {1 2} {
-	foreach {s f} [join [$t tag ranges header$level]] {
-	    set text [$t get $s $f]
-	    set pad $level
-	    while {$pad > 1} {
-		set text "        $text"
-		incr pad -1
-	    }
-	    lappend headers [list $s $text]
-	}
+        foreach {s f} [join [$t tag ranges header$level]] {
+            set text [$t get $s $f]
+            set pad $level
+            while {$pad > 1} {
+                set text "        $text"
+                incr pad -1
+            }
+            lappend headers [list $s $text]
+        }
     }
 
     # Sort headers by position in text
@@ -116,9 +116,9 @@ method Ical_Doc make_toc {} {
     # Insert into box
     set i 0
     foreach {index text} [join $headers] {
-	$l insert end $text
-	$t mark set header_$i $index
-	incr i
+        $l insert end $text
+        $t mark set header_$i $index
+        incr i
     }
 
     pack $l -fill y -side left
@@ -138,36 +138,36 @@ proc show_about {leader} {
 
     set t .about
     if ![winfo exists $t] {
-	toplevel $t
-	set font1 [pref largeHeadingFont]
-	set font2 [pref smallHeadingFont]
+        toplevel $t
+        set font1 [pref largeHeadingFont]
+        set font2 [pref smallHeadingFont]
 
-	frame $t.top -class Pane
-	frame $t.top.author
-	label $t.top.version -font $font1 -text "Ical Version $ical(version)"
+        frame $t.top -class Pane
+        frame $t.top.author
+        label $t.top.version -font $font1 -text "Ical Version $ical(version)"
 
-	label $t.top.author.l1 -font $font2 -text "Written by Sanjay Ghemawat"
-	label $t.top.author.l2  -font $font2 -text $ical(author) -anchor e
-	pack $t.top.author.l1 -side top -expand 1 -fill x
-	pack $t.top.author.l2 -side top -expand 1 -fill x
+        label $t.top.author.l1 -font $font2 -text "Written by Sanjay Ghemawat"
+        label $t.top.author.l2  -font $font2 -text $ical(author) -anchor e
+        pack $t.top.author.l1 -side top -expand 1 -fill x
+        pack $t.top.author.l2 -side top -expand 1 -fill x
 
-	pack $t.top.version -side top -expand 1 -fill x -padx 5m -pady 5m
-	pack $t.top.author  -side top -expand 1 -fill x -padx 5m -pady 5m
+        pack $t.top.version -side top -expand 1 -fill x -padx 5m -pady 5m
+        pack $t.top.author  -side top -expand 1 -fill x -padx 5m -pady 5m
 
-	make_buttons $t.bot 0 {
-	    {{Okay}		{set about(done) 1}}
-	}
+        make_buttons $t.bot 0 {
+            {{Okay}             {set about(done) 1}}
+        }
 
-	pack $t.top -side top -expand 1 -fill x
-	pack $t.bot -side bottom -expand 1 -fill x
+        pack $t.top -side top -expand 1 -fill x
+        pack $t.bot -side bottom -expand 1 -fill x
 
-	wm title $t {About Ical}
-	wm protocol $t WM_DELETE_WINDOW {set about(done) 1}
-	bind $t	<Control-c> {set about(done) 1}
-	bind $t	<Return>    {set about(done) 1}
+        wm title $t {About Ical}
+        wm protocol $t WM_DELETE_WINDOW {set about(done) 1}
+        bind $t <Control-c> {set about(done) 1}
+        bind $t <Return>    {set about(done) 1}
 
-	wm withdraw $t
-	update idletasks
+        wm withdraw $t
+        update idletasks
     }
 
     set about(done) 0

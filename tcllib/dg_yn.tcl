@@ -4,12 +4,12 @@
 #
 # Commands
 #
-#	yes_or_no <leader> <message> <yes-text>? <no-text>?
-#		Confirm with user.
+#       yes_or_no <leader> <message> <yes-text>? <no-text>?
+#               Confirm with user.
 
 # Hidden global variables
 #
-#	yn_done			Is yes_or_no interaction finished
+#       yn_done                 Is yes_or_no interaction finished
 
 set yn_done 0
 
@@ -30,8 +30,8 @@ proc yn_make {} {
 
     message $f.text -aspect 400 -text {Uninitialized message}
     make_buttons $f.bot 1 {
-	{Cancel		{set yn_done 0}}
-	{Okay		{set yn_done 1}}
+        {Cancel         {set yn_done 0}}
+        {Okay           {set yn_done 1}}
     }
 
     pack $f.text -in $f.top -side right -expand 1 -fill both -padx 5m -pady 5m

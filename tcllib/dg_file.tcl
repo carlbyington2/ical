@@ -4,13 +4,13 @@
 #
 # Commands
 #
-#	get_file_name <leader> <title> <message> <var> [<init>]
-#		Get file name from user.  The name is stored in <var>.
-#		Returns true iff user does not cancel operation.
+#       get_file_name <leader> <title> <message> <var> [<init>]
+#               Get file name from user.  The name is stored in <var>.
+#               Returns true iff user does not cancel operation.
 
 # Hidden global variables
 #
-#	file_done		Is file interaction finished
+#       file_done               Is file interaction finished
 
 set file_done 0
 
@@ -19,8 +19,8 @@ proc get_file_name {leader title message var {init {}}} {
 
     set result [file_interact $leader $title $message $init]
     if $result {
-	upvar $var returnVar
-	set returnVar [fs_filename .file_dialog.box]
+        upvar $var returnVar
+        set returnVar [fs_filename .file_dialog.box]
     }
     return $result
 }
@@ -40,8 +40,8 @@ proc file_make {} {
     FileSelector $f.box
     message $f.text -aspect 400 -text {Uninitialized message}
     make_buttons $f.bot 1 {
-	{Cancel		{set file_done 0}}
-	{Okay		{set file_done 1}}
+        {Cancel         {set file_done 0}}
+        {Okay           {set file_done 1}}
     }
 
     pack $f.text -in $f.top -side top -expand 1 -fill both -padx 5m -pady 5m
@@ -67,7 +67,7 @@ proc file_interact {leader title message init} {
     $f.text configure -text $message
     wm title $f $title
     if [string compare $init {}] {
-	fs_goto $f.box $init
+        fs_goto $f.box $init
     }
 
     # Run dialog
@@ -81,6 +81,6 @@ proc file_done_check {} {
     global file_done
 
     if ![file isdirectory [fs_filename .file_dialog.box]] {
-	set file_done 1
+        set file_done 1
     }
 }

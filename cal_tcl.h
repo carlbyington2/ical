@@ -21,39 +21,39 @@ class Calendar_Tcl : public Object {
     Calendar_Tcl(Tcl_Interp*, char const* handle, char const* file);
     virtual ~Calendar_Tcl();
 
-    int error();		/* Used to detect initialization error */
-    char const* error_msg();	/* Error description */
+    int error();                /* Used to detect initialization error */
+    char const* error_msg();    /* Error description */
 
     virtual int method(int, const char*[]);
 
-    CalFile*  main;		/* Main calendar */
-    FileList* includes;		/* Included calendars */
+    CalFile*  main;             /* Main calendar */
+    FileList* includes;         /* Included calendars */
 
     void add_item_handles(CalFile*);
     void remove_item_handles(Calendar*);
 
      /*
-      * effects	Returns calendar file with specified name.
-      *		If name is nil, returns main calendar file.
-      *		If no calendar file matches name, returns nil.
+      * effects Returns calendar file with specified name.
+      *         If name is nil, returns main calendar file.
+      *         If no calendar file matches name, returns nil.
       */
     CalFile* name2file(char const* name);
 
      /*
-      * effects	Returns calendar file for specified calendar.
-      *		If no calendar file matches c, returns nil.
+      * effects Returns calendar file for specified calendar.
+      *         If no calendar file matches c, returns nil.
       */
     CalFile* cal2file(Calendar* c);
 
     /*
-     * effects	Purge unnecessary hidden entries from main calendar.
+     * effects  Purge unnecessary hidden entries from main calendar.
      */
     void purge();
 
     /*
-     * modifies	includes/items/error_message.
-     * effects	Uses string names in main calendar to fixup include list.
-     *		Appends errors to error_message.
+     * modifies includes/items/error_message.
+     * effects  Uses string names in main calendar to fixup include list.
+     *          Appends errors to error_message.
      */
     void fix_includes();
 
@@ -61,7 +61,7 @@ class Calendar_Tcl : public Object {
     void add_error(char const* title, char const* text);
   private:
     int had_error;
-    charArray* msg;		/* Always kept null terminated */
+    charArray* msg;             /* Always kept null terminated */
 };
 
 inline int Calendar_Tcl::error() {

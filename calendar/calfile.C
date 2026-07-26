@@ -31,13 +31,13 @@ static int fsync(int) {return 0;}
 #endif
 
 // Get various file names
-static char const* home_backup_file();	// Backup file in home dir
-static char const* tmp_backup_file();	// Backup file in tmp dir
+static char const* home_backup_file();  // Backup file in home dir
+static char const* tmp_backup_file();   // Backup file in tmp dir
 
 static int backup_file(char const* src, char const* dst, long mode);
-// effects	Backup file named "src" to file named "dst".
-//		Change the mode of "dst" to "mode".
-//		Return true iff successful.
+// effects      Backup file named "src" to file named "dst".
+//              Change the mode of "dst" to "mode".
+//              Return true iff successful.
 
 const char* CalFile::lastError = "no error";
 
@@ -60,15 +60,15 @@ CalFile::CalFile(int ro, const char* name) {
     // Get directory name for access checks
     char* lastSlash = strrchr(name, '/');
     if (lastSlash == 0) {
-	/* Calendar is in current directory */
-	tmp = new char[3];
-	strcpy(tmp, "./");
+        /* Calendar is in current directory */
+        tmp = new char[3];
+        strcpy(tmp, "./");
     }
     else {
-	int dirlen = lastSlash + 1 - name;
-	tmp = new char[dirlen+1];
-	strncpy(tmp, name, dirlen);
-	tmp[dirlen] = '\0';
+        int dirlen = lastSlash + 1 - name;
+        tmp = new char[dirlen+1];
+        strncpy(tmp, name, dirlen);
+        tmp[dirlen] = '\0';
     }
     dirName = tmp;
 
@@ -105,33 +105,33 @@ int CalFile::Write() {
 
     int result = lstat(fileName, &buf);
     if ((result >= 0) && S_ISLNK(buf.st_mode)) {
-	// Get mode for real referenced file
-	is_slink = 1;
-	result = stat(fileName, &buf);
+        // Get mode for real referenced file
+        is_slink = 1;
+        result = stat(fileName, &buf);
     }
 
     if (result < 0) {
-	/* Could not get file mode */
-	if (errno == ENOENT) {
-	    /* Original file does not even exist - try to write directly */
-	    if (WriteTo(calendar, fileName)) {
-		written();
-		return 1;
-	    }
-	}
-	return 0;
+        /* Could not get file mode */
+        if (errno == ENOENT) {
+            /* Original file does not even exist - try to write directly */
+            if (WriteTo(calendar, fileName)) {
+                written();
+                return 1;
+            }
+        }
+        return 0;
     }
 
     long mode = buf.st_mode & 07777;
 
     // See if file is a link, or if the containing directory is write-protected
     if (is_slink || (buf.st_nlink > 1) || (access(dirName, W_OK) < 0)) {
-	// Backup by copying to preserve links
-	return WriteInPlace(mode);
+        // Backup by copying to preserve links
+        return WriteInPlace(mode);
     }
     else {
-	// Backup by renaming old version if possible
-	return WriteNew(mode);
+        // Backup by renaming old version if possible
+        return WriteNew(mode);
     }
 }
 
@@ -141,15 +141,15 @@ int CalFile::Write() {
 
 int CalFile::WriteNew(long mode) {
     if (! WriteTo(calendar, tmpName)) {
-	unlink(tmpName);
-	return 0;
+        unlink(tmpName);
+        return 0;
     }
 
     if (chmod(tmpName, mode) < 0) {
-	/* Could not set new file mode */
+        /* Could not set new file mode */
         lastError = strerror (errno);
-	unlink(tmpName);
-	return 0;
+        unlink(tmpName);
+        return 0;
     }
 
     // We could conceivably do more sanity checks here.
@@ -162,8 +162,8 @@ int CalFile::WriteNew(long mode) {
     // Now rename the new version
     if (rename(tmpName, fileName) < 0) {
         lastError = strerror (errno);
-	unlink(tmpName);
-	return 0;
+        unlink(tmpName);
+        return 0;
     }
 
     written();
@@ -178,8 +178,8 @@ int CalFile::WriteInPlace(long mode) {
     CopyBackup(mode);
 
     if (WriteTo(calendar, fileName)) {
-	written();
-	return 1;
+        written();
+        return 1;
     }
 
     return 0;
@@ -192,7 +192,7 @@ int CalFile::CopyBackup(long mode) {
     // * In home directory
     // * In tmp directory
 
-    if (backup_file(fileName, backupName,	   mode)) return 1;
+    if (backup_file(fileName, backupName,          mode)) return 1;
     if (backup_file(fileName, home_backup_file(),  mode)) return 1;
     if (backup_file(fileName, tmp_backup_file(),   mode)) return 1;
 
@@ -202,8 +202,8 @@ int CalFile::CopyBackup(long mode) {
 int CalFile::Read() {
     Calendar* old = ReRead();
     if (old != 0) {
-	delete old;
-	return 1;
+        delete old;
+        return 1;
     }
     return 0;
 }
@@ -215,17 +215,17 @@ Calendar* CalFile::ReRead() {
     Calendar* cal = ReadFrom(fileName);
     Calendar* old = 0;
     if (cal != 0) {
-	old = calendar;
-	calendar = cal;
-	calendar->SetReadOnly(readOnly);
+        old = calendar;
+        calendar = cal;
+        calendar->SetReadOnly(readOnly);
 
-	PerformAccessCheck();
+        PerformAccessCheck();
 
-	modified = 0;
+        modified = 0;
 
-	lastModifyValid = gotTime;
-	if (gotTime)
-	    lastModifyTime = newFileTime;
+        lastModifyValid = gotTime;
+        if (gotTime)
+            lastModifyTime = newFileTime;
     }
     return old;
 }
@@ -237,8 +237,8 @@ int CalFile::FileHasChanged() {
     int newModifyValid = GetModifyTime(fileName, newModifyTime);
 
     if (newModifyValid != lastModifyValid) {
-	/* Ability to read file information changed */
-	return 1;
+        /* Ability to read file information changed */
+        return 1;
     }
 
     return (lastModifyValid && (newModifyTime != lastModifyTime));
@@ -249,9 +249,9 @@ Calendar* CalFile::ReadFrom(const char* name) {
     Lexer input(name);
 
     if (! cal->Read(&input)) {
-	lastError = input.LastError();
-	delete cal;
-	cal = 0;
+        lastError = input.LastError();
+        delete cal;
+        cal = 0;
     }
 
     return cal;
@@ -260,14 +260,14 @@ Calendar* CalFile::ReadFrom(const char* name) {
 int CalFile::WriteTo(Calendar* cal, const char* name) {
     FILE* output = fopen(name, "w");
     if (! output) {
-	lastError = "could not open file for writing calendar";
+        lastError = "could not open file for writing calendar";
         return 0;
     }
 
     cal->Write(output);
     fflush(output);
     if (ferror(output) || (fsync(fileno(output)) < 0)) {
-	lastError = "error writing calendar file";
+        lastError = "error writing calendar file";
         fclose(output);
         return 0;
     }
@@ -294,20 +294,20 @@ void CalFile::PerformAccessCheck() {
     calendar->SetReadOnly(readOnly);
 
     if (access(fileName, W_OK) < 0) {
-	switch (errno) {
-	  case ENOENT:
-	    /* File does not exist */
-	    break;
-	  case EACCES:
-	  case EROFS:
-	  case ETXTBSY:
-	    /* Permission denied */
-	    calendar->SetReadOnly(1);
-	    break;
-	  default:
-	    /* Should not happen if we were successfuly able to read cal */
-	    break;
-	}
+        switch (errno) {
+          case ENOENT:
+            /* File does not exist */
+            break;
+          case EACCES:
+          case EROFS:
+          case ETXTBSY:
+            /* Permission denied */
+            calendar->SetReadOnly(1);
+            break;
+          default:
+            /* Should not happen if we were successfuly able to read cal */
+            break;
+        }
     }
 }
 
@@ -332,13 +332,13 @@ static char const* home_backup_file() {
 
     // Make sure we initialize only once
     if (!inited) {
-	inited = 1;
-	char const* home = getenv("HOME");
-	if (home != 0) {
-	    char* copy = new char[strlen(home) + strlen(part_name) + 2];
-	    sprintf(copy, "%s/%s", home, part_name);
-	    full_name = copy;
-	}
+        inited = 1;
+        char const* home = getenv("HOME");
+        if (home != 0) {
+            char* copy = new char[strlen(home) + strlen(part_name) + 2];
+            sprintf(copy, "%s/%s", home, part_name);
+            full_name = copy;
+        }
     }
 
     return full_name;
@@ -351,13 +351,13 @@ static char const* tmp_backup_file() {
 
     // Make sure we initialize only once
     if (!inited) {
-	inited = 1;
-	char const* uid = my_name();
-	if (uid != 0) {
-	    char* copy = new char[strlen(prefix) + strlen(uid) + 2];
-	    sprintf(copy, "%s%s~", prefix, uid);
-	    full_name = copy;
-	}
+        inited = 1;
+        char const* uid = my_name();
+        if (uid != 0) {
+            char* copy = new char[strlen(prefix) + strlen(uid) + 2];
+            sprintf(copy, "%s%s~", prefix, uid);
+            full_name = copy;
+        }
     }
 
     return full_name;

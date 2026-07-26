@@ -34,40 +34,40 @@ proc psmonth {date} {
     set row 0
 
     if [cal option MondayFirst] {
-	lappend output {0	()	(Mon)	()	ColumnHead}
-	lappend output {1	()	(Tue)	()	ColumnHead}
-	lappend output {2	()	(Wed)	()	ColumnHead}
-	lappend output {3	()	(Thu)	()	ColumnHead}
-	lappend output {4	()	(Fri)	()	ColumnHead}
-	lappend output {5	()	(Sat)	()	ColumnHead}
-	lappend output {6	()	(Sun)	()	ColumnHead}
-	set col [expr ($col + 6) % 7]
+        lappend output {0       ()      (Mon)   ()      ColumnHead}
+        lappend output {1       ()      (Tue)   ()      ColumnHead}
+        lappend output {2       ()      (Wed)   ()      ColumnHead}
+        lappend output {3       ()      (Thu)   ()      ColumnHead}
+        lappend output {4       ()      (Fri)   ()      ColumnHead}
+        lappend output {5       ()      (Sat)   ()      ColumnHead}
+        lappend output {6       ()      (Sun)   ()      ColumnHead}
+        set col [expr ($col + 6) % 7]
     } else {
-	lappend output {0	()	(Sun)	()	ColumnHead}
-	lappend output {1	()	(Mon)	()	ColumnHead}
-	lappend output {2	()	(Tue)	()	ColumnHead}
-	lappend output {3	()	(Wed)	()	ColumnHead}
-	lappend output {4	()	(Thu)	()	ColumnHead}
-	lappend output {5	()	(Fri)	()	ColumnHead}
-	lappend output {6	()	(Sat)	()	ColumnHead}
+        lappend output {0       ()      (Sun)   ()      ColumnHead}
+        lappend output {1       ()      (Mon)   ()      ColumnHead}
+        lappend output {2       ()      (Tue)   ()      ColumnHead}
+        lappend output {3       ()      (Wed)   ()      ColumnHead}
+        lappend output {4       ()      (Thu)   ()      ColumnHead}
+        lappend output {5       ()      (Fri)   ()      ColumnHead}
+        lappend output {6       ()      (Sat)   ()      ColumnHead}
     }
 
     set num 1
     for {set d $start} {$d <= $finish} {incr d} {
-	# Print date header
-	lappend output [format "%d %d () (%2d)" $row $col $num]
+        # Print date header
+        lappend output [format "%d %d () (%2d)" $row $col $num]
 
-	ps_printday output $d
+        ps_printday output $d
 
-	lappend output {ShowDay}
+        lappend output {ShowDay}
 
-	incr num
-	incr col
-	if {$col == 7} {
-	    set col 0
-	    incr row
-	    if {$row == 5} {set row 0}
-	}
+        incr num
+        incr col
+        if {$col == 7} {
+            set col 0
+            incr row
+            if {$row == 5} {set row 0}
+        }
     }
 
     lappend output {showpage}
@@ -87,9 +87,9 @@ proc psdays {start num cols landscape} {
     set output {}
 
     if $landscape {
-	lappend output {SetLandScape}
+        lappend output {SetLandScape}
     } else {
-	lappend output {SetPortrait}
+        lappend output {SetPortrait}
     }
 
     lappend output "$cols SetGridWidth"
@@ -104,9 +104,9 @@ proc psdays {start num cols landscape} {
     lappend output {0.1             SetTitleFraction}
 
     if {$year1 != $year2} {
-	lappend output "($year1 - $year2) SetHeaderLeft"
+        lappend output "($year1 - $year2) SetHeaderLeft"
     } else {
-	lappend output "($year1) SetHeaderLeft"
+        lappend output "($year1) SetHeaderLeft"
     }
 
     ps_printtime output
@@ -115,20 +115,20 @@ proc psdays {start num cols landscape} {
     set col 0
     set row 0
     for {set d $start} {$d <= $finish} {incr d} {
-	lappend output [format "%d %d (%s) (%s %d)"\
-			$row $col\
-			[lindex $wdays [date weekday $d]]\
-			[lindex $mons  [date month $d]]\
-			[date monthday $d]]
+        lappend output [format "%d %d (%s) (%s %d)"\
+                        $row $col\
+                        [lindex $wdays [date weekday $d]]\
+                        [lindex $mons  [date month $d]]\
+                        [date monthday $d]]
 
-	ps_printday output $d
-	lappend output {ShowDay}
+        ps_printday output $d
+        lappend output {ShowDay}
 
-	incr col
-	if {$col == $cols} {
-	    set col 0
-	    incr row
-	}
+        incr col
+        if {$col == $cols} {
+            set col 0
+            incr row
+        }
     }
 
     lappend output {showpage}
@@ -176,18 +176,18 @@ proc ps_printday {o date} {
     lappend output "\["
 
     cal query $date $date item junk {
-	lappend output "\["
+        lappend output "\["
 
-	# Print all the lines
-	set text [item2text $item "" "" 2000]
-	regsub -- "\n\$" $text "" text
-	regsub -all -- {[()\\]} $text {\\&} text
-	set lines [split $text "\n"]
+        # Print all the lines
+        set text [item2text $date $item "" "" 2000]
+        regsub -- "\n\$" $text "" text
+        regsub -all -- {[()\\]} $text {\\&} text
+        set lines [split $text "\n"]
 
-	# Put extra space at end of all strings to help out the line breaker.
-	lappend output [format {(%s )} [join $lines " )\n("]]
+        # Put extra space at end of all strings to help out the line breaker.
+        lappend output [format {(%s )} [join $lines " )\n("]]
 
-	lappend output "\]"
+        lappend output "\]"
     }
 
     lappend output "\]"

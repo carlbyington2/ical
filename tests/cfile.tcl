@@ -59,8 +59,8 @@ proc cfile3 {} {
     exec mkdir $tmp/rp
     exec chmod 0200 $tmp/rp
     expect_error\
-	{make_backup $tmp/rp/file}\
-	{permission denied}
+        {make_backup $tmp/rp/file}\
+        {permission denied}
 
     exec chmod 0700 $tmp/rp
 }
@@ -125,8 +125,8 @@ proc cfile7 {} {
     exec chmod 0600 $env(HOME)/icalbak~
 
     expect_error\
-	{check_calendar $env(HOME)/icalbak~ TestValue}\
-	"$env(HOME)/icalbak~: file does not contain calendar\n"
+        {check_calendar $env(HOME)/icalbak~ TestValue}\
+        "$env(HOME)/icalbak~: file does not contain calendar\n"
 
     check_calendar /tmp/ical_$me~ TestValue
     exec rm -f /tmp/ical_$me~ $env(HOME)/icalbak~
@@ -153,12 +153,12 @@ proc cfile8 {} {
     exec chmod 0600 /tmp/ical_$me~
 
     expect_error\
-	{check_calendar $env(HOME)/icalbak~ TestValue}\
-	"$env(HOME)/icalbak~: file does not contain calendar\n"
+        {check_calendar $env(HOME)/icalbak~ TestValue}\
+        "$env(HOME)/icalbak~: file does not contain calendar\n"
 
     expect_error\
-	{check_calendar /tmp/ical_$me~ TestValue}\
-	"/tmp/ical_$me~: file does not contain calendar\n"
+        {check_calendar /tmp/ical_$me~ TestValue}\
+        "/tmp/ical_$me~: file does not contain calendar\n"
 
     exec rm -f /tmp/ical_$me~ $env(HOME)/icalbak~
     exec chmod 0700 $tmp/rp
@@ -183,9 +183,9 @@ proc cfile9 {} {
     # Check the item
     calendar cal $fname
     cal query -all $today $today item junk {
-	if [string compare [$item text] "a % b"] {
-	    failed "item text containing % sign was mangled"
-	}
+        if [string compare [$item text] "a % b"] {
+            failed "item text containing % sign was mangled"
+        }
     }
     cal delete
 

@@ -24,23 +24,23 @@ proc okay {script} {
 
 proc expect {script value} {
     if [catch {uplevel $script} msg] {
-	failed $msg
-	return
+        failed $msg
+        return
     }
 
     if [string compare $msg $value] {
-	failed "expected \"$value\", got \"$msg\""
+        failed "expected \"$value\", got \"$msg\""
     }
 }
 
 proc expect_error {script error} {
     if ![catch {uplevel $script} msg] {
-	failed $msg
-	return
+        failed $msg
+        return
     }
 
     if [string compare $msg $error] {
-	failed "expected error \"$error\", got \"$msg\""
+        failed "expected error \"$error\", got \"$msg\""
     }
 }
 

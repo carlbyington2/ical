@@ -681,12 +681,13 @@ $text insert insert {Returns a brief textual description of how the item repeats
 $text insert insert {
 } {norm indent1}
 $text insert insert { * } {norm indent1h}
-$text insert insert {item describe_repeat} {bold indent1}
+$text insert insert {item describe_repeat [-terse]} {bold indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert {Like ``} {norm indent1}
 $text insert insert {item type} {bold indent1}
-$text insert insert {'', except that it returns a more complete description of how the item repeats.. } {norm indent1}
+$text insert insert {'', except that it returns a more complete description of how the item repeats. If terse, returns the complete description of the repetition as } {norm indent1}
+$text insert insert {start finish { deleted [ deleted ... ] } how...} {italic indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert { * } {norm indent1h}
@@ -988,23 +989,56 @@ $text insert insert { minutes. } {norm indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert { * } {norm indent1h}
-$text insert insert {appt starttime} {bold indent1}
+$text insert insert {appt starttime date} {bold indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert {Return the starting time for } {norm indent1}
 $text insert insert {appt} {italic indent1}
-$text insert insert { in minutes since midnight. } {norm indent1}
+$text insert insert { in minutes since midnight. Unless the } {norm indent1}
+$text insert insert {date} {italic indent1}
+$text insert insert { is specified as } {norm indent1}
+$text insert insert {native} {bold indent1}
+$text insert insert {, the value is converted from the native item's time zone to the current system time zone for } {norm indent1}
+$text insert insert {date} {italic indent1}
+$text insert insert {.} {norm indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert { * } {norm indent1h}
-$text insert insert {appt starttime minutes} {bold indent1}
+$text insert insert {appt starttime date minutes} {bold indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert {Set the starting time for } {norm indent1}
 $text insert insert {appt} {italic indent1}
 $text insert insert { to } {norm indent1}
 $text insert insert {minutes} {italic indent1}
-$text insert insert { after midnight. } {norm indent1}
+$text insert insert { after midnight. Unless the } {norm indent1}
+$text insert insert {date} {italic indent1}
+$text insert insert { is specified as } {norm indent1}
+$text insert insert {native} {bold indent1}
+$text insert insert {, the value is interpreted in the current system time zone for } {norm indent1}
+$text insert insert {date} {italic indent1}
+$text insert insert {.} {norm indent1}
+$text insert insert {
+} {norm indent1}
+$text insert insert { * } {norm indent1h}
+$text insert insert {appt timezone} {bold indent1}
+$text insert insert {
+} {norm indent1}
+$text insert insert {Return the time zone for } {norm indent1}
+$text insert insert {appt} {italic indent1}
+$text insert insert {
+} {norm indent1}
+$text insert insert { * } {norm indent1h}
+$text insert insert {appt timezone -convert name} {bold indent1}
+$text insert insert {
+} {norm indent1}
+$text insert insert {Set the time zone for } {norm indent1}
+$text insert insert {appt} {italic indent1}
+$text insert insert { to } {norm indent1}
+$text insert insert {name} {italic indent1}
+$text insert insert {. If } {norm indent1}
+$text insert insert {-convert} {bold indent1}
+$text insert insert { is specified the starting date and time are converted to the new time zone.} {norm indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert { * } {norm indent1h}
@@ -1519,12 +1553,16 @@ $text insert insert { as an integer in the range 0...999. } {norm indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert { * } {norm indent1h}
-$text insert insert {ical_time split time} {bold indent1}
+$text insert insert {ical_time split [-all] [-timezone name] time} {bold indent1}
 $text insert insert {
 } {norm indent1}
-$text insert insert {Returns a four element list of the components of } {norm indent1}
+$text insert insert {Returns eight (if } {norm indent1}
+$text insert insert {-all} {bold indent1}
+$text insert insert {) or four element list of the components of } {norm indent1}
 $text insert insert {time} {italic indent1}
-$text insert insert {. The first element is the hour, the second element is the minute, the third element is the second, and the fourth element is the millisecond. } {norm indent1}
+$text insert insert {. They are: the day of the month (1..31), the day of the week (1..7, for Sunday..Saturday), month (1..12), year (4-digit), hour, minute, second, millisecond. If } {norm indent1}
+$text insert insert {-all} {bold indent1}
+$text insert insert { is not specified, only the last four elements (hour...millisecond) are returned.  Unless the time zone is specified, the conversion takes place in the current system time zone.} {norm indent1}
 $text insert insert {
 } {norm indent1}
 $text insert insert { * } {norm indent1h}

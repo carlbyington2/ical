@@ -8,10 +8,10 @@ proc date2text {date} {
 
     set split [date split $date]
     return [format "%s %s %d, %d"\
-	    $weekday_name([lindex $split 1])\
-	    $month_name([lindex $split 2])\
-	    [lindex $split 0]\
-	    [lindex $split 3]]
+            $weekday_name([lindex $split 1])\
+            $month_name([lindex $split 2])\
+            [lindex $split 0]\
+            [lindex $split 3]]
 }
 
 # effects - Return shorter unparsing of date.
@@ -20,40 +20,40 @@ proc date2text_no_weekday {date} {
 
     set split [date split $date]
     return [format "%s %d, %d"\
-	    $month_name([lindex $split 2])\
-	    [lindex $split 0]\
-	    [lindex $split 3]]
+            $month_name([lindex $split 2])\
+            [lindex $split 0]\
+            [lindex $split 3]]
 }
 
 # effects - Return unparsing of time.
-#	    Time is number of minutes since midnight.
+#           Time is number of minutes since midnight.
 proc time2text {time} {
     set min [expr $time%60]
     set hour [expr ($time/60) % 24]
 
     set mer  ""
     if [cal option AmPm] {
-	if {$hour >= 12} {
-	    set mer pm
-	    incr hour -12
-	} else {
-	    set mer am
-	}
-	if {$hour == 0} {set hour 12}
+        if {$hour >= 12} {
+            set mer pm
+            incr hour -12
+        } else {
+            set mer am
+        }
+        if {$hour == 0} {set hour 12}
     }
 
     return [format "%d:%02d%s" $hour $min $mer]
 }
 
 # effects - Return unparsing for item.
-#	    Lines are folded so that they are no longer than $wrap chars.
-#	    $header is prepended to beginning of appt.
-#	    $indent is prepended to beginning of every line except the first.
-proc item2text {item {header " * "} {indent "   "} {wrap 40}} {
+#           Lines are folded so that they are no longer than $wrap chars.
+#           $header is prepended to beginning of appt.
+#           $indent is prepended to beginning of every line except the first.
+proc item2text {d item {header " * "} {indent "   "} {wrap 40}} {
     if [$item is appt] {
-	set start [time2text [$item starttime]]
-	set finish [time2text [expr [$item starttime]+[$item length]]]
-	set header "$header$start to $finish\n$indent"
+        set start [time2text [$item starttime $d]]
+        set finish [time2text [expr [$item starttime $d]+[$item length]]]
+        set header "$header$start to $finish\n$indent"
     }
     
     set str [$item text]
@@ -61,7 +61,7 @@ proc item2text {item {header " * "} {indent "   "} {wrap 40}} {
     # Wrap
     set out ""
     foreach line [split $str "\n"] {
-	set out "$out[wrapline $line $wrap]"
+        set out "$out[wrapline $line $wrap]"
     }
     set str $out
     
@@ -80,18 +80,18 @@ proc wrapline {line width} {
     set sep ""
 
     foreach word [split $line " \t"] {
-	set str "$str$sep$word"
-	if {[string length $str] > $width} {
-	    set str ""
-	    set sep "\n"
-	} else {
-	    set sep " "
-	}
-	if {$out == ""} {
-	    set out $word
-	} else {
-	    set out "$out$sep$word"
-	}
+        set str "$str$sep$word"
+        if {[string length $str] > $width} {
+            set str ""
+            set sep "\n"
+        } else {
+            set sep " "
+        }
+        if {$out == ""} {
+            set out $word
+        } else {
+            set out "$out$sep$word"
+        }
     }
 
     return "$out\n"
@@ -103,11 +103,11 @@ proc num2text {num} {
 
     # If second-last digit is not "1", then special case on the last digit.
     if {(($num/10)%10) != 1} {
-	switch -exact -- [expr $num%10] {
-	    1 {set suff "st"}
-	    2 {set suff "nd"}
-	    3 {set suff "rd"}
-	}
+        switch -exact -- [expr $num%10] {
+            1 {set suff "st"}
+            2 {set suff "nd"}
+            3 {set suff "rd"}
+        }
     }
 
     return "$num$suff"

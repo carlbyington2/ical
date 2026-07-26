@@ -3,7 +3,6 @@
 %%Title: Calendar listing
 %%Pages: 1
 %%PageOrder: Ascend
-%%BoundingBox: 0 0 612 792
 %%DocumentFonts: Times-Roman
 %%EndComments
 
@@ -12,9 +11,9 @@
 /mm { 72 mul 25.4 div } def
 
 % User-defined parameters (with defaults)
-/FontName	/Times-Roman	def
-/RealWidth	8.5 inch	def
-/RealHeight	11 inch		def
+/FontName       /Times-Roman    def
+/RealWidth      8.5 inch        def
+/RealHeight     11 inch         def
 /LandScape      true            def
 /GridWidth      4               def
 /GridHeight     2               def
@@ -27,10 +26,10 @@
 /HeaderRight    ()              def
 /ColumnHeight   0               def
 /ColumnSep      0               def
-/MinLines	1		def
-/MaxLines	100		def
+/MinLines       1               def
+/MaxLines       100             def
 /TitleFraction  0.16            def
-/FontHeight	16		def
+/FontHeight     16              def
 
 % User invoked commands
 /SetLandScape           { /LandScape true def }         def
@@ -50,40 +49,40 @@
 /SetColumnHeight        { /ColumnHeight exch def }      def
 /SetColumnSep           { /ColumnSep exch def } def
 /SetFontHeight          { /FontHeight exch def } def
-/SetA4Paper		{ /RealWidth 210 mm def /RealHeight 297 mm def} def
-/SetUSLetter		{ /RealWidth 8.5 inch def /RealHeight 11 inch def } def
+/SetA4Paper             { /RealWidth 210 mm def /RealHeight 297 mm def} def
+/SetUSLetter            { /RealWidth 8.5 inch def /RealHeight 11 inch def } def
 
 % Define /ISOLatin1Encoding only if it's not already there.
 /ISOLatin1Encoding where { pop save true }{ false } ifelse
     /ISOLatin1Encoding [
-	StandardEncoding 0 45 getinterval aload pop
-	/minus
-	StandardEncoding 46 98 getinterval aload pop
-	/dotlessi /grave /acute /circumflex /tilde /macron /breve /dotaccent
-	/dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek
-	/caron /space /exclamdown /cent /sterling /currency /yen /brokenbar
-	/section /dieresis /copyright /ordfeminine /guillemotleft /logicalnot
-	/hyphen /registered /macron /degree /plusminus /twosuperior
-	/threesuperior /acute /mu /paragraph /periodcentered /cedilla
-	/onesuperior /ordmasculine /guillemotright /onequarter /onehalf
-	/threequarters /questiondown /Agrave /Aacute /Acircumflex /Atilde
-	/Adieresis /Aring /AE /Ccedilla /Egrave /Eacute /Ecircumflex /Edieresis
-	/Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde /Ograve /Oacute
-	/Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave /Uacute
-	/Ucircumflex /Udieresis /Yacute /Thorn /germandbls /agrave /aacute
-	/acircumflex /atilde /adieresis /aring /ae /ccedilla /egrave /eacute
-	/ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis /eth
-	/ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash
-	/ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis
+        StandardEncoding 0 45 getinterval aload pop
+        /minus
+        StandardEncoding 46 98 getinterval aload pop
+        /dotlessi /grave /acute /circumflex /tilde /macron /breve /dotaccent
+        /dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek
+        /caron /space /exclamdown /cent /sterling /currency /yen /brokenbar
+        /section /dieresis /copyright /ordfeminine /guillemotleft /logicalnot
+        /hyphen /registered /macron /degree /plusminus /twosuperior
+        /threesuperior /acute /mu /paragraph /periodcentered /cedilla
+        /onesuperior /ordmasculine /guillemotright /onequarter /onehalf
+        /threequarters /questiondown /Agrave /Aacute /Acircumflex /Atilde
+        /Adieresis /Aring /AE /Ccedilla /Egrave /Eacute /Ecircumflex /Edieresis
+        /Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde /Ograve /Oacute
+        /Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave /Uacute
+        /Ucircumflex /Udieresis /Yacute /Thorn /germandbls /agrave /aacute
+        /acircumflex /atilde /adieresis /aring /ae /ccedilla /egrave /eacute
+        /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis /eth
+        /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash
+        /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis
     ] def
 { restore } if
 
 /reencodeISO { %def
     findfont dup length dict
     begin
-	{ 1 index /FID ne { def }{ pop pop } ifelse } forall
-	/Encoding ISOLatin1Encoding def
-	currentdict
+        { 1 index /FID ne { def }{ pop pop } ifelse } forall
+        /Encoding ISOLatin1Encoding def
+        currentdict
     end
     definefont pop
 } bind def
@@ -215,9 +214,9 @@
     DayLeft () eq {
       % The items can be allowed to overlap with the title if necessary
       Space LineHeight div DayList LineWidth ComputeItemLines lt {
-	% Not enough space.  Set-up things for overlap
-	/ThisTitleHeight 0 def
-	/Space Space DayTitleHeight add def
+        % Not enough space.  Set-up things for overlap
+        /ThisTitleHeight 0 def
+        /Space Space DayTitleHeight add def
       } if
     } if
 
@@ -225,7 +224,7 @@
     {
       % Check to see if item fits within space
       Space LineHeight div DayList LineWidth ComputeItemLines ge {
-	exit
+        exit
       } if
 
       % Need to shrink the font height
@@ -240,14 +239,14 @@
     DayList {
       % Display an item (list of strings).
       {
-	newpath
-	LineWidth
-	{
-	  DayBorder 2 mul DayPosition moveto show
-	  /DayPosition DayPosition LineHeight sub def
-	}
-	BreakIntoLines
-	closepath fill
+        newpath
+        LineWidth
+        {
+          DayBorder 2 mul DayPosition moveto show
+          /DayPosition DayPosition LineHeight sub def
+        }
+        BreakIntoLines
+        closepath fill
       } forall
 
       % Draw line at end
@@ -312,10 +311,10 @@
     grestore
 } def
 
-% usage		<list> <width> "ComputeItemLines" <height>
-% requires	<list> is an array of array of strings.
-% effects	Compute the # of lines occupied by <list> if it
-%		is broken into lines of the specified width.
+% usage         <list> <width> "ComputeItemLines" <height>
+% requires      <list> is an array of array of strings.
+% effects       Compute the # of lines occupied by <list> if it
+%               is broken into lines of the specified width.
 
 /ComputeItemLines {
   100 dict begin
@@ -324,9 +323,9 @@
 
     {
       {
-	linewidth {
-	  pop /lines 1 lines add def
-	} BreakIntoLines
+        linewidth {
+          pop /lines 1 lines add def
+        } BreakIntoLines
       } forall
     } forall
 
@@ -334,10 +333,10 @@
   end
 } def
 
-% usage		<string> <width> <proc> "BreakIntoLines" -
-% requires	<proc> takes a single string argument
-% effects	line-breaks the <string> based on <width>.
-%		Calls <proc> with the contents of each line.
+% usage         <string> <width> <proc> "BreakIntoLines" -
+% requires      <proc> takes a single string argument
+% effects       line-breaks the <string> based on <width>.
+%               Calls <proc> with the contents of each line.
 
 /wordbreak ( ) def
 /BreakIntoLines {
@@ -348,23 +347,23 @@
   /breakwidth wordbreak stringwidth pop def
   /curwidth 0 def
   /lastwordbreak 0 def
-	
+        
   /startchar 0 def
   /restoftext textstring def
-	
+        
   { restoftext wordbreak search
     { /nextword exch def pop
       /restoftext exch def
       /wordwidth nextword stringwidth pop def
-		
+                
       curwidth wordwidth add linelength gt
       { textstring startchar
-	lastwordbreak startchar sub
-	getinterval breakproc
-	/startchar lastwordbreak def
-	/curwidth wordwidth breakwidth add def }
+        lastwordbreak startchar sub
+        getinterval breakproc
+        /startchar lastwordbreak def
+        /curwidth wordwidth breakwidth add def }
       { /curwidth curwidth wordwidth add
-	breakwidth add def 
+        breakwidth add def 
       } ifelse
 
       /lastwordbreak lastwordbreak

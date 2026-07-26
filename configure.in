@@ -27,7 +27,7 @@ AC_PREREQ(2.0)
 # Create config files
 AC_CONFIG_HEADER(config.h)
 
-ICAL_VERSION="2.3"
+ICAL_VERSION="3.0"
 AC_SUBST(ICAL_VERSION)
 
 ############################################################################
@@ -144,17 +144,23 @@ if test -z "$TCL_EXEC_PREFIX"; then TCL_EXEC_PREFIX="$TCL_PREFIX"; fi
 if test -z "$TK_EXEC_PREFIX"; then TK_EXEC_PREFIX="$TK_PREFIX"; fi
 
 #### Check that the library files exist
-AC_MSG_CHECKING(for installed Tcl/Tk library files)
-eval lib1="${TCL_EXEC_PREFIX}/lib/${TCL_LIB_FILE}"
-eval lib2="${TK_EXEC_PREFIX}/lib/${TK_LIB_FILE}"
-for f in "$lib1" "$lib2"; do
-    if test ! -f "$f"; then
-	AC_MSG_RESULT($f not found)
-	AC_MSG_ERROR(Make sure Tcl/Tk are installed correctly on your
-system and then rerun configure.)
-    fi
-done
-AC_MSG_RESULT(ok)
+
+# I removed this check because it fails if the library
+# files are installed in /usr/lib64.  In any case all recent
+# versions of Tcl/Tk supply correct TCL_LIB_SPEC.
+#   - RWMJ 2007/09/19
+
+#AC_MSG_CHECKING(for installed Tcl/Tk library files)
+#eval lib1="${TCL_EXEC_PREFIX}/lib/${TCL_LIB_FILE}"
+#eval lib2="${TK_EXEC_PREFIX}/lib/${TK_LIB_FILE}"
+#for f in "$lib1" "$lib2"; do
+#    if test ! -f "$f"; then
+#	AC_MSG_RESULT($f not found)
+#	AC_MSG_ERROR(Make sure Tcl/Tk are installed correctly on your
+#system and then rerun configure.)
+#    fi
+#done
+#AC_MSG_RESULT(ok)
 
 #### Find the flags for linking with the Tcl/Tk libraries
 if test "$TCL_LIB_VERSIONS_OK" = "ok"; then TCL_LIB_VERSIONS_OK=yes; fi

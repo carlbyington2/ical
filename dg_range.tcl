@@ -4,23 +4,23 @@
 #
 # Commands
 #
-#	get_daterange <leader> <startvar> <finishvar>
+#       get_daterange <leader> <startvar> <finishvar>
 #
-#	Interact with user to get date range.  The initial values of
-#	the variables named by <startvar> and <finishvar> are used to
-#	initialize the range display.  When interaction is finished,
-#	the selected range is stored in <startvar> and <finishvar>.
-#	Returns true iff interaction is not cancelled by the user.
+#       Interact with user to get date range.  The initial values of
+#       the variables named by <startvar> and <finishvar> are used to
+#       initialize the range display.  When interaction is finished,
+#       the selected range is stored in <startvar> and <finishvar>.
+#       Returns true iff interaction is not cancelled by the user.
 
 # Hidden global variables
 #
-#	dr_state(done)		Interaction has finished
-#	dr_state(start)		Starting date
-#	dr_state(finish)	Finishing date
+#       dr_state(done)          Interaction has finished
+#       dr_state(start)         Starting date
+#       dr_state(finish)        Finishing date
 
-set dr_state(done)		0
-set dr_state(start)		{}
-set dr_state(finish)		{}
+set dr_state(done)              0
+set dr_state(start)             {}
+set dr_state(finish)            {}
 
 proc get_daterange {leader svar fvar} {
     # Initialize state
@@ -62,8 +62,8 @@ proc dr_init {} {
     pack $f.finish  -in $f.mid -side top -expand 1 -fill both -padx 5m -pady 5m
 
     make_buttons $f.bot 1 {
-	{Cancel		{set dr_state(done) 0}}
-	{Okay		{set dr_state(done) 1}}
+        {Cancel         {set dr_state(done) 0}}
+        {Okay           {set dr_state(done) 1}}
     }
 
     pack $f.top -side top -fill both -expand 1
@@ -94,9 +94,9 @@ proc dr_interact {leader} {
 proc dr_validate {args} {
     global dr_state
     if {[catch {date_parse $dr_state(start)}] ||
-	[catch {date_parse $dr_state(finish)}]} {
-	.dr_dialog.bot.b1 configure -state disabled
+        [catch {date_parse $dr_state(finish)}]} {
+        .dr_dialog.bot.b1 configure -state disabled
     } else {
-	.dr_dialog.bot.b1 configure -state normal
+        .dr_dialog.bot.b1 configure -state normal
     }
 }

@@ -4,12 +4,12 @@
 #
 # Commands
 #
-#	yes_no_cancel <leader> <message> <yes-text>? <no-text>? <cancel-text>?
-#		Confirm with user.
+#       yes_no_cancel <leader> <message> <yes-text>? <no-text>? <cancel-text>?
+#               Confirm with user.
 
 # Hidden global variables
 #
-#	ync_done		State of yes_no_cancel interaction
+#       ync_done                State of yes_no_cancel interaction
 
 set ync_done active
 
@@ -30,9 +30,9 @@ proc ync_make {} {
 
     message $f.text -aspect 400 -text {Uninitialized message}
     make_buttons $f.bot 2 {
-	{Cancel		{set ync_done cancel}}
-	{No		{set ync_done no}}
-	{Yes		{set ync_done yes}}
+        {Cancel         {set ync_done cancel}}
+        {No             {set ync_done no}}
+        {Yes            {set ync_done yes}}
     }
 
     pack $f.text -in $f.top -side right -expand 1 -fill both -padx 5m -pady 5m
@@ -40,8 +40,8 @@ proc ync_make {} {
     pack $f.top -side top -expand 1 -fill both
     pack $f.bot -side bottom -fill both
 
-    bind $f <Return>	{set ync_done yes}
-    bind $f <n>		{set ync_done no}
+    bind $f <Return>    {set ync_done yes}
+    bind $f <n>         {set ync_done no}
     bind $f <Control-c> {set ync_done cancel}
 
     wm withdraw $f

@@ -5,15 +5,15 @@
 # Commands
 #
 # get_number <leader> <title> <label> <doc> <min> <max> <tick> <init> <var>
-#		Get a number in the range <min>..<max> rounded to the
-#		nearest <tick>.  The initial displayed value is <init>.
-#		<title>/<label>/<doc> are used to prompt the user.  If the
-#		user confirms the selection, set <var> to the selected number
-#		and return true.  Else return false.
+#               Get a number in the range <min>..<max> rounded to the
+#               nearest <tick>.  The initial displayed value is <init>.
+#               <title>/<label>/<doc> are used to prompt the user.  If the
+#               user confirms the selection, set <var> to the selected number
+#               and return true.  Else return false.
 
 # Hidden global variables
 #
-#	num_done		Is num interaction finished
+#       num_done                Is num interaction finished
 
 set num_done 0
 
@@ -22,8 +22,8 @@ proc get_number {leader title label doc min max tick init var} {
 
     set result [num_interact $leader $title $label $doc $min $max $tick $init]
     if $result {
-	upvar $var returnVar
-	set returnVar [.number_dialog.scale get]
+        upvar $var returnVar
+        set returnVar [.number_dialog.scale get]
     }
     return $result
 }
@@ -44,8 +44,8 @@ proc num_make {} {
 
     scale $f.scale -orient horizontal -length 3i -showvalue 1
     make_buttons $f.bot 1 {
-	{Cancel		{set num_done 0}}
-	{Okay		{set num_done 1}}
+        {Cancel         {set num_done 0}}
+        {Okay           {set num_done 1}}
     }
 
     pack $f.scale -in $f.mid -side top -expand 1 -padx 5m -pady 5m

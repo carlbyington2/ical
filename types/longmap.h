@@ -8,30 +8,30 @@
 class LongMapRep {
   private:
     struct Entry {
-	long	key;
-	long	val;
+        long    key;
+        long    val;
     };
     Entry* list;
   public:
     LongMapRep(int entries) {
-	list = new Entry[entries];
-	for (int i = entries-1; i >= 0; i--) {
-	    list[i].key = LONG_MIN;
-	}
+        list = new Entry[entries];
+        for (int i = entries-1; i >= 0; i--) {
+            list[i].key = LONG_MIN;
+        }
     }
 
     inline ~LongMapRep() {
-	delete [] list;
+        delete [] list;
     }
 
-    inline long& key(int i) const	{ return list[i].key; }
-    inline long& val(int i) const	{ return list[i].val; }
-    inline int is_full(int i) const	{ return (list[i].key > LONG_MIN+1); }
-    inline int is_empty(int i) const	{ return (list[i].key == LONG_MIN); }
-    inline int is_del(int i) const	{ return (list[i].key == LONG_MIN+1); }
-    inline void clear(int i)		{ list[i].key = LONG_MIN; }
-    inline void kill(int i)		{ list[i].key = LONG_MIN+1; }
-    inline void store(int i, long k)	{ list[i].key = k; }
+    inline long& key(int i) const       { return list[i].key; }
+    inline long& val(int i) const       { return list[i].val; }
+    inline int is_full(int i) const     { return (list[i].key > LONG_MIN+1); }
+    inline int is_empty(int i) const    { return (list[i].key == LONG_MIN); }
+    inline int is_del(int i) const      { return (list[i].key == LONG_MIN+1); }
+    inline void clear(int i)            { list[i].key = LONG_MIN; }
+    inline void kill(int i)             { list[i].key = LONG_MIN+1; }
+    inline void store(int i, long k)    { list[i].key = k; }
 };
 
 #define HTABLE LongMap

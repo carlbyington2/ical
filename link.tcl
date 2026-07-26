@@ -4,26 +4,23 @@
 
 proc follow_link {uri} {
     if [regexp {^file://localhost/(.*)$} $uri junk filename] {
-	follow_file_link /$filename
-	return
+        follow_file_link /$filename
+        return
     }
     if [regexp {^/} $uri] {
-	follow_file_link $uri
-	return
+        follow_file_link $uri
+        return
     }
 
-    # XXX Just try netscape for now
-    if [catch {exec netscape -remote openURL($uri)} msg] {
-	if {[string first "not running on" $msg] != -1} {
-	    exec netscape $uri &
-	}
-    }
+    set w netscape
+    catch {set w [cal option WebBrowser]}
+    catch {exec $w $uri &}
 }
 
 proc follow_file_link {file} {
     if [catch {set text [file_read $file]} msg] {
-	ical_error $msg
-	return
+        ical_error $msg
+        return
     }
 
     set f [make_text_viewer $file [file tail $file]]

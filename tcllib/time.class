@@ -11,26 +11,26 @@ method C null {} {}
 
 method C var_test {} {
     for {set i 0} {$i < 1000} {incr i} {
-	set slot(a) $i
+        set slot(a) $i
     }
 }
 
 method C call_test {} {
     for {set i 0} {$i < 1000} {incr i} {
-	$self null
+        $self null
     }
 }
 
 proc proc_test {obj} {
     for {set i 0} {$i < 1000} {incr i} {
-	$obj null
+        $obj null
     }
 }
 
 set x [C]
-puts stdout "var_test	[time {$x var_test}  1]"
-puts stdout "call_test	[time {$x call_test} 1]"
-puts stdout "proc_test	[time {proc_test $x} 1]"
+puts stdout "var_test   [time {$x var_test}  1]"
+puts stdout "call_test  [time {$x call_test} 1]"
+puts stdout "proc_test  [time {proc_test $x} 1]"
 
 #############
 # Timings (on clef)

@@ -23,14 +23,14 @@ char const* uid_new() {
     static int   counter = 0;
 
     if (! inited) {
-	if (gethostname(hostname, MAXHOSTNAMELEN+1) < 0) {
-	    // Error?
-	    strcpy(hostname, "unknownhost");
-	}
-	hostid = gethostid();
-	pid = getpid();
-	counter = 0;
-	inited = 1;
+        if (gethostname(hostname, MAXHOSTNAMELEN+1) < 0) {
+            // Error?
+            strcpy(hostname, "unknownhost");
+        }
+        hostid = gethostid();
+        pid = getpid();
+        counter = 0;
+        inited = 1;
     }
 
     sprintf(buffer, "%s_%x_%x_%x", hostname, hostid, pid, counter);

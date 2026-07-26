@@ -19,18 +19,18 @@ catch {unset superclass}
 # effects - Create class
 proc class {name arglist body} {
     proc $name {args} [format {
-	global _o_next
-	incr _o_next
-	set self _o_$_o_next
-	_o_class_create %s $self
-	eval [list %s.constructor %s $self] $args
-	return $self
+        global _o_next
+        incr _o_next
+        set self _o_$_o_next
+        _o_class_create %s $self
+        eval [list %s.constructor %s $self] $args
+        return $self
     } $name $name $name]
 
     proc $name-with-name {self args} [format {
-	_o_class_create %s $self
-	eval [list %s.constructor %s $self] $args
-	return $self
+        _o_class_create %s $self
+        eval [list %s.constructor %s $self] $args
+        return $self
     } $name $name $name]
 
     # Initialization routine
@@ -61,7 +61,7 @@ proc subclass {name super arglist body} {
     set superclass($name) $super
 
     foreach m [array names super_ops] {
-	set sub_ops($m) $super_ops($m)
+        set sub_ops($m) $super_ops($m)
     }
 
     # Create subclass
@@ -77,9 +77,9 @@ proc class_kill {object} {
     global superclass
     set c [$object class]
     while 1 {
-	$c.destructor $c $object
-	if ![info exists superclass($c)] break
-	set c $superclass($c)
+        $c.destructor $c $object
+        if ![info exists superclass($c)] break
+        set c $superclass($c)
     }
 
     # Reclaim storage
@@ -94,8 +94,8 @@ proc method {class selector arglist body} {
     set ops($selector) $class
 
     proc $class.$selector [linsert $arglist 0 selfclass self] [format {
-	upvar #0 $self slot
-	%s
+        upvar #0 $self slot
+        %s
     } $body]
 }
 
@@ -126,8 +126,8 @@ proc _o_class_create {C self} {
     unset slot(junk)
 
     proc $self {sel args} [format {
-	global %s_ops
-	return [uplevel [list $%s_ops($sel).$sel $%s_ops($sel) %s] $args]
+        global %s_ops
+        return [uplevel [list $%s_ops($sel).$sel $%s_ops($sel) %s] $args]
     } $C $C $C $self]
 }
 

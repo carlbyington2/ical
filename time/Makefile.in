@@ -11,7 +11,7 @@
          ECHO = echo
        RANLIB = @RANLIB@
 
-     CXXFLAGS = -O
+     CXXFLAGS = @CXXFLAGS@
       CXXINCS = -I.. -I$(srcdir)
          OBJS = Date.o Month.o Time.o WeekDay.o Year.o parse.o
         TESTS = testparse

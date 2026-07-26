@@ -22,15 +22,15 @@ class Lexer {
      * Status.
      */
     enum StatusType {
-	Valid,
-	Eof,
-	Error
-	};
+        Valid,
+        Eof,
+        Error
+        };
 
-    StatusType Status();		/* Get current status */
+    StatusType Status();                /* Get current status */
 
-    void SetError(char const*);		/* Set error and corresponding msg */
-    static char const* LastError();	/* Return text of last error */
+    void SetError(char const*);         /* Set error and corresponding msg */
+    static char const* LastError();     /* Return text of last error */
 
     /*
      * Input operations.
@@ -41,9 +41,9 @@ class Lexer {
     /*
      * Character operations.
      */
-    int Peek(char&);		/* Return next char without advancing */
-    int Next(char&);		/* Return next char and advance over it */
-    int Advance(char&);		/* Advance and then Peek() */
+    int Peek(char&);            /* Return next char without advancing */
+    int Next(char&);            /* Return next char and advance over it */
+    int Advance(char&);         /* Advance and then Peek() */
 
 
     /*
@@ -115,19 +115,19 @@ class Lexer {
      */
     void Reset(int pos);
   protected:
-    char*	buf;		/* Contents of entire file */
-    int		length;		/* File length */
-    int		index;		/* Index of next char in file */
-    charArray*	tmp;		/* Temporary buffer */
+    char*       buf;            /* Contents of entire file */
+    int         length;         /* File length */
+    int         index;          /* Index of next char in file */
+    charArray*  tmp;            /* Temporary buffer */
 
     /* Last error message */
     static char const* lastError;
 };
 
 inline Lexer::StatusType Lexer::Status() {
-    if (index == length)	{return Eof;}
-    else if (index > length)	{return Error;}
-    else			{return Valid;}
+    if (index == length)        {return Eof;}
+    else if (index > length)    {return Error;}
+    else                        {return Valid;}
 }
 
 inline void Lexer::SetError(char const* msg) {
@@ -149,46 +149,46 @@ inline void Lexer::Reset(int i) {
 
 inline int Lexer::Peek(char& c) {
     if (index < length) {
-	c = buf[index];
-	return 1;
+        c = buf[index];
+        return 1;
     }
     else
-	return 0;
+        return 0;
 }
 
 inline int Lexer::Next(char& c) {
     if (index < length) {
-	c = buf[index];
-	index++;
-	return 1;
+        c = buf[index];
+        index++;
+        return 1;
     }
     else
-	return 0;
+        return 0;
 }
 
 inline int Lexer::Advance(char& c) {
     index++;
 
     if (index < length) {
-	c = buf[index];
-	return 1;
+        c = buf[index];
+        return 1;
     }
     else {
-	/* Undo advance */
-	index = length;
-	return 0;
+        /* Undo advance */
+        index = length;
+        return 0;
     }
 }
 
 inline int Lexer::Skip(char c) {
     if ((index < length) && (buf[index] == c)) {
-	index++;
-	return 1;
+        index++;
+        return 1;
     }
     else {
-	SetError("unexpected character");
-	return 0;
+        SetError("unexpected character");
+        return 0;
     }
 }
-	
+        
 #endif /* _LEXERH */

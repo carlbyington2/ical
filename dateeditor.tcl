@@ -2,7 +2,7 @@
 ###############################################################################
 # DateEditor
 #
-#	Allows interactive modification of a date.
+#       Allows interactive modification of a date.
 #
 # Description
 # ===========
@@ -13,13 +13,13 @@
 # Note
 # ====
 #
-# Code in dateeditor.c depends upon the tags assigned to canvas items.
-# If you change the canvas layout, examine dateeditor.c
+# Code in dateeditor.C depends upon the tags assigned to canvas items.
+# If you change the canvas layout, examine dateeditor.C
 
 # effects - Creates date editor window $name.
-#	    Initial date is $date.
-#	    Every time the date is changed, an action is executed to
-#	    switch "view" to the new date.
+#           Initial date is $date.
+#           Every time the date is changed, an action is executed to
+#           switch "view" to the new date.
 
 class DateEditor {name date view} {
     set slot(window) $name
@@ -43,36 +43,36 @@ class DateEditor {name date view} {
     # The month selector
     frame $name.month
     label $name.month.label -text Month\
-	-anchor center -width 9
+        -anchor center -width 9
     button $name.month.left -bitmap left_arrow -relief flat\
-	-command {ical_last_month}
+        -command {ical_last_month}
     button $name.month.right -bitmap right_arrow -relief flat\
-	-command {ical_next_month}
+        -command {ical_next_month}
 
-    pack $name.month.left	-side left
-    pack $name.month.right	-side right
-    pack $name.month.label	-side left -expand 1 -fill both
+    pack $name.month.left       -side left
+    pack $name.month.right      -side right
+    pack $name.month.label      -side left -expand 1 -fill both
 
     # The year selector
     frame $name.year
     label $name.year.label -text Year\
-	-anchor center -width 4
+        -anchor center -width 4
     button $name.year.left -bitmap left_arrow -relief flat\
-	-command {ical_last_year}
+        -command {ical_last_year}
     button $name.year.right -bitmap right_arrow -relief flat\
-	-command {ical_next_year}
+        -command {ical_next_year}
 
-    pack $name.year.left	-side left
-    pack $name.year.right	-side right
-    pack $name.year.label	-side left -expand 1 -fill both
+    pack $name.year.left        -side left
+    pack $name.year.right       -side right
+    pack $name.year.label       -side left -expand 1 -fill both
 
     # Miscellaneous buttons
     button $name.last -text Prev\
-	-command {ical_last_day}
+        -command {ical_last_day}
     button $name.today -text Today\
-	-command {ical_today}
+        -command {ical_today}
     button $name.next -text Next\
-	-command {ical_next_day}
+        -command {ical_next_day}
 
     # The monthday selector
     set d $name.days
@@ -92,22 +92,22 @@ class DateEditor {name date view} {
 
     # Create monthdays
     foreach r {1 2 3 4 5 6} {
-	foreach c {1 2 3 4 5 6 7} {
-	    $d create text\
-		[expr "$x+($c*$slot(hw))"]\
-		[expr "$y+(($r+1)*$slot(hh))"]\
-		-text "$r$c" -anchor ne\
-		-tags [list Day row$r col$c =[expr ($r-1)*7+$c]]\
-		-fill [pref weekdayColor]\
-		-font [pref weekdayFont]
-	}
+        foreach c {1 2 3 4 5 6 7} {
+            $d create text\
+                [expr "$x+($c*$slot(hw))"]\
+                [expr "$y+(($r+1)*$slot(hh))"]\
+                -text "$r$c" -anchor ne\
+                -tags [list Day row$r col$c =[expr ($r-1)*7+$c]]\
+                -fill [pref weekdayColor]\
+                -font [pref weekdayFont]
+        }
     }
 
     $d bind Day <1> [list $self day_select]
 
     # Create selection indicator
     $d create rect 0 0 5 5 -fill "" -outline [pref weekdayColor]\
-	-width 2.0 -tags {marker}
+        -width 2.0 -tags {marker}
     $d lower marker Day
 
     pack $name.month -in $name.top -side left -expand 1 -fill x
@@ -128,7 +128,7 @@ class DateEditor {name date view} {
     trigger on add      [list de_trigger_set $self]
     trigger on change   [list de_trigger_set $self]
     trigger on delete   [list de_trigger_set $self]
-    trigger on flush	[list de_trigger_set $self]
+    trigger on flush    [list de_trigger_set $self]
     trigger on midnight [list de_trigger_set $self]
     trigger on reconfig [list $self reconfig]
 
@@ -148,10 +148,10 @@ method DateEditor destructor {} {
 }
 
 # effects - Set up hilite recalculation to occur after
-#	    a small delay.  The delay is necessary because various
-#	    triggers may be fired before the corresponding calendar
-#	    state is changed.  The delay allows the calendar state
-#	    to be changed.
+#           a small delay.  The delay is necessary because various
+#           triggers may be fired before the corresponding calendar
+#           state is changed.  The delay allows the calendar state
+#           to be changed.
 proc de_trigger_set {de args} {
     after 50 [list de_calc_run $de]
 }
@@ -159,7 +159,7 @@ proc de_trigger_set {de args} {
 # Wrapper to handle dateeditor deletion
 proc de_calc_run {obj} {
     if {[info procs $obj] != $obj} {
-	return
+        return
     }
     $obj calc_hilite
 }
@@ -168,26 +168,26 @@ method DateEditor reconfig {} {
     set d $slot(window).days
     set wnames {Sun Mon Tue Wed Thu Fri Sat}
     if [cal option MondayFirst] {
-	set wnames {Mon Tue Wed Thu Fri Sat Sun}
+        set wnames {Mon Tue Wed Thu Fri Sat Sun}
     }
 
     $d delete Heading
     set col 1
     foreach w $wnames {
-	set item [$d create text\
-			[expr "$col*$slot(hw)-$slot(hpad)"] $slot(vpad)\
-		  	-text $w -anchor ne\
-			-tags [list Heading]\
-			-fill [pref weekdayColor]\
-			-font [pref weekdayFont]]
+        set item [$d create text\
+                        [expr "$col*$slot(hw)-$slot(hpad)"] $slot(vpad)\
+                        -text $w -anchor ne\
+                        -tags [list Heading]\
+                        -fill [pref weekdayColor]\
+                        -font [pref weekdayFont]]
 
-	if {($w == "Sun") || ($w == "Sat")} {
-	    $d itemconfigure $item\
-		-fill [pref weekendColor]\
-		-font [pref weekendFont]
-	}
+        if {($w == "Sun") || ($w == "Sat")} {
+            $d itemconfigure $item\
+                -fill [pref weekendColor]\
+                -font [pref weekendFont]
+        }
 
-	incr col
+        incr col
     }
 
     # Just configure all items to weekdayColor and weekdayFont
@@ -213,23 +213,23 @@ method DateEditor calc_hilite {} {
     set last  [expr $first + [date monthsize $first] - 1]
 
     hilite_loop cal {holiday always} $first $last d h {
-	$name.days addtag $h withtag =[expr [date monthday $d]+$slot(offset)]
+        $name.days addtag $h withtag =[expr [date monthday $d]+$slot(offset)]
     }
 
     canvas_intersect_tags $name.days holiday always holiday+always
 
     # Change colors
     $name.days itemconfig Day\
-	-fill [pref weekdayColor] -font [pref weekdayFont]
+        -fill [pref weekdayColor] -font [pref weekdayFont]
 
     $name.days itemconfig holiday\
-	-fill [pref weekendColor] -font [pref weekendFont]
+        -fill [pref weekendColor] -font [pref weekendFont]
 
     $name.days itemconfig always\
-	-fill [pref interestColor] -font [pref interestFont]
+        -fill [pref interestColor] -font [pref interestFont]
 
     $name.days itemconfig holiday+always\
-	-fill [pref weekendInterestColor] -font [pref weekendInterestFont]
+        -fill [pref weekendInterestColor] -font [pref weekendInterestFont]
 
     $name.days dtag holiday
     $name.days dtag always
@@ -251,7 +251,7 @@ method DateEditor load_month {} {
     set first [date make 1 $month $year]
     set slot(offset) [expr [date weekday $first]-1]
     if [cal option MondayFirst] {
-	set slot(offset) [expr ($slot(offset)+6)%7]
+        set slot(offset) [expr ($slot(offset)+6)%7]
     }
 
     de_monthdays cal $name.days $date
@@ -268,10 +268,10 @@ method DateEditor set_selection {} {
     set name $slot(window)
     set coords [$name.days coords $item]
     $name.days coords marker\
-	[expr [lindex $coords 0]+$slot(hpad)]\
-	[expr [lindex $coords 1]]\
-	[expr [lindex $coords 0]-$slot(itemwidth)]\
-	[expr [lindex $coords 1]+$slot(itemheight)]
+        [expr [lindex $coords 0]+$slot(hpad)]\
+        [expr [lindex $coords 1]]\
+        [expr [lindex $coords 0]-$slot(itemwidth)]\
+        [expr [lindex $coords 1]+$slot(itemheight)]
 }
 
 # Bindings
@@ -279,49 +279,49 @@ method DateEditor set_selection {} {
 method DateEditor day_select {} {
     set name $slot(window)
     if {[$name.days type current] != "text"} {
-	return
+        return
     }
 
     foreach tag [lindex [$name.days itemconfigure current -tags] 4] {
-	if [string match "=*" $tag] {
-	    set day [expr [string range $tag 1 end]-$slot(offset)]
-	    if {($day < 1) || ($day > [date monthsize $slot(date)])} {
-		return
-	    }
-	    ical_set_date [date make $day\
-			       [date month $slot(date)]\
-			       [date year $slot(date)]]
-	    return
-	}
+        if [string match "=*" $tag] {
+            set day [expr [string range $tag 1 end]-$slot(offset)]
+            if {($day < 1) || ($day > [date monthsize $slot(date)])} {
+                return
+            }
+            ical_set_date [date make $day\
+                               [date month $slot(date)]\
+                               [date year $slot(date)]]
+            return
+        }
     }
 }
 
 method DateEditor set_date {date} {
     set old $slot(date)
     if {$old != $date} {
-	# Make sure date can be rebuilt
-	if [catch {date make\
-		       [date monthday $date]\
-		       [date month $date]\
-		       [date year $date]} msg] {
-	    return
-	}
+        # Make sure date can be rebuilt
+        if [catch {date make\
+                       [date monthday $date]\
+                       [date month $date]\
+                       [date year $date]} msg] {
+            return
+        }
 
-	set slot(date) $date
-	if {([date month $old] != [date month $date]) ||
-	    ([date year  $old] != [date year  $date])} {
-	    set slot(load) 1
-	}
-	set slot(callback) 1
-	set slot(pending) [expr $slot(pending)+1]
-	after 50 [list de_check $self]
+        set slot(date) $date
+        if {([date month $old] != [date month $date]) ||
+            ([date year  $old] != [date year  $date])} {
+            set slot(load) 1
+        }
+        set slot(callback) 1
+        set slot(pending) [expr $slot(pending)+1]
+        after 50 [list de_check $self]
     }
 }
 
 # Wrapper to handle DateEditor deletion
 proc de_check {obj} {
     if {[info procs $obj] != $obj} {
-	return
+        return
     }
 
     $obj check
@@ -330,17 +330,17 @@ proc de_check {obj} {
 method DateEditor check {} {
     set slot(pending) [expr $slot(pending)-1]
     if {$slot(pending) > 0} {
-	return
+        return
     }
     set slot(pending) 0
 
     if $slot(load) {
-	set slot(load) 0
-	$self load_month
+        set slot(load) 0
+        $self load_month
     }
 
     if $slot(callback) {
-	set slot(callback) 0
-	$self set_selection
+        set slot(callback) 0
+        $self set_selection
     }
 }

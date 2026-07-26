@@ -4,25 +4,25 @@
 #
 # Commands
 #
-#	print_calendar <leader> <date>
+#       print_calendar <leader> <date>
 #
-#	Interact with user to print calendar contents.
+#       Interact with user to print calendar contents.
 
 # Hidden global variables
 #
-#	pr_done			Is pr interaction finished
-#	pr_count		Specification of how many days to print
-#	pr_type			Either "save", "print", or "preview"
-#	pr_save			Argument for "save"
-#	pr_print		Argument for "print"
-#	pr_preview		Argument for "preview"
-#	pr_other		Argument for printing "other # of days"
-#	pr_papersize		{ SetUSLetter, SetA4Paper }
+#       pr_done                 Is pr interaction finished
+#       pr_count                Specification of how many days to print
+#       pr_type                 Either "save", "print", or "preview"
+#       pr_save                 Argument for "save"
+#       pr_print                Argument for "print"
+#       pr_preview              Argument for "preview"
+#       pr_other                Argument for printing "other # of days"
+#       pr_papersize            { SetUSLetter, SetA4Paper }
 #
 ######################################################################
 # Minor Changes added by Christopher A. Stoner on 5/30/95            #
 # to allow printing of user entered days.                            #
-# Added the global variable "other"				     #
+# Added the global variable "other"                                  #
 ######################################################################
 
 set pr_done 0
@@ -62,106 +62,106 @@ proc pr_make {} {
     frame $f.top.r
 
     radiobutton $f.top.l.one -text "One Day"\
-	-anchor w\
-	-relief flat\
-	-variable pr_count\
-	-value 1
+        -anchor w\
+        -relief flat\
+        -variable pr_count\
+        -value 1
     radiobutton $f.top.l.two -text "Two Days"\
-	-anchor w\
-	-relief flat\
-	-variable pr_count\
-	-value 2
+        -anchor w\
+        -relief flat\
+        -variable pr_count\
+        -value 2
     radiobutton $f.top.l.six -text "Six Days"\
-	-anchor w\
-	-relief flat\
-	-variable pr_count\
-	-value 6
+        -anchor w\
+        -relief flat\
+        -variable pr_count\
+        -value 6
 
     radiobutton $f.top.r.nine -text "Nine Days"\
-	-anchor w\
-	-relief flat\
-	-variable pr_count\
-	-value 9
+        -anchor w\
+        -relief flat\
+        -variable pr_count\
+        -value 9
     radiobutton $f.top.r.twelv -text "Twelve Days"\
-	-anchor w\
-	-relief flat\
-	-variable pr_count\
-	-value 12
+        -anchor w\
+        -relief flat\
+        -variable pr_count\
+        -value 12
     radiobutton $f.top.r.month -text "Month"\
-	-anchor w\
-	-relief flat\
-	-variable pr_count\
-	-value month
+        -anchor w\
+        -relief flat\
+        -variable pr_count\
+        -value month
 
     radiobutton $f.top.l.other -text "Other"\
-	-anchor w\
-	-relief flat\
-	-variable pr_count\
-	-value other
+        -anchor w\
+        -relief flat\
+        -variable pr_count\
+        -value other
     
     frame $f.mid.save
     frame $f.mid.preview
     frame $f.mid.print
 
     radiobutton $f.mid.save.button -text "Save To"\
-	-anchor w\
-	-width 9\
-	-relief flat\
-	-variable pr_type\
-	-command pr_update_entries\
-	-value save
+        -anchor w\
+        -width 9\
+        -relief flat\
+        -variable pr_type\
+        -command pr_update_entries\
+        -value save
     radiobutton $f.mid.preview.button -text Preview\
-	-anchor w\
-	-width 9\
-	-relief flat\
-	-variable pr_type\
-	-command pr_update_entries\
-	-value preview
+        -anchor w\
+        -width 9\
+        -relief flat\
+        -variable pr_type\
+        -command pr_update_entries\
+        -value preview
     radiobutton $f.mid.print.button -text Print\
-	-anchor w\
-	-width 9\
-	-relief flat\
-	-variable pr_type\
-	-command pr_update_entries\
-	-value print
+        -anchor w\
+        -width 9\
+        -relief flat\
+        -variable pr_type\
+        -command pr_update_entries\
+        -value print
 
     entry $f.mid.entry -width 15
     entry $f.top.r.entry -width 15 -textvariable pr_other
 
     radiobutton $f.size.letter -text "US Letter" \
-	-anchor w\
-	-relief flat\
-	-variable pr_papersize\
-	-value SetUSLetter
+        -anchor w\
+        -relief flat\
+        -variable pr_papersize\
+        -value SetUSLetter
     radiobutton $f.size.a4 -text "A4 Paper" \
-	-anchor w\
-	-relief flat\
-	-variable pr_papersize\
-	-value SetA4Paper
+        -anchor w\
+        -relief flat\
+        -variable pr_papersize\
+        -value SetA4Paper
 
     make_buttons $f.bot 1 {
-	{Cancel		{set pr_done 0}}
-	{Okay		{set pr_done 1}}
+        {Cancel         {set pr_done 0}}
+        {Okay           {set pr_done 1}}
     }
 
-    pack $f.top.l.one	-side top -fill x -padx 5m
-    pack $f.top.l.two	-side top -fill x -padx 5m
-    pack $f.top.l.six	-side top -fill x -padx 5m
-    pack $f.top.r.nine	-side top -fill x -padx 5m
-    pack $f.top.r.twelv	-side top -fill x -padx 5m
-    pack $f.top.r.month	-side top -fill x -padx 5m
+    pack $f.top.l.one   -side top -fill x -padx 5m
+    pack $f.top.l.two   -side top -fill x -padx 5m
+    pack $f.top.l.six   -side top -fill x -padx 5m
+    pack $f.top.r.nine  -side top -fill x -padx 5m
+    pack $f.top.r.twelv -side top -fill x -padx 5m
+    pack $f.top.r.month -side top -fill x -padx 5m
     pack $f.top.l.other -side top -fill x -padx 5m
     pack $f.top.r.entry -side top -fill x -padx 5m
-    pack $f.top.l	-side left
-    pack $f.top.r	-side right
+    pack $f.top.l       -side left
+    pack $f.top.r       -side right
 
-    pack $f.mid.save.button	-side left -padx 5m
-    pack $f.mid.preview.button	-side left -padx 5m
-    pack $f.mid.print.button	-side left -padx 5m
+    pack $f.mid.save.button     -side left -padx 5m
+    pack $f.mid.preview.button  -side left -padx 5m
+    pack $f.mid.print.button    -side left -padx 5m
 
-    pack $f.mid.save	-side top -expand 1 -fill x
-    pack $f.mid.preview	-side top -expand 1 -fill x
-    pack $f.mid.print	-side top -expand 1 -fill x
+    pack $f.mid.save    -side top -expand 1 -fill x
+    pack $f.mid.preview -side top -expand 1 -fill x
+    pack $f.mid.print   -side top -expand 1 -fill x
 
     pack $f.size.letter -side left -fill x -padx 5m
     pack $f.size.a4 -side left -fill x -padx 5m
@@ -202,41 +202,43 @@ proc pr_interact {leader date} {
 
     # Stash away printing commands
     if ![cal readonly] {
-	cal option PrintCommand   $pr_print
-	cal option PreviewCommand $pr_preview
-	cal option PrintPaperSize $pr_papersize
+        cal option PrintCommand   $pr_print
+        cal option PreviewCommand $pr_preview
+        cal option PrintPaperSize $pr_papersize
     }
 
     # Get contents
     set output [pr_output $date $pr_count $pr_papersize]
 
     switch -exact -- $pr_type {
-	save	{ pr_file $pr_save $output }
-	print	{ pr_file "|$pr_print" $output }
-	preview	{ pr_bg   $pr_preview $output }
-	default { error "Unknown printing mode $pr_type" }
+        save    { pr_file $pr_save $output }
+        print   { pr_file "|$pr_print" $output }
+        preview { pr_bg   $pr_preview $output }
+        default { error "Unknown printing mode $pr_type" }
     }
 }
 
 proc pr_file {filespec data} {
-    # effects	Write data to specified file.
-    #		Make sure file gets closed on error.
+    # effects   Write data to specified file.
+    #           Make sure file gets closed on error.
     if [catch {
-	set outfile [open $filespec w]
-	puts $outfile $data
-	close $outfile
+        set outfile [open $filespec w]
+        # set the encoding to match the ps header
+        fconfigure $outfile -encoding iso8859-1
+        puts $outfile $data
+        close $outfile
     } msg] {
-	catch {close $outfile}
-	error "Could not print to \"$filespec\"\n\n$msg"
+        catch {close $outfile}
+        error "Could not print to \"$filespec\"\n\n$msg"
     }
 
     catch {close $outfile}
 }
 
 proc pr_bg {cmd data} {
-    # effects	Run command with specified input.
+    # effects   Run command with specified input.
     if [catch {eval exec [list echo $data |] $cmd [list &]} msg] {
-	error "$cmd failed:\n\n$msg"
+        error "$cmd failed:\n\n$msg"
     }
 }
 
@@ -246,23 +248,23 @@ proc pr_outfile {} {
 
     # Stash away printing commands
     if ![cal readonly] {
-	cal option PrintCommand   $pr_print
-	cal option PreviewCommand $pr_preview
+        cal option PrintCommand   $pr_print
+        cal option PreviewCommand $pr_preview
     }
 
     switch -exact -- $pr_type {
-	save {
-	    set str $pr_save
-	}
-	preview {
-	    set str "|$pr_preview"
-	}
-	print {
-	    set str "|$pr_print"
-	}
-	default {
-	    error "Unknown printing mode $pr_type"
-	}
+        save {
+            set str $pr_save
+        }
+        preview {
+            set str "|$pr_preview"
+        }
+        print {
+            set str "|$pr_print"
+        }
+        default {
+            error "Unknown printing mode $pr_type"
+        }
     }
 
     return $str
@@ -271,17 +273,17 @@ proc pr_outfile {} {
 # effects - Return postscript string
 proc pr_output {date count papersize} {
     if ![string compare $count month] {
-	set str [psmonth $date]
+        set str [psmonth $date]
     } else {
-	if ![string compare $count "other"] {
-	    global pr_other
-	    set count $pr_other
-	}
+        if ![string compare $count "other"] {
+            global pr_other
+            set count $pr_other
+        }
 
-	# Try to keep column width and row height similar
-	set cols [expr round(sqrt($count * 11.0 / 8.5))]
+        # Try to keep column width and row height similar
+        set cols [expr round(sqrt($count * 11.0 / 8.5))]
 
-	set str [psdays $date $count $cols 1]
+        set str [psdays $date $count $cols 1]
     }
 
     

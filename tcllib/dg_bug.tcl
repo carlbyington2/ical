@@ -4,12 +4,12 @@
 #
 # Commands
 #
-#	bug_notify <mailer> <email> <message>
-#		Handle software error
+#       bug_notify <mailer> <email> <message>
+#               Handle software error
 
 # Hidden global variables
 #
-#	bug_done		Is bug interaction finished
+#       bug_done                Is bug interaction finished
 
 set bug(done) no
 
@@ -32,9 +32,9 @@ proc bug_make {} {
     frame $f.mid -class Pane
 
     make_buttons $f.bot 2 {
-	{{Dismiss}		{set bug(done) cancel}}
-	{{Save}			{set bug(done) save}}
-	{{Mail Report}		{set bug(done) send}}
+        {{Dismiss}              {set bug(done) cancel}}
+        {{Save}                 {set bug(done) save}}
+        {{Mail Report}          {set bug(done) send}}
     }
 
     label $f.icon -bitmap error
@@ -79,12 +79,12 @@ proc bug_interact {mailer email message} {
 
     # Configure notice
     $f.warn configure -text [format [join {
-	"An internal error has occurred.  You can send a bug report to"
-	"the author (%s) by clicking on the \"Mail Report\" button"
-	"at the bottom of this dialog.  The text displayed in the text"
-	"areas below will be the only information sent to the author."
+        "An internal error has occurred.  You can send a bug report to"
+        "the author (%s) by clicking on the \"Mail Report\" button"
+        "at the bottom of this dialog.  The text displayed in the text"
+        "areas below will be the only information sent to the author."
         "If you do not want to send a bug report, click on the"
-	"\"Dismiss\" button.  If you want to send extra comments to"
+        "\"Dismiss\" button.  If you want to send extra comments to"
         "the author, type them into the area below."
     }] $email]
 
@@ -104,15 +104,15 @@ proc bug_interact {mailer email message} {
 
     set text [bug_extract]
     switch -exact -- $bug(done) {
-	save {
-	    bug_save $email $text
-	}
-	send {
-	    # Try different ways of sending mail
-	    if [catch {bug_mail1 $mailer $email $text}] {
-		catch {bug_mail2 $mailer $email $text}
-	    }
-	}
+        save {
+            bug_save $email $text
+        }
+        send {
+            # Try different ways of sending mail
+            if [catch {bug_mail1 $mailer $email $text}] {
+                catch {bug_mail2 $mailer $email $text}
+            }
+        }
     }
 }
 
@@ -131,15 +131,15 @@ proc bug_save {email text} {
     if ![get_file_name {} {File} $msg file] return
 
     catch {
-	set f [open $file w]
-	catch {puts $f "To: $email"}
-	catch {puts $f "Subject: Bug report"}
-	catch {puts $f "--------"}
-	catch {puts $f $text}
-	close $f
+        set f [open $file w]
+        catch {puts $f "To: $email"}
+        catch {puts $f "Subject: Bug report"}
+        catch {puts $f "--------"}
+        catch {puts $f $text}
+        close $f
     }
 }
-		
+                
 proc bug_mail1 {mailer email text} {
     set f .bug_dialog
 

@@ -37,10 +37,10 @@ class CalFile {
     void Modified();
 
     enum CalFile_Result {
-	Success,
-	Cancel,
-	Failure
-	};
+        Success,
+        Cancel,
+        Failure
+        };
 
     /*
      * Write calendar out to file.
@@ -70,20 +70,20 @@ class CalFile {
      */
     static char const* LastError();
   protected:
-    int readOnly;		/* Read-only mode? */
-    char* fileName;		/* Calendar file name */
-    char* backupName;		/* Backup file name */
-    char* tmpName;		/* Tmp file name */
-    char* dirName;		/* Directory name */
+    int readOnly;               /* Read-only mode? */
+    char* fileName;             /* Calendar file name */
+    char* backupName;           /* Backup file name */
+    char* tmpName;              /* Tmp file name */
+    char* dirName;              /* Directory name */
 
-    Calendar* calendar;		/* Volatile calendar state */
+    Calendar* calendar;         /* Volatile calendar state */
 
     // Called after writing to clear modify flag and also
     // update last modify time.
     void  written();
-    int   modified;		/* Has cal been modified since last write */
-    Time  lastModifyTime;	/* Last calendar file modify time */
-    int   lastModifyValid;	/* Is lastModifyTime valid? */
+    int   modified;             /* Has cal been modified since last write */
+    Time  lastModifyTime;       /* Last calendar file modify time */
+    int   lastModifyValid;      /* Is lastModifyTime valid? */
 
     /* Utility routines */
     static int GetModifyTime(char const*, Time&);
@@ -99,9 +99,9 @@ class CalFile {
     static int WriteTo(Calendar*, const char*);
 
     // Other internal IO routines
-    int WriteNew(long mode);		// Save without writing in-place
-    int WriteInPlace(long mode);	// Write in-place to preserve links
-    int CopyBackup(long mode);		// Make a backup by copying
+    int WriteNew(long mode);            // Save without writing in-place
+    int WriteInPlace(long mode);        // Write in-place to preserve links
+    int CopyBackup(long mode);          // Make a backup by copying
 };
 
 inline char const* CalFile::GetName() {

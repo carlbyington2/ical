@@ -4,12 +4,12 @@
 #
 # Commands
 #
-#	define_key <leader> <var>
+#       define_key <leader> <var>
 #
-#	Interact with user to get a key definition.
-#	Sets <var> to result when done.
-#	The result is a list with two elements.  The first element
-#	is a key sequence, and the second is a command name.
+#       Interact with user to get a key definition.
+#       Sets <var> to result when done.
+#       The result is a list with two elements.  The first element
+#       is a key sequence, and the second is a command name.
 
 set defkey(done) -1
 set defkey(help) 0
@@ -20,11 +20,11 @@ proc define_key {leader var} {
 
     set result [defkey_interact $leader]
     if $result {
-	set key [keyentry_get .defkey.key]
-	set val [.defkey.val get]
+        set key [keyentry_get .defkey.key]
+        set val [.defkey.val get]
 
-	upvar $var resultVar
-	set resultVar [list $key $val]
+        upvar $var resultVar
+        set resultVar [list $key $val]
     }
     return $result
 }
@@ -42,20 +42,20 @@ proc defkey_make {} {
     frame $f.mid -class Pane
 
     make_buttons $f.bot 3 {
-	{Clear			{defkey_clear_key}}
-	{Help			{defkey_help_toggle}}
-	{Cancel			{set defkey(done) 0}}
-	{Okay			{set defkey(done) 1}}
+        {Clear                  {defkey_clear_key}}
+        {Help                   {defkey_help_toggle}}
+        {Cancel                 {set defkey(done) 0}}
+        {Okay                   {set defkey(done) 1}}
     }
 
     message $f.text -aspect 400 -text [join {
-	"Enter a key binding by clicking on the key field and"
-	"typing the key binding.\n\n"
-	"Select a command to be executed either by typing it"
-	"into the command field, or by picking it from the list"
-	"of displayed commands.\n\n"
-	"You can delete an existing key binding by entering the key"
-	"binding and leaving the command field blank."
+        "Enter a key binding by clicking on the key field and"
+        "typing the key binding.\n\n"
+        "Select a command to be executed either by typing it"
+        "into the command field, or by picking it from the list"
+        "of displayed commands.\n\n"
+        "You can delete an existing key binding by entering the key"
+        "binding and leaving the command field blank."
     }]
     pack $f.text -in $f.top -side right -expand 1 -fill both -padx 5m -pady 5m
 
@@ -110,7 +110,7 @@ proc defkey_interact {leader} {
     # Enter command entries
     $f.list delete 0 end
     foreach name [lsort [array names action_title]] {
-	$f.list insert end $name
+        $f.list insert end $name
     }
 
     # Start off without help message
@@ -138,9 +138,9 @@ proc defkey_changed_command {args} {
     set f .defkey
 
     if [info exists action_title($defkey(cmd))] {
-	$f.cmdinfo configure -text $action_title($defkey(cmd))
+        $f.cmdinfo configure -text $action_title($defkey(cmd))
     } else {
-	$f.cmdinfo configure -text ""
+        $f.cmdinfo configure -text ""
     }
 }
 
@@ -154,10 +154,10 @@ proc defkey_help_toggle {} {
 
     set f .defkey
     if $defkey(help) {
-	pack forget $f.top
-	set defkey(help) 0
+        pack forget $f.top
+        set defkey(help) 0
     } else {
-	pack $f.top -before $f.mid -side top -expand 1 -fill both	
-	set defkey(help) 1
+        pack $f.top -before $f.mid -side top -expand 1 -fill both       
+        set defkey(help) 1
     }
 }

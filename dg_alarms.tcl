@@ -4,17 +4,17 @@
 #
 # Commands
 #
-#	alarm_set <leader> <label> <resultvar> <initial alarm list>
+#       alarm_set <leader> <label> <resultvar> <initial alarm list>
 #
-#	Interact with user to determine set of alarm times.
-#	The result is a list of elements ranging over 0..60 and is
-#	stored in resultvar.  Returns true iff dialog is not cancelled.
+#       Interact with user to determine set of alarm times.
+#       The result is a list of elements ranging over 0..60 and is
+#       stored in resultvar.  Returns true iff dialog is not cancelled.
 
 # Hidden global variables
 #
-#	as_done			Is as interaction finished
-#	as_ruler		Ruler window name
-#	as_helping		True iff help is being displayed
+#       as_done                 Is as interaction finished
+#       as_ruler                Ruler window name
+#       as_helping              True iff help is being displayed
 
 set as_done 0
 set as_ruler ""
@@ -25,10 +25,10 @@ proc alarm_set {leader label var init} {
 
     set result [as_interact $leader $label $init]
     if $result {
-	global as_ruler
-	upvar $var returnVar
+        global as_ruler
+        upvar $var returnVar
 
-	set returnVar [ruler_tabs $as_ruler]
+        set returnVar [ruler_tabs $as_ruler]
     }
     return $result
 }
@@ -45,18 +45,18 @@ proc as_make {} {
     frame $f.mid -class Pane
 
     make_buttons $f.bot 2 {
-	{Cancel			{set as_done 0}}
-	{Help			{as_help_toggle}}
-	{Okay			{set as_done 1}}
+        {Cancel                 {set as_done 0}}
+        {Help                   {as_help_toggle}}
+        {Okay                   {set as_done 1}}
     }
 
     message $f.text -aspect 400 -text [join {
-	{Select set of alarm times in minutes.}
-	{Create an alarm by dragging a marker out of the well at the}
-	{right of the scale.}
-	{You can also drag existing markers to change alarm times.}
-	{If you drag a marker far enough up or down so that it turns}
-	{dim, it will be deleted when you release the mouse button.}
+        {Select set of alarm times in minutes.}
+        {Create an alarm by dragging a marker out of the well at the}
+        {right of the scale.}
+        {You can also drag existing markers to change alarm times.}
+        {If you drag a marker far enough up or down so that it turns}
+        {dim, it will be deleted when you release the mouse button.}
     }]
     pack $f.text -in $f.top -side right -expand 1 -fill both -padx 5m -pady 5m
 
@@ -89,7 +89,7 @@ proc as_interact {leader label init} {
     # Start off without help message
     global as_helping
     if $as_helping {
-	as_help_toggle
+        as_help_toggle
     }
 
     # Run dialog
@@ -104,10 +104,10 @@ proc as_help_toggle {} {
 
     set f .as_dialog
     if $as_helping {
-	pack forget $f.top
-	set as_helping 0
+        pack forget $f.top
+        set as_helping 0
     } else {
-	pack $f.top -before $f.mid -side top -expand 1 -fill both	
-	set as_helping 1
+        pack $f.top -before $f.mid -side top -expand 1 -fill both       
+        set as_helping 1
     }
 }

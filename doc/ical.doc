@@ -316,8 +316,8 @@ $text insert insert {
 $text insert insert {
 } {pre indent0}
 $text insert insert {
-	ical -calendar file-name.
-	} {pre indent0}
+        ical -calendar file-name.
+        } {pre indent0}
 $text insert insert {
 } {pre indent0}
 $text insert insert {
