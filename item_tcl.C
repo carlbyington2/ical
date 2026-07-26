@@ -440,13 +440,13 @@ static int item_alarms(ClientData c, Tcl_Interp* tcl, int argc, const char* argv
     for (int i = 0; i < count; i++) {
 	int x;
 	if ((Tcl_GetInt(tcl, list[i], &x) != TCL_OK) || (x < 0) || (x > 60)) {
-	    free((char*) list);
+	    Tcl_Free((char*) list);
 	    delete alarms;
 	    TCL_Error(tcl, "invalid alarm time");
 	}
 	alarms->append(x);
     }
-    free((char*) list);
+    Tcl_Free((char*) list);
 	    
     if (! check_permission(tcl, item)) {
 	delete alarms;

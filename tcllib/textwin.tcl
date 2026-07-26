@@ -45,7 +45,6 @@ proc make_text_viewer {title iconname} {
 
     bind $f <Tab>		{break}
     bind $f <Control-c>		{destroy %W}
-    bind $f <Escape>		{destroy %W}
     bind $f <space>		{tkTextScrollPages %W.text 1}
     bind $f <Control-f>		{tkTextScrollPages %W.text 1}
     bind $f <Control-v>		{tkTextScrollPages %W.text 1}

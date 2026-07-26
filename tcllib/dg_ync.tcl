@@ -43,7 +43,6 @@ proc ync_make {} {
     bind $f <Return>	{set ync_done yes}
     bind $f <n>		{set ync_done no}
     bind $f <Control-c> {set ync_done cancel}
-    bind $f <Escape> {set ync_done cancel}
 
     wm withdraw $f
     update

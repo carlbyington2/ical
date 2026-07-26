@@ -136,7 +136,6 @@ proc iedit_make {} {
     pack $f.todo -in $f.f2.c1 -side top -fill both
 
     bind $f <Control-c> {set iedit(done) 0}
-    bind $f <Escape> {set iedit(done) 0}
     bind $f <Return>    {set iedit(done) 1}
 
     wm withdraw $f

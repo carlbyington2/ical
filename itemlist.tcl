@@ -44,7 +44,6 @@ class ItemListing {} {
 
     # Key bindings
     bind .$self <Control-c> [list class_kill $self]
-    bind .$self <Escape> [list class_kill $self]
     bind .$self <Return> [list class_kill $self]
     bind .$self.display <Double-1> [list $self null]
     bind .$self.display <Triple-1> [list $self null]

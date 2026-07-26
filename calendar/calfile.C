@@ -58,7 +58,7 @@ CalFile::CalFile(int ro, const char* name) {
     backupName = tmp;
 
     // Get directory name for access checks
-    const char* lastSlash = strrchr(name, '/');
+    char* lastSlash = strrchr(name, '/');
     if (lastSlash == 0) {
 	/* Calendar is in current directory */
 	tmp = new char[3];

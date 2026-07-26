@@ -72,7 +72,6 @@ proc as_make {} {
     pack $f.bot -side bottom -expand 1 -fill both
 
     bind $f <Control-c> {set as_done 0}
-    bind $f <Escape> {set as_done 0}
     bind $f <Return> {set as_done 1}
 
     wm withdraw $f

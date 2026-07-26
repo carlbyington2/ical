@@ -55,7 +55,6 @@ proc str_make {} {
     pack $f.bot -side bottom -fill x
 
     bind $f <Control-c> {set str_done 0}
-    bind $f <Escape> {set str_done 0}
     bind $f <Return> {set str_done 1}
 
     wm deiconify $f

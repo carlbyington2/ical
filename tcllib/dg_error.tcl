@@ -47,7 +47,6 @@ proc error_make {} {
     pack $f.bot -side bottom -fill both
 
     bind $f <Control-c> {set error_done 1}
-    bind $f <Escape> {set error_done 1}
     bind $f <Return>    {set error_done 1}
 
     wm withdraw $f

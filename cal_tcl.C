@@ -291,7 +291,7 @@ static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,
 	for (int i = 0; i < count; i++) {
 	    Object* obj = Object::find(tcl, list[i]);
 	    if ((obj == 0) || (strcmp(obj->type(), "Item") != 0)) {
-		free((char*) list);
+		Tcl_Free((char*) list);
 		items.remove(items.size() - isize);
 		TCL_Error(tcl, "no such item");
 	    }

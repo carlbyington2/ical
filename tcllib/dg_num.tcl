@@ -54,7 +54,6 @@ proc num_make {} {
     pack $f.bot -side bottom -fill both
 
     bind $f <Control-c> {set num_done 0}
-    bind $f <Escape> {set num_done 0}
     bind $f <Return>    {set num_done 1}
 
     wm withdraw $f

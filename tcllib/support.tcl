@@ -129,9 +129,7 @@ proc set_geometry {leader w g} {
 #		 centered on <leader>.
 
 proc dialog_run {leader window var {focuswin ""}} {
-    # Pre-tcl 8.5 seemed to tolerate not pruning the (), but no longer.
-    set arrayless_var [regsub {\(.*\)$} $var {}]
-    global $arrayless_var
+    global $var
 
     # Wait for window geometry to be computed if possible
     update idletasks

@@ -39,7 +39,6 @@ proc yn_make {} {
     pack $f.bot -side bottom -fill both
 
     bind $f <Control-c> {set yn_done 0}
-    bind $f <Escape> {set yn_done 0}
     bind $f <Return> {set yn_done 1}
 
     wm withdraw $f
