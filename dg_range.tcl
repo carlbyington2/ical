@@ -71,6 +71,7 @@ proc dr_init {} {
     pack $f.bot -side bottom -fill x
 
     bind $f <Control-c> {global dr_state; set dr_state(done) 0}
+    bind $f <Escape> {global dr_state; set dr_state(done) 0}
     bind $f <Return>    {global dr_state; set dr_state(done) 1}
 
     wm withdraw $f

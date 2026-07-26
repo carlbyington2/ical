@@ -108,6 +108,7 @@ proc ws_make {} {
     pack $f.left -side left -expand 1 -fill both
 
     bind $f <Control-c> {global ws_state; set ws_state(done) 0}
+    bind $f <Escape> {global ws_state; set ws_state(done) 0}
     bind $f <Return>    {global ws_state; set ws_state(done) 1}
 
     wm withdraw $f

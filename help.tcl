@@ -17,6 +17,7 @@ class Ical_Doc {doc} {
     focus .$self
     bind .$self <Tab>	    {break}
     bind .$self <Control-c> [list class_kill $self]
+    bind .$self <Escape> [list class_kill $self]
     bind .$self <space>	    [list tkTextScrollPages $t 1]
     bind .$self <Control-f> [list tkTextScrollPages $t 1]
     bind .$self <Control-v> [list tkTextScrollPages $t 1]
@@ -164,6 +165,7 @@ proc show_about {leader} {
 	wm title $t {About Ical}
 	wm protocol $t WM_DELETE_WINDOW {set about(done) 1}
 	bind $t	<Control-c> {set about(done) 1}
+	bind $t	<Escape> {set about(done) 1}
 	bind $t	<Return>    {set about(done) 1}
 
 	wm withdraw $t

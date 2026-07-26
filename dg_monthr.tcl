@@ -106,6 +106,7 @@ proc monthrepeat_init {} {
     pack $f.right -side left -expand 1 -fill both
 
     bind $f <Control-c> {global mr_state; set mr_state(done) 0}
+    bind $f <Escape> {global mr_state; set mr_state(done) 0}
     bind $f <Return>    {global mr_state; set mr_state(done) 1}
 
     wm withdraw $f

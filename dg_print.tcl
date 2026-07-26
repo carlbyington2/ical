@@ -174,6 +174,7 @@ proc pr_make {} {
     pr_update_entries
 
     bind $f <Control-c> {set pr_done 0}
+    bind $f <Escape> {set pr_done 0}
     bind $f <Return>    {set pr_done 1}
 
     wm withdraw $f

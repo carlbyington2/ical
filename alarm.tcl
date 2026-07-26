@@ -245,6 +245,7 @@ class AlarmNotice {item starttime} {
     # were automatically giving the focus to the alarm, and the next
     # return would dismiss it.)
     bind .$self <Control-c> [list AN_check_kill $self]
+    bind .$self <Escape> [list AN_check_kill $self]
     # bind .$self <Return> [list AN_check_kill $self]
 
     # Triggers

@@ -60,6 +60,7 @@ proc build_time_range {w gvar} {
     pack $w.bot -side top -fill x
 
     bind $w <Control-c> {set tr_done 0}
+    bind $w <Escape> {set tr_done 0}
     bind $w <Return>    {set tr_done 1}
     
     time_range_edit $w 0 24

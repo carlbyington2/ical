@@ -52,6 +52,7 @@ proc file_make {} {
     pack $f.bot -side top -expand 1 -fill both
 
     bind $f <Control-c> {set file_done 0}
+    bind $f <Escape> {set file_done 0}
     bind $f <Return> {set file_done 1}
     bind $f.box.children <Double-Button-1> {file_done_check}
 
