@@ -1,0 +1,218 @@
+Copyright (c) 1993 by Sanjay Ghemawat
+
+CLASS SYSTEM FOR TCL
+====================
+
+* Classes have methods and instance variables.
+* Classes representations are hidden -- only methods can access the
+  instance variables.
+* Objects have to be explicitly deleted.
+* There is single inheritance.
+* Methods can name their receiver object as "$self".
+* Methods can also access instance variables through an array named "slots".
+* Methods can invoke their superclass version.
+* Classes have a creator body that is run to initialize class instances.
+* You can also define a method to be run whenever an object is deleted
+
+Defining a Class
+================
+
+You can define a class by saying --
+
+        class <class-name> {<args>} {
+            <create-body>
+        }
+
+This creates a procedure called <class-name> that takes <args>
+arguments, creates a class instance, and then executes <create-body>
+for that class instance.  <Create-body> can refer to the newly created
+instance as $self.  In addition, an array named "slots" is available
+and can be used to store instance variables.
+
+Example --
+
+        # Cons cell
+        class Cons {a b} {
+            set slot(car) $a
+            set slot(cdr) $b
+        }
+
+Creating a Class Instance
+=========================
+
+You can create an instance of class <class-name> by invoking the
+procedure <class-name> with the appropriate number of arguments.
+The procedure will return a string handle for the new instance.
+
+        set x [<class-name> ...]
+
+Example --
+
+        set list [Cons 1 [Cons 2 [Cons 3 ""]]]
+
+Creating a Class Instance with a Specified Name
+===============================================
+
+You can specify the name to give a class instance explicitly as
+by invoking <classname>-with-name.
+
+Example --
+
+        class Stack {} {...}
+        ...
+        Stack-with-name stack
+        stack push 1
+        stack push 2
+        stack push 3
+
+Deleting a Class Instance
+=========================
+
+You can delete a class intance as follows --
+
+        class_kill <object-handle>
+
+Example --
+
+        set pair [Cons 1 2]
+        class_kill $pair
+
+You can supply code to run when a class instance is deleted by
+defining a method called "destructor".  This method will be called
+just before any class instance is destroyed.
+
+Methods
+=======
+
+You can define a method for a particular class by saying --
+
+        method <class-name> <method-name> {<args>} {
+            <method-body>
+        }
+
+Within <method-body>, $self refers to the current instance.
+Therefore you can invoke another method <method2> by saying --
+
+        $self <method2> ...
+
+Within method body, instance variables can also be accessed by
+looking in the array named "slots".
+
+Example --
+
+        method Cons car {} {
+            return $slot(car)
+        }
+
+        method Cons cdr {} {
+            return $slot(cdr)
+        }
+
+Invoking Methods
+================
+
+You can invoke a method on an object by saying --
+
+        <object-handle> <method-name> <args...>
+
+        ...
+
+
+        set pair [Cons 1 2]
+        puts stdout "[$pair car] [$pair cdr]"
+
+Complete Example
+================
+
+A stack has one slot "elements" that is a list of all items in the
+stack.  The topmost item is at the front of the list.
+
+        class Stack {} {
+            set slot(elements) ""
+        }
+
+        method Stack size {} {
+            return [llength $slot(elements)]
+        }
+
+        method Stack empty {} {
+            return [expr {[$self size] == 0}]
+        }
+
+        method Stack push {x} {
+            set slot(elements) [linsert $slot(elements) 0 $x]
+        }
+
+        # requires - ![$self empty]
+        method Stack top {} {
+            return [lindex $slot(elements) 0]
+        }
+
+        # requires - ![$self empty]
+        method Stack pop {} {
+            set slot(elements) [lrange $slot(elements) 1 end]
+        }
+
+A stack instance can be used as follows --
+
+        # Create a new stack instance and store its handle
+        # in the TCL variable "stack".
+        set stack [Stack]
+
+        # Push some items on the stack
+        $stack push 1
+        $stack push 2
+        $stack push 3
+
+        while {![$stack empty]} {
+            puts stdout [$stack top]
+            $stack pop
+        }
+
+        # Delete the object
+        class_kill $stack
+
+Defining a sub-class
+====================
+
+You can define a sub class by saying --
+
+        subclass <class-name> <super-class> {<args>} {
+            <create-body>
+        }
+
+This declares <class-name> that has all of the methods defined for
+<super-class-name>.  You can define new methods, or override existing
+methods with the "method" command.
+
+The super-class constructor is not called automatically.  Call it
+explicitly as "super constructor <args>" as necessary.  The
+superclass destructor however is called automatically.
+
+The same "super <methodname> <args>" syntax can be used to call a
+super-class version of a method as necessary.
+
+Example
+=======
+
+A stack that allows multiple pushes with one invocation.
+
+        subclass MultiStack Stack {} {
+            super constructor
+        }
+
+        method MultiStack push {args} {
+            foreach x $args {
+                super push $x
+            }
+        }
+
+An example that uses "MultiStack" --
+
+        set stack [MultiStack]
+        $stack push 1 2 3 4 5
+        while {![$stack empty]} {
+            puts stdout [$stack top]
+            $stack pop
+        }
+        class_kill $stack

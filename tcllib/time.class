@@ -1,0 +1,40 @@
+#!/usr/local/bin/tclsh
+# Copyright (c) 1993 by Sanjay Ghemawat
+
+source class.tcl
+
+class C {} {
+    set slot(a) 0
+}
+
+method C null {} {}
+
+method C var_test {} {
+    for {set i 0} {$i < 1000} {incr i} {
+        set slot(a) $i
+    }
+}
+
+method C call_test {} {
+    for {set i 0} {$i < 1000} {incr i} {
+        $self null
+    }
+}
+
+proc proc_test {obj} {
+    for {set i 0} {$i < 1000} {incr i} {
+        $obj null
+    }
+}
+
+set x [C]
+puts stdout "var_test   [time {$x var_test}  1]"
+puts stdout "call_test  [time {$x call_test} 1]"
+puts stdout "proc_test  [time {proc_test $x} 1]"
+
+#############
+# Timings (on clef)
+#
+# var_test        169824 microseconds per iteration
+# call_test       469456 microseconds per iteration
+# proc_test       459296 microseconds per iteration

@@ -1,5 +1,5 @@
-AC_INIT([ical], [3.0.3])
-AM_INIT_AUTOMAKE
+AC_INIT([ical], [3.0.4])
+AM_INIT_AUTOMAKE([subdir-objects])
 
 # Create config files
 AC_CONFIG_HEADER(config.h)

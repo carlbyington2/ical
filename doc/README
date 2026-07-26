@@ -1,0 +1,7 @@
+This directory contains ical documentation.
+
+	ical.{html,man,doc}	Man page in various formats
+	interface.{html,doc}	The TCL interface to ical
+
+The tcl interface to ical will be useful to people who wish to
+customize ical.

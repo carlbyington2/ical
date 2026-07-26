@@ -6,9 +6,10 @@ nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
 icallib_DATA = $(builddir)/startup.tcl $(builddir)/ps_header.tcl
 EXTRA_DIST = startup.tcl.in ps_header.ps doc/ical.html doc/interface.html \
 	     COPYRIGHT.ORIG Makefile.am
-CLEANFILES = $(icallib_DATA)
 dist_man1_MANS = doc/ical.man
 
+appdir = $(prefix)/share/applications
+app_DATA = ical.desktop
 ical_SOURCES = cal_tcl.C dateeditor.C dispatch.C ical.C ical_tcl.C \
 	       item_tcl.C object.C time_tcl.C main.C
 ical_CPPFLAGS = -DICALLIBDIR='"$(icallibdir)"' -I$(srcdir)/calendar -I$(srcdir)/types -I$(srcdir)/time @TK_XINCLUDES@
@@ -29,12 +30,26 @@ libtime_a_SOURCES = time/Date.C time/Month.C time/Time.C time/WeekDay.C \
 
 libtypes_a_SOURCES = types/bitvec.C types/hashfuncs.C types/intset.C
 
+CLEANFILES = $(icallib_DATA) $(app_DATA)
+
 ps_header.tcl: ps_header.ps
 	echo  'proc ps_header {} { set val {}' > $@;
 	@SED@ -e 's/\[/\\[/g' \
 	      -e 's/"/\\"/g' \
 	      -e 's/.*/  set val "$$val&\\n"/' < $< >> $@;
 	echo '  return $$val\n}' >> $@
+
+ical.desktop:
+	echo "[Desktop Entry]" >$@
+	echo "Name=Ical" >>$@
+	echo "Comment=Ical calendar package" >>$@
+	echo "Exec=ical" >>$@
+	echo  'Icon=$(icallibdir)/contrib/ical_icon.png' >>$@
+	echo "Terminal=false" >>$@
+	echo "Type=Application" >>$@
+	echo "Categories=Office" >>$@
+	echo "StartupNotify=true;" >>$@
+	chmod 644 $@
 
 # cannot do it in configure, as libdir is not known there :(
 startup.tcl: startup.tcl.in

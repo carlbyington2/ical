@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# Test tcllib
+
+set kludge { ${1+"$@"}
+shift
+shift
+exec wish -f $0 ${1+"$@"}
+}
+
+# Initialization
+
+set auto_path [concat [list .] $auto_path]
+set icon_path [list .]
+
+source class.tcl
+
+message .msg -aspect 400 -relief raised -bd 1 -text [join {
+    {Click on the attached buttons to run various tests.}
+    {Use the "Quit" button to exit.}
+}]
+
+make_buttons .bot {} {
+    {{Run all}		{foreach f $tests {run_script $f}}}
+    {{Quit}		{destroy .}}
+}
+
+frame .buttons -relief flat -bd 2
+
+set i 0
+set tests {}
+set buttons {}
+foreach f [lsort [glob -nocomplain tests/*.tcl]] {
+    button .b$i -text [file tail $f] -command [list run_script $f] -bd 1
+
+    lappend buttons .b$i
+    lappend tests $f
+    incr i
+}
+
+foreach b $buttons {
+    $b configure -anchor w
+    pack $b -in .buttons -side top -fill x -expand 1 -anchor w
+}
+
+pack .buttons -side right -fill y
+pack .msg -side top -fill both -expand 1
+
+pack .bot -side bottom -fill x
+
+proc run_script {f} {
+    if [catch {source $f} msg] {
+	puts stderr $msg
+    }
+}
