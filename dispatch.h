@@ -40,6 +40,6 @@ struct Dispatch_Entry {
  * The array is delimited by a NULL command field in the last entry.
  */
 
-extern int Dispatch(Dispatch_Entry*, ClientData, Tcl_Interp*, int, char*[]);
+extern int Dispatch(Dispatch_Entry*, ClientData, Tcl_Interp*, int, const char*[]);
 
 #endif /* _DISPATCH_H */

@@ -45,7 +45,7 @@ class Object {
     static Object* find(Tcl_Interp*, char const* handle);
 
     /* TCL Callback */
-    virtual int method(int argc, char* argv[]);
+    virtual int method(int argc, const char* argv[]);
   private:
     void init(Tcl_Interp*, char const* otype, char const* ohandle);
 

@@ -116,10 +116,10 @@ proc pref_init {} {
     }
 
     # XXX People do not seem to like the motif-style popup behavior
-    global tk_strictMotif
-    if {!$tk_strictMotif} {
-	bind Menubutton <Any-ButtonRelease-1> {tkMenuUnpost {}}
-    }
+#    global tk_strictMotif
+#    if {!$tk_strictMotif} {
+#	bind Menubutton <Any-ButtonRelease-1> {tkMenuUnpost {}}
+#    }
 
     # Handle command line preferences
     global ical

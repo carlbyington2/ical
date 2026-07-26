@@ -32,8 +32,8 @@ extern "C" {
  */
 
 /* Date command */
-int Cmd_Date(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
-    char* cmd = argv[1];
+int Cmd_Date(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
+    const char* cmd = argv[1];
     char buffer[100];
     int days;
     Date d;
@@ -162,8 +162,8 @@ int Cmd_Date(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
 }
 
 /* Time command */
-int Cmd_Time(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
-    char* cmd = argv[1];
+int Cmd_Time(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
+    const char* cmd = argv[1];
     char buffer[100];
     double secs;
     Time t;

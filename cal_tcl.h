@@ -24,7 +24,7 @@ class Calendar_Tcl : public Object {
     int error();		/* Used to detect initialization error */
     char const* error_msg();	/* Error description */
 
-    virtual int method(int, char*[]);
+    virtual int method(int, const char*[]);
 
     CalFile*  main;		/* Main calendar */
     FileList* includes;		/* Included calendars */

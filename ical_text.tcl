@@ -47,7 +47,9 @@ proc ical_no_tk_script {} {
 
     if $print {
 	# Generate postscript
-	puts stdout [pr_output $ical(startdate) $showcount]
+	set papersize SetUSLetter
+	catch {set papersize [cal option PrintPaperSize]}
+	puts stdout [pr_output $ical(startdate) $showcount $papersize]
     } else {
 	# Generate listing
 	set lastdate ""

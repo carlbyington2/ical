@@ -48,7 +48,7 @@
        LIB2 = time/libtime.a
        LIB3 = types/libtypes.a
        LIB4 = @TK_LIB_SPEC@ @TCL_LIB_SPEC@
-       LIBS = $(LIB1) $(LIB2) $(LIB3) $(LIB4) $(EXTRALIBS) $(X_LIBS) @TCL_LIBS@
+       LIBS = $(LIB1) $(LIB2) $(LIB3) $(LIB4) $(EXTRALIBS) $(X_LIBS)
 
 # XXX Make sure bundled executable uses static versions of tcl/tk libraries?
 #      BLIBS = $(LIB1) $(LIB2) $(LIB3)\

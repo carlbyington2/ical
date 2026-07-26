@@ -30,8 +30,6 @@ extern "C" int fsync(int);
 static int fsync(int) {return 0;}
 #endif
 
-static char const* sys_error();		// Last system error msg
-
 // Get various file names
 static char const* home_backup_file();	// Backup file in home dir
 static char const* tmp_backup_file();	// Backup file in tmp dir
@@ -149,7 +147,7 @@ int CalFile::WriteNew(long mode) {
 
     if (chmod(tmpName, mode) < 0) {
 	/* Could not set new file mode */
-	lastError = sys_error();
+        lastError = strerror (errno);
 	unlink(tmpName);
 	return 0;
     }
@@ -163,7 +161,7 @@ int CalFile::WriteNew(long mode) {
 
     // Now rename the new version
     if (rename(tmpName, fileName) < 0) {
-	lastError = sys_error();
+        lastError = strerror (errno);
 	unlink(tmpName);
 	return 0;
     }
@@ -317,35 +315,6 @@ void CalFile::written() {
     modified = 0;
     lastModifyValid = GetModifyTime(fileName, lastModifyTime);
 }
-
-/* How to get U*ix error message */
-#ifdef HAVE_STRERROR
-
-#ifndef HAVE_STRERROR_PROTO
-extern "C" {
-    extern char* strerror(int);
-}
-#endif
-
-static char const* sys_error() {
-    return (strerror(errno));
-}
-
-#else /* !HAVE_STRERROR */
-
-#ifndef HAVE_SYS_ERRLIST_PROTO
-
-extern "C" {
-    extern char* sys_errlist[];
-}
-
-#endif /* HAVE_SYS_ERRLIST_PROTO */
-
-static char const* sys_error() {
-    return sys_errlist[errno];
-}
-
-#endif /* !HAVE_STRERROR */
 
 static int backup_file(char const* src, char const* dst, long mode) {
     if (dst == 0) return 0;

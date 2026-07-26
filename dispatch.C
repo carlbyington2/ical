@@ -4,13 +4,13 @@
 #include "ical.h"
 
 int Dispatch(Dispatch_Entry* table, ClientData c, Tcl_Interp* tcl,
-	     int argc, char* argv[]) {
+	     int argc, const char* argv[]) {
 
     if (argc < 2) {
 	TCL_Error(tcl, "invalid command");
     }
 
-    char* command = argv[1];
+    const char* command = argv[1];
     argc -= 2;
     argv += 2;
 

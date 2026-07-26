@@ -12,12 +12,6 @@
 #include "WeekDay.h"
 #include "Time.h"
 
-#ifndef HAVE_GETTIMEOFDAY_PROTO
-extern "C" {
-    extern int gettimeofday(struct timeval*, struct timezone*);
-}
-#endif
-
 static double roundit(double d) {
     double x = floor(d);
     if ((d - x) >= 0.5) {

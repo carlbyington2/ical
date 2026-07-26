@@ -25,31 +25,31 @@ extern void trigger(Tcl_Interp*, char const* ttype, char const* id = 0);
 
 #define TCL_Return(tcl,str)			\
     do {					\
-	Tcl_SetResult(tcl, (str), TCL_STATIC);	\
+	Tcl_SetResult(tcl, (char *)(str), TCL_STATIC);	\
 	return TCL_OK;				\
     } while (0)
 
 #define TCL_Error(tcl,str)			\
     do {					\
-	Tcl_SetResult(tcl, (str), TCL_STATIC);	\
+	Tcl_SetResult(tcl, (char *)(str), TCL_STATIC);	\
 	return TCL_ERROR;			\
     } while (0)
 
 
 // Prototype for Tcl commands.
 
-extern int Cmd_CreateCalendar	(ClientData, Tcl_Interp*, int, char*[]);
-extern int Cmd_CreateNotice	(ClientData, Tcl_Interp*, int, char*[]);
-extern int Cmd_CreateAppt	(ClientData, Tcl_Interp*, int, char*[]);
+extern int Cmd_CreateCalendar	(ClientData, Tcl_Interp*, int, const char*[]);
+extern int Cmd_CreateNotice	(ClientData, Tcl_Interp*, int, const char*[]);
+extern int Cmd_CreateAppt	(ClientData, Tcl_Interp*, int, const char*[]);
 
-extern int Cmd_Date		(ClientData, Tcl_Interp*, int, char*[]);
-extern int Cmd_Time		(ClientData, Tcl_Interp*, int, char*[]);
+extern int Cmd_Date		(ClientData, Tcl_Interp*, int, const char*[]);
+extern int Cmd_Time		(ClientData, Tcl_Interp*, int, const char*[]);
 
 /* Speedup routines. */
-extern int Cmd_MonthDays	(ClientData, Tcl_Interp*, int, char*[]);
-extern int Cmd_HiliteLoop	(ClientData, Tcl_Interp*, int, char*[]);
+extern int Cmd_MonthDays	(ClientData, Tcl_Interp*, int, const char*[]);
+extern int Cmd_HiliteLoop	(ClientData, Tcl_Interp*, int, const char*[]);
 
 /* Convenience routines */
-extern int Cmd_ExpandFileName	(ClientData, Tcl_Interp*, int, char*[]);
+extern int Cmd_ExpandFileName	(ClientData, Tcl_Interp*, int, const char*[]);
 
 #endif /* _ICAL_H */

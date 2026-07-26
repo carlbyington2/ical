@@ -11,12 +11,6 @@
 #include "Year.h"
 #include "config.h"
 
-#ifndef HAVE_STRNCASECMP_PROTO
-extern "C" {
-    extern int strncasecmp(char const*, char const*, unsigned long);
-}
-#endif
-
 // Token types
 enum Token_Type {
     INT_TOKEN,

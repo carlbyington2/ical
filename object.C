@@ -8,7 +8,7 @@
 #include "ical.h"
 #include "object.h"
 
-static int obj_handle(ClientData, Tcl_Interp*, int, char*[]);
+static int obj_handle(ClientData, Tcl_Interp*, int, const char*[]);
 
 Object::Object(Tcl_Interp* t, char const* type) {
     /* Generate handle */
@@ -52,11 +52,11 @@ Object* Object::find(Tcl_Interp* tcl, char const* h) {
     return 0;
 }
 
-int Object::method(int, char*[]) {
+int Object::method(int, const char*[]) {
     TCL_Error(interp, "Object has no methods");
 }
 
-int obj_handle(ClientData c, Tcl_Interp* tcl, int argc, char* argv[]) {
+int obj_handle(ClientData c, Tcl_Interp* tcl, int argc, const char* argv[]) {
     Object* object = (Object*) c;
 
     assert(object->tcl() == tcl);

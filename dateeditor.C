@@ -47,7 +47,7 @@ static Calendar_Tcl* find_cal(Tcl_Interp*, char const* name);
  *		item (under the assumption that the month  named by <date>
  *		is being displayed).
  */
-int Cmd_MonthDays(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
+int Cmd_MonthDays(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
     if (argc != 4) {
 	TCL_Error(tcl, "illegal number of arguments");
     }
@@ -68,7 +68,7 @@ int Cmd_MonthDays(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
     }
     int finish = start + first.GetMonth().Size(first.GetYear()) - 1;
 
-    char* canvas = argv[2];
+    const char* canvas = argv[2];
     if (Tcl_VarEval(tcl, canvas, " itemconfig Day -text {}", NULL) != TCL_OK) {
 	return TCL_ERROR;
     }
@@ -93,7 +93,7 @@ int Cmd_MonthDays(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
  *		"<hlist>", the string "always" is used instead of actual
  *		hilite style.
  */
-int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
+int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
     int i;
 
     if (argc != 8) {
@@ -113,7 +113,7 @@ int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
     }
 
     int count;
-    char** strlist;
+    const char** strlist;
     if (Tcl_SplitList(tcl, argv[2], &count, &strlist) != TCL_OK) {
 	return TCL_ERROR;
     }
@@ -124,9 +124,9 @@ int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, char* argv[]) {
     Date today = Date::Today();
     Date start(startDays);
     Date finish(finishDays);
-    char* dvar = argv[5];
-    char* hvar = argv[6];
-    char* body = argv[7];
+    const char* dvar = argv[5];
+    const char* hvar = argv[6];
+    const char* body = argv[7];
 
     // Get all items
     ItemList items;
