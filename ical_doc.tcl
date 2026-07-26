@@ -1,7 +1,4 @@
-# !!! Do not edit !!!
-# Tk code generated automatically by "html2tk".
-# !!! Do not edit !!!
-
+proc ical_doc {text} {
 wm title [winfo toplevel $text] {ical - An X based Calendar Program}
 $text insert insert {Synopsis} {header1 indent0}
 $text insert insert {
@@ -1545,3 +1542,4 @@ $text insert insert {
 $text insert insert {Ical } {norm indent0}
 $text insert insert {http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html} {norm indent0}
 catch {unset _html_tmp}
+}

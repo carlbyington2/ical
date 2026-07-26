@@ -20,11 +20,10 @@ proc ical_init {} {
     # Initialize options
     global ical
     set ical(author)            {sanjay@pa.dec.com}
-    set ical(version)           {@ICAL_VERSION@}
+    set ical(version)           {@PACKAGE_VERSION@}
     set ical(mailer)            {@MAILER@}
-    set ical(prefix)            {@prefix@}
-    set ical(libparent)         {@prefix@/lib/ical}
-    set ical(library)           {@prefix@/lib/ical/v@ICAL_VERSION@}
+    set ical(libparent)         {@pkglibdir@}
+    set ical(library)           {@icallibdir@}
     set ical(startdate)         [date today]
     set ical(iconic)            0
     set ical(prefs)             {}

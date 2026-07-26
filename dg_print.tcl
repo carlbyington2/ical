@@ -285,11 +285,10 @@ proc pr_output {date count papersize} {
 
         set str [psdays $date $count $cols 1]
     }
-
     
+    set psheader [ps_header]
     set header "$papersize\n%%EndProlog\n%%Page: 1 1\ngsave\n"
     set trailer "\ngrestore\n%%Trailer\n%%Pages: 1"
 
-    global ical
-    return "$ical(psheader)\n$header$str$trailer"
+    return "$psheader\n$header$str$trailer"
 }

@@ -54,8 +54,7 @@ class Ical_Doc {doc} {
                                 -underline 1
 
     # Insert documentation into text widget
-    set text $t
-    eval $doc
+    $doc $t
     $self make_toc
     $t configure -state disabled
 

@@ -769,12 +769,12 @@ action ical_gripe always {Gripe to the author of ical} {} {
 
 action ical_help always {Display help on ical} {} {
     global ical
-    Ical_Doc $ical(doc)
+    Ical_Doc ical_doc
 }
 
 action ical_tcl_interface always {Display the Tcl interface to ical} {} {
     global ical
-    Ical_Doc $ical(tcl_interface_doc)
+    Ical_Doc interface_doc
 }
 
 action ical_about always {Display information about this version of ical} {} {

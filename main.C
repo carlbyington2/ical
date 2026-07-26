@@ -24,61 +24,6 @@
 #include <tk.h>
 #include "ical.h"
 
-/* Include various libraries converted to strings. */
-
-#ifdef STANDALONE
-static const char* tcl_lib_str[] = {
-#include "tcl_lib.gen"
-0
-};
-
-// Need to disable "source" command
-static const char* tk_lib_str[] = {
-"rename source _orig_source",
-"proc source {args} {}",
-#include "tk_lib.gen"
-"rename source {}",
-"rename _orig_source source",
-0
-};
-
-static const char* ical_lib_str[] = {
-#include "ical_lib.gen"
-0
-};
-
-static const char* tcllib_str[] = {
-#include "tcllib.gen"
-0
-};
-#endif
-
-static const char* ical_startup[] = {
-#include "ical_start.gen"
-0
-};
-
-static const char* psheader_str[] = {
-"set ical(psheader) {"
-#include "psheader.gen"
-"}",
-0
-};
-
-static const char* ical_doc_str[] = {
-"set ical(doc) {",
-#include "icaldoc.gen"
-"}",
-0
-};
-
-static const char* tcl_doc_str[] = {
-"set ical(tcl_interface_doc) {",
-#include "tcldoc.gen"
-"}",
-0
-};
-
 #include "bitmaps/left.xbm"
 #include "bitmaps/right.xbm"
 #include "bitmaps/todo.xbm"
@@ -171,35 +116,8 @@ main(int argc, char* argv[]) {
     return 0;
 }
 
-#ifdef STANDALONE
-extern "C" int MyTcl_Init(Tcl_Interp* tcl) {
-    return (eval_list(tcl, tcl_lib_str));
-}
-#else
-#define MyTcl_Init Tcl_Init
-#endif
-
-/* XXX We need to replace TkPlatformInit */
-#ifdef STANDALONE
-extern "C" void TkCreateXEventSource();
-extern "C" int TkPlatformInit(Tcl_Interp* tcl) {
-    char* libDir = Tcl_GetVar(tcl, "tk_library", TCL_GLOBAL_ONLY);
-    if (libDir == NULL) {
-        libDir = getenv("TK_LIBRARY");
-        if (libDir == NULL) {
-            libDir = "/unknown";
-        }
-        Tcl_SetVar(tcl, "tk_library", libDir, TCL_GLOBAL_ONLY);
-    }
-
-    TkCreateXEventSource();
-
-    return (eval_list(tcl, tk_lib_str));
-}
-#endif
-
 static int app_init(Tcl_Interp* tcl) {
-    if (MyTcl_Init(tcl) != TCL_OK) return TCL_ERROR;
+    if (Tcl_Init(tcl) != TCL_OK) return TCL_ERROR;
     if (have_tk && (Tk_Init(tcl) != TCL_OK)) return TCL_ERROR;
     if (Ical_Init(tcl) != TCL_OK) return TCL_ERROR;
 
@@ -244,16 +162,6 @@ int Ical_Init(Tcl_Interp* tcl) {
         if (!MAKE_BITMAP(tcl, "ical_icon",      ical))    return TCL_ERROR;
     }
 
-    // Set-up postscript prolog
-    if (eval_list(tcl, psheader_str) != TCL_OK)
-        return TCL_ERROR;
-
-    // Set-up documentation
-    if (eval_list(tcl, ical_doc_str) != TCL_OK)
-        return TCL_ERROR;
-    if (eval_list(tcl, tcl_doc_str) != TCL_OK)
-        return TCL_ERROR;
-
     // Non-Tk ical commands
     Tcl_CreateCommand(tcl, "calendar",     Cmd_CreateCalendar,  NULL, NULL);
     Tcl_CreateCommand(tcl, "notice",       Cmd_CreateNotice,    NULL, NULL);
@@ -264,18 +172,8 @@ int Ical_Init(Tcl_Interp* tcl) {
     Tcl_CreateCommand(tcl, "hilite_loop",  Cmd_HiliteLoop,      NULL, NULL);
     Tcl_CreateCommand(tcl, "ical_expand_file_name", Cmd_ExpandFileName, 0, 0);
 
-#ifdef STANDALONE
-    // Load tcllib files
-    if (eval_list(tcl, tcllib_str) != TCL_OK)
-        return TCL_ERROR;
-
-    // Load ical library files
-    if (eval_list(tcl, ical_lib_str) != TCL_OK)
-        return TCL_ERROR;
-#endif
-
     // Initialize ical stuff
-    if (eval_list(tcl, ical_startup) != TCL_OK)
+    if (Tcl_EvalFile(tcl, ICALLIBDIR "/startup.tcl") != TCL_OK)
         return TCL_ERROR;
 
     if (Tcl_Eval(tcl, "ical_init") == TCL_ERROR)

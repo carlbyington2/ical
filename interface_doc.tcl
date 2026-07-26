@@ -1,7 +1,4 @@
-# !!! Do not edit !!!
-# Tk code generated automatically by "html2tk".
-# !!! Do not edit !!!
-
+proc interface_doc {text} {
 wm title [winfo toplevel $text] {The Tcl Interface to Ical}
 $text insert insert {The Tcl Interface to Ical} {header1 indent0}
 $text insert insert {
@@ -1873,3 +1870,4 @@ $text insert insert {
 $text insert insert {Ical documentation at } {norm indent0}
 $text insert insert {http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html} {norm indent0}
 catch {unset _html_tmp}
+}
