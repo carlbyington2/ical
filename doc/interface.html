@@ -1,0 +1,895 @@
+<html>
+<head>
+<title>The Tcl Interface to Ical</title>
+</head>
+
+<body>
+<h1>The Tcl Interface to Ical</h1>
+
+This document contains a brief description of the Tcl interface to
+ical. Part of this interface is implemented in C++ and the rest is
+implemented by Tcl support libraries.
+
+<p>
+
+The C++ code exports calendar and item objects to tcl code.  A number
+of operations are provided to create such objects and to manipulate
+dates and times.  In addition, the calendar and item objects have
+various methods that can be called from tcl code.
+
+<h1>Computation Model</h1>
+
+Calendars and items are stored persistently on file systems.  Copies
+of these calendars and items are read into ical's address space.  The
+Tcl code operates on these copies through well-defined interfaces.
+These interfaces contain special operations for saving pending
+modifications to persistent storage on the file system.
+
+<p>
+
+Each user has a main calendar.  This main calendar is represented as a
+calendar object in Tcl code, and persistently as a file stored on the
+file system.  The main calendar contains a list of names of included
+calendar files.  The main calendar file and the included calendar
+files all contain items.  Each item in the main calendar file and the
+included calendar files is visible as an item object to the Tcl code.
+
+<h1><a name="sec:calendars">Calendars</a></h1>
+
+The following calendar operations raise errors if the user does not
+have sufficient permission to perform the required operation.  Errors
+are also raised if specified files do not contain a calendar.  Some of
+these operations also take a calendar file name as an optional
+argument.  If the file name is omitted, then the main calendar file is
+used.
+
+<p>
+
+Arguments named <em>file</em> in the following list are names of Unix
+files.  Arguments named <em>cal</em> are calendar objects created by the
+``calendar'' command.
+
+<h2>Files and Includes</h2>
+
+This section lists the operations for creating and deleting calendar
+objects from calendar files, and also operations for handling included
+calendars.
+
+<ul>
+
+<li> <strong>calendar <em>cal</em> <em>file</em></strong><br>
+  Create a calendar object named <em>cal</em> with <em>file</em> as the main
+  calendar file.  The actual file named <em>file</em> contains a list of
+  included calendar files.  The files mentioned in this list are also
+  incorporated into <em>cal</em>.  Typically only one calendar object is created
+  in an ical application.  Included calendars are considered part of
+  this one calendar object.
+
+<li> <strong><em>cal</em> delete</strong><br>
+  Discard <em>cal</em> and all contained items from process memory.  The
+  underlying files are not destroyed and can be used to initialize a
+  calendar object in another invocation.
+
+<li> <strong><em>cal</em> main</strong><br>
+  Return the name of the main calendar file for <em>cal</em>.
+
+<li> <strong><em>cal</em> include <em>file</em></strong><br>
+  Include <em>file</em> into <em>cal</em>.  All items contained in <em>file</em> are made
+  available as item objects to Tcl code.
+
+<li> <strong><em>cal</em> exclude <em>file</em></strong><br>
+  Exclude <em>file</em> from <em>cal</em>.  All objects for items contained
+  in <em>file</em> are removed from the Tcl interpreter and cannot be used
+  by Tcl code any more.
+
+<li> <strong><em>cal</em> forincludes <em>var</em> <em>body</em></strong><br>
+  For each include <em>file</em> in <em>cal</em>, set <em>var</em> to <em>file</em> and
+  execute <em>body</em>.
+
+</ul>
+
+<h2>Adding and Removing Items</h2>
+
+This section describes the operations for adding and removing items
+from calendars.
+
+<ul>
+
+<li> <strong><em>cal</em> add <em>item</em> [<em>file</em>]</strong><br>
+  Add <em>item</em> to the specified <em>file</em> in <em>cal</em>.
+
+<li> <strong><em>cal</em> remove <em>item</em></strong><br>
+  Remove <em>item</em> from <em>cal</em>.
+
+<li> <strong><em>cal</em> hide <em>item</em></strong><br>
+  Hide <em>item</em> from this user.  Other users will still see the item.
+
+</ul>
+
+<h2>Input and Output</h2>
+
+This section describes the operations for reading and writing
+calendars to persistent storage.
+
+<ul>
+
+<li> <strong><em>cal</em> readonly [<em>file</em>]</strong><br>
+  Returns true iff the user does not have permission to modify the
+  specified <em>file</em>.
+
+<li> <strong><em>cal</em> dirty [<em>file</em>]</strong><br>
+  Has the specified <em>file</em> been modified locally without being saved
+  to persistent storage?
+
+<li> <strong><em>cal</em> stale [<em>file</em>]</strong><br>
+  Has the specified <em>file</em> been modified by another user or process?
+
+<li> <strong><em>cal</em> save [<em>file</em>]</strong><br>
+  Save any local changes made to <em>file</em> to persistent storage.
+  For example, the following code saves all modifications:
+  <pre>
+  if [cal dirty [cal main]] {
+      cal save [cal main]
+  }
+
+  cal forincludes file {
+      if [cal dirty $file] {
+          cal save $file
+      }
+  }
+  </pre>
+
+<li> <strong><em>cal</em> reread [<em>file</em>]</strong><br>
+  Incorporate any changes made to <em>file</em> by other users or
+  processes.  Any existing items objects from <em>file</em> may be deleted
+  and replaced by new item objects even if the file has not been
+  modified recently.
+
+</ul>
+
+<h2>User Preferences</h2>
+
+Each calendar file contains a general mapping from option names to
+string values.  This mapping is typically used to store user preferences
+for ical.  Sometimes, however this mapping contains miscellaneous
+properties of the calendar file.
+
+<ul>
+
+<li> <strong><em>cal</em> option [-calendar <em>file</em>] <em>name</em></strong><br>
+  Look up the value associated with <em>name</em> in the named calendar <em>file</em>.
+  If no calendar file is specified, the value is looked up in the main
+  calendar file.  An error is raised if the named option does not
+  exist in the calendar.
+  Example:
+  <pre>
+  set p "lpr"
+  catch {set p [cal option PrintCmd]}
+  </pre>
+
+<li> <strong><em>cal</em> option [-calendar <em>file</em>] <em>name</em> <em>value</em></strong><br>
+  Set the value of the option named <em>name</em> to <em>value</em> in the named
+  calendar <em>file</em>.  If no calendar file is specified, the value is
+  looked up in the main calendar file.
+  Example:
+  <pre>
+  cal option PrintCmd "lpr -m"
+  </pre>
+
+<li> <strong><em>cal</em> delete_option [-calendar <em>file</em>] <em>name</em></strong><br>
+  Remove the option named <em>name</em> from the named calendar <em>file</em>.
+  If no calendar file is specified, the option is removed from the main
+  calendar file.  An error is raised if the named option does not
+  exist in the calendar.
+  Example:
+  <pre>
+  catch {cal delete_option PrintCmd}
+  </pre>
+
+</ul>
+
+<h2>Queries</h2>
+
+The following operations can be used to get listings of various items
+in a calendar.  The range of most of these queries can be controlled
+by specifying one of the following options:
+
+<ul>
+<li> <strong>-all</strong><br>
+  Query ranges over all calendars and items.
+<li> <strong>-calendar <em>file</em></strong><br>
+  Query ranges over the contents of the specified calendar file.
+<li> <strong>-list <em>item-list</em></strong><br>
+  Query ranges over only the specified list of items.
+</ul>
+
+The actual query methods are as follows:
+
+<ul>
+
+<li> <strong><em>cal</em> query [<em>range options</em>]
+     <em>start</em> <em>finish</em>
+     <em>itemvar</em> <em>datevar</em> <em>body</em></strong><br>
+  For any item occurrence in the range <em>start..finish</em>, set
+  <em>itemvar</em> to the item, set <em>datevar</em> to the date of the item
+  occurrence, and then evaluate <em>body</em>.  The executions of <em>body</em>
+  are sorted by occurrence.
+
+<li> <strong><em>cal</em> listing [<em>range options</em>]
+     <em>start</em> <em>finish</em>
+     <em>itemvar</em> <em>datevar</em> <em>body</em></strong><br>
+  For all items <em>i</em>, For each occurrence of <em>i</em> in
+  <em>start</em>..(<em>finish</em>+[<em>i</em> earlywarning]), Set <em>itemvar</em> to
+  <em>i</em>, <em>datevar</em> to the occurrence date and execute <em>body</em>.
+  The executions of <em>body</em> are sorted by occurrence.
+  This operation differs from ``<em>cal</em> query'' only in its handling of
+  early warnings.
+  Example:
+  <pre>
+  cal listing $date [expr $date+9] i d {
+      print_date $d
+      print_item $i
+  }
+  </pre>
+
+<li> <strong><em>cal</em> incalendar <em>file</em> <em>itemvar</em> <em>body</em></strong><br>
+  For all items <em>i</em> in <em>file</em>, Set <em>itemvar</em> to <em>i</em> and execute
+  <em>body</em>.  The executions of <em>body</em> are sorted by date of first
+  occurrence.  This operation is equivalent to the ``query'' operation
+  executed with a ``-calendar'' range option.
+  Example:
+  <pre>
+  cal incalendar [cal main] item {
+      print_item $item
+  }
+  </pre>
+
+<li> <strong><em>cal</em> loop_forward [<em>range options</em>]
+     <em>item</em> <em>date</em>
+     <em>itemvar</em> <em>datevar</em> <em>body</em></strong><br>
+  For each item occurence that occurs after the specified <em>item</em> on the
+  specified <em>date</em>, set <em>itemvar</em> and <em>datevar</em> to the item occurrence
+  and execute <em>body</em>.  If <em>item</em> is the empty string, then start yielding
+  with the first item that occurs on <em>date</em>.  For example, the following
+  code searches for the string ``birthday'':
+  <pre>
+  cal loop_forward $item $date i d {
+      if [string match "*birthday*" [$i text]] {
+          ...
+          break
+      }
+  }
+  </pre>
+
+
+<li> <strong><em>cal</em> loop_backward [<em>range options</em>]
+     <em>item</em> <em>date</em>
+     <em>itemvar</em> <em>datevar</em> <em>body</em></strong><br>
+  For each item occurence that occurs before the specified <em>item</em> on the
+  specified <em>date</em>, set <em>itemvar</em> and <em>datevar</em> to the item occurrence
+  and execute <em>body</em>.  If <em>item</em> is the empty string, then start yielding
+  with the last item that occurs on <em>date</em>.  For example, the following
+  code searches for the string ``birthday'':
+  <pre>
+  cal loop_backward $item $date i d {
+      if [string match "*birthday*" [$i text]] {
+          ...
+          break
+      }
+  }
+  </pre>
+
+</ul>
+
+<h1><a name="sec:items">Items</a></h1>
+
+Item objects come in two flavors - appointments and notices.  An
+appointment occurs at a specific time of the day.  A notice does not
+have any associated time of day.  For example, a meeting at 3pm on
+March 27th will be recorded as an appointment while somebody's
+birthday on March 28th will be recorded as a notice.
+
+<p>
+
+Each item object also has associated text and a set of dates on which
+the item occurs.
+
+<h2>Creation and Deletion</h2>
+
+The following operations can be used to create and delete items.
+
+<ul>
+
+<li> <strong>notice</strong><br>
+  Create a notice object with empty text and an empty set of dates.
+
+<li> <strong>appointment</strong><br>
+  Create an appointment object with empty text and an empty set of dates.
+
+<li> <strong><em>item</em> delete</strong><br>
+  Remove <em>item</em> from any calendar that contains it and delete all storage
+  required for the item.
+
+<li> <strong><em>item</em> clone</strong><br>
+  Create and return a copy of <em>item</em>.
+
+</ul>
+
+<h2>Item Occurrences</h2>
+
+The following operations can be used to manipulate and query the
+set of dates on which an item occurs.
+
+<ul>
+
+<li> <strong><em>item</em> contains <em>date</em></strong><br>
+  Returns true iff <em>item</em> occurs on <em>date</em>.
+
+<li> <strong><em>item</em> empty</strong><br>
+  Returns true iff <em>item</em> has no occurrences.
+
+<li> <strong><em>item</em> repeats</strong><br>
+  Returns true iff <em>item</em> occurs more than once.
+
+<li> <strong><em>item</em> first</strong><br>
+  Returns the date of first occurrence of <em>item</em>.  Raises an error
+  if <em>item</em> has no occurrences.
+
+<li> <strong><em>item</em> next <em>date</em></strong><br>
+  Returns the date of the first occurrence of <em>item</em> after <em>date</em>.
+  Raises an error if <em>item</em> has no occurrences after <em>date</em>.
+
+<li> <strong><em>item</em> range <em>startVar</em> <em>finishVar</em></strong><br>
+  Sets <em>startVar</em> and <em>finishVar</em> to the repetition range for <em>item</em>
+  and returns 1.  Returns 0 if item does not have a range.  (An item
+  does not have a range iff it never occurs.)
+
+<li> <strong><em>item</em> type</strong><br>
+  Returns a brief textual description of how the item repeats.
+
+<li> <strong><em>item</em> describe_repeat</strong><br>
+  Like ``<strong><em>item</em> type</strong>'', except that it returns a more complete
+  description of how the item repeats..
+
+<li> <strong><em>item</em> date <em>date</em></strong><br>
+  Modifies <em>item</em> to occur exactly on <em>date</em>.
+
+<li> <strong><em>item</em> dayrepeat <em>interval</em> <em>anchor</em></strong><br>
+  Modifies <em>item</em> to occur on all dates that are an integral
+  multiple of <em>interval</em> days away from <em>anchor</em>.  For example,
+  the following code makes ``$item'' repeat every Saturday assuming
+  that the anchor date occurs on a Saturday.
+  <pre>
+  $item dayrepeat 7 $anchor
+  </pre>
+
+<li> <strong><em>item</em> monthrepeat <em>interval</em> <em>anchor</em></strong><br>
+  Modifies <em>item</em> to occur on all dates that are an integral
+  multiple of <em>interval</em> months away from <em>anchor</em>.  For example,
+  the following code makes ``$item'' repeat on the 23rd of February
+  every year.
+  <pre>
+  $item monthrepeat 12 [date make 23 2 1994]
+  </pre>
+
+<li> <strong><em>item</em> weekdays [<em>weekday</em>...]</strong><br>
+  Modifies <em>item</em> to repeat on all specified <em>weekdays</em>.  For
+  example, the following code makes ``$item'' repeat on every Monday,
+  Wednesday and Friday (Sunday is represented by 1, Monday is
+  represented by 2, ...).
+  <pre>
+  $item weekdays 2 4 6 
+  </pre>
+
+<li> <strong><em>item</em> month_day <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
+  Modifies <em>item</em> to repeat on the <em>n</em>th day of every month
+  that is an integral number of <em>interval</em> months away from the
+  date specified in <em>anchor</em>.  If <em>anchor</em> and <em>interval</em> are not
+  specified, then the <em>item</em> repeats every month.
+  For example, the following code makes
+  ``$item'' repeat on the 17th of every January because the anchor
+  date is in January, and the interval is 12.
+  <pre>
+  $item month_day 17 [date make 1 1 1994] 12
+  </pre>
+
+<li> <strong><em>item</em> month_last_day <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
+  Behaves like ``<strong><em>item</em> month_day</strong>'' except that <em>item</em> is made
+  to repeat on the <em>n</em>th-last day of the month.
+  For example, the following code makes ``$item'' repeat on the second
+  last day of every month.
+  <pre>
+  $item month_last_day 2
+  </pre>
+
+<li> <strong><em>item</em> month_work_day <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
+  Behaves like ``<strong><em>item</em> month_day</strong>'' except that <em>item</em> is made to
+  repeat on the <em>n</em>th working day of the month.
+  For example, the following code makes ``$item'' repeat on the first
+  working day of each month.
+  <pre>
+  $item month_work_day 1
+  </pre>
+
+<li> <strong><em>item</em> month_last_work_day <em>n</em></strong><br>
+  Behaves like ``<strong><em>item</em> month_last_day</strong>'' except that <em>item</em> is made to
+  repeat on the <em>n</em>th-last working day of the month.
+  For example, the following code makes ``$item'' repeat on the
+  fourth-last working day of each month.
+  <pre>
+  $item month_last_work_day 4
+  </pre>
+
+<li> <strong><em>item</em> month_week_day <em>day</em> <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
+  Behaves like ``<strong><em>item</em> month_day</strong>'' except that <em>item</em> is made
+  to repeat on the <em>n</em>th occurrence of a particular day of the week of
+  the month.
+  
+  The <em>day</em> argument should be an integer in the range $1 ...
+  7$.  An argument of $1$ means that the item should repeat on the
+  <em>n</em>th Sunday of the month.  An argument of $7$ means that the
+  item should repeat on the <em>n</em>th Saturday of the month.  For example,
+  the following code makes ``$item'' repeat on the third Thursday of
+  every month.  (Thursday is specified by the integer $5$).
+  <pre>
+  $item month_week_day 5 3
+  </pre>
+
+<li> <strong><em>item</em> month_last_week_day <em>day</em> <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br> 
+  Behaves like ``<strong><em>item</em> month_week_day</strong>'' except that
+  occurrences of <em>day</em> are counted from the end of the month.  For
+  example, the following code makes ``$item'' repeat on the last
+  Friday of every month.  (Friday is specified by the integer $6$.)
+  <pre>
+  $item month_last_week_day 6 1
+  </pre>
+
+<li> <strong><em>item</em> start <em>date</em></strong><br>
+  Modifies <em>item</em> by removing all occurrences that occur before
+  <em>date</em>.
+
+<li> <strong><em>item</em> finish <em>date</em></strong><br>
+  Modifies <em>item</em> by removing all occurrences that occur after
+  <em>date</em>.  For example, the following code restricts ``$item'' to
+  occur only in 1994.
+  <pre>
+  $item start  [date make 1  1  1994]
+  $item finish [date make 31 12 1994]
+  </pre>
+
+<li> <strong><em>item</em> deleteon <em>date</em></strong><br>
+  If <em>item</em> occurs on <em>date</em>, removes that occurrence of <em>item</em>.
+  Otherwise leaves <em>item</em> unmodified.
+
+</ul>
+
+<h2>Item Properties</h2>
+
+The following operations can be used to examine and manipulate various
+properties of an item.  The first few operations apply only to
+appointments.  The remaining operations apply to both appointments and
+notices.
+
+<ul>
+
+<li> <strong><em>appt</em> length</strong><br>
+  Return <em>appt</em>'s length in minutes.
+
+<li> <strong><em>appt</em> length <em>length</em></strong><br>
+  Set <em>appt</em>'s length to <em>length</em> minutes.
+
+<li> <strong><em>appt</em> starttime</strong><br>
+  Return the starting time for <em>appt</em> in minutes since midnight.
+
+<li> <strong><em>appt</em> starttime <em>minutes</em></strong><br>
+  Set the starting time for <em>appt</em> to <em>minutes</em> after midnight.
+
+<li> <strong><em>appt</em> alarms</strong><br>
+  Return a list of alarm times.  For each entry <em>t</em> in this list,
+  ical will generate an alarm <em>t</em> minutes before the appointment
+  starts.  All of the elements in this list are non-negative.
+
+<li> <strong><em>appt</em> alarms <em>list</em></strong><br>
+  Set the list of alarm times for <em>appt</em>.  All of the elements of
+  this list should be non-negative.  For example, the following code
+  will remove all alarms from ``$appt''.
+  <pre>
+  $appt alarms {}
+  </pre>
+  The following code will set alarms to occur at the appointment start time,
+  and also 5, 10, and 15 minutes before the appointment starts.
+  <pre>
+  $appts alarms {0 5 10 15}
+  </pre>
+
+<li> <strong><em>item</em> is appt</strong><br>
+  Returns true iff <em>item</em> is an appointment.
+
+<li> <strong><em>item</em> is note</strong><br>
+  Returns true iff <em>item</em> is a notice.
+
+<li> <strong><em>item</em> calendar</strong><br>
+  If <em>item</em> is contained in a calendar, return the name of that
+  calendar's file.  Otherwise raise an error.
+
+<li> <strong><em>item</em> text</strong><br>
+  Return text for <em>item</em>.
+
+<li> <strong><em>item</em> text <em>text</em></strong><br>
+  Replace <em>item</em>'s text with <em>text</em>.
+
+<li> <strong><em>item</em> uid</strong><br>
+  Return unique identifier for <em>item</em>.
+
+<li> <strong><em>item</em> earlywarning</strong><br>
+  Items start appearing in item listings some number of days before
+  their actual occurrence.  For example, a birthday notice may start
+  appearing five days early to give you enough time to go buy a
+  birthday card.  This operation returns the number of days of early
+  warning you get for <em>item</em>.
+
+<li> <strong><em>item</em> earlywarning <em>days</em></strong><br>
+  Set the early warning for <em>item</em> to <em>days</em>.  <em>days</em> must be
+  non-negative.
+
+<li> <strong><em>item</em> owner</strong><br>
+  Return the name of <em>item</em>'s owner.
+
+<li> <strong><em>item</em> owner <em>o</em></strong><br>
+  Make <em>o</em> the owner of <em>item</em>.
+
+<li> <strong><em>item</em> owned</strong><br>
+  Returns true iff <em>item</em> is owned by the current user.
+
+<li> <strong><em>item</em> own</strong><br>
+  Make the current user the owner of <em>item</em>.
+
+<li> <strong><em>item</em> hilite</strong><br>
+  Return the highlight mode for <em>item</em>.  ``always'' means all item
+  occurrences should be highlighted.  ``never'' means no item
+  occurrences should be highlighted.  ``expire means only
+  occurrences on or after today should be highlighted.  ``holiday''
+  means that all item occurrences should be highlighted, but as holidays.
+
+<li> <strong><em>item</em> hilite <em>mode</em></strong><br>
+  Set the highlight mode for <em>item</em> to <em>mode</em>.
+  For example, the following code will create an item for Christmas day
+  and add it to the calendar.
+  <pre>
+  set i [notice]
+  $i monthrepeat 12 [date make 25 12 1994]
+  $i text {Christmas}
+  $i hilite holiday
+  cal add $i
+  </pre>
+
+<li> <strong><em>item</em> todo</strong><br>
+  Ical supports <em>todo</em> items.  If a todo item occurs in the past, that
+  occurrence is automatically moved forward to today every day until
+  the item is deleted, or marked as a non-todo item.  This operation
+  returns true iff <em>item</em> is a todo item.
+
+<li> <strong><em>item</em> todo 1</strong><br>
+  This operation makes <em>item</em> a todo item.
+
+<li> <strong><em>item</em> todo 0</strong><br>
+  This operation makes <em>item</em> a non-todo item.
+
+<li> <strong><em>item</em> is_done</strong><br>
+  This operation returns true iff <em>item</em> is a todo item that
+  has been marked as done.
+
+<li> <strong><em>item</em> done 1</strong><br>
+  This operation makes <em>item</em> a todo item (if it isn't one already),
+  and also marks it as done.  A done todo item stops moving forward
+  every day.
+
+<li> <strong><em>item</em> done 0</strong><br>
+  This operation marks the item as not done.  If the item is also a todo
+  item, it will now move forward every day.
+
+<li> <strong><em>item</em> option <em>name</em></strong><br>
+  Look up the value associated with <em>name</em> in the named item <em>item</em>.
+  An error is raised if the named option does not exist in the item.
+  Example:
+  <pre>
+  set priority normal
+  catch {set priority [$item option Priority]}
+  </pre>
+
+<li> <strong><em>item</em> option <em>name</em> <em>value</em></strong><br>
+  Set the value of the option named <em>name</em> to <em>value</em> in the named
+  item <em>item</em>.
+  Example:
+  <pre>
+  $item option Priority high
+  </pre>
+
+<li> <strong><em>item</em> delete_option <em>name</em></strong><br>
+  Remove the option named <em>name</em> from the named item <em>item</em>.
+  An error is raised if the named option does not exist in the item.
+  Example:
+  <pre>
+  catch {$item delete_option Priority}
+  </pre>
+
+</ul>
+
+<h1>Dates</h1>
+
+Dates are represented in Tcl code as integers from some unspecified
+date.  Therefore the ``expr'' command can be used to manipulate dates
+by addition and subtraction.  Here is a list of other supported
+operations on dates.
+
+<ul>
+
+<li> <strong>date make <em>day</em> <em>month</em> <em>year</em></strong><br>
+  Returns the date for the specified <em>day</em>, <em>month</em>, and <em>year</em>.
+  <em>day</em>, <em>month</em>, and <em>year</em> should all be integers.  This operation
+  raises an error if the date specification is invalid.  Here is an
+  example of a date creation:
+  <pre>
+  # March 5, 1994.
+  set d [date make 5 3 1994]
+  </pre>
+<li> <strong>date today</strong><br>
+  Returns today's date.
+<li> <strong>date first</strong><br>
+  Returns the first date that can be legally represented by the ical
+  implementation.
+<li> <strong>date last</strong><br>
+  Returns the last date that can be legally represented by the ical
+  implementation.
+<li> <strong>date monthsize <em>date</em></strong><br>
+  Return the number of days in the month containing <em>date</em>.
+<li> <strong>date monthday <em>date</em></strong><br>
+  Returns the day of the month component of <em>date</em> as an integer in
+  the range 1...31.
+<li> <strong>date weekday <em>date</em></strong><br>
+  Returns the day of the week component of <em>date</em> as an integer in the
+  range 1...7.  One corresponds to Sunday, and Seven corresponds to
+  Saturday.
+<li> <strong>date month <em>date</em></strong><br>
+  Returns the month component of <em>date</em> as an integer in the range
+  1...12.
+<li> <strong>date year <em>date</em></strong><br>
+  Returns the year component of <em>date</em> as an integer.
+<li> <strong>date split <em>date</em></strong><br>
+  Returns a four element list of the components of <em>date</em>.  The first
+  element is the day of the month, the second element is the day of
+  the week, the third element is the month, and the fourth element is
+  the year.
+<li> <strong>date extract <em>s</em> <em>d</em> <em>pre</em> <em>post</em></strong><br>
+  Returns true iff a date specification is successfully parsed from
+  <em>s</em>.  The parsed date is stored in the variable named by <em>d</em>.  The
+  portion of <em>s</em> before the parsed date specification is stored in the
+  variable named by <em>pre</em>, and the portion of <em>s</em> after the parsed
+  date specification is stored in the variable named by <em>post</em>.
+  For example, the following code will store today's date in the variable
+  ``date'', the string ``before'' in the variable ``pre'', and
+  the string ``after'' in the variable ``post''.
+  <pre>
+  date extract {before today after} date pre post
+  </pre>
+
+</ul>
+
+<h1>Times</h1>
+
+Times are represented in Tcl code as real numbers that give the number
+of seconds since some unspecified time.  Therefore the ``expr''
+command can be used to manipulate time values by addition and
+subtraction.  Here is a list of other supported operations on times.
+
+<ul>
+
+<li> <strong>ical_time now</strong><br>
+  Returns the current time. 
+
+<li> <strong>ical_time date <em>time</em></strong><br>
+  Returns the date on which <em>time</em> occurs.
+
+<li> <strong>ical_time hour <em>time</em></strong><br>
+  Returns the hour of the day represented by <em>time</em> as an integer in
+  the range 0...23.
+
+<li> <strong>ical_time minute <em>time</em></strong><br>
+  Returns the minute of the hour represented by <em>time</em> as an integer in
+  the range 0...59.
+
+<li> <strong>ical_time second <em>time</em></strong><br>
+  Returns the second of the minute represented by <em>time</em> as an integer in
+  the range 0...59.
+
+<li> <strong>ical_time millisecond <em>time</em></strong><br>
+  Returns the millisecond of the second represented by <em>time</em> as an integer in
+  the range 0...999.
+
+<li> <strong>ical_time split <em>time</em></strong><br>
+  Returns a four element list of the components of <em>time</em>.  The first
+  element is the hour, the second element is the minute, the third
+  element is the second, and the fourth element is the millisecond.
+
+<li> <strong>ical_time extract_time <em>s</em> <em>t</em> <em>pre</em> <em>post</em></strong><br>
+  Returns true iff a time of day specification is successfully parsed
+  from <em>s</em>.  The parsed time is stored in the variable named by <em>d</em>
+  as the number of seconds since midnight.  The portion of <em>s</em> before
+  the parsed time is stored in the variable named by <em>pre</em>, and the
+  portion of <em>s</em> after the parsed time is stored in the variable named
+  by <em>post</em>.  For example, the following code will store 180 (for
+  ``3am'') in the variable ``time, the string ``X'' in the
+  variable ``pre'', and the string ``Y'' in the variable
+  ``post''.
+
+  <pre>
+  ical_time extract_time {X 3am Y} time pre post
+  </pre>
+
+<li> <strong>ical_time extract_range <em>s</em> <em>start</em> <em>finish</em> <em>pre</em> <em>post</em></strong><br>
+  Returns true iff a time range specification is successfully parsed
+  from <em>s</em>.  The parsed time is stored in the variables named by
+  <em>start</em> and <em>finish</em> as the number of seconds since midnight.  The
+  portion of <em>s</em> before the parsed range is stored in the variable
+  named by <em>pre</em>, and the portion of <em>s</em> after the parsed time is
+  stored in the variable named by <em>post</em>.  For example, the following
+  code will store 180 in the variable ``s'', 240 in the variable
+  ``f'', the string ``Meeting'' in the variable ``pre'', and the string
+  ``in Room 419'' in the variable ``post''.
+
+  <pre>
+  ical_time extract_range {Meeting 3-4am in Room 419} s f pre post
+  </pre>
+
+</ul>
+
+<h1>Customization via Hooks</h1>
+
+Ical provides a number of hooks.  Users can attach code to these hooks
+to customize ical behavior.  Code is attached to hooks by one of
+the following commands.
+
+<ul>
+<li> <strong>append-hook <em>hook</em> {<em>varnames...</em>} {<em>code</em>}</strong><br>
+  <em>Code</em> will be executed when the named <em>hook</em> is invoked by ical.
+  Ical will provide a number of arguments when it invokes <em>hook</em>.
+  (The number of arguments will depend on the particular hook being
+  invoked.)  The variables named by <em>varnames...</em> will be assigned the
+  arguments supplied in the hook invocation before <em>code</em> is executed.
+
+  For example, ical calls the ``dayview-startup'' hook when it creates
+  a new calendar window.  The hook is supplied one argument, the
+  window being created.  The following code changes the window to have
+  a vertical layout by moving the appointment sub-window from the
+  right side of the window to the bottom.
+
+  <pre>
+  append-hook dayview-startup {w} {
+      pack [$w window].al -side bottom
+  }
+  </pre>
+
+<li> <strong>prepend-hook <em>hook</em> {<em>varnames...</em>} {<em>code</em>}</strong><br>
+  This command is very similar to ``append-hook''.  The only difference is
+  that the specified <em>code</em> will be executed before any code that is
+  currently attached to <em>hook</em>.  (<em>Code</em> specified by an ``append-hook''
+  command is executed after code that is already attached to the hook.)
+
+</ul>
+
+<h2>General Hooks</h2>
+
+Here is a list of some general hooks for ical.
+
+<ul>
+<li> <strong>ical-startup</strong><br>
+  This hook is invoked without any arguments when ical starts up.
+
+<li> <strong>ical-exit</strong><br>
+  This hook is invoked without any arguments just before ical exits.
+
+<li> <strong>item-create <em>item</em></strong><br>
+  This hook is invoked when a new item is created.  The created item is
+  passed as the only argument to attached code.
+
+<li> <strong>todo-item-done <em>item</em></strong><br>
+  This hook is invoked when a todo item is marked as done.  The done item is
+  passed as the only argument to attached code.
+
+<li> <strong>alarm-fire <em>appt</em></strong><br>
+  This hook is invoked whenever an alarm is generated for an appointment.
+  The appointment object for which the alarm is generated is passed as
+  the only argument to the attached code.
+</ul>
+
+<h2>Day Window Hooks</h2>
+
+The following hooks are invoked when interesting things happen to a
+window that displays the items for a particular day.  These windows
+are referred to as <em>dayviews</em> in the rest of the document.  The object
+representing the dayview is passed as the first argument to these
+hooks.  The <a href="#sec:dayview">dayview interface</a> is described
+in more detail later in this document.
+
+<ul>
+<li> <strong>dayview-startup <em>view</em></strong><br>
+  This hook is invoked when a dayview is created.
+
+<li> <strong>dayview-close <em>view</em></strong><br>
+  This hook is invoked just before a dayview is deleted.
+
+<li> <strong>dayview-set-date <em>view</em> <em>date</em></strong><br>
+  This hook is invoked when the date displayed in a dayview is changed.
+  The new date is passed as the second argument to the hook.
+
+<li> <strong>dayview-focus <em>view</em> <em>item</em></strong><br>
+  This hook is invoked when an item displayed in a dayview is selected.
+  The selected item is passed as the second argument to the hook.
+
+<li> <strong>dayview-unfocus <em>view</em></strong><br>
+  This hook is invoked when an item displayed in a dayview is unselected.
+
+</ul>
+
+<h1><a name="sec:dayview">Day Windows</a></h1>
+
+<em>This section is incomplete!</em>
+
+<p>
+
+This section describes the operations available on objects that represent
+the main ical windows.  These windows display the items for a particular
+day.
+
+<h1>Common Editing Actions</h1>
+
+<em>This section is incomplete!</em>
+
+<p>
+
+This section describes the common editing operations that can be
+invoked from user customizations.  These operations build on the
+calendar and item interfaces described in earlier sections.  Use these
+operations when you customize ical's user interface because these
+operations provide a consistent editing interface to the user.  For
+example, the operations described in this section produce friendly
+messages if the user tries to edit an item in a read-only calendar.
+By contrast, the low-level interfaces described in the sections
+on <a href="#sec:calendars">calendars</a> and
+<a href="#sec:items">items</a> generate a stack trace if they are
+passed invalid arguments.
+
+<h1>Miscellaneous Commands</h1>
+
+The C++ code exports a few miscellaneous commands to tcl code.
+
+<ul>
+  <li> <strong>wbeep <em>volume</em></strong><br> Produces a beep at the specified <em>volume</em>.
+  The volume should be an integer in the range -100...100.  A
+  volume of -100 is the quietest.  A volume of 100 is the loudest.
+  This command is only available when ical is running on an X display.
+</ul>
+
+A few more commands are implemented in C++ to speed-up some
+frequent computations.  The specifications for these commands are
+given in the C++ code itself.
+
+
+<H1>Author</H1>
+
+Sanjay Ghemawat (sanjay@pa.dec.com)<br>
+<A HREF="http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/home.html">http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/home.html</A>
+
+<H1>Copyright</H1>
+
+Copyright (c) 1995 by Sanjay Ghemawat.  Permission is granted to make
+and distribute verbatim copies of this manual provided the copyright
+notice and this permission notice are preserved on all copies.
+
+<H1>See Also</H1>
+
+Ical documentation at
+<A HREF="http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html">http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html</A>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+# Copyright (c) 1995 by Sanjay Ghemawat
+
+       srcdir = @srcdir@
+        VPATH = $(srcdir)
+
+          CXX = @CXX@
+    CXXLINKER = $(CXX)
+         DEFS = @DEFS@
+
+           RM = rm
+           AR = ar
+         ECHO = echo
+       RANLIB = @RANLIB@
+
+     CXXFLAGS = -O $(DEFS)
+      CXXINCS = -I$(srcdir)
+         OBJS = bitvec.o hashfuncs.o intset.o
+        TESTS = testarray testbv testomap testoset timemap testhash testmap\
+		hspeed
+
+all: Makefile libtypes.a
+
+Makefile: $(srcdir)/Makefile.in config.status
+	./config.status
+	@echo Makefile has been rebuilt.
+	@echo Re-execute make.
+	@false
+
+config.status: $(srcdir)/configure
+	@CONFIGURE@ --no-create
+
+libtypes.a: $(OBJS)
+	$(RM) -f $@
+	$(AR) r $@ $(OBJS)
+	$(RANLIB) $@
+
+tests: $(TESTS)
+
+testarray: testarray.o
+	$(CXXLINKER) -o $@ testarray.o
+
+testbv: testbv.o bitvec.o
+	$(CXXLINKER) -o $@ testbv.o bitvec.o
+
+testomap: testomap.o libtypes.a
+	$(CXXLINKER) -o $@ testomap.o libtypes.a
+
+testoset: testoset.o libtypes.a
+	$(CXXLINKER) -o $@ testoset.o libtypes.a
+
+testhash: testhash.o
+	$(CXXLINKER) -o $@ testhash.o
+
+testmap: testmap.o
+	$(CXXLINKER) -o $@ testmap.o
+
+timemap: timemap.o intset.o
+	$(CXXLINKER) -o $@ timemap.o intset.o
+
+hspeed: hspeed.o longmap.o
+	$(CXXLINKER) -o $@ hspeed.o longmap.o
+
+clean::
+	$(RM) -f *.o *.a Makefile.bak $(TESTS)
+
+depend:
+	Mdepend -f Makefile.in -- $(CXXFLAGS) $(CXXINCS) -- *.C
+
+.SUFFIXES: .C
+
+.C.o:
+	$(CXX) $(CXXFLAGS) $(CXXINCS) -c $<
+
+# Special profiling stuff
+tm.etp: timemap.o
+	cxx -non_shared -o tm timemap.o
+	etp tm\
+		insert__6IntSetXi\
+		init__6IntSetXi\
+		remove__6IntSetXi\
+		contains__C6IntSetXi\
+		resize__6IntSetXi\
+		unsafe_insert__6IntSetXii
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+bitvec.o: $(srcdir)/basic.h
+bitvec.o: $(srcdir)/bitvec.h
+hashfuncs.o: $(srcdir)/hashfuncs.h
+hspeed.o: $(srcdir)/longmap.h
+hspeed.o: $(srcdir)/htable.h
+hspeed.o: $(srcdir)/tablerep.h
+intset.o: $(srcdir)/intset.h
+intset.o: $(srcdir)/htable.h
+intset.o: $(srcdir)/tablerep.h
+longmap.o: $(srcdir)/longmap.h
+longmap.o: $(srcdir)/htable.h
+longmap.o: $(srcdir)/tablerep.h
+testarray.o: $(srcdir)/Array.h
+testarray.o: $(srcdir)/basic.h
+testbv.o: $(srcdir)/bitvec.h
+testhash.o: $(srcdir)/htable.h
+testhash.o: $(srcdir)/tablerep.h
+testmap.o: $(srcdir)/htable.h
+testmap.o: $(srcdir)/tablerep.h
+testomap.o: $(srcdir)/ohashmap.h
+testomap.o: $(srcdir)/basic.h
+testomap.o: $(srcdir)/hashfuncs.h
+testoset.o: $(srcdir)/ohashset.h
+testoset.o: $(srcdir)/basic.h
+testoset.o: $(srcdir)/hashfuncs.h
+timemap.o: $(srcdir)/intset.h
+timemap.o: $(srcdir)/htable.h
+timemap.o: $(srcdir)/tablerep.h

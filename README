@@ -1,0 +1,47 @@
+Copyright (c) 1993 by Sanjay Ghemawat
+
+Ical
+====
+
+Ical is a calendar application.  Some of the important features are ---
+
+    * Items can be created edited and deleted easily.
+    * Items can be made to repeat in various ways.
+    * Ical will post reminders for upcoming appointments.
+    * Ical can print and list item occurrences.
+    * Ical calendars can be shared by different users.
+
+This release of ical is designed to work with Tcl7.5/Tk4.1 or later.
+If you are using older versions of Tcl/Tk, you will need to upgrade if
+you want to use the new version of ical.
+
+See also:
+http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html
+
+Copyrights
+==========
+
+Most of the files are covered by the copyright in the file COPYRIGHT.
+
+The configure script is covered by the GNU Public License (see
+COPYRIGHT.GNU).
+
+Requirements
+============
+
+Ical requires a C++ compiler and Tcl/Tk libraries and header files.
+You can obtain g++ (a free C++ compiler) from the Free Software
+Foundation.  You can obtain the Tcl/Tk distribution from
+sprite.berkeley.edu.
+
+Ical uses a GNU-style configure script to control building and
+installation.  Read the file INSTALL for more details.
+
+Acknowledgments
+===============
+
+Thanks to people too numerous to mention who have sent patches, code,
+and suggested improvements and new features for ical.
+
+-Sanjay Ghemawat
+ (sanjay@pa.dec.com)

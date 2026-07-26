@@ -1,0 +1,104 @@
+#!/usr/local/bin/perl
+#
+# This script exports and creates a tar file for a new release of ical.
+#
+# Release checklist:
+#	* Update CHANGES.html
+#	* make shipdoc
+#	* Run "release <version number>"
+#	* Move the tar file to "ical/icalbins" html directory
+#	* Update pointers from ical/get.html
+#	* Copy the tar file to ftp.lcs.mit.edu:pub/sanjay
+#	* Send out announcement to "ical-announce@lcs.mit.edu"
+#	* Send out announcement to "comp.lang.tcl"
+
+require('getopts.pl');
+$opt_n = 0;
+$opt_m = 0;
+$opt_d = 0;
+&Getopts('nmd') || &usage;
+
+unless ($opt_m || $opt_d) {($version = shift) || &usage;}
+shift && &usage;
+
+(-e "$ENV{HOME}/bin/html2man") || &usage;
+(-e "$ENV{HOME}/bin/html2tk") || &usage;
+(-e "./doc/ical.html") || &dir;
+
+$SIG{'INT'} = 'interrupt';
+$SIG{'HUP'} = 'interrupt';
+
+# Generate various documents
+&execute("cd doc ; make release");
+
+# See if we are just "making" stuff
+exit 0 if ($opt_m);
+
+# Generate Makefile dependencies
+$cinc = "-I/usr/include/cxx";
+$incs = "-Itypes -Itime -Icalendar -I/usr/local/include";
+&execute("Mdepend $incs $cinc -f Makefile.in *.C");
+chdir('types');
+&execute("Mdepend $cinc -f Makefile.in *.C");
+chdir('../time');
+&execute("Mdepend -I../types $cinc -f Makefile.in *.C");
+chdir('../calendar');
+&execute("Mdepend -I../types -I../time $cinc -f Makefile.in *.C");
+chdir('..');
+
+# See if we just want dependencies
+exit 0 if ($opt_d);
+
+($tag = 'Ical_' . $version) =~ s/[^\w\d]/_/g;
+$dir = 'ical-' . $version;
+
+# Store version number in sources
+&execute('perl -pi~ -e ' .
+	 '\'s|ICAL_VERSION=.*|ICAL_VERSION="' . $version . '"|\' ' .
+	 'configure.in');
+&execute('autoconf');
+
+# Commit sources
+&execute("cvs commit -m $tag");
+
+# Add tag
+&execute("cvs tag $tag");
+
+# Extract the right release
+&execute("cvs export -r $tag -d $dir ical");
+
+# Generate the tar file
+&execute("gtar cfpv - $dir | gzip > $dir.tar.gz");
+
+# Remove the exported sources
+&execute("rm -rf $dir");
+
+sub execute {
+    local($_) = @_;
+
+    print STDERR $_ . "\n";
+    return 1 if ($opt_n);
+
+    system($_) && &cleanup;
+    return 1;
+}
+
+sub usage {
+    warn("Usage: release [-n] <version id>\n\n");
+    warn("This is script intended to be run ONLY BY ME before I release\n");
+    warn("ical to the world.  It depends on things that other people\n");
+    warn("probably do not have.\n");
+    warn("\n");
+    warn("--Sanjay Ghemawat\n");
+    &cleanup;
+}
+
+sub dir {
+    warn("This script should be run from the ical source directory.\n"); 
+    &cleanup;
+}
+
+sub cleanup {
+    warn("\n*** failure ***\n");
+    exit(1);
+}

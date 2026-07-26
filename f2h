@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Code stolen from the "wish_compiler" by "Stephen Uhler (sau@bellcore.com)".
+
+# Transformations applied to each line of the file:
+#       Convert preexisting backslash into double backslash.
+#       Precede preexisting double quote (") with backslash.
+#	Change each line into a string followed by a ",".
+
+PATH=/bin:/usr/bin:/usr/ucb
+export PATH
+
+sed				\
+-e 's/\\/\\\\/g'		\
+-e 's/"/\\\"/g'			\
+-e 's/^/"/'			\
+-e 's/$/",/'

@@ -1,0 +1,24 @@
+# Sample values to feed into "testparse" to check time/date parsing
+
+# Dates
+date Monday May 8
+date 4/7
+date 4/13
+date 13/4
+
+# Times
+time noon
+time midnight
+time 4am
+time 3:34:13pm
+time 0:00
+time 18:00
+
+# Ranges
+range 3-4pm
+range 3-4am
+range 3-4:00pm
+range 3:00-4:00pm
+range 10:00-2:00
+range 10am-4:00
+range 4:00-3:00pm

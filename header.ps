@@ -1,0 +1,380 @@
+%!PS-Adobe-2.0
+%%Creator: ical
+%%Title: Calendar listing
+%%Pages: 1
+%%PageOrder: Ascend
+%%BoundingBox: 0 0 612 792
+%%DocumentFonts: Times-Roman
+%%EndComments
+
+% Simple defs
+/inch { 72 mul } def
+/mm { 72 mul 25.4 div } def
+
+% User-defined parameters (with defaults)
+/FontName	/Times-Roman	def
+/RealWidth	8.5 inch	def
+/RealHeight	11 inch		def
+/LandScape      true            def
+/GridWidth      4               def
+/GridHeight     2               def
+/BorderWidth    0.5 inch        def
+/BorderHeight   0.3 inch        def
+/HeaderHeight   0.5 inch        def
+/HeaderSep      0.2 inch        def
+/HeaderLeft     ()              def
+/HeaderCenter   ()              def
+/HeaderRight    ()              def
+/ColumnHeight   0               def
+/ColumnSep      0               def
+/MinLines	1		def
+/MaxLines	100		def
+/TitleFraction  0.16            def
+/FontHeight	16		def
+
+% User invoked commands
+/SetLandScape           { /LandScape true def }         def
+/SetPortrait            { /LandScape false def }        def
+/SetGridWidth           { /GridWidth exch def }         def
+/SetGridHeight          { /GridHeight exch def }        def
+/SetBorderWidth         { /BorderWidth exch def }       def
+/SetBorderHeight        { /BorderHeight exch def }      def
+/SetHeaderHeight        { /HeaderHeight exch def }      def
+/SetHeaderLeft          { /HeaderLeft exch def }        def
+/SetHeaderCenter        { /HeaderCenter exch def }      def
+/SetHeaderRight         { /HeaderRight exch def }       def
+/SetHeaderSep           { /HeaderSep exch def }         def
+/SetTitleFraction       { /TitleFraction exch def }     def
+/SetMinLines            { /MinLines exch def }          def
+/SetMaxLines            { /MaxLines exch def }          def
+/SetColumnHeight        { /ColumnHeight exch def }      def
+/SetColumnSep           { /ColumnSep exch def } def
+/SetFontHeight          { /FontHeight exch def } def
+/SetA4Paper		{ /RealWidth 210 mm def /RealHeight 297 mm def} def
+/SetUSLetter		{ /RealWidth 8.5 inch def /RealHeight 11 inch def } def
+
+% Define /ISOLatin1Encoding only if it's not already there.
+/ISOLatin1Encoding where { pop save true }{ false } ifelse
+    /ISOLatin1Encoding [
+	StandardEncoding 0 45 getinterval aload pop
+	/minus
+	StandardEncoding 46 98 getinterval aload pop
+	/dotlessi /grave /acute /circumflex /tilde /macron /breve /dotaccent
+	/dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek
+	/caron /space /exclamdown /cent /sterling /currency /yen /brokenbar
+	/section /dieresis /copyright /ordfeminine /guillemotleft /logicalnot
+	/hyphen /registered /macron /degree /plusminus /twosuperior
+	/threesuperior /acute /mu /paragraph /periodcentered /cedilla
+	/onesuperior /ordmasculine /guillemotright /onequarter /onehalf
+	/threequarters /questiondown /Agrave /Aacute /Acircumflex /Atilde
+	/Adieresis /Aring /AE /Ccedilla /Egrave /Eacute /Ecircumflex /Edieresis
+	/Igrave /Iacute /Icircumflex /Idieresis /Eth /Ntilde /Ograve /Oacute
+	/Ocircumflex /Otilde /Odieresis /multiply /Oslash /Ugrave /Uacute
+	/Ucircumflex /Udieresis /Yacute /Thorn /germandbls /agrave /aacute
+	/acircumflex /atilde /adieresis /aring /ae /ccedilla /egrave /eacute
+	/ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis /eth
+	/ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide /oslash
+	/ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis
+    ] def
+{ restore } if
+
+/reencodeISO { %def
+    findfont dup length dict
+    begin
+	{ 1 index /FID ne { def }{ pop pop } ifelse } forall
+	/Encoding ISOLatin1Encoding def
+	currentdict
+    end
+    definefont pop
+} bind def
+
+/isoFont FontName reencodeISO
+/FontName /isoFont def
+
+% Compute layout
+/ComputeLayout {
+    % Adjust for landscape
+    LandScape {
+        /PageWidth RealHeight def
+        /PageHeight RealWidth def
+        RealWidth 0 translate
+        90 rotate
+    }
+    {
+        /PageWidth RealWidth def
+        /PageHeight RealHeight def
+    } ifelse
+
+    /DayWidth PageWidth BorderWidth 2 mul sub GridWidth div def
+    /DayHeight PageHeight HeaderHeight sub HeaderSep sub
+               ColumnHeight sub ColumnSep sub
+               BorderHeight 2 mul sub GridHeight div def
+    /DayTitleHeight DayHeight TitleFraction mul def
+
+    % Layout the header
+    newpath
+        /HeaderY PageHeight BorderHeight sub HeaderHeight sub def
+        FontName findfont HeaderHeight 0.8 mul scalefont setfont
+
+        % Place left string
+        BorderWidth HeaderY moveto
+        HeaderLeft show
+
+        % Place center string
+        PageWidth HeaderCenter stringwidth pop sub 2 div HeaderY moveto
+        HeaderCenter show
+
+        % Place right string
+        PageWidth BorderWidth sub HeaderRight stringwidth pop sub
+        HeaderY moveto
+        HeaderRight show
+   stroke
+
+   % Translate to grid origin
+   BorderWidth BorderHeight translate
+} def
+
+% Draw the day boundary
+/DayBoundary {
+    0 0 moveto DayWidth DayHeight DrawBox
+} def
+
+% Draw the title boundary.
+/DayTitleBoundary {
+    DayLeft () eq {
+        % Left is empty. Title is just right justified box
+
+        % Compute right string width
+        FontName findfont DayTitleHeight 0.8 mul scalefont setfont
+        DayRight stringwidth pop 1.4 mul
+        /DayRightWidth exch def
+
+        % Draw box
+        DayWidth DayRightWidth sub DayHeight DayTitleHeight sub moveto
+        DayRightWidth DayTitleHeight DrawBox
+    }
+    {
+        % Title extends for entire DayWidth
+        0 DayHeight DayTitleHeight sub moveto
+        DayWidth DayTitleHeight DrawBox
+    }
+    ifelse
+} def
+
+% Fill in the titles
+/DayTitle {
+    FontName findfont DayTitleHeight 0.8 mul scalefont setfont
+
+    % Show DayLeft
+    0 DayHeight DayTitleHeight sub moveto
+    DayTitleHeight 0.2 mul dup rmoveto
+    DayLeft show
+
+    % Show DayRight
+    0 DayHeight DayTitleHeight sub moveto
+    DayWidth DayTitleHeight 0.2 mul sub DayTitleHeight 0.2 mul rmoveto
+    DayRight stringwidth pop neg 0 rmoveto
+    DayRight show
+} def
+
+% Draw the box for a particular day at the current position
+% Input:
+%       left:   string
+%       right:  string
+%       list:   array[array[string]]
+
+/DayDraw {
+    /DayList  exch def
+    /DayRight exch def
+    /DayLeft  exch def
+
+    % Fill title box
+    currentpoint translate
+
+    gsave newpath DayTitleBoundary 0.9 setgray    fill   grestore 
+    gsave newpath DayTitleBoundary 1 setlinewidth stroke grestore 
+    gsave newpath DayTitle                        fill   grestore
+    gsave newpath DayBoundary      3 setlinewidth stroke grestore
+
+    % Set clipping for text
+    newpath DayTitleBoundary DayBoundary eoclip
+
+    % Get line width
+    /DayBorder 4 def
+    /LineWidth DayWidth DayBorder 4 mul sub def
+
+    % Set-up the font in the current height
+    /CurHeight FontHeight def
+    /LineHeight CurHeight 1.1 mul def
+    FontName findfont CurHeight scalefont setfont
+
+    % Compute available space
+    /Space DayHeight DayTitleHeight sub DayBorder 2 mul sub def
+    /ThisTitleHeight DayTitleHeight def
+
+    DayLeft () eq {
+      % The items can be allowed to overlap with the title if necessary
+      Space LineHeight div DayList LineWidth ComputeItemLines lt {
+	% Not enough space.  Set-up things for overlap
+	/ThisTitleHeight 0 def
+	/Space Space DayTitleHeight add def
+      } if
+    } if
+
+    % Scale down the font size to fit space
+    {
+      % Check to see if item fits within space
+      Space LineHeight div DayList LineWidth ComputeItemLines ge {
+	exit
+      } if
+
+      % Need to shrink the font height
+      /CurHeight CurHeight 1 sub def
+      /LineHeight CurHeight 1.1 mul def
+      FontName findfont CurHeight scalefont setfont
+    } loop
+
+    /DayPosition DayHeight ThisTitleHeight sub LineHeight 0.9 mul sub def
+
+    /str 100 string def
+    DayList {
+      % Display an item (list of strings).
+      {
+	newpath
+	LineWidth
+	{
+	  DayBorder 2 mul DayPosition moveto show
+	  /DayPosition DayPosition LineHeight sub def
+	}
+	BreakIntoLines
+	closepath fill
+      } forall
+
+      % Draw line at end
+      newpath
+      0 DayPosition LineHeight 0.8 mul add moveto
+      DayWidth 0 rlineto
+      closepath 0 setlinewidth stroke
+    } forall
+} def
+
+% Draw box
+% Input:
+%       width height
+/DrawBox {
+    exch dup 0 rlineto
+    exch dup 0 exch rlineto
+    exch neg 0 rlineto
+    neg 0 exch rlineto
+    closepath
+} def
+
+% Show day
+% Input:
+%       row
+%       column
+%       left text
+%       right text
+%       items
+/ShowDay {
+    5 3 roll
+    DayWidth mul exch GridHeight exch sub 1 sub DayHeight mul moveto
+
+    gsave DayDraw grestore
+} def
+
+% Show Column heading
+% Input:
+%       column
+%       ltext
+%       ctext
+%       rtext
+/ColumnHead {
+    /ColRight  exch def
+    /ColCenter exch def
+    /ColLeft   exch def
+    /ColNum    exch def
+
+    gsave
+        DayWidth ColNum mul GridHeight DayHeight mul ColumnSep add translate
+        FontName findfont ColumnHeight 0.8 mul scalefont setfont
+
+        % Show left
+        newpath 0 0 moveto ColLeft show stroke
+
+        % Show center
+        newpath DayWidth ColCenter stringwidth pop sub 2 div 0 moveto
+                ColCenter show stroke
+
+        % Show right
+        newpath DayWidth ColRight stringwidth pop sub 0 moveto
+                ColRight show stroke
+    grestore
+} def
+
+% usage		<list> <width> "ComputeItemLines" <height>
+% requires	<list> is an array of array of strings.
+% effects	Compute the # of lines occupied by <list> if it
+%		is broken into lines of the specified width.
+
+/ComputeItemLines {
+  100 dict begin
+    /linewidth exch def
+    /lines 0 def
+
+    {
+      {
+	linewidth {
+	  pop /lines 1 lines add def
+	} BreakIntoLines
+      } forall
+    } forall
+
+    lines
+  end
+} def
+
+% usage		<string> <width> <proc> "BreakIntoLines" -
+% requires	<proc> takes a single string argument
+% effects	line-breaks the <string> based on <width>.
+%		Calls <proc> with the contents of each line.
+
+/wordbreak ( ) def
+/BreakIntoLines {
+  /breakproc exch def
+  /linelength exch def
+  /textstring exch def
+
+  /breakwidth wordbreak stringwidth pop def
+  /curwidth 0 def
+  /lastwordbreak 0 def
+	
+  /startchar 0 def
+  /restoftext textstring def
+	
+  { restoftext wordbreak search
+    { /nextword exch def pop
+      /restoftext exch def
+      /wordwidth nextword stringwidth pop def
+		
+      curwidth wordwidth add linelength gt
+      { textstring startchar
+	lastwordbreak startchar sub
+	getinterval breakproc
+	/startchar lastwordbreak def
+	/curwidth wordwidth breakwidth add def }
+      { /curwidth curwidth wordwidth add
+	breakwidth add def 
+      } ifelse
+
+      /lastwordbreak lastwordbreak
+      nextword length add 1 add def
+    }
+    {pop exit}
+    ifelse
+  } loop
+  /lastchar textstring length def
+  textstring startchar lastchar startchar sub 
+  getinterval breakproc
+} def
+

@@ -1,0 +1,8 @@
+This directory contains ical sources and binaries.
+
+binaries/		Binaries compiled for various platforms.
+ical-XXX.tar.gz		Source distribution of ical.
+ical*.patch		Patches for ical
+
+old-versions/		Old versions of ical.
+snapshot		Beta releases of ical

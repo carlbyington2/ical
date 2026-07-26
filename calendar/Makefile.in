@@ -1,0 +1,140 @@
+# Copyright (c) 1993 by Sanjay Ghemawat
+
+       srcdir = @srcdir@
+        VPATH = $(srcdir)
+
+          CXX = @CXX@
+    CXXLINKER = @CXXLINKER@
+
+       RANLIB = @RANLIB@
+
+           RM = rm
+           AR = ar
+         ECHO = echo
+
+   CXXFLAGS = -O
+    CXXINCS = -I.. -I$(srcdir) -I$(srcdir)/../types -I$(srcdir)/../time
+
+    CXXOBJS = arrays.o calendar.o calfile.o dateset.o item.o\
+              lexer.o misc.o options.o smallintset.o uid.o
+
+        LIB = libcalendar.a
+
+all: $(LIB)
+
+$(LIB): $(CXXOBJS)
+	$(RM) -f $@
+	$(AR) r $@ $(CXXOBJS)
+	$(RANLIB) $@
+
+dstest: dstest.o $(LIB) ../types/libtypes.a ../time/libtime.a
+	$(CXXLINKER) -o $@ dstest.o $(LIB) ../time/libtime.a ../types/libtypes.a -lm
+
+clean::
+	$(RM) -f *.o *.a Makefile.bak dstest
+
+.SUFFIXES: .C
+
+.C.o:
+	$(CXX) $(CXXFLAGS) $(CXXINCS) -c $<
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+arrays.o: $(srcdir)/arrays.h
+arrays.o: $(srcdir)/../types/Array.h
+arrays.o: $(srcdir)/../types/basic.h
+calendar.o: $(srcdir)/../types/basic.h
+calendar.o: $(srcdir)/calendar.h
+calendar.o: $(srcdir)/item.h
+calendar.o: $(srcdir)/../time/Date.h
+calendar.o: $(srcdir)/dateset.h
+calendar.o: $(srcdir)/../types/Array.h
+calendar.o: $(srcdir)/arrays.h
+calendar.o: $(srcdir)/smallintset.h
+calendar.o: $(srcdir)/lexer.h
+calendar.o: $(srcdir)/misc.h
+calendar.o: $(srcdir)/options.h
+calendar.o: $(srcdir)/../types/hashfuncs.h
+calendar.o: $(srcdir)/../types/ohashmap.h
+calendar.o: $(srcdir)/uid.h
+calendar.o: $(srcdir)/../types/ohashset.h
+calendar.o: $(srcdir)/version.h
+calfile.o: $(srcdir)/../types/basic.h
+calfile.o: $(srcdir)/calfile.h
+calfile.o: $(srcdir)/../time/Time.h
+calfile.o: $(srcdir)/calendar.h
+calfile.o: $(srcdir)/lexer.h
+calfile.o: $(srcdir)/misc.h
+calfile.o: $(srcdir)/statfix.h
+calfile.o: $(srcdir)/uid.h
+calfile.o: $(srcdir)/../types/hashfuncs.h
+calfile.o: $(srcdir)/../types/ohashset.h
+dateset.o: $(srcdir)/arrays.h
+dateset.o: $(srcdir)/../types/Array.h
+dateset.o: $(srcdir)/../types/basic.h
+dateset.o: $(srcdir)/../time/Month.h
+dateset.o: $(srcdir)/../time/WeekDay.h
+dateset.o: $(srcdir)/../time/Year.h
+dateset.o: $(srcdir)/dateset.h
+dateset.o: $(srcdir)/../time/Date.h
+dateset.o: $(srcdir)/smallintset.h
+dateset.o: $(srcdir)/lexer.h
+dateset.o: $(srcdir)/misc.h
+dstest.o: $(srcdir)/../time/Month.h
+dstest.o: $(srcdir)/../time/WeekDay.h
+dstest.o: $(srcdir)/dateset.h
+dstest.o: $(srcdir)/../types/basic.h
+dstest.o: $(srcdir)/../types/Array.h
+dstest.o: $(srcdir)/../time/Date.h
+dstest.o: $(srcdir)/arrays.h
+dstest.o: $(srcdir)/smallintset.h
+dstest.o: $(srcdir)/lexer.h
+item.o: $(srcdir)/../types/basic.h
+item.o: $(srcdir)/../types/Array.h
+item.o: $(srcdir)/../time/Year.h
+item.o: $(srcdir)/../time/Month.h
+item.o: $(srcdir)/../time/WeekDay.h
+item.o: $(srcdir)/../time/Date.h
+item.o: $(srcdir)/arrays.h
+item.o: $(srcdir)/item.h
+item.o: $(srcdir)/dateset.h
+item.o: $(srcdir)/smallintset.h
+item.o: $(srcdir)/lexer.h
+item.o: $(srcdir)/misc.h
+item.o: $(srcdir)/options.h
+item.o: $(srcdir)/../types/hashfuncs.h
+item.o: $(srcdir)/../types/ohashmap.h
+item.o: $(srcdir)/uid.h
+item.o: $(srcdir)/../types/ohashset.h
+item.o: $(srcdir)/version.h
+item.o: $(srcdir)/itemmap.h
+item.o: $(srcdir)/../types/htable.h
+item.o: $(srcdir)/../types/tablerep.h
+item.o: $(srcdir)/../types/htable_p.h
+lexer.o: $(srcdir)/../types/basic.h
+lexer.o: $(srcdir)/arrays.h
+lexer.o: $(srcdir)/../types/Array.h
+lexer.o: $(srcdir)/lexer.h
+misc.o: $(srcdir)/../types/basic.h
+misc.o: $(srcdir)/arrays.h
+misc.o: $(srcdir)/../types/Array.h
+misc.o: $(srcdir)/misc.h
+options.o: $(srcdir)/../types/basic.h
+options.o: $(srcdir)/options.h
+options.o: $(srcdir)/../types/hashfuncs.h
+options.o: $(srcdir)/../types/ohashmap.h
+options.o: $(srcdir)/arrays.h
+options.o: $(srcdir)/../types/Array.h
+options.o: $(srcdir)/lexer.h
+options.o: $(srcdir)/misc.h
+smallintset.o: $(srcdir)/smallintset.h
+smallintset.o: $(srcdir)/arrays.h
+smallintset.o: $(srcdir)/../types/Array.h
+smallintset.o: $(srcdir)/../types/basic.h
+smallintset.o: $(srcdir)/lexer.h
+smallintset.o: $(srcdir)/misc.h
+uid.o: $(srcdir)/../types/basic.h
+uid.o: $(srcdir)/misc.h
+uid.o: $(srcdir)/uid.h
+uid.o: $(srcdir)/../types/hashfuncs.h
+uid.o: $(srcdir)/../types/ohashset.h

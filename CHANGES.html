@@ -1,0 +1,600 @@
+<HTML>
+<HEAD>
+<title>Ical Change Log</title>
+<!-- Changed by: Sanjay Ghemawat, 24-Sep-1995 -->
+</HEAD>
+<BODY>
+
+<H1>Ical Change Log</H1>
+
+<HR>
+<H1><A NAME="toc">Table of Contents</A></H1>
+<UL>
+<li> <A HREF="#mine">Unreleased changes</A>
+<li> <A HREF="#2.2">Version 2.2</A>
+<LI> <A HREF="#2.1">Version 2.1</A>
+     <UL>
+     <LI> <A HREF="#2.1b2">Version 2.1b2</A>
+     <LI> <A HREF="#2.1b1">Version 2.1b1</A>
+     </UL>
+<LI> <A HREF="#2.0">Version 2.0</A>
+<LI> <A HREF="#1.9">Version 1.9</A>
+     <ul>
+     <LI> <A HREF="#1.9b2">Version 1.9b2</A>
+     <LI> <A HREF="#1.9b1">Version 1.9b1</A>
+     </ul>
+<LI> <A HREF="#1.8">Version 1.8</A>
+     <ul>
+     <LI> <A HREF="#1.8b3">Version 1.8b3</A>
+     <LI> <A HREF="#1.8b2">Version 1.8b2</A>
+     <LI> <A HREF="#1.8b1">Version 1.8b1</A>
+     </ul>
+<LI> <A HREF="#1.7">Version 1.7</A>
+     <ul>
+     <LI> <A HREF="#1.7b1">Version 1.7b1</A>
+     </ul>
+</UL>
+<HR>
+
+<h1><A NAME="mine">Unreleased changes</A></h1>
+<ul>
+<li> None yet...
+</ul>
+<hr>
+
+<h1><A NAME="2.2">Version 2.2</A></h1>
+<ul>
+<li> Ported to Tcl/Tk 8.0
+<li> Added option for printing to A4 paper
+<li> Changed keybindings so that alarms do not disappear when
+     the "Return" key is hit.  Users need to hit either Control-C,
+     or click on the buttons.
+<li> Display midnight as 12am, not 12pm.
+<li> Moved search functions to <em>Item</em> menu.
+<li> Fixed race condition in calendar file writing code that could
+     get triggered by the file-system filling up.
+</ul>
+<hr>
+
+<h1><A NAME="2.1">Version 2.1</A></h1>
+<ul>
+<li> Updated to work with Tcl7.6/Tk4.2 (also works with Tcl7.5/Tk4.1)
+     <ul>
+     <li> <strong>No longer works with earlier versions of Tcl/Tk</strong>.
+     </ul>
+<li> Various bug fixes
+<li> Fix alarm behavior in the presence of concurrently modified calendars
+<li> Improved completion in the file selector widget
+<li> Moved to file format version 2.0
+     <ul>
+     <li> More uniform text/include-file encoding.
+     <li> Still reads and writes old format calendars compatibly.
+     <li> <strong>New calendars are written in the new format, which cannot
+	  be read by old ical versions.</strong>
+     <li> The recommended way to upgrade to the new calendar format is to
+	  make sure that all copies of ical at your site are upgraded to
+	  the new version at the same time.  If you miss a few copies,
+	  they will continue to work fine for any existing calendars,
+	  but they will not be able to read any brand-new calendars created
+	  by the new version of ical.
+     </ul>
+<li> Changes in the Tcl interface to Ical
+     <ul>
+     <li> Added command to get an item's uid.
+     </ul>
+     <li> Renamed the <code>time</code> command to <code>ical_time</code>
+          to avoid conflicting with the Tcl <code>time</code> command.
+          <strong>This is a potential incompatibility for ical
+	  scripts.</strong>
+</ul>
+
+<h2><A NAME="2.1b2">Version 2.1b2</A></h1>
+<ul>
+<li> Fixed typo in "configure" library name creation
+<li> More robust font name generation
+<li> Work-around for Tk bug related to empty popup menus
+</ul>
+
+<h2><A NAME="2.1b1">Version 2.1b1</A></h1>
+<ul>
+<li> Moved the help menu all the way to the right of the menu bar.
+<li> Fixed bugs in alarm handling
+<li> Renamed the <code>time</code> command to <code>ical_time</code>
+     to avoid conflicting with the Tcl <code>time</code> command.
+     <ul>
+     <li> <strong>This is a potential incompatibility for ical
+	  scripts.</strong>
+     </ul>
+<li> Added resize handles on selected appointments.
+<li> Added icon bitmap for calendar windows.
+<li> Upgraded to work with Tcl 7.5/Tk 4.1
+     <ul>
+     <li> <strong>No longer works with earlier versions of Tcl/Tk</strong>.
+     </ul>
+<li> Added contrib script for generating zsh script commands
+<li> Updated and fixed the documentation
+<li> Better documentation display via the 4.0 text widget improvements
+<li> Fixed geometry handling for virtual window managers
+<li> Moved to file format version 2.0
+     <ul>
+     <li> More uniform text/include-file encoding.
+     <li> Still reads and writes old format calendars compatibly.
+     <li> <strong>New calendars are written in the new format, which cannot
+	  be read by old ical versions.</strong>
+     <li> The recommended way to upgrade to the new calendar format is to
+	  make sure that all copies of ical at your site are upgraded to
+	  the new version at the same time.  If you miss a few copies,
+	  they will continue to work fine for any existing calendars,
+	  but they will not be able to read any brand-new calendars created
+	  by the new version of ical.
+     </ul>
+</ul>
+<p>
+<HR>
+
+<h1><A NAME="2.0">Version 2.0</A></h1>
+
+<h2>Patches</h2>
+<ul>
+<li> Version 2.0p2
+     <ul>
+     <li> Fixed configure.in bug related to prefix directory.
+     </ul>
+<li> Version 2.0p1
+     <ul>
+     <li> Fixed bug triggered by % signs in item text
+     </ul>
+</ul>
+
+<h2>Main Release</h2>
+<ul>
+<li> <strong>No longer works with Tk 3.6 and older versions</strong>
+<li> Fixed for Tcl 7.4/Tk 4.0.
+<li> Some incompatibilities were introduced
+     <ul>
+     <li> <code>ical_action</code> does not take a view argument
+     <li> Added <code>item-select</code> and <code>item-unselect</code> hooks
+     <li> Removed <code>dayview-focus</code> and <code>dayview-unfocus</code>
+	  hooks
+     </ul>
+
+<li> The <code>-bg</code> command line option is now handled
+     via <code>tk_setPalette</code>
+<li> Added -date option to control starting date for windows/listings
+<li> Added -print option for generating postscript from command line
+<li> Allow printing arbitrary number of days
+<li> Fixed printing code to handle long lines gracefully.
+
+<!-- <li> Added code to follow links to files and WWW documents -->
+<li> Install contributed files as well
+<li> Added contributed script for displaying ISO week numbers
+
+<li> Allow todo items to be marked as done.
+<li> Todo/done items are sorted appropriately.
+<li> Added <samp>todo-item-done</samp> hook.
+<li> Make item copying preserve todo status.
+<li> Item cloning now duplicates all item options.
+<li> Item hiliting is set to "never" when todo items are marked as done.
+<li> Make time range parsing smarter.
+<li> Repeating items now start from current date.
+<li> Week day editing dialog double-checks with the user if all
+     week days are unselected.
+<li> Added searching code.
+<li> Added <samp>fontSize</samp> option to use smaller fonts.
+<li> largeHeadingFont is smaller.
+<li> More robust handling of bad color names.
+<li> Postscript previewer now runs in background.
+<li> Added dialog for editing item properties.
+
+<li> Tab key cycles through the items for the current day
+<li> Meta-n used to cyle thru items as well as tab key
+<li> Arrow keys can be used to change dates when no item is selected
+<li> Escape/Control-g unselect the current item (if any)
+
+<li> Help display uses a pointer cursor.
+<li> Allow keyboard shortcuts for scrolling around help window.
+<li> Added "about ical" menu entry.
+<li> Notice items now widen themselves to use all available space.
+<li> More robust appointment resize/move handling.
+<li> Changed dayview window names to not have underscores
+
+<li> Allow multiple calendars to be opened correctly.
+<li> Added regression tests.
+<li> Bug fixes in remove-include of dirty calendar.
+<li> Calendar file writing code is more robust.
+     <ul>
+     <li> Handles symbolic and hard links cleanly
+     <li> Handles non-writable directories
+     </ul>
+<li> Fixed bug in notice unselection on window close.
+<li> Over-kill fix for unpredictable alarm countdown bug.
+<li> Other miscellaneous bug fixes
+
+<li> Allow tcl code to get and set item options.
+<li> Allow call to "&lt;item&gt; weekdays" with empty week day list
+<li> Added rule to build bundle with shared Tcl/Tk libs.
+<li> Use "-lnsl" if available.  (This is useful on Solaris?)
+</ul>
+
+<HR>
+
+<h1><A NAME="1.9">Version 1.9</A></h1>
+
+<h2>User-Visible Changes since version 1.8</h2>
+<ul>
+<li> Changed default color scheme.
+<li> Improved handling of appointment text that does not fit in available area.
+<li> Added more kinds of repeating items.
+<LI> Added "Todo" items -- these propagate automatically to today every day.
+<LI> Added emacs style editing of items.
+<LI> Added on-line help.
+</ul>
+
+<h2>Customizability changes since version 1.8</h2>
+<ul>
+<li> Added documentation of some of the internals (see doc/interface.ps).
+     This will be useful if you want to customize ical, or if you want to
+     write scripts to manipulate ical calendars.
+<li> Load <samp>$ical(library)/site.tcl</samp> at startup time if available.
+<li> Changed the Tcl class system to support single inheritance.
+<li> Added more hooks
+     <pre>
+	dayview-focus
+	dayview-unfocus
+	dayview-set-date
+	alarm-fire
+     </pre>
+</ul>
+
+<h2>Installation changed since version 1.8</h2>
+<ul>
+<li> Ical can optionally be built as a single executable that contains
+     all required tcl/tk files.  This allows people to copy ical binaries
+     around from one machine to another without having to install Tcl/Tk,
+     or without worrying about the location of ical's ".tcl" files.  Use
+     the following method to build a standalone executable.
+     <pre>
+	make ical-bundle
+     </pre>
+<li> The ical library directory now includes the version number.
+     Therefore different versions of ical will not trounce each
+     other anymore.
+</ul>
+
+<h2>Changes since version 1.9b2</h2>
+
+<ul>
+<li> Changed <samp>f2h</samp> to look for <samp>sed</samp> in more
+     directories than just <samp>/bin</samp>.
+<li> Made selected item background lighter to have better contrast
+     between foreground and background.
+<li> Add "-lc" flag when using shared linking with g++ on DEC OSF1.
+     This prevents an undefined symbol error at run-time.
+<li> Renamed "Annual" menu entry to "Annually".
+<li> -geometry option was being ignored.
+<li> Added "-iconposition" option for placing icon.
+<li> Removed duplicate definition of <samp>dialog_run</samp>.
+<li> Changed the Tcl class system to have better support for subclassing.
+</ul>
+
+<HR>
+
+<h1><A NAME="1.9b2">Version 1.9b2</A></h1>
+<ul>
+<li> Bug fixes
+<ul>
+<li> Fixed bug in "contrib/timeofday.tcl".
+<li> Fixed bug with Monday-First option in "dg_wdays.tcl".
+<li> Fixed bug in proc name for "delete-word".
+<li> Call "wm geometry" within "catch" to handle geometry spec errors.
+</ul>
+<li> Interface changes
+<ul>
+<li> Made default "itemOverflowColor" a little darker so that it
+     interacts better with the selected item foreground color.
+<li> Truncate appointment text so that it fits within the available
+     area when the appointment is not selected.
+<li> Changed colors to use a gray background by default.
+<li> Load <samp>$ical(library)/site.tcl</samp> at startup time if available.
+</ul>
+<li> Various cleanups
+<ul>
+<li> Cleaned up alarm generation code.
+<li> Cleaned up item selection code.
+<li> Turned change log into html document.
+</ul>
+</ul>
+
+<HR>
+
+<h1><A NAME="1.9b1">Version 1.9b1</A></h1>
+
+<h2>User-Visible Changes</h2>
+<UL>
+<LI> Repeating items
+<UL>
+<LI> Added more ways for monthly repetitions
+<LI> Cleaned up Repeat menu
+<LI> Added dialogs for complex repetitions
+<LI> Item listings now contain more detailed repeating item descriptions
+</UL>
+<LI> Added "Todo" items -- these propagate automatically to today every day
+
+<LI> Added emacs style editing of items.
+
+<LI> Added on-line help.
+
+<LI> Overflowed appointment text now has a background.
+
+<LI> Added documentation of some of the internals (see doc/interface.ps).
+  This will be useful if you want to customize ical, or if you want to
+  write scripts to manipulate ical calendars.
+
+<LI> Contributed code
+<UL>
+<LI> Added contributed script "icaladdlines"
+<LI> Added contributed code "timeofday.tcl"
+</UL>
+
+<LI> The "pollSeconds" option has been split in two -- "pollSeconds"
+  and "saveSeconds".  The first option controls the frequency of
+  re-reads.  The second option controls the frequency of saves.
+  By default "pollSeconds" is bigger than "saveSeconds".
+
+<LI> The file selector was changed to not display ~ files by default.
+  The "children" list was also made a little wider.
+
+<LI> Added more hooks
+	dayview-focus<BR>
+	dayview-unfocus<BR>
+	dayview-set-date<BR>
+	alarm-fire
+
+<LI> Adapted the ruler demo from the Tk demo set for selecting a set of
+  alarm times.
+
+<LI> Added "Delete Selection" menu item.
+
+</UL>
+
+<h2>Internal Changes</h2>
+<UL>
+<LI> Ical can optionally be built as a single executable that contains
+  all required tcl/tk files.  This allows people to copy ical binaries
+  around from one machine to another without having to install Tcl/Tk,
+  or without worrying about the location of ical's ".tcl" files.  Use
+  the following method to build a standalone executable.
+  <pre>
+	make ical-bundle
+  </pre>
+
+<LI> The ical library directory now includes the version number.
+     Therefore different versions of ical will not trounce each
+     other anymore.
+
+<LI> Lots of internal changes.  These will allow easier creation of
+  calendar management scripts and ical customizations.  Plus some
+  outright bugs were fixed.  The Tcl code cleanups are:
+<UL>
+<LI> cleaned up menu creation
+<LI> cleaned up dialog code
+<LI> cleaned up key binding mechanism
+<LI> moved most code out of DayView into "actions.tcl".
+<LI> removed obsolete use of "pack"
+<LI> added inheritance support to object system
+<LI> made a subclass of ItemWindow to allow moving/resizing
+</UL>
+
+<LI> C++ code cleanups
+<UL>
+<LI> C++ code now does permission checking and sets modified flags and
+    generates triggers on item/calendar modifications.  This drastically
+    simplified the tcl code for manipulating calendars and items.
+<LI> added routine to collect all non-hidden items
+<LI> Removed calendar slot from items.
+<LI> Removed "length" sub-command for notices.
+<LI> cleaned up date/time parsing code and moved into C++
+</UL>
+</UL>
+
+<H2>Bug fixes</H2>
+<UL>
+<LI> handle invocations when the HOME environment variable is not set
+<LI> Fix hangup that occurs on repeat_check/yes with fast typing into an item
+<LI> Removed memory leaks
+<LI> Do not use "gethostid" unless it really works.  (It was causing
+    core-dumps on some HP machines.)<BR>
+<LI> Supply "gethostname" routine for machines that do not have it.
+    (Solaris is the only problem reported to me.)
+</UL>
+
+<hr>
+
+<h1><A NAME="1.8">Version 1.8</A></h1>
+
+<UL>
+<LI> Handle color allocation errors so they don't look like bugs.
+
+<LI> Handle infrequent Tcl syntax errors after reading a calendar file.
+
+<LI> Added "item-create" hook that is called on item creation in calendar
+  window.  Use this to customize the initial state of new items.
+
+<LI> Allow hilite field to be extensible with more values.
+</UL>
+
+<hr>
+
+<h1><A NAME="1.8b3">Version 1.8b3</A></h1>
+
+<UL>
+<LI> Added a "catch" in dialog handling code to ignore the frequent grab
+  errors.
+
+<LI> Added hook mechanism --
+     <ul>
+     <li> ical-startup
+     <li> ical-exit
+     <li> dayview-startup
+     <li> dayview-close
+     <li> item-create
+     </ul>
+
+<LI> Removed vertical-layout options.  It is probably used very rarely
+  and is easy to set-up via a hook in <samp>~/.tk/ical/user.tcl</samp>.
+  <pre>
+	append-hook dayview-startup {view} {<BR>
+	    pack .$view.al -side bottom<BR>
+	}
+  </pre>
+
+</UL>
+<hr>
+
+<h1><A NAME="1.8b2">Version 1.8b2</A></h1>
+
+<UL>
+<LI> The calendar view automatically switches to the next day at midnight.
+  (But only if the view is displaying the current date.)
+
+<LI> Added script "icalexpire" to the contrib directory.  This script moves
+  expired items from the user's calendar into an archival calendar.  Use
+  it if ical uses too much memory or takes too much time starting up
+  because there are too many expired items in your calendar.
+
+<LI> Reduced per-item memory requirements.
+
+<LI> Added date/time/time-range/item parsing routines to library.
+
+<LI> Added code to import the current selection as a new item.
+  The item parsing code is used to guess the date and times for
+  the new item.
+
+<LI> Added script "icaladd" to the contrib directory.  This script reads
+  an item from the standard input and adds it to the user's calendar.
+  The date and times for the item are extracted from the standard input
+  if possible.
+
+</UL>
+<hr>
+
+<h1><A NAME="1.8b1">Version 1.8b1</A></h1>
+
+<UL>
+<LI> Added highlighting options for items.
+
+<LI> Changed shut up button to say "No More Alarms"
+
+<LI> Cleaned up man-page formatting (thanks to john@civil.su.oz.au)
+
+<LI> Include user name in printouts
+
+<LI> Changed startup code so that more things get initialized when
+  the ical shells start up.  Therefore the tcl startup scripts
+  need less junk.  It also makes it easier to build various
+  converters and other scripts that manipulate calendar data.
+
+<LI> Added a "contrib" directory.
+
+<LI> Added a script "ical2calendar" to convert from an ical calendar to
+  an old-style calendar file.
+
+<LI> Made "dialog_wdays" obey Monday-first option.
+
+</UL>
+
+<hr>
+
+
+<h1><A NAME="1.7">Version 1.7</A></h1>
+<UL>
+<LI> Various bug fixes
+
+<LI> Item text now word-wraps automatically.  An unfortunate side-effect
+  of this change is that explicit new-lines in old items may make the
+  items have excessive new-lines.
+
+<LI> Notices automatically expand and shrink as the text changes.
+  Appointments will optionally not allow text changes that would
+  result in overflow.
+
+<LI> More user preferences can be set while ical is running.
+<UL>
+<LI> default alarm intervals
+<LI> default early-warning behavior
+<LI> the time range displayed in the appointment window
+<LI> height of the notice window
+<LI> width of displayed appointments and notices
+<LI> whether or not appointments allow text overflow
+</UL>
+
+<LI> Dragging with the left mouse button held down in an appointment or
+  notice sets the X selection.
+
+<LI> The "Insert Selection" entry in the Edit menu can now be used to
+  "paste" the current X selection into an appointment or notice.
+  The key "^y" invokes this operation.
+
+<LI> On monochrome displays, item selection is indicated by changing the
+  border width of the selected item instead of reversing the colors.
+  This change was made because reversed colors interacted badly with
+  overflow text and X selections.
+
+<LI> Added command line options "-fg" and "-bg".
+
+<LI> The menus have been rearranged a bit.
+
+<LI> Added a print dialog to control printing.
+
+</UL>
+
+<hr>
+
+<h1><A NAME="1.7b1">Version 1.7b1</A></h1>
+<UL>
+<LI> Various bug fixes
+
+<LI> Support for Tcl 7.0 and Tk 3.3.
+  <em>Ical no longer works with older versions of Tcl and Tk</em>
+
+<LI> Uses GNU style build process.  Installers just need to type "configure"
+  and "make".
+
+<LI> Ical is more careful about the fonts it picks.  If a required font
+  does not exist, it tries to find another similar font.  Eventually
+  it falls back to "fixed".  You can also change from one font family
+  to another very easily -- use the "Ical.fontFamily" resource.  See
+  the man page for more details.
+
+<LI> Menus behave like most non-motif applications (unless tk_strictMotif
+  is set to true).  I put in this change because most people in my lab
+  hate the motif-style menus that stay popped up even after you
+  release the button.
+
+<LI> Users can now change the interval at which ical polls its calendar
+  files.  This can help if you are on a slow machine.
+
+<LI> Added "-popup" option for generating a nice item listing on an
+  X display.  You can put "ical -popup" in your ".xsession" file
+  and get a little item listing window whenever you login.
+
+<LI> Items now have an "owner" field to indicate who created them.
+
+<LI> You can interactively change alarms for each appointment.
+
+<LI> Backspace now deletes the last character (just like the Delete key)
+
+<LI> If you delete an item you do not own, it does not actually get
+  deleted.  It just gets hidden from your view.
+
+<LI> You can now control am/pm printing, and whether a week starts with a
+  monday as opposed to a sunday.
+
+<LI> Support for eight-bit characters.
+
+</UL>
+
+<hr>
+
+</BODY>
+</HTML>

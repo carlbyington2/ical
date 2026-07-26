@@ -1,0 +1,335 @@
+# Copyright (c) 1993 by Sanjay Ghemawat
+############################################################################
+
+       srcdir = @srcdir@
+        VPATH = @srcdir@
+
+       prefix = @prefix@
+  exec_prefix = @exec_prefix@
+
+        SHELL = /bin/sh
+
+ CONFIGURE    = @CONFIGURE@
+ CONFIGURED   = @MFILES@
+ CONFIGURE_IN = @MFILES_IN@
+ CONFFILES    = $(srcdir)/configure.in
+
+       BINDIR = $(exec_prefix)/bin
+       LIBDIR = $(prefix)/lib
+      ILIBDIR = $(LIBDIR)/ical/v@ICAL_VERSION@
+       MANDIR = $(prefix)/man
+
+           CC = @CC@
+          CXX = @CXX@
+    CXXLINKER = $(CXX)
+
+       RANLIB = @RANLIB@
+      INSTALL = @INSTALL@
+         LN_S = @LN_S@
+ INSTALL_DATA = @INSTALL_DATA@
+
+           RM = rm
+           AR = ar
+        CHMOD = chmod
+         ECHO = echo
+        MKDIR = mkdir
+       FILE2H = $(srcdir)/f2h
+
+  TKSCRIPTS = @TK_SCRIPTS@
+ TCLSCRIPTS = @TCL_SCRIPTS@
+  LIB_FILES = @ICAL_TCLLIB_SCRIPTS@
+ ICAL_FILES = @ICAL_SCRIPTS@
+
+   X_CFLAGS = @TK_XINCLUDES@
+     X_LIBS = @TK_LIBS@
+  EXTRALIBS = @LIBS@
+
+       LIB1 = calendar/libcalendar.a
+       LIB2 = time/libtime.a
+       LIB3 = types/libtypes.a
+       LIB4 = @TK_LIB_SPEC@ @TCL_LIB_SPEC@
+       LIBS = $(LIB1) $(LIB2) $(LIB3) $(LIB4) $(EXTRALIBS) $(X_LIBS) @TCL_LIBS@
+
+# XXX Make sure bundled executable uses static versions of tcl/tk libraries?
+#      BLIBS = $(LIB1) $(LIB2) $(LIB3)\
+#              @tklibdir@/libtk@tklibver@.a @tcllibdir@/libtcl@tcllibver@.a\
+#              $(EXTRALIBS) $(X_LIBS)
+      BLIBS = $(LIBS)
+
+# Tiny bundled executable uses shared versions of tcl/tk libraries
+ TINY_BLIBS = $(LIBS)
+
+       OPTF = -O
+
+   CXXFLAGS = $(OPTF)
+    CXXINCS = -I. -I$(srcdir) -I$(srcdir)/calendar \
+              -I$(srcdir)/types -I$(srcdir)/time \
+              $(X_CFLAGS) -I@TCL_INCDIR@ -I@TK_INCDIR@
+
+     CFLAGS = $(OPTF) -I. -I$(srcdir) $(X_CFLAGS)
+
+OBJS = cal_tcl.o dateeditor.o dispatch.o ical.o ical_tcl.o \
+       item_tcl.o object.o time_tcl.o @LIBOBJS@
+
+# Building rules
+
+all: $(CONFIGURED) ical
+
+ical: $(LIB3) $(LIB2) $(LIB1) $(OBJS) main.o
+	$(CXXLINKER) -o $@ $(OBJS) main.o $(LIBS)
+
+ical-bundle: $(LIB3) $(LIB2) $(LIB1) $(OBJS) mbundle.o
+	$(CXXLINKER) -o $@ $(OBJS) mbundle.o $(BLIBS)
+
+ical-tiny: $(LIB3) $(LIB2) $(LIB1) $(OBJS) mbundle.o
+	$(CXXLINKER) -o $@ $(OBJS) mbundle.o $(TINY_BLIBS)
+
+$(LIB1): FRC
+	@echo making in calendar
+	@cd calendar; $(MAKE) libcalendar.a
+
+$(LIB2): FRC
+	@echo making in time
+	@cd time; $(MAKE) libtime.a
+
+$(LIB3): FRC
+	@echo making in types
+	@cd types; $(MAKE) libtypes.a
+
+# Rules to generate C strings from various files
+
+GEN1 = tcl_lib.gen tk_lib.gen tcllib.gen ical_lib.gen
+GEN2 = ical_start.gen psheader.gen icaldoc.gen tcldoc.gen
+
+tcl_lib.gen: Makefile $(TCLSCRIPTS)
+	cat $(TCLSCRIPTS) | $(FILE2H) > $@
+
+tk_lib.gen: Makefile $(TKSCRIPTS)
+	cat $(TKSCRIPTS) | $(FILE2H) > $@
+
+tcllib.gen: $(LIB_FILES)
+	cat $(LIB_FILES) | $(FILE2H) > $@
+
+ical_lib.gen: $(ICAL_FILES)
+	cat $(ICAL_FILES) | $(FILE2H) > $@
+
+ical_start.gen: startup.tcl
+	cat startup.tcl | $(FILE2H) > $@
+
+psheader.gen: $(srcdir)/header.ps
+	cat $(srcdir)/header.ps | $(FILE2H) > $@
+
+icaldoc.gen: $(srcdir)/doc/ical.doc
+	cat $(srcdir)/doc/ical.doc | $(FILE2H) > $@
+
+tcldoc.gen: $(srcdir)/doc/interface.doc
+	cat $(srcdir)/doc/interface.doc | $(FILE2H) > $@
+
+main.o: $(GEN2)
+
+mbundle.o: $(GEN1) $(GEN2) $(srcdir)/main.C
+	$(CXX) -DSTANDALONE $(CXXFLAGS) $(CXXINCS) -c $(srcdir)/main.C -o $@
+
+FRC:
+
+# Cleaning rules
+
+distclean: clean
+	$(RM) -f config.h config.status config.log config.cache startup.tcl
+	$(RM) -f Makefile types/Makefile time/Makefile calendar/Makefile
+
+clean::
+	@echo cleaning in calendar
+	@cd calendar; $(MAKE) clean
+	@echo cleaning in time
+	@cd time; $(MAKE) clean
+	@echo cleaning in types
+	@cd types; $(MAKE) clean
+	$(RM) -f ical ical-bundle ical-tiny icaltest.cal* *.gen *.o *.a *.bak
+
+# Installation rules
+
+install: instbin instman instlib instcontrib
+	@echo installation finished
+
+instbin: ical
+	-$(MKDIR) $(BINDIR)
+	$(INSTALL) ical $(BINDIR)/ical-@ICAL_VERSION@
+	$(RM) -f $(BINDIR)/ical
+	$(LN_S) ical-@ICAL_VERSION@ $(BINDIR)/ical
+
+instman:
+	-$(MKDIR) $(MANDIR)
+	-$(MKDIR) $(MANDIR)/man1
+	-$(INSTALL_DATA) $(srcdir)/doc/ical.man $(MANDIR)/man1/ical.1
+
+instlib:
+	-$(MKDIR) $(LIBDIR)
+	-$(MKDIR) $(LIBDIR)/ical
+	-$(MKDIR) $(ILIBDIR)
+	-$(MKDIR) $(ILIBDIR)/tcllib
+	@for f in $(LIB_FILES) $(srcdir)/tcllib/tclIndex ; do\
+		echo $(INSTALL_DATA) $$f $(ILIBDIR)/tcllib/`basename $$f`;\
+		$(INSTALL_DATA) $$f $(ILIBDIR)/tcllib/`basename $$f`;\
+	done
+	@for f in $(ICAL_FILES) $(srcdir)/tclIndex ; do\
+		echo $(INSTALL_DATA) $$f $(ILIBDIR)/`basename $$f`;\
+		$(INSTALL_DATA) $$f $(ILIBDIR)/`basename $$f`;\
+	done
+
+instcontrib:
+	-$(MKDIR) $(LIBDIR)
+	-$(MKDIR) $(LIBDIR)/ical
+	-$(MKDIR) $(ILIBDIR)
+	-$(MKDIR) $(ILIBDIR)/contrib
+	@for f in $(srcdir)/contrib/* ; do\
+		if test -f $$f ; then\
+		echo $(INSTALL_DATA) $$f $(ILIBDIR)/contrib/`basename $$f`;\
+		$(INSTALL_DATA) $$f $(ILIBDIR)/contrib/`basename $$f`;\
+		fi;\
+	done
+
+test:
+	ICAL_LIBRARY=$(srcdir) ./ical -calendar icaltest.cal
+
+check: check_text check_x
+
+check_text:
+	@ICAL_LIBRARY=$(srcdir) ./ical -nodisplay -f $(srcdir)/tests/no_x.tcl
+
+check_x:
+	@ICAL_LIBRARY=$(srcdir) ./ical -f $(srcdir)/tests/x.tcl
+
+# Rules for shipping html documentation
+DOCDEST = /udir/sanjay/pkg/srcweb/sanjay.bio/external-web/ical
+shipdoc:
+	cp $(srcdir)/doc/ical.html $(DOCDEST)/doc.html
+	cp $(srcdir)/doc/interface.html $(DOCDEST)/interface.html
+	cp $(srcdir)/CHANGES.html $(DOCDEST)/changes.html
+
+.SUFFIXES: .C
+
+.C.o:
+	$(CXX) $(CXXFLAGS) $(CXXINCS) -c $<
+
+# Support for automatic reconfiguration
+
+config.status: $(srcdir)/configure
+	$(CONFIGURE) --no-create
+
+$(CONFIGURED): $(CONFIGURE_IN) config.status
+	./config.status
+	@echo Makefiles have been rebuilt.
+	@echo Re-execute make.
+	@false
+
+# (Do not run autoconf automatically because it may not be present on
+# client machine.)
+#
+#$(srcdir)/configure: $(CONFFILES)
+#	cd $(srcdir); autoconf
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+cal_tcl.o: $(srcdir)/cal_tcl.h
+cal_tcl.o: $(srcdir)/object.h
+cal_tcl.o: $(srcdir)/calendar/arrays.h
+cal_tcl.o: $(srcdir)/types/Array.h
+cal_tcl.o: $(srcdir)/types/basic.h
+cal_tcl.o: $(srcdir)/collect.h
+cal_tcl.o: $(srcdir)/time/Date.h
+cal_tcl.o: $(srcdir)/dispatch.h
+cal_tcl.o: $(srcdir)/ical.h
+cal_tcl.o: $(srcdir)/item_tcl.h
+cal_tcl.o: $(srcdir)/calendar/item.h
+cal_tcl.o: $(srcdir)/calendar/dateset.h
+cal_tcl.o: $(srcdir)/calendar/smallintset.h
+cal_tcl.o: $(srcdir)/calendar/calendar.h
+cal_tcl.o: $(srcdir)/calendar/calfile.h
+cal_tcl.o: $(srcdir)/time/Time.h
+cal_tcl.o: $(srcdir)/calendar/uid.h
+cal_tcl.o: $(srcdir)/types/hashfuncs.h
+cal_tcl.o: $(srcdir)/types/ohashset.h
+dateeditor.o: $(srcdir)/types/Array.h
+dateeditor.o: $(srcdir)/types/basic.h
+dateeditor.o: $(srcdir)/time/Date.h
+dateeditor.o: $(srcdir)/time/Month.h
+dateeditor.o: $(srcdir)/time/WeekDay.h
+dateeditor.o: $(srcdir)/cal_tcl.h
+dateeditor.o: $(srcdir)/object.h
+dateeditor.o: $(srcdir)/calendar/arrays.h
+dateeditor.o: $(srcdir)/calendar/calendar.h
+dateeditor.o: $(srcdir)/calendar/calfile.h
+dateeditor.o: $(srcdir)/time/Time.h
+dateeditor.o: $(srcdir)/collect.h
+dateeditor.o: $(srcdir)/ical.h
+dateeditor.o: $(srcdir)/item_tcl.h
+dateeditor.o: $(srcdir)/calendar/item.h
+dateeditor.o: $(srcdir)/calendar/dateset.h
+dateeditor.o: $(srcdir)/calendar/smallintset.h
+dispatch.o: $(srcdir)/dispatch.h
+dispatch.o: $(srcdir)/ical.h
+handle.o: $(srcdir)/types/basic.h
+handle.o: $(srcdir)/handle.h
+ical.o: $(srcdir)/collect.h
+ical.o: $(srcdir)/types/Array.h
+ical.o: $(srcdir)/types/basic.h
+ical.o: $(srcdir)/time/Date.h
+ical.o: $(srcdir)/ical.h
+ical.o: $(srcdir)/cal_tcl.h
+ical.o: $(srcdir)/object.h
+ical.o: $(srcdir)/calendar/arrays.h
+ical.o: $(srcdir)/item_tcl.h
+ical.o: $(srcdir)/calendar/item.h
+ical.o: $(srcdir)/calendar/dateset.h
+ical.o: $(srcdir)/calendar/smallintset.h
+ical.o: $(srcdir)/calendar/calfile.h
+ical.o: $(srcdir)/time/Time.h
+ical.o: $(srcdir)/calendar/calendar.h
+ical_tcl.o: $(srcdir)/types/basic.h
+ical_tcl.o: $(srcdir)/cal_tcl.h
+ical_tcl.o: $(srcdir)/object.h
+ical_tcl.o: $(srcdir)/calendar/arrays.h
+ical_tcl.o: $(srcdir)/types/Array.h
+ical_tcl.o: $(srcdir)/ical.h
+ical_tcl.o: $(srcdir)/item_tcl.h
+ical_tcl.o: $(srcdir)/calendar/item.h
+ical_tcl.o: $(srcdir)/time/Date.h
+ical_tcl.o: $(srcdir)/calendar/dateset.h
+ical_tcl.o: $(srcdir)/calendar/smallintset.h
+item_tcl.o: $(srcdir)/time/WeekDay.h
+item_tcl.o: $(srcdir)/types/basic.h
+item_tcl.o: $(srcdir)/calendar/arrays.h
+item_tcl.o: $(srcdir)/types/Array.h
+item_tcl.o: $(srcdir)/cal_tcl.h
+item_tcl.o: $(srcdir)/object.h
+item_tcl.o: $(srcdir)/calendar/calfile.h
+item_tcl.o: $(srcdir)/time/Time.h
+item_tcl.o: $(srcdir)/calendar/calendar.h
+item_tcl.o: $(srcdir)/ical.h
+item_tcl.o: $(srcdir)/item_tcl.h
+item_tcl.o: $(srcdir)/calendar/item.h
+item_tcl.o: $(srcdir)/time/Date.h
+item_tcl.o: $(srcdir)/calendar/dateset.h
+item_tcl.o: $(srcdir)/calendar/smallintset.h
+item_tcl.o: $(srcdir)/dispatch.h
+main.o: $(srcdir)/ical.h
+main.o: $(srcdir)/bitmaps/left.xbm
+main.o: $(srcdir)/bitmaps/right.xbm
+main.o: $(srcdir)/bitmaps/todo.xbm
+main.o: $(srcdir)/bitmaps/done.xbm
+main.o: $(srcdir)/bitmaps/sleft.xbm
+main.o: $(srcdir)/bitmaps/dleft.xbm
+main.o: $(srcdir)/bitmaps/sright.xbm
+main.o: $(srcdir)/bitmaps/dright.xbm
+main.o: $(srcdir)/bitmaps/ical.xbm
+object.o: $(srcdir)/types/basic.h
+object.o: $(srcdir)/ical.h
+object.o: $(srcdir)/object.h
+time_tcl.o: $(srcdir)/time/Date.h
+time_tcl.o: $(srcdir)/time/Time.h
+time_tcl.o: $(srcdir)/time/Month.h
+time_tcl.o: $(srcdir)/time/WeekDay.h
+time_tcl.o: $(srcdir)/time/Year.h
+time_tcl.o: $(srcdir)/time/parse.h
+time_tcl.o: $(srcdir)/ical.h

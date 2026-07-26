@@ -1,0 +1,159 @@
+Copyright (c) 1993 Sanjay Ghemawat
+
+Simple Cookbook (see below for more details)
+===============
+
+1.  Get a C++ compiler
+2.  Make sure Tcl/Tk library and header files are installed.
+3.  Execute "./configure" (in the directory that contains this file).
+4.  Execute "make"
+5.  Execute "make test" to test it
+6.  Execute "make install"
+
+Alternate Installations
+=======================
+
+By default, ical installs as an executable plus some library files
+written in tcl.  You can optionally generate a standalone executable
+that can be copied around from system to system without worrying about
+the location of library files.
+
+	% make ical-bundle
+
+This will generate a big executable "ical-bundle" that can be copied
+from one system to another without worrying about the presence or
+location of library files.
+
+Configuration notes
+===================
+
+In the directory that this file is in, type `./configure'.  If you're
+using `csh' on an old version of System V, you might need to type `sh
+configure' instead to prevent `csh' from trying to execute `configure'
+itself.
+
+The `configure' shell script attempts to guess correct values for
+various system-dependent variables used during compilation, and
+creates the Makefile.  Usually configure will be able to guess
+appropriate values for all `make' variables, However, sometimes you
+will want to override its choices.
+
+You can override these choices by setting environment variables
+before you run configure.  For the following variables, any value
+given in the environment overrides the value that `configure' would
+choose:
+
+CXX		C++ compiler program (for .C files).
+INSTALL		Program for installing files.
+prefix		Installation prefix
+
+tcllib		Directory that contains tcl library (e.g. /usr/local/lib)
+tklib		Directory that contains tk library (e.g. /usr/local/lib)
+tclinc		Directory that contains tcl.h (e.g. /usr/local/include)
+tkinc		Directory that contains tk.h (e.g. /usr/local/include)
+tclscripts	Directory that contains tcl scripts (e.g. /usr/local/lib/tcl)
+tkscripts	Directory that contains tk scripts (e.g. /usr/local/lib/tk)
+
+Installation Directories
+========================
+
+If you have "wish" installed on your system, then by default this
+package will be installed in the same location as wish.  I.e., if
+"wish" is installed in /foo/bin, then the package will be installed in
+/foo/{bin,lib,man}.  If you do not have "wish" installed, then the
+package will be installed in "/usr/local/{bin,lib,man}".
+
+You can specify another installation prefix by giving `configure' the
+option `--prefix=PATH'.
+
+	Binaries go in			<prefix>/bin
+	Ical library files go in	<prefix>/lib/ical-<version>
+	Man pages go in			<prefix>/man/man1
+
+Compiling in a different directory
+==================================
+
+To compile the package in a different directory from the one
+containing the source code, you must use GNU make (or a version of
+make that supports VPATH in the same way as GNU make).  `cd' to the
+directory where you want the object files and executables to go and
+run `<source directory>/configure'.  `configure' automatically checks
+for the source code in the directory that `configure' is in and in
+`..'.  If for some reason `configure' is not in the source code
+directory that you are configuring, then it will report that it can't
+find the source code.  In that case, run `configure' with the option
+`--srcdir=DIR', where DIR is the directory that contains the source
+code.
+
+Before Installation
+===================
+
+You can play with ical and check out its features before you install
+it.  Build ical as described in steps 1--4 above.  Then execute
+"make test" in the directory where you built ical.  Go ahead, try
+it.
+
+Problems
+========
+
+If you need to do unusual things to compile the package, we
+encourage you to figure out how `configure' could check whether to
+do them, and mail diffs or instructions to the address given in the
+README so we can include them in the next release.
+
+Here are some problems and solutions reported by various people.
+
+-------
+CPU:	IBM RS/6000
+OS:	AIX 3.2.4
+C++:	IBM xlC 1.1.2.28
+
+Symptom:
+	invalid command name "addtag"
+
+	Trace:
+	invalid command name "addtag"
+	    while executing
+	"addtag oldinterest withtag interest"
+	    invoked from within
+	"de_interest $name.days $slot(date)"
+	    (procedure "DateEditor::calc_interest" line 7)
+	...
+
+Workaround:
+	The C++ compiler does not seem to handle calls to Tcl_VarEval
+	correctly under optimization.  The person who reported this
+	problem compiled everything with optimization turned off to
+	solve this problem.  It might be sufficient just to compile
+	dateeditor.cc without optimization.
+
+-------
+CPU:	DEC MIPS Workstations
+OS:	Ultrix 4.*
+
+Symptom:
+	Files do not compile because of errors in "X11" header fi;es.
+
+Workaround:
+	The default X11 header files and libraries are busted on some
+	versions of Ultrix.  If your system administrator has installed
+	the correct files from the MIT X11 distribution, then you can
+	use those by setting "X_CFLAGS" and "X_LIBS" in your invocation
+	of make.  For example, on some local Ultrix machines, the
+	correct X11 header files are in "/usr/include/mit" and the correct
+	X11 library is "-lX11-mit".  The following invocation uses these
+	versions ---
+
+		make X_CFLAGS=-I/usr/include/mit X_LIBS=-lX11-mit
+-------
+CPU:	*86 PCs?
+OS:	?
+X:	Xfree86 v2.0
+
+Symptom:
+	Some of the lines in the appointment listing area are
+	drawn all over the screen (outside ical's windows).
+
+Workaround:
+	Remove the "-stipple" option from the lines created
+	in the "background" method in "apptlist.tcl".

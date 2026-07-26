@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Fake mail delivery
+
+set kludge { ${1+"$@"}
+shift
+shift
+exec wish -f $0 ${1+"$@"}
+}
+
+set auto_path [concat [list .] $auto_path]
+set icon_path [list .]
+
+text .t
+.t insert insert "To: [lindex $argv 0]\n"
+.t insert insert [read -nonewline stdin]
+.t configure -state disabled
+
+make_buttons .b 0 {
+    {Okay {destroy .}}
+}
+
+pack .t -side top -expand 1 -fill both
+pack .b -side bottom -fill x
