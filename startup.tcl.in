@@ -23,8 +23,8 @@ proc ical_init {} {
     set ical(version)		{@ICAL_VERSION@}
     set ical(mailer)		{@MAILER@}
     set ical(prefix)		{@prefix@}
-    set ical(libparent)		{@prefix@/lib/ical}
-    set ical(library)   	{@prefix@/lib/ical/v@ICAL_VERSION@}
+    set ical(libparent)		{@libdir@/ical}
+    set ical(library)   	{@libdir@/ical/v@ICAL_VERSION@}
     set ical(startdate)		[date today]
     set ical(iconic)		0
     set ical(prefs)		{}
