@@ -11,7 +11,7 @@
 
 #include "Month.h"
 #include "WeekDay.h"
-#include "Time.h"
+#include "Time_.h"
 
 /*
  * Want to get high resolution for region of time that will be most
@@ -54,13 +54,13 @@ void Time::BreakDown(int& mday, WeekDay& wday, Month& month, int& year,
                      int& hour, int& min, int& sec, int& milli,
                      const char *tz) const
 {
-    const char *old;
+    char *old;
     if (! initialized) Initialize();
 
     time_t clock = (time_t) round(rep + offset);
 
     if (tz) {
-        if ((old=getenv("TZ"))) old=strdupa(old);
+        if ((old=getenv("TZ"))) old=strdup(old);
         setenv("TZ", tz, 1);
         tzset();
     }
@@ -70,6 +70,7 @@ void Time::BreakDown(int& mday, WeekDay& wday, Month& month, int& year,
     if (tz) {
         if (old) setenv("TZ", old, 1); else unsetenv("TZ");
         tzset();
+        free(old);
     }
 
     mday  = t->tm_mday;                         /* tm_mday in 1..31 */

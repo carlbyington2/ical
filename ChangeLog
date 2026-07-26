@@ -1,3 +1,9 @@
+Version 3.0.3 Sergei Golubchik <sergii@pisem.net>
+
+	* support for gcc 6+
+
+	* support for tcl 8.6
+
 Version 3.0.2 Sergei Golubchik <sergii@pisem.net>
 
 	* switched to use automake to ensure that Makefile has distcheck

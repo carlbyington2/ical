@@ -11,7 +11,7 @@ dist_man1_MANS = doc/ical.man
 
 ical_SOURCES = cal_tcl.C dateeditor.C dispatch.C ical.C ical_tcl.C \
 	       item_tcl.C object.C time_tcl.C main.C
-ical_CPPFLAGS = -DICALLIBDIR='"$(icallibdir)"' -I$(srcdir)/calendar -I$(srcdir)/types -I$(srcdir)/time
+ical_CPPFLAGS = -DICALLIBDIR='"$(icallibdir)"' -I$(srcdir)/calendar -I$(srcdir)/types -I$(srcdir)/time @TK_XINCLUDES@
 ical_LDADD = libcalendar.a libtime.a libtypes.a \
 	     @TK_LIB_SPEC@ @TCL_LIB_SPEC@ @TK_LIBS@
 
@@ -30,11 +30,11 @@ libtime_a_SOURCES = time/Date.C time/Month.C time/Time.C time/WeekDay.C \
 libtypes_a_SOURCES = types/bitvec.C types/hashfuncs.C types/intset.C
 
 ps_header.tcl: ps_header.ps
-	@SED@ -e '1iproc ps_header {} { set val {}' \
-	      -e 's/\[/\\[/g' \
+	echo  'proc ps_header {} { set val {}' > $@;
+	@SED@ -e 's/\[/\\[/g' \
 	      -e 's/"/\\"/g' \
-	      -e 's/.*/  set val "$$val&\\n"/' \
-	      -e '$$a \ \ return $$val\n}' < $< > $@
+	      -e 's/.*/  set val "$$val&\\n"/' < $< >> $@;
+	echo '  return $$val\n}' >> $@
 
 # cannot do it in configure, as libdir is not known there :(
 startup.tcl: startup.tcl.in
@@ -50,7 +50,7 @@ noinst_HEADERS = cal_tcl.h calendar/arrays.h calendar/calendar.h \
 		 calendar/statfix.h calendar/uid.h calendar/version.h \
 		 collect.h config.h dispatch.h ical.h item_tcl.h object.h \
 		 types/Array.h types/basic.h time/Date.h time/Month.h \
-		 time/Time.h time/WeekDay.h time/Year.h time/parse.h \
+		 time/Time_.h time/WeekDay.h time/Year.h time/parse.h \
 		 types/Array.h types/basic.h types/bitvec.h types/hashfuncs.h \
 		 types/htable.h types/htable_p.h types/intset.h \
 		 types/ohashmap.h types/ohashset.h types/tablerep.h \

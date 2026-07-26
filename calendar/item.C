@@ -388,9 +388,6 @@ void Appointment::convert_tz(Date &d, int &min, bool to_tz) const {
     cache.from_d=d;
     cache.to_tz=to_tz;
 
-    const char* old=getenv("TZ");
-    if (old) old=strdupa(old);
-
     struct tm t;
     WeekDay wd;
     Month m;
@@ -402,6 +399,9 @@ void Appointment::convert_tz(Date &d, int &min, bool to_tz) const {
     t.tm_min  = min % 60;
     t.tm_hour = min / 60;
     t.tm_isdst = -1;
+
+    char* old=getenv("TZ");
+    if (old) old=strdup(old);
 
     if (!to_tz) {
         setenv("TZ", timezone, 1);
@@ -427,6 +427,7 @@ void Appointment::convert_tz(Date &d, int &min, bool to_tz) const {
     min=t1->tm_min+t1->tm_hour*60;
     cache.to_d=d;
     cache.to_min=min;
+    free(old);
 }
 
 int Appointment::contains(Date d) const {

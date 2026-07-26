@@ -141,7 +141,7 @@ void trigger(Tcl_Interp* tcl, char const* ttype, char const* id) {
     buffer.append('\0');
 
     if (Tcl_Eval(tcl, buffer.as_pointer()) == TCL_ERROR)
-        fprintf(stderr, "ical: trigger error: %s\n", tcl->result);
+        fprintf(stderr, "ical: trigger error: %s\n", Tcl_GetStringResult(tcl));
 
     buffer.clear();
 }

@@ -1,4 +1,4 @@
-AC_INIT([ical], [3.0.2])
+AC_INIT([ical], [3.0.3])
 AM_INIT_AUTOMAKE
 
 # Create config files
@@ -18,8 +18,8 @@ AC_PROG_SED
 # Find Tcl/Tk
 
 AC_CHECKING(Tcl/Tk installation)
-legal_tk_versions="8.5 8.4 8.3 8.2 8.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1"
-legal_tcl_versions="8.5 8.4 8.3 8.2 8.0 7.9 7.8 7.7 7.6 7.5"
+legal_tk_versions="8.6 8.5 8.4 8.3 8.2 8.0 4.9 4.8 4.7 4.6 4.5 4.4 4.3 4.2 4.1"
+legal_tcl_versions="8.6 8.5 8.4 8.3 8.2 8.0 7.9 7.8 7.7 7.6 7.5"
 
 #### Find tclsh
 AC_ARG_WITH(tclsh,
@@ -51,7 +51,16 @@ AC_ARG_WITH(tclconfig,
                            [directory that contains tclConfig.sh])],
            [tclconfig="$withval"])
 if test -z "$tclconfig"; then
-  [tclconfig=`echo 'puts stdout [file dirname [info library]]' | $tclsh`]
+  if test -e /System/Library/Frameworks; then
+    # Mac OS X
+    tclconfig=/System/Library/Frameworks/Tcl.framework
+  else
+    [tclconfig=`echo 'puts [file dirname [info library]]' | $tclsh`]
+    if test ! -f "$tclconfig/tclConfig.sh"; then
+      # Debian, is that you?
+      [tclconfig=`echo 'puts [info library]' | $tclsh`]
+    fi
+  fi
 fi
 if test ! -f "$tclconfig/tclConfig.sh"; then
     AC_MSG_ERROR([I could not find tclConfig.sh in $tclconfig.
@@ -73,7 +82,16 @@ AC_ARG_WITH(tkconfig,
                             [directory that contains tkConfig.sh])],
             [tkconfig="$withval"])
 if test -z "$tkconfig"; then
+  if test -e /System/Library/Frameworks; then
+    # Mac OS X
+    tkconfig=/System/Library/Frameworks/Tk.framework
+  else
     tkconfig="$tclconfig"
+    if test ! -f "$tkconfig/tkConfig.sh"; then
+      # Debian, is that you?
+      [tkconfig=`echo 'puts [file join [file dirname [info library]] tk[info tclversion]]' | $tclsh`]
+    fi
+  fi
 fi
 if test ! -f "$tkconfig/tkConfig.sh"; then
     AC_MSG_ERROR([I could not find tkConfig.sh in $tkconfig.
