@@ -148,12 +148,12 @@ int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
 	char buffer[20];
 	sprintf(buffer, "%d", list[i].date.EpochDays());
 	if (Tcl_SetVar(tcl, dvar, buffer, 0) == NULL) {
-	    free((char*) strlist);
+	    Tcl_Free((char*) strlist);
 	    TCL_Error(tcl, "could not set loop variable");
 	}
 
 	if (Tcl_SetVar(tcl, hvar, (char*)hilite, 0) == NULL) {
-	    free((char*) strlist);
+	    Tcl_Free((char*) strlist);
 	    TCL_Error(tcl, "could not set loop variable");
 	}
 
@@ -165,11 +165,11 @@ int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
 	if (result == TCL_BREAK) break;
 
 	// Error of some sort
-	free((char*) strlist);
+	Tcl_Free((char*) strlist);
 	return result;
     }
 
-    free((char*) strlist);
+    Tcl_Free((char*) strlist);
     TCL_Return(tcl, "");
 }
 
