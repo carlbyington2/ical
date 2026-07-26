@@ -51,7 +51,7 @@ proc monthrepeat_init {} {
     toplevel $f -class Dialog
     wm title $f "Monthly Repetition"
     wm iconname $f "Repeat"
-    wm protocol $f WM_DELETE_WINDOW {set mr_state(done) 0}
+	wm protocol $f WM_DELETE_WINDOW {global mr_state; set mr_state(done) 0}
 
     frame $f.top   -class Pane
     frame $f.left  -class Pane
@@ -61,8 +61,8 @@ proc monthrepeat_init {} {
     pack $f.text -in $f.top -side top -expand 1 -fill both -padx 5m -pady 5m
 
     make_buttons $f.bot 1 {
-	{Cancel		{set mr_state(done) 0}}
-	{Okay		{set mr_state(done) 1}}
+	{Cancel		{global mr_state; set mr_state(done) 0}}
+	{Okay		{global mr_state; set mr_state(done) 1}}
     }
 
     # Create interval buttons
@@ -75,6 +75,7 @@ proc monthrepeat_init {} {
 	{{Every Six Months}	6}
     }
 
+    global mr_state
     foreach i $buttons {
 	radiobutton $f.i[lindex $i 1] -text [lindex $i 0]\
 	    -variable mr_state(int) -value [lindex $i 1]\
@@ -104,8 +105,8 @@ proc monthrepeat_init {} {
     pack $f.left  -side left -expand 1 -fill both
     pack $f.right -side left -expand 1 -fill both
 
-    bind $f <Control-c> {set mr_state(done) 0}
-    bind $f <Return>    {set mr_state(done) 1}
+    bind $f <Control-c> {global mr_state; set mr_state(done) 0}
+    bind $f <Return>    {global mr_state; set mr_state(done) 1}
 
     wm withdraw $f
     update

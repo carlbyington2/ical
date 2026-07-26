@@ -54,7 +54,7 @@ proc ws_make {} {
     toplevel $f -class Dialog
     wm title $f {Weekly Repetition}
     wm iconname $f Repeat
-    wm protocol $f WM_DELETE_WINDOW {set ws_state(done) 0}
+    wm protocol $f WM_DELETE_WINDOW {global ws_state; set ws_state(done) 0}
 
     frame $f.top   -class Pane
     frame $f.left  -class Pane
@@ -64,8 +64,8 @@ proc ws_make {} {
     pack $f.text -in $f.top -side top -expand 1 -fill both -padx 5m -pady 5m
 
     make_buttons $f.bot 1 {
-	{Cancel		{set ws_state(done) 0}}
-	{Okay		{set ws_state(done) 1}}
+	{Cancel		{global ws_state; set ws_state(done) 0}}
+	{Okay		{global ws_state; set ws_state(done) 1}}
     }
 
     # Make set of weekdays
@@ -107,8 +107,8 @@ proc ws_make {} {
     pack $f.right -side left -expand 1 -fill both
     pack $f.left -side left -expand 1 -fill both
 
-    bind $f <Control-c> {set ws_state(done) 0}
-    bind $f <Return>    {set ws_state(done) 1}
+    bind $f <Control-c> {global ws_state; set ws_state(done) 0}
+    bind $f <Return>    {global ws_state; set ws_state(done) 1}
 
     wm withdraw $f
     update

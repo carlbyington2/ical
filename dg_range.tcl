@@ -47,7 +47,7 @@ proc dr_init {} {
     toplevel $f -class Dialog
     wm title $f "Select Range"
     wm iconname $f "Range"
-    wm protocol $f WM_DELETE_WINDOW {set dr_state(done) 0}
+    wm protocol $f WM_DELETE_WINDOW {global dr_state; set dr_state(done) 0}
 
     frame $f.top -class Pane
     message $f.text -aspect 800 -text {Restrict item repetition range...}
@@ -62,16 +62,16 @@ proc dr_init {} {
     pack $f.finish  -in $f.mid -side top -expand 1 -fill both -padx 5m -pady 5m
 
     make_buttons $f.bot 1 {
-	{Cancel		{set dr_state(done) 0}}
-	{Okay		{set dr_state(done) 1}}
+	{Cancel		{global dr_state; set dr_state(done) 0}}
+	{Okay		{global dr_state; set dr_state(done) 1}}
     }
 
     pack $f.top -side top -fill both -expand 1
     pack $f.mid -side top -fill both -expand 1
     pack $f.bot -side bottom -fill x
 
-    bind $f <Control-c> {set dr_state(done) 0}
-    bind $f <Return>    {set dr_state(done) 1}
+    bind $f <Control-c> {global dr_state; set dr_state(done) 0}
+    bind $f <Return>    {global dr_state; set dr_state(done) 1}
 
     wm withdraw $f
     update
