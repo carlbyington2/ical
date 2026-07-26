@@ -81,11 +81,6 @@ class Lexer {
     int GetNumber(int& num);
 
     /*
-     * Read specified number of characters into supplied buffer.
-     */
-    int GetText(char*, int len);
-
-    /*
      * Read a string.  The string read by this method terminates
      * at the first "]".  However, backslashes can be used to
      * quote characters.  Therefore if the input contains "\]",

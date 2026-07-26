@@ -129,7 +129,7 @@ proc set_geometry {leader w g} {
 #                centered on <leader>.
 
 proc dialog_run {leader window var {focuswin ""}} {
-    global $var
+    global [regsub {\(.*\)$} $var {}]
 
     # Wait for window geometry to be computed if possible
     update idletasks
@@ -186,7 +186,7 @@ proc text_cache_load {font text} {
     if [info exists font_cache(w:$font,$text)] return
 
     # Get the width
-    set f .__font_loader
+    set f .__text_loader
     if ![winfo exists $f] {canvas $f}
 
     set i [$f create text 0 0 -text $text -font $font]
@@ -203,12 +203,11 @@ proc font_exists {font} {
     if ![info exists font_cache(exists:$font)] {
         # Have not checked this font yet.  Try to use it.
         set f .__font_loader
-        if ![winfo exists $f] {canvas $f}
+        if ![winfo exists $f] {label $f -text X}
 
         set font_cache(exists:$font) 0
-        if ![catch {set i [$f create text 0 0 -text X -font $font]}] {
+        if ![catch {set i [$f configure -font $font]}] {
             set font_cache(exists:$font) 1
-            $f delete $i
         }
     }
 
@@ -221,12 +220,11 @@ proc color_exists {color} {
     if ![info exists color_cache(exists:$color)] {
         # Have not checked this color yet.  Try to use it.
         set f .__font_loader
-        if ![winfo exists $f] {canvas $f}
+        if ![winfo exists $f] {label $f -text X}
 
         set color_cache(exists:$color) 0
-        if ![catch {set i [$f create line 0 0 10 10 -fill $color]}] {
+        if ![catch {set i [$f configure -foreground $color]}] {
             set color_cache(exists:$color) 1
-            $f delete $i
         }
     }
 

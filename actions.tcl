@@ -636,6 +636,39 @@ action ical_toggle_monday writable {Display Monday at the start of a week?} {} {
     trigger fire reconfig
 }
 
+action ical_rename writable {Change the calendar title} {calendar} {
+    if [cal readonly $calendar] {return}
+
+    if ![get_string [ical_leader] "Rename" "New name" [ical_title $calendar] t] {
+        return
+    }
+    cal option -calendar $calendar Title $t
+}
+
+action ical_toggle_visible writable {Is the included calendar visible?} {calendar} {
+    if [cal readonly $calendar] {return}
+
+    cal option -calendar $calendar Visible [expr ![cal option -calendar $calendar Visible]]
+    trigger fire flush
+}
+
+action ical_toggle_ignorealarms writable {Ignore all alarms from the included calendar?} {calendar} {
+    if [cal readonly $calendar] {return}
+
+    cal option -calendar $calendar IgnoreAlarms [expr ![cal option -calendar $calendar IgnoreAlarms]]
+    trigger fire flush
+}
+
+action ical_change_colors writable {Asks to change calendar colors} {calendar} {
+    if [cal readonly $calendar] {return}
+
+    set colors [get_colors [ical_leader] [ical_title $calendar] [cal option -calendar $calendar Color]]
+    if [llength $colors] {
+        cal option -calendar $calendar Color "$colors"
+    }
+    trigger fire flush
+}
+
 action ical_timerange writable {Set the range of time initially displayed in a window} {} {
     if [cal readonly] {return}
 
@@ -971,3 +1004,4 @@ action ical_search_backward always {Search backward} {} {
 
     error_notify [ical_leader] "No more items"
 }
+

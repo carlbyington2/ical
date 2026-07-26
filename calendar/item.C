@@ -21,25 +21,7 @@
 #define HTABLE_IMPLEMENT
 #include "itemmap.h"
 
-/*
- * Info needed for old date set format.
- */
-struct Item_OldDates {
-    int         inited;
-    int         isWeekly;
-    SmallIntSet days;
-    SmallIntSet months;
-    int         everyYear;
-    int         firstYear;
-    int         lastYear;
-
-    DateList    deleteList;
-};
-
 const int Item::defaultRemindStart = 1;
-
-static const char opener = '[';
-static const char closer = ']';
 
 Item::Item() {
     text = copy_string("");
@@ -70,13 +52,6 @@ Item::~Item() {
 }
 
 int Item::Read(Lexer* lex) {
-    Item_OldDates old;
-    old.inited = 0;
-    old.isWeekly = 0;
-    old.days.Clear();
-    old.months.Clear();
-    old.everyYear = 1;
-
     while (1) {
         char c;
         char const* keyword;
@@ -87,49 +62,26 @@ int Item::Read(Lexer* lex) {
             return 0;
         }
 
-        if (c == closer) {
-            /*
-             * Item is over.  Convert old date format into new format
-             * if necessary.
-             */
-
-            if (old.inited) {
-                if (old.isWeekly) {
-                    date->set_week_set(old.days, old.months);
-                }
-                else {
-                    date->set_month_set(old.days, old.months);
-                }
-                if (! old.everyYear) {
-                    date->set_start(Date(1,Month::January(),old.firstYear));
-                    date->set_finish(Date(31,Month::December(),old.lastYear));
-                }
-
-                for (int i = 0; i < old.deleteList.size(); i++) {
-                    date->delete_occurrence(old.deleteList[i]);
-                }
-            }
-
+        if (c == ']')
             return 1;
-        }
 
         if (! lex->GetId(keyword) ||
             ! lex->SkipWS() ||
-            ! lex->Skip(opener)) {
+            ! lex->Skip('[')) {
             lex->SetError("error reading item property name");
             return 0;
         }
 
-        if (! Parse(lex, keyword, old) ||
+        if (! Parse(lex, keyword) ||
             ! lex->SkipWS() ||
-            ! lex->Skip(closer)) {
+            ! lex->Skip(']')) {
             lex->SetError("error reading item property");
             return 0;
         }
     }
 }
 
-int Item::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {
+int Item::Parse(Lexer* lex, char const* keyword) {
     if (strcmp(keyword, "Remind") == 0) {
         if (! lex->SkipWS() ||
             ! lex->GetNumber(remindStart)) {
@@ -152,7 +104,7 @@ int Item::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {
 
     if (strcmp(keyword, "Uid") == 0) {
         char const* x;
-        if (!lex->SkipWS() || !lex->GetUntil(closer, x)) {
+        if (!lex->SkipWS() || !lex->GetUntil(']', x)) {
             lex->SetError("error reading unique id");
             return 0;
         }
@@ -172,37 +124,6 @@ int Item::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {
         return 1;
     }
 
-    if (strcmp(keyword, "Text") == 0) {
-        /* Read text */
-        int len;
-
-        // Read length
-        if (! lex->SkipWS() ||
-            ! lex->GetNumber(len) ||
-            ! (len >= 0) ||
-            ! lex->SkipWS() ||
-            ! lex->Skip(opener)) {
-            lex->SetError("error reading item text");
-            return 0;
-        }
-
-        // Allocate enough space for text
-        delete [] text;
-        text = new char[len+1];
-        strcpy(text, "");
-
-        if (! lex->GetText(text, len) ||
-            ! lex->Skip(closer)) {
-            delete [] text;
-            text = copy_string("");
-            lex->SetError("error reading item text");
-            return 0;
-        }
-
-        text[len] = '\0';
-        return 1;
-    }
-
     if (strcmp(keyword, "Dates") == 0) {
         int start = lex->Index();
         if (! date->read(lex)) {
@@ -217,73 +138,6 @@ int Item::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {
             if (options == 0) options = new OptionMap;
             options->store("Dates", val);
         }
-        return 1;
-    }
-
-    if (strcmp(keyword, "Wdays") == 0) {
-        old.inited = 1;
-        old.isWeekly = 1;
-        if (! old.days.Read(lex)) {
-            lex->SetError("error reading weekdays");
-            return 0;
-        }
-        return 1;
-    }
-
-    if (strcmp(keyword, "Mdays") == 0) {
-        old.inited = 1;
-        old.isWeekly = 0;
-        if (! old.days.Read(lex)) {
-            lex->SetError("error reading monthdays");
-            return 0;
-        }
-        return 1;
-    }
-
-    if (strcmp(keyword, "Months") == 0) {
-        old.inited = 1;
-        if (! old.months.Read(lex)) {
-            lex->SetError("error reading set of months");
-            return 0;
-        }
-        return 1;
-    }
-
-    if (strcmp(keyword, "EveryYear") == 0) {
-        old.inited = 1;
-        old.everyYear = 1;
-        return 1;
-    }
-
-    if (strcmp(keyword, "Years") == 0) {
-        old.inited = 1;
-        old.everyYear = 0;
-
-        if (! lex->SkipWS() ||
-            ! lex->GetNumber(old.firstYear) ||
-            ! lex->SkipWS() ||
-            ! lex->GetNumber(old.lastYear)) {
-            lex->SetError("error reading range of years");
-            return 0;
-        }
-        return 1;
-    }
-
-    if (strcmp(keyword, "Deleted") == 0) {
-        int day, month, year;
-
-        if (! lex->SkipWS() ||
-            ! lex->GetNumber(day) ||
-            ! lex->SkipWS() ||
-            ! lex->GetNumber(month) ||
-            ! lex->SkipWS() ||
-            ! lex->GetNumber(year)) {
-            lex->SetError("error reading deletion date");
-            return 0;
-        }
-
-        old.inited = 1;
-        old.deleteList.append(Date(day, Month::First()+(month-1), year));
         return 1;
     }
 
@@ -323,7 +177,7 @@ int Item::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {
     return 1;
 }
 
-void Item::Write(charArray* out, int major, int minor) const {
+void Item::Write(charArray* out) const {
     format(out, "Uid [%s]\n", uid);
     ((Item*) this)->uid_persistent = 1;
 
@@ -333,15 +187,9 @@ void Item::Write(charArray* out, int major, int minor) const {
         append_string(out, "]\n");
     }
 
-    if (major == 1) {
-        format(out, "Text [%d [", strlen(text));
-        append_string(out, text);
-        append_string(out, "]]\n");
-    } else {
-        append_string(out, "Contents [");
-        Lexer::PutString(out, text);
-        append_string(out, "]\n");
-    }
+    append_string(out, "Contents [");
+    Lexer::PutString(out, text);
+    append_string(out, "]\n");
 
     format(out, "Remind [%d]\n", remindStart);
 
@@ -423,8 +271,8 @@ int Item::similar(Item const* x) const {
 
     // XXX Just compare unparsing: only works if it is deterministic
     charArray aval, bval;
-    this->Write(&aval, VersionMajor, VersionMinor);
-    x->Write(&bval, VersionMajor, VersionMinor);
+    this->Write(&aval);
+    x->Write(&bval);
 
     if (aval.size() != bval.size()) return 0;
     return strncmp(aval.as_pointer(), bval.as_pointer(), aval.size());
@@ -437,7 +285,7 @@ Item* Notice::Clone() const {
     return copy;
 }
 
-int Appointment::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {
+int Appointment::Parse(Lexer* lex, char const* keyword) {
     if (strcmp(keyword, "Start") == 0) {
         if (! lex->SkipWS() ||
             ! lex->GetNumber(start)) {
@@ -490,10 +338,10 @@ int Appointment::Parse(Lexer* lex, char const* keyword, Item_OldDates& old) {
         return 1;
     }
 
-    return Item::Parse(lex, keyword, old);
+    return Item::Parse(lex, keyword);
 }
 
-void Appointment::Write(charArray* out, int major, int minor) const {
+void Appointment::Write(charArray* out) const {
     format(out, "Start [%d]\n", start);
     format(out, "Length [%d]\n", length);
     if (has_timezone())
@@ -507,7 +355,7 @@ void Appointment::Write(charArray* out, int major, int minor) const {
         append_string(out, "]\n");
     }
 
-    Item::Write(out, major, minor);
+    Item::Write(out);
 }
 
 Item* Appointment::Clone() const {
@@ -536,10 +384,9 @@ void Appointment::convert_tz(Date &d, int &min, bool to_tz) const {
         return;
     }
 
-    /* cast away 'const' from this */
-    const_cast<Appointment*>(this)->cache.from_min=min;
-    const_cast<Appointment*>(this)->cache.from_d=d;
-    const_cast<Appointment*>(this)->cache.to_tz=to_tz;
+    cache.from_min=min;
+    cache.from_d=d;
+    cache.to_tz=to_tz;
 
     const char* old=getenv("TZ");
     if (old) old=strdupa(old);
@@ -554,6 +401,7 @@ void Appointment::convert_tz(Date &d, int &min, bool to_tz) const {
     t.tm_sec  = 0;
     t.tm_min  = min % 60;
     t.tm_hour = min / 60;
+    t.tm_isdst = -1;
 
     if (!to_tz) {
         setenv("TZ", timezone, 1);
@@ -577,8 +425,8 @@ void Appointment::convert_tz(Date &d, int &min, bool to_tz) const {
     }
     d=Date(t1->tm_mday, Month::January()+t1->tm_mon, t1->tm_year+1900);
     min=t1->tm_min+t1->tm_hour*60;
-    const_cast<Appointment*>(this)->cache.to_d=d;
-    const_cast<Appointment*>(this)->cache.to_min=min;
+    cache.to_d=d;
+    cache.to_min=min;
 }
 
 int Appointment::contains(Date d) const {

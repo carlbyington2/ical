@@ -41,17 +41,17 @@ int Cmd_Date(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
     switch (argc) {
       case 2:
         if (strcmp(cmd, "today") == 0) {
-            sprintf(buffer, "%ld", Date::Today().EpochDays());
+            sprintf(buffer, "%d", Date::Today().EpochDays());
             Tcl_SetResult(tcl, buffer, TCL_VOLATILE);
             return TCL_OK;
         }
         if (strcmp(cmd, "first") == 0) {
-            sprintf(buffer, "%ld", Date::First().EpochDays());
+            sprintf(buffer, "%d", Date::First().EpochDays());
             Tcl_SetResult(tcl, buffer, TCL_VOLATILE);
             return TCL_OK;
         }
         if (strcmp(cmd, "last") == 0) {
-            sprintf(buffer, "%ld", Date::Last().EpochDays());
+            sprintf(buffer, "%d", Date::Last().EpochDays());
             Tcl_SetResult(tcl, buffer, TCL_VOLATILE);
             return TCL_OK;
         }
@@ -120,7 +120,7 @@ int Cmd_Date(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
             }
 
             d = Date(days, Month::First()+(month-1), year);
-            sprintf(buffer, "%ld", d.EpochDays());
+            sprintf(buffer, "%d", d.EpochDays());
             Tcl_SetResult(tcl, buffer, TCL_VOLATILE);
             return TCL_OK;
         }
@@ -223,7 +223,7 @@ int Cmd_Time(ClientData, Tcl_Interp* tcl, int argc, const char** argv) {
             t.BreakDownDate(day, wday, month, year);
             Date date(day, month, year);
 
-            sprintf(buffer, "%ld", date.EpochDays());
+            sprintf(buffer, "%d", date.EpochDays());
             Tcl_SetResult(tcl, buffer, TCL_VOLATILE);
             return TCL_OK;
         }

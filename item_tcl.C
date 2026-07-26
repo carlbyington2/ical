@@ -551,7 +551,7 @@ static int item_first(ClientData c, Tcl_Interp* tcl, int argc, const char** argv
 
 static int item_type(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {
     Item_Tcl* item = (Item_Tcl*) c;
-    char* result;
+    const char* result;
     switch (item->value()->repeat_type()) {
       case DateSet::None:
         result = "";
@@ -933,7 +933,8 @@ static int check_permission(Tcl_Interp* tcl, Item_Tcl* item) {
     if (file == 0) return 1;
 
     if (file->GetCalendar()->ReadOnly()) {
-        Tcl_SetResult(tcl, "item is in readonly calendar", TCL_STATIC);
+        Tcl_SetResult(tcl, const_cast<char*>("item is in readonly calendar"),
+                TCL_STATIC);
         return 0;
     }
 

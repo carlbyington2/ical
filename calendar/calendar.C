@@ -16,9 +16,6 @@
 
 #include "arrays.h"
 
-static const char opener = '[';
-static const char closer = ']';
-
 // Calendar options with default values
 struct OptionDesc {
     char const* key;
@@ -37,6 +34,11 @@ static OptionDesc option_list[] = {
     { "AmPm",                   "1"             },
     { "MondayFirst",            "0"             },
     { "AllowOverflow",          "1"             },
+
+    { "Visible",                "1"             },
+    { "IgnoreAlarms",           "0"             },
+    { "Color",            "<Default> <Default>" },
+    { "Timezone",               "<Local>"       },
 
     { 0,                        0               }
 };
@@ -58,8 +60,6 @@ Calendar::Calendar()
     readonly = 0;
     hidden = new UidSet;
     options = new OptionMap;
-    major = VersionMajor;
-    minor = VersionMinor;
 }
 
 Calendar::~Calendar() {
@@ -135,14 +135,15 @@ int Calendar::Read(Lexer* lex) {
     /*
      * Get file version number.
      * We can only understand version numbers that have a major
-     * component <= to my major version number.
+     * component <= to my major version number and >= 2.
+     * Version 1 is not supported anymore.
      */
 
-    if (! lex->Skip(opener) ||
+    if (! lex->Skip('[') ||
         ! lex->Skip('v') ||
 
         ! lex->GetNumber(file_major) ||
-        ! (file_major >= 0) ||
+        ! (file_major >= 2) ||
         ! (file_major <= VersionMajor) ||
 
         ! lex->Skip('.') ||
@@ -150,15 +151,12 @@ int Calendar::Read(Lexer* lex) {
         ! lex->GetNumber(file_minor) ||
         ! (file_minor >= 0) ||
 
-        ! lex->GetUntil(closer, modifier) ||
+        ! lex->GetUntil(']', modifier) ||
         /* Possibly check modifier here */
 
-        ! lex->Skip(closer)) {
+        ! lex->Skip(']')) {
         lex->SetError("illegal version");
     }
-
-    major = file_major;
-    minor = file_minor;
 
     while (1) {
         char c;
@@ -179,7 +177,7 @@ int Calendar::Read(Lexer* lex) {
 
         if (! lex->GetId(keyword) ||
             ! lex->SkipWS() ||
-            ! lex->Skip(opener)) {
+            ! lex->Skip('[')) {
             lex->SetError("error reading item header");
             return 0;
         }
@@ -209,32 +207,9 @@ int Calendar::Read(Lexer* lex) {
             }
             Include(name);
         }
-        else if (strcmp(keyword, "Include") == 0) {
-            /* Read old style include spec */
-            int len;
-
-            if (! lex->SkipWS() ||
-                ! lex->GetNumber(len) ||
-                ! lex->SkipWS() ||
-                ! lex->Skip(opener)) {
-                lex->SetError("error reading included file name");
-                return 0;
-            }
-
-            char* name = new char[len + 1];
-            if (! lex->GetText(name, len) ||
-                ! lex->Skip(closer)) {
-                delete name;
-                lex->SetError("error reading included file name");
-                return 0;
-            }
-            name[len] = '\0';
-            Include(name);
-            delete name;
-        }
         else if (strcmp(keyword, "Hide") == 0) {
             char const* x;
-            if (!lex->SkipWS() || !lex->GetUntil(closer, x)) {
+            if (!lex->SkipWS() || !lex->GetUntil(']', x)) {
                 lex->SetError("error reading hidden item uid");
                 return 0;
             }
@@ -258,7 +233,7 @@ int Calendar::Read(Lexer* lex) {
         }
 
         if (! lex->SkipWS() ||
-            ! lex->Skip(closer)) {
+            ! lex->Skip(']')) {
             lex->SetError("incomplete item");
             return 0;
         }
@@ -267,31 +242,7 @@ int Calendar::Read(Lexer* lex) {
 
 void Calendar::Write(FILE* file) const {
     charArray* out = new charArray;
-    if (major == 1) {
-        WriteV1(out);
-    } else {
-        WriteLatestVersion(out);
-    }
 
-    // Just dump array out to file.
-    out->append('\0');
-    fputs(out->as_pointer(), file);
-    delete out;
-}
-
-void Calendar::WriteV1(charArray* out) const {
-    format(out, "Calendar [v%d.%d]\n", major, minor);
-    options->write(out);
-    for (int i = 0; i < includes.size(); i++) {
-        char const* name = (char const*) includes[i];
-        format(out, "Include [%d [", strlen(name));
-        append_string(out, name);
-        append_string(out, "]]\n");
-    }
-    WriteCommon(out);
-}
-
-void Calendar::WriteLatestVersion(charArray* out) const {
     format(out, "Calendar [v%d.%d]\n", VersionMajor, VersionMinor);
     options->write(out);
     for (int i = 0; i < includes.size(); i++) {
@@ -300,10 +251,6 @@ void Calendar::WriteLatestVersion(charArray* out) const {
         Lexer::PutString(out, name);
         append_string(out, "]\n");
     }
-    WriteCommon(out);
-}
-
-void Calendar::WriteCommon(charArray* out) const {
     for (int i = 0; i < items.size(); i++) {
         Item* item = (Item*) items[i];
 
@@ -313,13 +260,18 @@ void Calendar::WriteCommon(charArray* out) const {
         else {
             append_string(out, "Appt [\n");
         }
-        item->Write(out, major, minor);
+        item->Write(out);
         append_string(out, "]\n");
     }
 
     for (UidSet_Elements h = hidden; h.ok(); h.next()) {
         format(out, "Hide [%s]\n", h.get());
     }
+
+    // Just dump array out to file.
+    out->append('\0');
+    fputs(out->as_pointer(), file);
+    delete out;
 }
 
 int Calendar::Size() const {

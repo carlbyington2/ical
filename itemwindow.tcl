@@ -40,6 +40,18 @@ class ItemWindow {canvas font item date} {
     set slot(height) 1
     set slot(sel) 0
 
+    set colors [cal option -calendar [$item calendar] Color]
+    set fg [lindex $colors 0]
+    set bg [lindex $colors 1]
+    if { $fg == "<Default>" || ![color_exists $fg]} {
+        set fg [pref itemFg]
+    }
+    if { $bg == "<Default>" || ![color_exists $bg]} {
+        set bg [pref itemBg]
+    }
+    set slot(fg) $fg
+    set slot(bg) $bg
+
     $canvas create rectangle -100 -100 -101 -101\
         -fill [pref itemOverflowColor]\
         -stipple [pref itemOverflowStipple]\
@@ -47,25 +59,25 @@ class ItemWindow {canvas font item date} {
         -tags [list item $self back back.$self click.$self vis.$self]
 
     $canvas create rectangle -100 -100 -101 -101\
-        -fill [pref itemBg]\
+        -fill $slot(bg)\
         -width 0\
         -tags [list item $self rect.$self click.$self vis.$self]
 
     $canvas create bitmap -100 -100\
         -anchor nw\
-        -foreground [pref itemFg]\
-        -background [pref itemBg]\
+        -foreground $slot(fg)\
+        -background $slot(bg)\
         -tags [list item $self icon.$self vis.$self]
 
     $canvas create bitmap -100 -100\
         -anchor ne\
-        -foreground [pref itemFg]\
-        -background [pref itemBg]\
+        -foreground $slot(fg)\
+        -background $slot(bg)\
         -tags [list item $self link.$self vis.$self]
 
     set slot(text) [$canvas create text -100 -100\
                         -anchor nw\
-                        -fill [pref itemFg]\
+                        -fill $slot(fg)\
                         -font $font\
                         -width 0\
                         -text ""\
@@ -171,10 +183,10 @@ method ItemWindow select {} {
 method ItemWindow unselect {} {
     set slot(sel) 0
     focus [winfo toplevel $slot(canvas)]
-    $slot(canvas) itemconfig text.$self -fill [pref itemFg]
-    $slot(canvas) itemconfig icon.$self -background [pref itemBg]
-    $slot(canvas) itemconfig link.$self -background [pref itemBg]
-    $slot(canvas) itemconfig rect.$self -fill [pref itemBg] -width 0
+    $slot(canvas) itemconfig text.$self -fill $slot(fg)
+    $slot(canvas) itemconfig icon.$self -background $slot(bg)
+    $slot(canvas) itemconfig link.$self -background $slot(bg)
+    $slot(canvas) itemconfig rect.$self -fill $slot(bg) -width 0
     $slot(canvas) focus ""
 }
 
@@ -753,3 +765,4 @@ proc itemwindow_calendar {cal} {
         cal add [$last_sel item] $iw_cal
     }
 }
+

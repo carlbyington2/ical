@@ -39,10 +39,10 @@ struct Occurrence {
 declareArray(ItemList,Item_Tcl*)
 declareArray(Occurrences,Occurrence)
 
-extern void collect_all(Calendar_Tcl*, ItemList& list);
+extern void collect_all(Calendar_Tcl*, ItemList& list, bool only_visible);
 // modifies     list
 // effects      Collect together all of the items contained in
-//              all of the calendar files and append them to "list".
+//              all (or only in visible) calendar files and append them to "list".
 
 extern void collect_calendar(Calendar_Tcl*, Calendar* cal, ItemList& list);
 // modifies     list

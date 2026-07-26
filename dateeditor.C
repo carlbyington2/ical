@@ -130,7 +130,7 @@ int Cmd_HiliteLoop(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
 
     // Get all items
     ItemList items;
-    collect_all(cal, items);
+    collect_all(cal, items, true);
 
     // Get all occurrences in desired range
     Occurrences list;

@@ -16,7 +16,7 @@
 implementArray(ItemList,Item_Tcl*)
 implementArray(Occurrences,Occurrence)
 
-void collect_all(Calendar_Tcl* cal, ItemList& list) {
+void collect_all(Calendar_Tcl* cal, ItemList& list, bool only_visible) {
     Calendar* mainCalendar = cal->main->GetCalendar();
 
     for (int i = 0; i <= cal->includes->size(); i++) {
@@ -24,6 +24,7 @@ void collect_all(Calendar_Tcl* cal, ItemList& list) {
                               ? mainCalendar
                               : cal->includes->slot(i)->GetCalendar()
                               );
+        if (only_visible && !calendar->Visible()) continue;
         collect_calendar(cal, calendar, list);
     }
 }

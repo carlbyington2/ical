@@ -18,7 +18,6 @@ class OptionMap;
 
 class Notice;
 class Appointment;
-struct Item_OldDates;
 
 /*
  * Item
@@ -45,8 +44,8 @@ class Item {
     virtual ~Item();
 
     virtual int Read(Lexer*);
-    virtual int Parse(Lexer*, char const* keyword, Item_OldDates&);
-    virtual void Write(charArray*, int major, int minor) const;
+    virtual int Parse(Lexer*, char const* keyword);
+    virtual void Write(charArray*) const;
 
     virtual Item* Clone() const = 0;
 
@@ -104,7 +103,7 @@ class Item {
     // modifies - this
     // effects  - Make the current user the owner of this item.
 
-    int IsMine() const { strcmp(my_name(), owner) == 0; }
+    int IsMine() const { return strcmp(my_name(), owner) == 0; }
     // effects  - Returns true iff this item is owned by the current user.
 
     char const* GetUid() const { return uid; }
@@ -209,8 +208,8 @@ class Appointment : public Item {
         if (alarms != 0) delete alarms;
     }
 
-    virtual int Parse(Lexer*, char const* keyword, struct Item_OldDates&);
-    virtual void Write(charArray*, int major, int minor) const;
+    virtual int Parse(Lexer*, char const* keyword);
+    virtual void Write(charArray*) const;
 
     virtual Item* Clone() const;
 
@@ -270,7 +269,7 @@ class Appointment : public Item {
      * tcl code calls starttime for example many times per appt.
      * cache the last result to avoid expensive timezone conversions
      */
-    struct {
+    mutable struct {
         int from_min, to_min;
         Date from_d, to_d;
         bool to_tz;

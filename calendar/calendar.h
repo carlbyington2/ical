@@ -38,8 +38,8 @@ class Calendar {
     /*
      * True iff this calendar is read-only.
      */
-    int ReadOnly() const;
-    void SetReadOnly(int);
+    int ReadOnly() const { return readonly; }
+    void SetReadOnly(int t) { readonly = t; }
 
     /*
      * Read/Write.
@@ -69,29 +69,19 @@ class Calendar {
     void RemoveOption(char const* key);
     // modifies - this
     // effects  - Remove any option associated with "key"
+
+    bool Visible() const { return GetOption("Visible")[0] == '1'; }
+
   protected:
     pointerArray& items;                // Items
     pointerArray& includes;             // Included calendars
     int readonly;                       // Readonly calendar?
     UidSet*       hidden;               // Hidden items from other calendars
     OptionMap*    options;              // Calendar options
-    int           major, minor;         // Calendar file version numbers
 
     void clear();
     // modifies this
     // effects  Restores calendar to pristine state.
-
-    void WriteV1(charArray*) const;
-    void WriteLatestVersion(charArray*) const;
-    void WriteCommon(charArray*) const;
 };
-
-inline int Calendar::ReadOnly() const {
-    return readonly;
-}
-
-inline void Calendar::SetReadOnly(int t) {
-    readonly = t;
-}
 
 #endif /* _CALENDARH */

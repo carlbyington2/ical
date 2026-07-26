@@ -52,6 +52,7 @@ Calendar_Tcl::~Calendar_Tcl() {
 void Calendar_Tcl::add_item_handles(CalFile* cal) {
     int count = cal->GetCalendar()->Size();
     for (int i = 0; i < count; i++) {
+        // the object gets automatically inserted into tcl hash table
         new Item_Tcl(tcl(), cal->GetCalendar()->Get(i), cal);
     }
 }
@@ -246,7 +247,7 @@ static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,
 {
     // modifies items, argc, argv
     // effects  If "argc/argv" starts with "-all", then strips off
-    //          that option and appends all items to "items".
+    //          that option and appends all items from all calendars to "items".
     //          If "argc/argv" starts with "-calendar <calname>", then
     //          strips off that option and appends all items from named
     //          calendar to "items".
@@ -254,14 +255,14 @@ static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,
     //          strips off that option and appends all listed items
     //          to "items".
     //          Otherwise, does not modify "argc/argv" and appends all
-    //          items to "items".
+    //          items from all visible calendars to "items".
     //
     //          Normally returns TCL_OK, but if there is an error parsing
     //          the calendar name or the list of items, then sets the
     //          TCL return value to an error message and returns TCL_ERROR.
 
     if ((argc >= 1) && (strcmp(argv[0], "-all") == 0)) {
-        collect_all(cal, items);
+        collect_all(cal, items, false);
         argc--;
         argv++;
         return TCL_OK;
@@ -304,7 +305,7 @@ static int parse_items(Tcl_Interp* tcl, Calendar_Tcl* cal, ItemList& items,
     }
 
     // Default behavior is to return all items
-    collect_all(cal, items);
+    collect_all(cal, items, true);
     return TCL_OK;
 }
 

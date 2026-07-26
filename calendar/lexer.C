@@ -171,26 +171,6 @@ int Lexer::GetNumber(int& x) {
     return 1;
 }
 
-int Lexer::GetText(char* result, int len) {
-    int i;
-
-    if (index >= length) {
-        return 0;
-    }
-
-    if ((index + len) > length) {
-        /* Not enough characters */
-        index = length;
-        return 0;
-    }
-
-    for (i = 0; i < len; i++) {
-        result[i] = buf[index+i];
-    }
-    index += i;
-    return 1;
-}
-
 int Lexer::GetString(char const*& x) {
     if (index >= length) return 0;
 

@@ -66,6 +66,7 @@ for {set y $from_y} {$y <= $to_y} {incr y} {
     set date [date make $day $month $y]
     # see http://de.wikipedia.org/wiki/Feiertage_in_Deutschland
     add_item [expr $date-48] Rosenmontag
+    add_item [expr $date-47] "(1/2) Faschingsdienstags"
     add_item [expr $date-2 ] Karfreitag
     add_item       $date     Ostersonntag
     add_item [expr $date+1 ] Ostermontag

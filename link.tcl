@@ -15,6 +15,8 @@ proc follow_link {uri} {
     set w netscape
     catch {set w [cal option WebBrowser]}
     catch {exec $w $uri &}
+    # this trick will reap a zombie left from the exec above
+    after 60000 exec echo
 }
 
 proc follow_file_link {file} {

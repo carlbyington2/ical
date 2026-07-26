@@ -27,13 +27,13 @@
 /* Include various libraries converted to strings. */
 
 #ifdef STANDALONE
-static char* tcl_lib_str[] = {
+static const char* tcl_lib_str[] = {
 #include "tcl_lib.gen"
 0
 };
 
 // Need to disable "source" command
-static char* tk_lib_str[] = {
+static const char* tk_lib_str[] = {
 "rename source _orig_source",
 "proc source {args} {}",
 #include "tk_lib.gen"
@@ -42,37 +42,37 @@ static char* tk_lib_str[] = {
 0
 };
 
-static char* ical_lib_str[] = {
+static const char* ical_lib_str[] = {
 #include "ical_lib.gen"
 0
 };
 
-static char* tcllib_str[] = {
+static const char* tcllib_str[] = {
 #include "tcllib.gen"
 0
 };
 #endif
 
-static char* ical_startup[] = {
+static const char* ical_startup[] = {
 #include "ical_start.gen"
 0
 };
 
-static char* psheader_str[] = {
+static const char* psheader_str[] = {
 "set ical(psheader) {"
 #include "psheader.gen"
 "}",
 0
 };
 
-static char* ical_doc_str[] = {
+static const char* ical_doc_str[] = {
 "set ical(doc) {",
 #include "icaldoc.gen"
 "}",
 0
 };
 
-static char* tcl_doc_str[] = {
+static const char* tcl_doc_str[] = {
 "set ical(tcl_interface_doc) {",
 #include "tcldoc.gen"
 "}",
@@ -95,7 +95,7 @@ static int have_tk;
 // Was a script specified on the command line?
 static int have_script;
 
-static int eval_list(Tcl_Interp*, char** list);
+static int eval_list(Tcl_Interp*, const char** list);
 static int app_init(Tcl_Interp*);
 extern int Ical_Init(Tcl_Interp*);
 
@@ -285,7 +285,7 @@ int Ical_Init(Tcl_Interp* tcl) {
 }
 
 // Concatenate list of lines into one string and "Tcl_Eval" it.
-static int eval_list(Tcl_Interp* tcl, char** list) {
+static int eval_list(Tcl_Interp* tcl, const char** list) {
     // Get buffer size
     int i;
     int count = 0;

@@ -70,7 +70,7 @@ class Date {
      * Time Midnight() const;
      */
 
-    long EpochDays() const { return rep; }
+    int EpochDays() const { return rep; }
     static int epochRep;
   private:
     static int epochWDayIndex;

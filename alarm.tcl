@@ -87,6 +87,7 @@ method Alarmer recompute {} {
 # effects - Merge newly added item into pending list
 method Alarmer add {item} {
     if ![$item is appt] return
+    if [cal option -calendar [$item calendar] IgnoreAlarms] return
 
     set now [ical_time now]
     set midnight [$self midnight]
@@ -123,6 +124,8 @@ method Alarmer midnight {} {
 #       time            time of occurrence
 #       now             current time
 method Alarmer appt {appt time now} {
+    if [cal option -calendar [$appt calendar] IgnoreAlarms] return
+
     if [catch {set alarms [$appt alarms]}] {
         set alarms $slot(alarms)
     }

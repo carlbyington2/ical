@@ -265,9 +265,7 @@ method DayView build_menu {} {
     menu-entry  $b File Print                   {ical_print}
     menu-sep    $b File
     menu-entry  $b File {Include Calendar}      {ical_addinclude}
-    #per-calendar config is not implemented yet
-    #menu-pull   $b File {Configure Calendar}    {ical_fill_config}
-    menu-pull   $b File {Remove Include}        {ical_fill_reminc}
+    menu-pull   $b File {Configure Calendar}    {ical_fill_config}
     menu-sep    $b File
     menu-entry  $b File {New Window}            {ical_newview}
     menu-entry  $b File {Close Window}          {ical_close}
@@ -359,7 +357,8 @@ proc add_menu_command {menu title cmd} {
     $menu add command -label $title -command $cmd
 }
 proc add_menu_cascade {menu title cmd} {
-    set m $menu.submenu[string map {" " _} [string tolower $title]]
+    set i [$menu index last]
+    set m $menu.submenu$i
     destroy $m
     menu $m -postcommand [concat $cmd $m] -tearoff 0
     $menu add cascade -label $title -menu $m
@@ -378,7 +377,7 @@ proc ical_fill_includes {add menu action {exclude_main ""}} {
     $menu delete 0 last
 
     if ![string length $exclude_main] {
-      $add $menu "Main Calendar" [list $action [cal main]]
+      $add $menu [ical_title [cal main]] [list $action [cal main]]
       $menu add separator
     }
 
@@ -394,24 +393,33 @@ proc ical_fill_includes {add menu action {exclude_main ""}} {
     }
 }
 
-# effects - Fill remove-include menu
-proc ical_fill_reminc {menu} {
-    ical_fill_includes add_menu_command $menu ical_removeinc exclude_main
-}
-
 # effects - fill config-menu for one calendar
 proc fill_cal_config {cal menu} {
+    variable cal_state
+    set cal_state($cal:visible) [cal option -calendar $cal Visible]
+    set cal_state($cal:ignorealarms) [cal option -calendar $cal IgnoreAlarms]
+
     $menu delete 0 last
-    $menu add checkbutton       -label "Enabled"
-    $menu add checkbutton       -label "Read Only"
-    $menu add checkbutton       -label "Ignore Alarms"
-    $menu add command           -label "Color..."
-    $menu add command           -label "Assumed Highlight..."
-    $menu add command           -label "Assumed Time Zone..."
-    set name [ical_title $cal]
-    if {$name != "Main Calendar"} {
+    # the label is "hidden" instead of "visible" to have all checkboxes off by default
+    $menu add checkbutton       -label "Hidden" -onvalue 0 -offvalue 1 -variable cal_state($cal:visible) -command [list ical_toggle_visible $cal]
+    $menu add checkbutton       -label "Ignore Alarms" -onvalue 1 -offvalue 0 -variable cal_state($cal:ignorealarms) -command [list ical_toggle_ignorealarms $cal]
+    $menu add command           -label "Color..." -command [list ical_change_colors $cal]
+    $menu add command           -label "Rename" -command [list ical_rename $cal]
+    #these two are only needed for non-ical calendars
+    #$menu add command           -label "Default Highlight..."
+    #$menu add command           -label "Default Time Zone..."
+    if {$cal != [cal main]} {
         $menu add separator
-        $menu add command           -label "Remove $name" -command [list ical_removeinc $cal]
+        $menu add command       -label "Remove" -command [list ical_removeinc $cal]
+    }
+    set color [cal option -calendar $cal Color]
+    set fg [lindex $color 0]
+    set bg [lindex $color 1]
+    if { $fg != "<Default>" && [color_exists $fg]} {
+        $menu entryconfigure 2 -foreground $fg
+    }
+    if { $bg != "<Default>" && [color_exists $bg]} {
+        $menu entryconfigure 2 -background $bg
     }
 }
 
@@ -450,7 +458,6 @@ method DayView fill_hilite {b m} {
 
 #### Special code to set enablers for cascade menus ####
 global ical_action_enabler
-set ical_action_enabler(ical_fill_reminc)       writable
 set ical_action_enabler(ical_fill_config)       writable
 set ical_action_enabler(ical_fill_move)         witem
 set ical_action_enabler(ical_fill_listinc)      always
