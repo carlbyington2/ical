@@ -8,13 +8,18 @@ proc ical_no_tk_script {} {
     global argv ical
 
     set showcount 1
-    set print 0
+    set doexport  0
+    set doprint   0
+    set dolist    0
 
     while {[llength $argv] != 0} {
         set arg [lindex $argv 0]
         set argv [lrange $argv 1 end]
 
         switch -- $arg {
+            "-exportics" {
+                set doexport 1
+            }
             "-print" {
                 if {[llength $argv] < 1} ical_usage
                 set spec [lindex $argv 0]
@@ -22,7 +27,7 @@ proc ical_no_tk_script {} {
 
                 # Check on format of show spec
                 set showcount $spec
-                set print 1
+                set doprint 1
             }
             "-show" {
                 if {[llength $argv] < 1} ical_usage
@@ -32,11 +37,11 @@ proc ical_no_tk_script {} {
                 # Check on format of show spec
                 if ![regexp {^\+([0-9]+)$} $spec junk days] ical_usage
                 set showcount $days
-                set print 0
+                set dolist 1
             }
             "-list" {
                 set showcount 1
-                set print 0
+                set dolist 1
             }
             default {ical_usage}
         }
@@ -45,13 +50,19 @@ proc ical_no_tk_script {} {
     # Get calendar
     calendar cal $ical(calendar)
 
-    if $print {
+    if $doexport {
+        export_ics
+    }
+
+    if $doprint {
         # Generate postscript
         set papersize SetUSLetter
         catch {set papersize [cal option PrintPaperSize]}
         fconfigure stdout -encoding iso8859-1
         puts stdout [pr_output $ical(startdate) $showcount $papersize]
-    } else {
+    }
+
+    if $dolist {
         # Generate listing
         set lastdate ""
         set sep ""

@@ -194,18 +194,51 @@ proc repeat_check {leader item date} {
     return "instance"
 }
 
-# effects - Print usage message and exist
+# parsed by main.C/main and tk somewhere
+#   -display <xdisplay>
+
+# parsed by main.C/main
+#   -nodisplay
+
+# parsed by support.tcl/ical_parse_args
+#   -calendar <file>
+#   -date <date>
+
+# parsed by main.C/main and ical_text.tcl/ical_no_tk_script
+#   -list
+#   -show [+<days>]
+#   -print (1|2|4|8|10|month)
+
+# parsed by main.C/main
+#   -file <script.tcl>
+
+# parsed by ical_x.tcl/ical_tk_script
+#   -popup
+
+# parsed by support.tcl/ical_parse_tk_args
+#   -iconic
+#   -iconposition <x,y>
+#   -fg <color>
+#   -bg <color>
+
+# parsed by tk somewhere?
+#   -geometry <geometry>
+
+# effects - Print usage message and exit
 proc ical_usage {} {
     puts stderr {Usage: ical [options]
+          -nodisplay                ; Ignore DISPLAY environment variable
+          -display <xdisplay>       ; Override DISPLAY environment variable
           -calendar <file>          ; Calendar file
           -date <date>              ; Start ical on specified date
           -list                     ; List imminent items
           -show [+<days>]           ; Like "-list" but covers specified range
           -print (1|2|4|8|10|month) ; Generate postscript for specified range
+          -file <script.tcl>        ; Run a tcl script
     If on X display --
+          -popup                    ; Just display imminent items
           -iconic                   ; Start iconified
           -iconposition <x,y>       ; Initial icon position
-          -popup                    ; Just display imminent items
           -fg <color>               ; Foreground color
           -bg <color>               ; Background color
           -geometry <geometry>      ; Initial window geometry}

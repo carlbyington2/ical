@@ -6,119 +6,119 @@
 # element name is the name of a command and the value is
 # a script that loads the command.
 
-set auto_index(tkCanvasBindings) "source $dir/canvas.tcl"
-set auto_index(tkCanvasMod) "source $dir/canvas.tcl"
-set auto_index(tkCanvasMoveTo) "source $dir/canvas.tcl"
-set auto_index(tkCanvasIndex) "source $dir/canvas.tcl"
-set auto_index(tkCanvasMoveLine) "source $dir/canvas.tcl"
-set auto_index(tkCanvasMoveWord) "source $dir/canvas.tcl"
-set auto_index(tkCanvasBol) "source $dir/canvas.tcl"
-set auto_index(tkCanvasEol) "source $dir/canvas.tcl"
-set auto_index(tkCanvasInsert) "source $dir/canvas.tcl"
-set auto_index(tkCanvasDeleteCharBackward) "source $dir/canvas.tcl"
-set auto_index(tkCanvasDeleteCharForward) "source $dir/canvas.tcl"
-set auto_index(tkCanvasEmacsKillLine) "source $dir/canvas.tcl"
-set auto_index(tkCanvasDeleteWordBackward) "source $dir/canvas.tcl"
-set auto_index(tkCanvasDeleteWordForward) "source $dir/canvas.tcl"
-set auto_index(tkCanvasOpenLine) "source $dir/canvas.tcl"
-set auto_index(tkCanvasCutRegion) "source $dir/canvas.tcl"
-set auto_index(tkCanvasCopyRegion) "source $dir/canvas.tcl"
-set auto_index(tkCanvasPaste) "source $dir/canvas.tcl"
-set auto_index(class) "source $dir/class.tcl"
-set auto_index(subclass) "source $dir/class.tcl"
-set auto_index(class_kill) "source $dir/class.tcl"
-set auto_index(method) "source $dir/class.tcl"
-set auto_index(rename_method) "source $dir/class.tcl"
-set auto_index(super) "source $dir/class.tcl"
-set auto_index(_o_class_create) "source $dir/class.tcl"
-set auto_index(require) "source $dir/class.tcl"
-set auto_index(bug_notify) "source $dir/dg_bug.tcl"
-set auto_index(bug_make) "source $dir/dg_bug.tcl"
-set auto_index(bug_textwin) "source $dir/dg_bug.tcl"
-set auto_index(bug_interact) "source $dir/dg_bug.tcl"
-set auto_index(bug_extract) "source $dir/dg_bug.tcl"
-set auto_index(bug_save) "source $dir/dg_bug.tcl"
-set auto_index(bug_mail1) "source $dir/dg_bug.tcl"
-set auto_index(bug_mail2) "source $dir/dg_bug.tcl"
-set auto_index(error_notify) "source $dir/dg_error.tcl"
-set auto_index(error_make) "source $dir/dg_error.tcl"
-set auto_index(error_interact) "source $dir/dg_error.tcl"
-set auto_index(get_file_name) "source $dir/dg_file.tcl"
-set auto_index(file_make) "source $dir/dg_file.tcl"
-set auto_index(file_interact) "source $dir/dg_file.tcl"
-set auto_index(file_done_check) "source $dir/dg_file.tcl"
-set auto_index(get_number) "source $dir/dg_num.tcl"
-set auto_index(num_make) "source $dir/dg_num.tcl"
-set auto_index(num_interact) "source $dir/dg_num.tcl"
-set auto_index(get_string) "source $dir/dg_string.tcl"
-set auto_index(str_make) "source $dir/dg_string.tcl"
-set auto_index(str_interact) "source $dir/dg_string.tcl"
-set auto_index(yes_or_no) "source $dir/dg_yn.tcl"
-set auto_index(yn_make) "source $dir/dg_yn.tcl"
-set auto_index(yn_interact) "source $dir/dg_yn.tcl"
-set auto_index(yes_no_cancel) "source $dir/dg_ync.tcl"
-set auto_index(ync_make) "source $dir/dg_ync.tcl"
-set auto_index(ync_interact) "source $dir/dg_ync.tcl"
-set auto_index(FileSelector) "source $dir/filesel.tcl"
-set auto_index(fs_filename) "source $dir/filesel.tcl"
-set auto_index(fs_goto) "source $dir/filesel.tcl"
-set auto_index(_fs_cleanup) "source $dir/filesel.tcl"
-set auto_index(_fs_canonicalize) "source $dir/filesel.tcl"
-set auto_index(_fs_descend) "source $dir/filesel.tcl"
-set auto_index(_fs_setentry) "source $dir/filesel.tcl"
-set auto_index(_fs_rescan) "source $dir/filesel.tcl"
-set auto_index(_fs_cd) "source $dir/filesel.tcl"
-set auto_index(_fs_parent) "source $dir/filesel.tcl"
-set auto_index(_fs_change_file) "source $dir/filesel.tcl"
-set auto_index(_fs_complete) "source $dir/filesel.tcl"
-set auto_index(_fs_scroll_child) "source $dir/filesel.tcl"
-set auto_index(_fs_complete_slash) "source $dir/filesel.tcl"
-set auto_index(create-hook) "source $dir/hooks.tcl"
-set auto_index(append-hook) "source $dir/hooks.tcl"
-set auto_index(prepend-hook) "source $dir/hooks.tcl"
-set auto_index(run-hook) "source $dir/hooks.tcl"
-set auto_index(obsolete-hook) "source $dir/hooks.tcl"
-set auto_index(_hook_check) "source $dir/hooks.tcl"
-set auto_index(keyentry) "source $dir/key.tcl"
-set auto_index(keyentry_get) "source $dir/key.tcl"
-set auto_index(keyentry_set) "source $dir/key.tcl"
-set auto_index(key_shortform) "source $dir/key.tcl"
-set auto_index(keyentry_redisplay) "source $dir/key.tcl"
-set auto_index(keyentry_key) "source $dir/key.tcl"
-set auto_index(label_widget) "source $dir/label.tcl"
-set auto_index(attach_vscrollbar) "source $dir/label.tcl"
-set auto_index(make_selection_list) "source $dir/label.tcl"
-set auto_index(menu-entry) "source $dir/menus.tcl"
-set auto_index(menu-bool) "source $dir/menus.tcl"
-set auto_index(menu-oneof) "source $dir/menus.tcl"
-set auto_index(menu-pull) "source $dir/menus.tcl"
-set auto_index(menu-sep) "source $dir/menus.tcl"
-set auto_index(_menu_find) "source $dir/menus.tcl"
-set auto_index(ruler) "source $dir/ruler.tcl"
-set auto_index(ruler_setlabel) "source $dir/ruler.tcl"
-set auto_index(ruler_settabs) "source $dir/ruler.tcl"
-set auto_index(ruler_tabs) "source $dir/ruler.tcl"
-set auto_index(ruler_user_coord) "source $dir/ruler.tcl"
-set auto_index(ruler_canvas_coord) "source $dir/ruler.tcl"
-set auto_index(ruler_tab) "source $dir/ruler.tcl"
-set auto_index(ruler_newtab) "source $dir/ruler.tcl"
-set auto_index(ruler_move) "source $dir/ruler.tcl"
-set auto_index(ruler_select) "source $dir/ruler.tcl"
-set auto_index(ruler_release) "source $dir/ruler.tcl"
-set auto_index(require) "source $dir/support.tcl"
-set auto_index(redefine_proc) "source $dir/support.tcl"
-set auto_index(after_proc) "source $dir/support.tcl"
-set auto_index(before_proc) "source $dir/support.tcl"
-set auto_index(tcllib_load_options) "source $dir/support.tcl"
-set auto_index(make_buttons) "source $dir/support.tcl"
-set auto_index(set_geometry) "source $dir/support.tcl"
-set auto_index(dialog_run) "source $dir/support.tcl"
-set auto_index(text_width) "source $dir/support.tcl"
-set auto_index(text_height) "source $dir/support.tcl"
-set auto_index(text_cache_load) "source $dir/support.tcl"
-set auto_index(font_exists) "source $dir/support.tcl"
-set auto_index(color_exists) "source $dir/support.tcl"
-set auto_index(stack_trace) "source $dir/support.tcl"
-set auto_index(file_read) "source $dir/support.tcl"
-set auto_index(make_scrolled_text) "source $dir/textwin.tcl"
-set auto_index(make_text_viewer) "source $dir/textwin.tcl"
+set auto_index(tkCanvasBindings) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasMod) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasMoveTo) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasIndex) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasMoveLine) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasMoveWord) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasBol) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasEol) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasInsert) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasDeleteCharBackward) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasDeleteCharForward) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasEmacsKillLine) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasDeleteWordBackward) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasDeleteWordForward) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasOpenLine) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasCutRegion) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasCopyRegion) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(tkCanvasPaste) [list source -encoding utf-8 [file join $dir canvas.tcl]]
+set auto_index(class) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(subclass) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(class_kill) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(method) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(rename_method) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(super) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(_o_class_create) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(require) [list source -encoding utf-8 [file join $dir class.tcl]]
+set auto_index(bug_notify) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(bug_make) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(bug_textwin) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(bug_interact) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(bug_extract) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(bug_save) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(bug_mail1) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(bug_mail2) [list source -encoding utf-8 [file join $dir dg_bug.tcl]]
+set auto_index(error_notify) [list source -encoding utf-8 [file join $dir dg_error.tcl]]
+set auto_index(error_make) [list source -encoding utf-8 [file join $dir dg_error.tcl]]
+set auto_index(error_interact) [list source -encoding utf-8 [file join $dir dg_error.tcl]]
+set auto_index(get_file_name) [list source -encoding utf-8 [file join $dir dg_file.tcl]]
+set auto_index(file_make) [list source -encoding utf-8 [file join $dir dg_file.tcl]]
+set auto_index(file_interact) [list source -encoding utf-8 [file join $dir dg_file.tcl]]
+set auto_index(file_done_check) [list source -encoding utf-8 [file join $dir dg_file.tcl]]
+set auto_index(get_number) [list source -encoding utf-8 [file join $dir dg_num.tcl]]
+set auto_index(num_make) [list source -encoding utf-8 [file join $dir dg_num.tcl]]
+set auto_index(num_interact) [list source -encoding utf-8 [file join $dir dg_num.tcl]]
+set auto_index(get_string) [list source -encoding utf-8 [file join $dir dg_string.tcl]]
+set auto_index(str_make) [list source -encoding utf-8 [file join $dir dg_string.tcl]]
+set auto_index(str_interact) [list source -encoding utf-8 [file join $dir dg_string.tcl]]
+set auto_index(yes_or_no) [list source -encoding utf-8 [file join $dir dg_yn.tcl]]
+set auto_index(yn_make) [list source -encoding utf-8 [file join $dir dg_yn.tcl]]
+set auto_index(yn_interact) [list source -encoding utf-8 [file join $dir dg_yn.tcl]]
+set auto_index(yes_no_cancel) [list source -encoding utf-8 [file join $dir dg_ync.tcl]]
+set auto_index(ync_make) [list source -encoding utf-8 [file join $dir dg_ync.tcl]]
+set auto_index(ync_interact) [list source -encoding utf-8 [file join $dir dg_ync.tcl]]
+set auto_index(FileSelector) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(fs_filename) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(fs_goto) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_cleanup) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_canonicalize) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_descend) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_setentry) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_rescan) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_cd) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_parent) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_change_file) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_complete) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_scroll_child) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(_fs_complete_slash) [list source -encoding utf-8 [file join $dir filesel.tcl]]
+set auto_index(create-hook) [list source -encoding utf-8 [file join $dir hooks.tcl]]
+set auto_index(append-hook) [list source -encoding utf-8 [file join $dir hooks.tcl]]
+set auto_index(prepend-hook) [list source -encoding utf-8 [file join $dir hooks.tcl]]
+set auto_index(run-hook) [list source -encoding utf-8 [file join $dir hooks.tcl]]
+set auto_index(obsolete-hook) [list source -encoding utf-8 [file join $dir hooks.tcl]]
+set auto_index(_hook_check) [list source -encoding utf-8 [file join $dir hooks.tcl]]
+set auto_index(keyentry) [list source -encoding utf-8 [file join $dir key.tcl]]
+set auto_index(keyentry_get) [list source -encoding utf-8 [file join $dir key.tcl]]
+set auto_index(keyentry_set) [list source -encoding utf-8 [file join $dir key.tcl]]
+set auto_index(key_shortform) [list source -encoding utf-8 [file join $dir key.tcl]]
+set auto_index(keyentry_redisplay) [list source -encoding utf-8 [file join $dir key.tcl]]
+set auto_index(keyentry_key) [list source -encoding utf-8 [file join $dir key.tcl]]
+set auto_index(label_widget) [list source -encoding utf-8 [file join $dir label.tcl]]
+set auto_index(attach_vscrollbar) [list source -encoding utf-8 [file join $dir label.tcl]]
+set auto_index(make_selection_list) [list source -encoding utf-8 [file join $dir label.tcl]]
+set auto_index(menu-entry) [list source -encoding utf-8 [file join $dir menus.tcl]]
+set auto_index(menu-bool) [list source -encoding utf-8 [file join $dir menus.tcl]]
+set auto_index(menu-oneof) [list source -encoding utf-8 [file join $dir menus.tcl]]
+set auto_index(menu-pull) [list source -encoding utf-8 [file join $dir menus.tcl]]
+set auto_index(menu-sep) [list source -encoding utf-8 [file join $dir menus.tcl]]
+set auto_index(_menu_find) [list source -encoding utf-8 [file join $dir menus.tcl]]
+set auto_index(ruler) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_setlabel) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_settabs) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_tabs) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_user_coord) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_canvas_coord) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_tab) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_newtab) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_move) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_select) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(ruler_release) [list source -encoding utf-8 [file join $dir ruler.tcl]]
+set auto_index(require) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(redefine_proc) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(after_proc) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(before_proc) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(tcllib_load_options) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(make_buttons) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(set_geometry) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(dialog_run) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(text_width) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(text_height) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(text_cache_load) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(font_exists) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(color_exists) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(stack_trace) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(file_read) [list source -encoding utf-8 [file join $dir support.tcl]]
+set auto_index(make_scrolled_text) [list source -encoding utf-8 [file join $dir textwin.tcl]]
+set auto_index(make_text_viewer) [list source -encoding utf-8 [file join $dir textwin.tcl]]

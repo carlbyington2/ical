@@ -75,6 +75,7 @@ main(int argc, char* argv[]) {
             continue;
         }
         if ((strcmp(argv[i], "-f") == 0) || (strcmp(argv[i], "-file") == 0)) {
+            have_tk = 0;
             have_script = 1;
             continue;
         }

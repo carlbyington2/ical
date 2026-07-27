@@ -1,5 +1,3 @@
-#!/bin/sh
-#
 # Copyright (C) 2006 Ethan Blanton <elb@elitists.net>
 # Version 0.9.3
 #
@@ -7,17 +5,6 @@
 # calendar it loads.  As you can see, it's not at all finished;
 # However, it's finished enough to be useful to me, so here it is.
 #
-# The "kludge" hackery below is based on a posting to comp.lang.tcl by
-# Paul Mackerras (paulus@anu.edu.au).
-#
-
-set kludge { ${1+"$@"}
-shift
-shift
-exec ical -f $0 -nodisplay ${1+"$@"}
-}
-
-# Tcl code starts here.
 
 proc preamble {c} {
     fconfigure $c -translation crlf
@@ -164,10 +151,11 @@ proc text_fold {t} {
     return $t2
 }
 
-calendar cal $ical(calendar)
-
-preamble stdout
-cal query [date first] [date last] i d {
-    iteminfo stdout $i $d
+proc export_ics {
+    global cal
+    preamble stdout
+    cal query [date first] [date last] i d {
+        iteminfo stdout $i $d
+    }
+    postamble stdout
 }
-postamble stdout
