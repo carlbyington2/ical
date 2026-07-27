@@ -35,7 +35,7 @@ puts stderr =====
 while {[gets stdin line] >= 0} {
     set item [item_parse $line]
     puts stderr [date2text [$item first]]
-    puts -nonewline stderr [item2text $item]
+    puts -nonewline stderr [item2text notify $item]
     cal add [item_parse $line]
 puts stderr =====
 }

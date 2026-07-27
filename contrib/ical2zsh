@@ -27,7 +27,7 @@ exec ical -f $0 -nodisplay ${1+"$@"}
 
 # Parse arguments
 proc usage {} {
-    puts stderr {Usage: eval $(ical2zsh [-calendar <file>])}
+    puts stderr {Usage: $(ical2zsh [-calendar <file>])}
     exit 1
 }
 if {[llength $argv] > 0} {usage}
@@ -48,7 +48,7 @@ proc handle {i curtim} {
 	if [catch {set alarms [$i alarms]}] {
 	    set alarms [cal option DefaultAlarms]
 	}
-	set st [$i starttime]
+	set st [$i starttime native]
 	set stim [tims $st]
 	foreach al $alarms {
 	    set ti [expr {$st - $al}]

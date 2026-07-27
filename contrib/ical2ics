@@ -1,11 +1,23 @@
-#!/usr/bin/env ical-script
-# -*- Tcl -*-
+#!/bin/sh
+#
 # Copyright (C) 2006 Ethan Blanton <elb@elitists.net>
 # Version 0.9.3
 #
 # This program spits out an iCalendar format calendar of the ical
 # calendar it loads.  As you can see, it's not at all finished;
 # However, it's finished enough to be useful to me, so here it is.
+#
+# The "kludge" hackery below is based on a posting to comp.lang.tcl by
+# Paul Mackerras (paulus@anu.edu.au).
+#
+
+set kludge { ${1+"$@"}
+shift
+shift
+exec ical -f $0 -nodisplay ${1+"$@"}
+}
+
+# Tcl code starts here.
 
 proc preamble {c} {
     fconfigure $c -translation crlf
@@ -47,7 +59,7 @@ proc vevent {c i d} {
     puts $c "UID:[$i uid]"
     puts $c "[text_fold SUMMARY:[string map [list "\n" {\n}] [$i text]]]"
     if {[$i repeats]} {
-        set r [$i describe_repeat --terse]
+        set r [$i describe_repeat -terse]
         rrule $c $i $r
         puts $c "DTSTART:[item_time $i [lindex $r 0]]"
     } else {
@@ -62,7 +74,7 @@ proc vjournal {c i d} {
     puts $c "UID:[$i uid]"
     puts $c "[text_fold SUMMARY:[string map [list "\n" {\n}] [$i text]]]"
     if {[$i repeats]} {
-        set r [$i  describe_repeat --terse]
+        set r [$i  describe_repeat -terse]
         rrule $c $i $r
         puts $c "DTSTART:[item_date $i [lindex $r 0]]"
     } else {
@@ -86,7 +98,7 @@ proc rrule {c i r} {
         "monthly" {
             set rule "FREQ=MONTHLY;INTERVAL=[lindex $r 4]"
             switch -- [lindex $r 5] {
-                "day" { 
+                "day" {
                     set rule "$rule;BYMONTHDAY=[lindex $r 6]"
                 }
                 "week" {
@@ -129,7 +141,7 @@ proc item_date {i d} {
 }
 
 proc item_time {i d} {
-    set t [$i starttime]
+    set t [$i starttime native]
     set d [format "%sT%02d%02d00" [item_date $i $d] [expr {($t / 60) % 24}] \
 		  [expr {$t % 60}]]
 }

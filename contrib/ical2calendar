@@ -61,6 +61,6 @@ cal listing [date today] [expr [date today]+$days-1] i d {
 	    [date monthday $d]\
 	    $wday([date weekday $d])\
 	   ]
-    puts -nonewline stdout [item2text $i "$dt - " "$dt   " 50]
+    puts -nonewline stdout [item2text notify $i "$dt - " "$dt   " 50]
 }
 exit 0

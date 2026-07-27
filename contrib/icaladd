@@ -44,5 +44,5 @@ cal add $item
 cal save
 puts stderr =====
 puts stderr [date2text [$item first]]
-puts -nonewline stderr [item2text $item]
+puts -nonewline stderr [item2text notify $item]
 puts stderr =====

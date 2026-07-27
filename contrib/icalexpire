@@ -25,7 +25,7 @@ exec ical -f $0 -nodisplay ${1+"$@"}
 #	file named by <output>.
 #
 #	The default value for <expiration days> is 31.  The default value
-#	for <input> is the user's normal calendar.  Threfore, if you just
+#	for <input> is the user's normal calendar.  Therefore, if you just
 #	specify an archival calendar, then all items that do not occur
 #	in the past month and do not occur in the future will be moved to
 #	the archival calendar.
