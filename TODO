@@ -13,32 +13,15 @@ Bugs + Stuff to Fix
 * Alarms are killed on flush: should be killed only if changed
 * Calendar that includes itself creates problems.
   See messages from Murray.Cameron
-* Select an item, do "Properties...", mark it as a todo item, click Okay.
-  Pull down the Item menu, notice that "Todo" is not marked.
 * Tk 4.1 configuration does not pick up -lsocket -lnsl -lbsd etc...
-* Allow CFLAGS passing to sub-make invocations
 * Set the "wm client" and "wm command" properties.
 * Use -tearoffcommand to track menus that have to be updated
 * Do not change border widths to "1" on monochrome displays
-* Add menu entry for pasting text into an item
 * New alarms created by the ruler widget are not aligned properly
-* Add preferences to select WWW viewer
 * Fix focus list ordering for all toplevels
 * Fix documentation to reflect new menu items (if any)
-* Fix and re-enable insert-text/delete-text commands
 * Add control-u for editor bindings?
-* People keep complaining about overlap between scrollbar and NoteList
 
-
-Changes for Tcl 7.5/Tk 4.1
-==========================
-* How does Tk_CreateMainWindow get called now?
-* Use "package" stuff?
-* "foreach" is now better"
-* Use portable file IO?
-* "grid" geometry manager
-* Look for uses of "fd" and change to Tcl_File?
-* Switch to using the "clock" command?
 
 Various proposals
 =================
@@ -51,7 +34,6 @@ Various proposals
   - fix dateeditor.tcl to hilite the appropriate columns
   - fix the "nth" working day stuff for monthly repetitions.  Yikes!
 
-* Allow "ical -print" for generating postscript
 * Set up end range (for date range editing) by default to be a year away?
 * "Appointment range" changes do not affect window sizes if the window
   has already been resized.

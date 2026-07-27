@@ -5,18 +5,16 @@ minimal and reasonably efficient.
 
 The important files are --
 
-testlib				Allow the user to run various tests
+testlib             Allow the user to run various tests
 
-class.doc			Documentation for class system
-class.tcl			Class system
-warn.xbm			Until Tk 3.3 becomes widespread...
+class.doc           Documentation for class system
+class.tcl           Class system
 
-support.tcl			Miscellaneous routines
-dialog_bug.tcl			Send bug notification via email
-dialog_error.tcl		Report user error
-dialog_string.tcl		Allow user to select a string
-dialog_yn.tcl			Allow user to respond yes/no
-dialog_ync.tcl			Allow user to respond yes/no/cancel
-dialog_file.tcl			Allow user to select file
-    fileselector.tcl		File selection widget
-    stringbrowser.tcl		List of strings widget
+support.tcl         Miscellaneous routines
+dg_bug.tcl          Send bug notification via email
+dg_error.tcl        Report user error
+dg_string.tcl       Allow user to select a string
+dg_yn.tcl           Allow user to respond yes/no
+dg_ync.tcl          Allow user to respond yes/no/cancel
+dg_file.tcl         Allow user to select file
+filesel.tcl         File selection widget

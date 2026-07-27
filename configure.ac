@@ -1,29 +1,29 @@
-AC_INIT([ical], [3.0.5])
+AC_INIT([ical],[3.0.5])
 AM_INIT_AUTOMAKE([subdir-objects])
+LT_INIT
 
 # Create config files
-AC_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 
 ############################################################################
 # Check for programs
 
 AC_PROG_INSTALL
-AC_PROG_RANLIB
-AC_LN_S
-AC_PROGRAMS_PATH(MAILER,Mail mail,Mail)
+AC_PROG_LN_S
+AC_PATH_PROGS([MAILER],[Mail mail],[Mail])
 AC_PROG_CXX
 AC_PROG_SED
 
 ############################################################################
 # Find Tcl/Tk
 
-AC_CHECKING(Tcl/Tk installation)
+AS_MESSAGE([checking Tcl/Tk installation...])
 legal_tk_versions="9.0"
 legal_tcl_versions="9.0"
 
 #### Find tclsh
 AC_ARG_WITH(tclsh,
-            [AC_HELP_STRING([--with-tclsh=<path>],[full path name of tclsh])],
+            [AS_HELP_STRING([--with-tclsh=<path>],[full path name of tclsh])],
             [tclsh="$withval"])
 if test -n "$tclsh"; then
     AC_MSG_CHECKING(for tclsh)
@@ -47,8 +47,7 @@ fi
 #### Run tclsh to find tclConfig.sh
 AC_MSG_CHECKING(for tclConfig.sh)
 AC_ARG_WITH(tclconfig,
-           [AC_HELP_STRING([--with-tclconfig=<path>],
-                           [directory that contains tclConfig.sh])],
+           [AS_HELP_STRING([--with-tclconfig=<path>],[directory that contains tclConfig.sh])],
            [tclconfig="$withval"])
 if test -z "$tclconfig"; then
   if test -e /System/Library/Frameworks; then
@@ -78,8 +77,7 @@ AC_MSG_RESULT($tclconfig/tclConfig.sh)
 #### Look for tkConfig.sh (in same directory as tclConfig.sh?)
 AC_MSG_CHECKING(for tkConfig.sh)
 AC_ARG_WITH(tkconfig,
-            [AC_HELP_STRING([--with-tkconfig=<path>],
-                            [directory that contains tkConfig.sh])],
+            [AS_HELP_STRING([--with-tkconfig=<path>],[directory that contains tkConfig.sh])],
             [tkconfig="$withval"])
 if test -z "$tkconfig"; then
   if test -e /System/Library/Frameworks; then
@@ -135,5 +133,6 @@ AC_SUBST(ICAL_CONTRIB)
 
 AC_CHECK_FUNCS(fsync)
 
-AC_OUTPUT(Makefile)
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
 
