@@ -1,0 +1,813 @@
+\documentclass[a4paper,english]{article}
+\usepackage{a4wide}
+\usepackage[latin1]{inputenc}
+\usepackage{babel}
+\usepackage{verbatim}
+\usepackage{enumitem}
+
+%% do we have the `hyperref package?
+\IfFileExists{hyperref.sty}{
+   \usepackage[bookmarksopen,bookmarksnumbered]{hyperref}
+}{}
+
+%% do we have the `fancyhdr' package?
+\IfFileExists{fancyhdr.sty}{
+\usepackage[fancyhdr]{latex2man}
+}{
+%% do we have the `fancyheadings' package?
+\IfFileExists{fancyheadings.sty}{
+\usepackage[fancy]{latex2man}
+}{
+\usepackage[nofancy]{latex2man}
+\message{no fancyhdr or fancyheadings package present, discard it}
+}}
+
+
+\setDate{2026-07-28}    %%%% must be manually set
+\setVersionWord{Version:}  %%% that's the default, no need to set it.
+\setVersion{3.0.5}
+
+\pagestyle{fancy}
+\lfoot{\Version}
+
+\begin{document}
+
+\begin{Name}{1}{ical}{Sanjay Ghemawat}{ical \Version}{}
+ical - An X based Calendar Program
+\end{Name}
+
+\section{Synopsis}
+%%%%%%%%%%%%%%%%%%
+
+\Prog{ical} \oOptArg{-calendar}{ filename}
+            \oOptArg{-date}{ date}
+            \oOptArg{-show}{ +days}
+            \oOptArg{-list}{}
+            \oOptArg{-print}{ 1|2|4|8|10|month}
+            \oOptArg{-exportics}{}
+            \oOptArg{-addone}{}
+            \oOptArg{-addmultiple}{}
+            \oOptArg{-iconic}{}
+            \oOptArg{-iconposition}{ x,y}
+            \oOptArg{-popup}{}
+            \oOptArg{-geometry}{ +x+y}
+            \oOptArg{-fg}{ color}
+            \oOptArg{-bg}{ color}
+            \oOptArg{-display}{ display}
+            \oOptArg{-nodisplay}{}
+
+\section{Description}
+%%%%%%%%%%%%%%%%%%%%%
+
+    \begin{Description}\setlength{\itemsep}{0cm}
+
+    Ical provides an X interface for maintaining a calendar.  A
+    calendar is basically just a set of items. An item is either an
+    appointment, or a notice. An appointment starts at a particular time
+    of the day, and finishes at a particular time of the day. A notice
+    does not have any starting or ending time.  Notices are useful for
+    marking certain days as special. For example, a calendar may contain
+    a notice for April 15th indicating that taxes are due.  When the
+    documentation below refers to an item, it applies both to notices
+    and appointments.  The main features of ical are:
+
+    \begin{itemize}
+        \item Items can be created and edited easily.
+        \item Items can be cut, copied and pasted.
+        \item Items can be made to repeat in various ways.
+        \item Ical will generate alarms for upcoming appointments.
+        \item Users can view many calendars at a time.
+        \item Calendars can be shared by many users.
+        \item Related items can be grouped in their own calendar.
+    \end{itemize}
+    \end{Description}
+
+\section{Options}
+%%%%%%%%%%%%%%%%%
+\subsection{General Options}
+\begin{Description}\setlength{\itemsep}{0cm}
+\item[\oOptArg{-nodisplay}{}]
+    Ignore the DISPLAY environment variable.
+
+\item[\OptArg{-calendar}{ filename}]
+    The  calendar  is read from the specified \Arg{filename}.
+    See the description of calendar files for more information.
+
+\item[\oOptArg{-date}{ date}]
+    Set the starting date for item listings or window displays
+    to the specified date. If this option is not specified,
+    then the starting date is today. For example:
+    \begin{itemize}
+        \item ical -date 1/aug/1997
+        \item ical -date 10/8/2026
+    \end{itemize}
+
+\item[\oOptArg{-show}{ +days}]
+    Print a text listing of items in the date range \\
+    \Lbr starting date...(starting date + \Arg{days} - 1)\Rbr
+    to stdout.
+
+\item[\oOptArg{-list}{}]
+    Same as \Arg{-show} +2
+
+\item[\oOptArg{-print}{ 1|2|4|8|10|month}]
+    Generate a single page calendar in postscript format to stdout for
+    items in the next few days, or for the current month.  The
+    starting date may be changed with the \Arg{-date} option.
+
+\item[\oOptArg{-exportics}{}]
+    Export the entire calendar in .ics format to standard out.
+
+\item[\oOptArg{-addone}{}]
+    Read all of stdin as a single text block, extracts date
+    and time info from it, and adds it to the calendar. If
+    the text contains a time, it is added as an appointment.
+    Otherwise, it is added as a notice.
+
+\item[\oOptArg{-addmultiple}{}]
+    Same as \OptArg{-addone}{} except it processes each line of
+    stdin as a separate calendar item.
+
+\end{Description}
+
+\subsection{X Options}
+\begin{Description}\setlength{\itemsep}{0cm}
+
+The following options are valid only if you are logged in on an X display.
+
+\item[\oOptArg{-iconic}{}]
+    Start up with the main window iconified.
+
+\item[\oOptArg{-iconposition}{ x,y}]
+    Icon is placed at the specified position. This is an ancient
+    option that seems to have no effect in modern Linux environments.
+
+\item[\oOptArg{-popup}{}]
+    Popup a window containing the same contents as \Arg{-show} +2
+    and exit as soon as the window is dismissed.
+
+\item[\oOptArg{-geometry}{ +x+y}]
+    Use \Arg{+x+y} as the geometry for the main window.
+
+\item[\oOptArg{-fg}{ color}]
+    Use \Arg{color} as the foreground for all windows.
+
+\item[\oOptArg{-bg}{ color}]
+    Use \Arg{color} as the background for all windows.
+
+\item[\oOptArg{-display}{ display}]
+    Use the specified X display.
+
+\end{Description}
+
+\section{Windows}
+    The main calendar window displays the appointments and notices for
+    a particular date.
+
+    \subsection{Date Selector}
+        The top left portion of the window contains a date selector.
+        You can click on the various arrows to change the month or the
+        year.  The day of the month can be selected by clicking on the
+        appropriate day in the month display.  The date selector
+        contains various other buttons for convenient date selection.
+
+    \subsection{Notice Window}
+        The bottom left portion of the window contains the notices for
+        the selected date. A scroll bar is provided if all of the
+        notices for the selected date do not fit into the notice
+        window.
+
+    \subsection{Appointment Window}
+        The right portion of the window contains the appointments for
+        the selected day.  You can scroll this region by using the
+        scroll bar, or by dragging with the middle mouse button in the
+        background.
+
+    \subsection{Menubar}
+        A menubar runs along the top of the calendar window.  The File
+        menu allows you to cre‐ ate and destroy application
+        windows.
+
+    \subsection{Status Line}
+        The bottom portion of the window contains a status line. This
+        status line indicates the calendar from which the selected
+        item comes and whether or not the selected item repeats.
+
+\section{Calendar Files}
+    A calendar is stored in a calendar file. The default calendar file
+    is named .calendar and is kept in the user's home directory. If
+    the CALENDAR environment variable is set, its value is used as the
+    name of the calendar file. The CALENDAR environment variable and
+    the default can both be overridden by specifying a file name on
+    the command line as follows -- ical -calendar file-name.  Ical
+    periodically saves any modifications made to a calendar to the
+    corresponding calendar file. It also periodically incorporates
+    changes made to a shared calendar file by other instances of ical.
+    You can explicitly trigger these periodic saves and reads by using
+    the File menu.
+
+    \subsection{Including and Sharing Calendars}
+        You can include other calendars into your private
+        calendar. This facility is mainly useful for allowing a group
+        of people to share a common set of items. For example, members
+        of a particular group might have a calendar that contains the
+        birthdays for each member of the group. This calendar can be
+        included in each group member's private calendar.  Use the
+        File menu to include and exclude shared calendars.  Use the
+        Move Item To ... entry from the Item menu to move items
+        between calendars.  Use the From Calendar ... entry in the
+        List menu to list all items a particular calendar.
+
+\section{Items}
+    \subsection{Notices}
+        You can enter notices by clicking in the background in the
+        bottom-left portion of the main calendar window. This click
+        will create a new notice for the selected date.  You can enter
+        text into the notice by typing into it while it is selected
+        (selected notices are highlighted by being displayed in
+        different colors).  A notice can be selected for editing by
+        clicking with left button.
+
+    \subsection{Appointments}
+        You can enter appointments by left-clicking in the background
+        in the right portion of the main calendar window.  This click
+        will create a new appointment for the selected date. The start
+        time for this appointment is determined by the click
+        location. You can move the appointment by dragging it with the
+        middle mouse button held down. The appointment can be resized
+        by dragging with the right mouse button held down.
+
+        Appointment text can be edited by typing into the appointment
+        window while it is selected.  If the appointment text you are
+        typing in does not fit into the appointment area, then it will
+        overflow out of the appointment area, but will be editable
+        normally.  If you do not like overflowing text, you should
+        turn off the Allow Text Overflow option in the Options menu .
+        With this option turned off, if the current text completely
+        fills the area allocated to the appointment, then any attempts
+        to add to the appointment text will be ignored until the
+        appointment is enlarged with the right mouse button.
+        Likewise, the right mouse button will refuse to shrink an
+        appointment window if the appointment text completely fills
+        the appointment window.
+
+    \subsection{Alarms}
+        Ical generates alarms for appointments. By default, the first
+        alarm is generated fifteen minutes before the appointment is
+        supposed to start and successive alarms are generated every
+        five minutes until the appointment actually starts.  You can
+        change this default behavior by selecting the Default Alarms
+        entry from the Options menu.  You can also change the timings
+        of these alarms on an appointment-by-appointment basis by
+        double-clicking on the appointment, or by selecting the
+        appointment and then chosing the Properties entry in the Item
+        menu.
+
+    \subsection{Repeating Items}
+        Items can be made to repeat in various ways. Item repetition
+        can be controlled by using the entries in the Repeat menu.
+        These entries make the item repeat in certain frequently used
+        ways.  For example, the Monthly entry makes the selected item
+        repeat once per month and the Weekly entry makes the selected
+        item repeat once per week.  The Edit Monthly... and Edit
+        Weekly... entries can be used to make items that repeat in
+        more complex ways: for example, an item that occurs on the
+        last Friday of each month, or an item that occurs on Monday,
+        Wednesday, and Friday every week.
+
+        In addition to making an item repeat in one of the pre-defined
+        ways, you can also restrict an item's starting and finishing
+        date by selecting the Set Range... entry from the Repeat menu.
+
+        Normally, a modification to a repeating item applies to all
+        occurrences of that item. A single occurrence of a repeating
+        item can be modified by selecting the occurrence and then
+        choosing the Make Unique entry from the Repeat menu.  The
+        selected occurrence can now be modified independently of the
+        repeating item.
+
+    \subsection{Todo Items}
+        Items can be marked as todo items by selecting the Todo entry
+        in the Item menu.  A todo item is automatically moved forward
+        to today's date every day until the item is deleted or marked
+        as done.  An item can be marked as done by clicking in the
+        little check-box right next to the displayed item.
+
+    \subsection{Highlighting}
+        By default, if any item occurs on a date, then the date is
+        highlighted in the date selector located in the top-left
+        corner of the calendar window.  You can use the Highlight
+        entries in the Item menu to control this highlighting behavior
+        on an item-by-item basis.
+
+\section{Key bindings}
+    This section is currently incomplete.
+
+\section{Editing}
+    Dragging with the left mouse button in a selected appointment or
+    notice sets the X selection.  The Edit menu provides commands for
+    dealing with the X selection.
+
+    Ical also has a clipboard that can store a single item. The Copy
+    entry in the Edit menu copies the selected item into the
+    clipboard.  The Cut entry does the same, but it also deletes the
+    item from the calendar. If the selected item repeats, then the Cut
+    command allows the user to delete all occurrences of the item, or
+    just the selected occurrence.  However, if the selected item does
+    not belong to you, then Cut just hides the item from you.  Other
+    people will still see the item.  An item in the clipboard can be
+    inserted into the current day by selecting Paste entry. The newly
+    pasted item loses all repetition information, and occurs just on
+    the day in which it was pasted.
+
+\section{Listing items}
+    You can generate listings of imminent items by selecting one of
+    the listing options in the List menu.  You can also use the
+    command line options -list, -show, or -popup to generate item
+    listings.  The command line options are most useful in .login
+    files.
+
+    By default an item is included in a listing for a particular date
+    if it occurs either on that date, or on the very next day.  You
+    can control this feature of item listings with the List item entry
+    in the Item menu.
+
+\section{Printing}
+    Calendar contents can be printed by selecting the Print option
+    from the File menu.
+
+\section{Customization}
+    Some of ical's behavior can be customized via the Options menu.
+    Other aspects of ical's behavior can be controlled via X
+    Resources.
+
+    \subsection{X Resources Behavior}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        The following X resources can be used to control various
+        aspects of ical's behavior.
+
+        \item[Ical.pollSeconds]
+            Shared calendars are checked for changes made by other
+            people once every pollSeconds seconds.  The default value
+            is 120.  If ical appears sluggish, or if it is using too
+            much CPU time, increase this value.
+
+        \item[Ical.saveSeconds]
+            Calendar files are saved once every saveSeconds seconds.
+            The default value is 30.  If ical appears sluggish, or if
+            it is using too much CPU time, increase this value.
+
+        \end{Description}
+
+    \subsection{Dimensions}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        The following X resources can be used to control various
+        dimensions of ical's appearance.
+
+        \item[Ical.itemSelectWidth]
+            The border width of selected items is set to the value of
+            this option to display the selected status of the item to
+            to the user.  On color displays, the default value of this
+            option is 1 because on color displays selection is
+            indicated by changing the color of the selected item.  On
+            monochrome displays, the default value of itemSelectWidth
+            is 4.
+
+        \item[Ical.Dayview.geometry]
+            X geometry specification for main calendar window.
+            Usually, you will just specify the window position here.
+            The size of the window is easier to control via the
+            Options menu.
+
+        \item[Ical.Reminder.geometry]
+            X geometry specification for alarms.  Usually, you will
+            just specify the window posi‐ tion here.  The
+            window size will be calculated automatically.
+
+        \item[Ical.Listing.geometry]
+            X geometry specification for item listings.  Usually, you
+            will just specify the window position here.  The window
+            size will be calculated automatically.
+
+        \end{Description}
+
+    \subsection{Colors}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        The following X resources can be used to customize ical's use
+        of colors.  If ical windows show up with illegible colors (not
+        enough distinction between background and foreground), it may
+        be because your X resources contain definitions for
+        *foreground or *background that conflict with ical colors.  In
+        general, it is a bad idea to define *foreground and
+        *background in your resources because it will break a number
+        of programs.  You will be better off defining resources on an
+        application by application basis.
+
+        \item[Ical*Foreground/Ical*Background]
+            Foreground and background colors for most of ical's
+            windows.
+
+        \item[Ical*disabledForeground]
+            Foreground color assigned to disabled buttons and menu
+            entries.
+
+        \item[Ical.itemFg/Ical.itemBg]
+            Foreground and background colors for unselected items.
+            The default foreground is black and the default background
+            is gray.
+
+        \item[Ical.itemSelectFg/Ical.itemSelectBg]
+            Foreground and background colors for selected items.  The
+            default foreground is black and the default background is
+            SlateBlue1.
+
+        \item[Ical.itemOverflowColor/Ical.itemOverflowStipple]
+            Background color and stippling used for appointment text
+            that overflows out of the ap‐ pointment area.  On
+            color displays, the default overflow background is
+            SlateBlue3 and no stippling is done (specified by an empty
+            stipple option).  On monochrome displays, the default
+            overflow background is black, and the default overflow
+            stippling is gray50.
+
+        \item[Ical.apptLineColor]
+            The color for the background lines and times displayed in
+            the appointment window.
+
+        \item[Ical.weekdayColor]
+            The color used to display days of the week.  The default
+            is black.
+
+        \item[Ical.weekendColor]
+            The color used to display weekends.  The default is red.
+
+        \item[Ical.interestColor]
+            The color used to highlight interesting dates.  The
+            default is blue.
+
+        \item[Ical.weekendInterestColor]
+            The color used to highlight interesting dates on weekends
+            and holidays.  The default is purple.
+
+        \end{Description}
+
+    \subsection{Fonts}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        The following resources can be used to customize ical's use of
+        fonts.
+
+        \item[Ical.fontFamily]
+            Preferred font family.  Fonts for various purposes are
+            obtained from this family unless overridden with
+            one of the specifications below.  The default font family
+            is times.  Some other font families you can specify here
+            are charter, new century school book, and
+            helvetica.  My personal favorite is new century
+            schoolbook.
+
+        \item[Ical.fixedFontFamily]
+            Preferred font family for fixed-width fonts.  Fixed-width
+            fonts for various purposes are obtained from this family
+            unless overridden with one of the specifications below.
+            The default font family is courier.  Some other font
+            families you can specify here are fixed and terminal.
+
+        \item[Ical.fontSize]
+            Font sizes used for ical.  Use the value small to use
+            small font sizes everywhere.  Any other value for this
+            option defaults to the normal fonts.
+
+        \item[Ical*itemFont]
+            Font used to display item contents.
+
+        \item[Ical.weekdayFont]
+            Font used for displaying days of the week.
+
+        \item[Ical.weekendFont]
+            Font used for displaying weekends.
+
+        \item[Ical.interestFont]
+            Font used to highlight interesting dates.
+
+        \item[Ical.weekendInterestFont]
+            Font used to highlight interesting dates on weekends and holidays.
+
+        \item[Ical.smallHeadingFont]
+            Font used for small headings.
+
+        \item[Ical.largeHeadingFont]
+            Font used for large headings.
+
+        \item[Ical*<class>*font]
+            Font used for windows of a certain class.  Possible values
+            for <class> are Dialog, Button, Label, Menubutton, Menu,
+            Listbox, and Reminder.
+
+    \subsection{Tcl Code}
+        Users can also customize ical by writing tcl code and storing
+        it in the file ~/.tk/ical/user.tcl.  The code stored in this
+        file is executed when ical starts up.
+
+        Ical also looks for site-specific customizations at startup.
+        These customizations can be placed in the file site.tcl in
+        either the ical library directory, or its parent directory.
+        (By default, ical looks for site.tcl in
+        /usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but
+        these directories may be located elsewhere on your
+        system.)  The site specific files will be loaded in before any
+        user specific customization file is loaded in.
+
+        See the "Tcl Interface to Ical" document available via the
+        Ical help menu.
+
+        Ical can run even when X is not available, therefore
+        customization files should be written so that they will
+        function even when Tk commands are not available.
+
+\section{Menus}
+    \subsection{File Menu}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        \item[Save]
+            Save any modifications to the appropriate calendar files.
+
+        \item[Re-Read]
+            Read any changes made to a shared calendar by another user
+            or another instance of ical.  Ical will automatically
+            invoke this function periodically.  It is provided as a
+            menu entry only so for people who do not want to wait for
+            ical's periodic checks.
+
+        \item[Print]
+            Print calendar contents.  The user has the option of
+            saving the print-out to a file, pre viewing the print-out
+            by specifying a PostScript displaying program, or sending
+            the print-out directly to a PostScript printer by
+            specifying a printing command.
+
+        \item[Include Calendar]
+            Select a calendar to include into your private calendar.
+            Included calendars are normally used to share calendars
+            between different users.
+
+        \item[New Window]
+            Open a new calendar window. This new window can be used to
+            view the items for a different date than the original
+            window.
+
+        \item[Close Window]
+            Close the selected window.
+
+        \item[Exit]
+            Save any changes and kill ical.
+
+        \end{Description}
+
+    \subsection{Edit Menu}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        \item[Cut Item]
+            Delete the currently selected item and store it in the
+            clipboard.
+
+        \item[Copy Item]
+            Copy selected item to the clipboard.
+
+        \item[Paste Item]
+            Paste item from clipboard into calendar.
+
+        \item[Delete Text]
+            Delete the currently selected text from the selected item.
+
+        \item[Insert Text]
+            Insert the current X selection into the selected item.
+
+        \item[Import Text]
+            Import the current X selection as a new item into the
+            calendar.  The date and time of this new item are parsed
+            from the X selection if possible.
+
+        \end{Description}
+
+    \subsection{Item Menu}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        \item[Todo]
+            Toggle the item between being a todo item and not being a
+            todo item.
+
+        \item[Always Highlight]
+            The item always causes the corresponding date to be
+            highlighted.  This is the default behavior.
+
+        \item[Never Highlight]
+            The item never causes the corresponding date to be
+            highlighted.
+
+        \item[Highlight Future]
+            The item causes the corresponding date to be highlighted
+            if and only if the date is not in the past.
+
+        \item[Holiday]
+            The item causes the corresponding date to be highlighted
+            as a holiday.
+
+        \item[Change Alarms]
+            This item pops up a dialog box that allows you to edit the
+            alarm times for an appointment.
+
+            Note that this will only change the alarm times for the
+            selected appointments.  You can make this change for all
+            appointments that do not have special alarm times by using
+            the Default Alarms entry in the Options menu.
+
+        \item[Early Warning]
+            By default an item is included in a listing for a
+            particular date if it occurs either on that date, or on
+            the very next day.  Sometimes, you may want to include an
+            item in listings for earlier dates. For example, if you
+            have an item reminding you of a birthday on March 17th,
+            you might want this item to be included in all listings
+            from March 7th to March 17th so that you will have enough
+            time to go out and buy a present.  You can achieve this
+            effect by selecting this menu entry and then entering "10
+            days" into the resulting dialog.
+
+            Note that this will only change the listing behavior for
+            the selected item.  You can make this change for all items
+            you create from now on by using the Default Listings entry
+            in the Options menu.
+
+        \item[Properties ...]
+            Edit various item properties, including the calendar to
+            which the item belongs, highlighting information, early
+            warning options, alarm times, and starting and ending
+            times for appointments.  You can also double-click on an
+            item to pop up the property editing dialog.
+
+        \item[Search Forward]
+            Search forward looking for an item that contains a user
+            specified string.
+
+        \item[Search Backward]
+            Search backward looking for an item that contains a user
+            specified string.
+
+        \end{Description}
+
+    \subsection{Repeat Menu}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        \item[Don't Repeat]
+            Make the selected item a non-repeating item.
+
+        \item[Daily]
+            Make the item repeat every day.
+
+        \item[Weekly]
+            Make the item repeat once every week.
+
+        \item[Monthly]
+            Make the item repeat once every month.
+
+        \item[Annually]
+            Make the item repeat once every year.
+
+        \item[Edit Weekly]
+            Make the item repeat on a weekly basis in a complicated
+            fashion.  For example, on Tuesday and Thursday every week.
+
+        \item[Edit Monthly]
+            Make the item repeat on a monthly basis in a complicated
+            fashion.  For example, on the third Sunday in June, or the
+            last working day of each month.
+
+        \item[Set Range...]
+            Restrict the range for a repeating item.
+
+        \item[Last Occurrence]
+            Make the current occurrence the last occurrence of the
+            selected item.  I.e., remove any occurrences after the
+            current date.
+
+        \item[Make Unique]
+            If you want to modify just a single occurrence of a
+            repeating item, select the item occurrence you want to
+            modify and then activate this menu entry.  Now all
+            modifications to this item occurrence will only affect
+            this particular occurrence.
+
+        \end{Description}
+
+    \subsection{ List Menu}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        \item[One Day]
+            List the item occurrences for one day.
+
+        \item[Seven Days]
+            List the item occurrences for the next seven days.
+
+        \item[Ten Days]
+            List the item occurrences for the next ten days.
+
+        \item[Thirty Days]
+            List the item occurrences for the next thirty days.
+
+        \item[Week]
+           List the item occurrences for this week.
+
+        \item[Month]
+            List the item occurrences for this month.
+
+        \item[Year]
+            List the item occurrences for this year.
+
+        \item[From Calendar ...]
+            List all item occurrences from a selected calendar.
+
+        \end{Description}
+
+    \subsection{Option Menu}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        \item[Appointment Range]
+            Controls the subset of a day displayed by default in the
+            appointment listing.  The factory settings display 8:00am
+            to 6:00pm.
+
+        \item[Notice Window Height]
+            This entry can be used to change the height of the notice
+            window.
+
+        \item[Item Width]
+            This entry can be used to change the width of displayed
+            appointments and notices.
+
+        \item[Allow Text Overflow]
+            If this option is selected, then you can type in any
+            amount of text into an appointment.  The part of the text
+            that does not fit into the appointment will be allowed to
+            overflow out of the appointment.  If you do not like text
+            overflowing out of an appointment, then you should turn
+            off this option.
+
+        \item[Display Am/Pm]
+            If this option is selected, time will be printed in twelve
+            hour mode with am or pm indicators.  Otherwise, time will
+            be printed in twenty-four hour mode.
+
+        \item[Start Week on Monday]
+            If this option is selected, month displays will start each
+            week off on a Monday.  Otherwise, each week will start on
+            a Sunday.
+
+        \item[Default Alarms]
+            Use this menu entry to change the time intervals at which
+            alarms go off.  The factory settings cause alarms to be
+            triggered fifteen minutes before each appointment, and
+            then once every five minutes until the appointment
+            actually starts.  This menu entry changes the default
+            alarm behavior for all appointments.  You can override
+            this default behavior on an appointment-by-appointment
+            basis by selecting an appointment and then selecting the
+            Change Alarms entry in the item menu.
+
+        \item[Default Listings]
+            This menu can be used to select the default listing
+            behavior for newly created items.  If the On Occurrence
+            entry is selected, then a newly created item will only be
+            shown in the listing of the day on which the item occurs.
+            If the A Day Early entry is selected, then a new item will
+            be shown in listings starting a day before the item
+            occurrence.  Similarly, the other menu entries can be
+            selected to make new items show up in listings a number of
+            days before their actual occurrence.  This menu selects
+            the default behavior for new items.  Individual item
+            behavior can be controlled by similar entries in the Item
+            menu.
+
+        \end{Description}
+
+    \subsection{Help Menu}
+        \begin{Description}\setlength{\itemsep}{0cm}
+        \item[About Ical]
+            Displays ical version number and author information.
+
+        \item[User Guide]
+            Displays this document.
+
+        \item[Tcl Interface to Ical]
+           Displays instructions for using Tcl to customize Ical.
+
+\section{Author}
+%%%%%%%%%%%%%%%%
+
+Originally written by Sanjay Ghemawat in 1993. Updated by Carl
+Byington in 2026.
+
+\section{Copyright}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Copyright \copyright ~ 1993 by Sanjay Ghemawat.  Permission is granted to make
+and distribute verbatim copies of this manual provided the copyright
+notice and this permission notice are preserved on all copies.
+
+
+\LatexManEnd
+
+\end{document}

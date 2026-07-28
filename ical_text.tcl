@@ -64,7 +64,7 @@ proc ical_no_tk_script {} {
         while {[gets stdin line] >= 0} {
             set item [item_parse $line]
             puts stderr [date2text [$item first]]
-            puts -nonewline stderr [item2text notify $item]
+            puts -nonewline stderr [item2text native $item]
             cal add $item
             puts stderr =====
         }
@@ -83,7 +83,7 @@ proc ical_no_tk_script {} {
         cal save
         puts stderr =====
         puts stderr [date2text [$item first]]
-        puts -nonewline stderr [item2text notify $item]
+        puts -nonewline stderr [item2text native $item]
         puts stderr =====
     }
 

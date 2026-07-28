@@ -1,803 +1,1103 @@
-<TITLE>ical - An X based Calendar Program</TITLE>
-<!-- Changed by: Sanjay Ghemawat, 20-Jul-1995 -->
-
-<H1>Synopsis</H1>
-
-<em>Ical</em> provides an X interface for maintaining a calendar.  A
-calendar is basically just a set of items. An item is either an
-appointment, or a notice. An <A HREF="#appts">appointment</A> starts
-at a particular time of the day, and finishes at a particular time of
-the day. A <A HREF="#notes">notice</A> does not have any starting or
-ending time. Notices are useful for marking certain days as
-special. For example, a calendar may contain a notice for April 15th
-indicating that taxes are due.  When the documentation below refers to
-an <em>item</em>, it applies both to notices and appointments.  The
-main features of <em>ical</em> are:
-
-<UL>
-<LI> Items can be created and edited easily.
-<LI> Items can be <A HREF="#editing">cut, copied and pasted</A>.
-<LI> Items can be made to <A HREF="#repeat">repeat</A> in various ways.
-<LI> Ical will generate <A HREF="#alarms">alarms</A> for upcoming
-     appointments.
-<!--
-<LI> Items can have links to files and Web documents.
--->
-<LI> Users can view many calendars at a time.
-<LI> Calendars can be <A HREF="#shared">shared</A> by many users.
-<LI> Related items can be grouped in their own calendar.
-</UL>
-
-<H1>Invocation</H1>
-
-You can specify various command line options to control <em>ical</em>.
-
-<H2>General Options</H2>
-
-The following options can be used even when you are not logged in on
-an X display.
-
-<DL>
-<DT> -calendar <var>file-name</var>
-<DD> The calendar is read from the specified file.  See the
-     description of <A HREF="#calendar_file">calendar files</A>
-     for more information.
-
-<DT> -date <var>date</var>
-<DD> Set the starting date for item listings or window display to
-     the specified date.  For example:
-     <pre>
-     ical -date 1/aug/1997
-     </pre>
-
-<DT> -list
-<DD> Print a listing of the starting date's items and exit immediately.
-     See the description of <A HREF="#listing">listing items</A>
-     for details on the actual items printed by this option.
-     The starting date is usually today, but may be changed with
-     the -date option.
-
-<DT> -show +<var>days</var>
-<DD> Print a listing for items in the range
-     <CODE>[starting date...(starting date + days - 1)]</CODE>
-     and exit immediately.
-     See the description of <A HREF="#listing">listing items</A>
-     for details on the actual items printed by this option.
-     The starting date is usually today, but may be changed with
-     the -date option.
-
-<DT> -print <code>1|2|4|8|10|month</code>
-<DD> Generate postscript on standard output for range of days and exit.
-     The starting date is usually today, but may be changed with
-     the -date option.
-</DL>
-
-<H2>X Options</H2>
-
-The following options are valid only if you are logged in on an X
-display.
-
-<DL>
-<DT> -iconic
-<DD> Start up with the main window iconified.
-
-<DT> -iconposition <var>x</var>,<var>y</var>
-<DD> Icon is placed at the specified position.
-
-<DT> -popup
-<DD> Popup a window containing a listing of the starting date's items
-     and exit as soon as the window is dismissed.
-     See the description of <A HREF="#listing">listing items</A>
-     for details on the actual items printed by this option.
-     The starting date is usually today, but may be changed with
-     the -date option.
-
-<DT> -geometry <var>geometry</var>
-<DD> Use <var>geometry</var> as the geometry for the main window.
-
-<DT> -fg <var>color</var>
-<DD> Use <var>color</var> as the foreground for all windows.
-
-<DT> -bg <var>color</var>
-<DD> Use <var>color</var> as the background for all windows.
-
-<DT> -display <var>display</var>
-<DD> Run <em>ical</em> on the specified X display.
-</DL>
-
-<H1>Windows</H1>
-
-The main calendar window displays the appointments and notices for a
-particular date.
-
-<DL>
-
-<DT> Date Selector
-<DD> The top left portion of the window contains a date selector.  You
-can click on the various arrows to change the month or the year.  The
-day of the month can be selected by clicking on the appropriate day in
-the month display.  The date selector contains various other buttons
-for convenient date selection.
-
-<DT> Notice Window
-<DD> The bottom left portion of the window contains the notices for
-the selected date. A scroll bar is provided if all of the notices for
-the selected date do not fit into the notice window.
-
-<DT> Appointment Window
-<DD> The right portion of the window contains the appointments for the
-selected day. You can scroll this region by using the scroll bar, or
-by dragging with the middle mouse button in the background.
-
-<DT> Menubar
-<DD> A menubar runs along the top of the calendar window.  The
-<em>File menu</em> allows you to create and destroy application
-windows.
-
-<DT> Status Line
-<DD> The bottom portion of the window contains a status line. This
-status line indicates the calendar from which the selected item comes
-and whether or not the selected item repeats.
-
-</DL>
-
-<H1><A NAME=calendar_file>Calendar Files</A></H1>
-
-A calendar is stored in a calendar file. The default calendar file is
-named <CODE>.calendar</CODE> and is kept in the user's home
-directory. If the <CODE>CALENDAR</CODE> environment variable is set,
-its value is used as the name of the calendar file. The
-<CODE>CALENDAR</CODE> environment variable and the default can both be
-overridden by specifying a file name on the command line as follows --
-
-        <PRE>
-        ical -calendar <VAR>file-name</VAR>.
-        </PRE>
-
-<em>Ical</em> periodically saves any modifications made to a
-calendar to the corresponding calendar file. It also periodically
-incorporates changes made to a shared calendar file by other instances
-of ical.  You can explicitly trigger these periodic saves and
-reads by using the <A HREF="#file_menu">File menu</A>.
-
-<H2><A NAME="shared">Including and Sharing Calendars</A></H2>
-
-You can include other calendars into your private calendar. This
-facility is mainly useful for allowing a group of people to share a
-common set of items. For example, members of a particular group might
-have a calendar that contains the birthdays for each member of the
-group. This calendar can be included in each group member's private
-calendar.  Use the <A HREF="#file_menu">File menu</A> to include and
-exclude shared calendars.  Use the <em>Move Item To ...</em> entry
-from the <A HREF="#item_menu">Item menu</A> to move items between
-calendars.  Use the <em>From Calendar ...</em> entry in the <A
-HREF="#list_menu">List menu</A> to list all items a particular
-calendar.
-
-<H1><A NAME="items">Items</A></H1>
-
-<H2><A NAME="notes">Notices</A></H2>
-
-You can enter notices by clicking in the background in the bottom-left
-portion of the main calendar window. This click will create a new
-notice for the selected date.  You can enter text into the notice by
-typing into it while it is selected (selected notices are highlighted
-by being displayed in different colors).  A notice can be selected for
-editing by clicking with left button.
-
-<H2><A NAME="appts">Appointments</A></H2>
-
-You can enter appointments by left-clicking in the background in the
-right portion of the main calendar window. This click will create a
-new appointment for the selected date. The start time for this
-appointment is determined by the click location. You can move the
-appointment by dragging it with the middle mouse button held down. The
-appointment can be resized by dragging with the right mouse button
-held down.
-<P>
-
-Appointment text can be edited by typing into the appointment window
-while it is selected.  If the appointment text you are typing in does
-not fit into the appointment area, then it will overflow out of the
-appointment area, but will be editable normally.  If you do not like
-overflowing text, you should turn off the <em>Allow Text Overflow</em>
-option in the <A HREF="#option_menu">Options menu</A> .  With this
-option turned off, if the current text completely fills the area
-allocated to the appointment, then any attempts to add to the
-appointment text will be ignored until the appointment is enlarged
-with the right mouse button.  Likewise, the right mouse button will
-refuse to shrink an appointment window if the appointment text
-completely fills the appointment window.
-
-<H2><A NAME="alarms">Alarms</A></H2>
-
-<em>Ical</em> generates alarms for appointments. By default, the first
-alarm is generated fifteen minutes before the appointment is supposed
-to start and successive alarms are generated every five minutes until
-the appointment actually starts.  You can change this default behavior
-by selecting the <em>Default Alarms</em> entry from the <A
-HREF="#option_menu">Options menu</A>.  You can also change the timings
-of these alarms on an appointment-by-appointment basis by
-double-clicking on the appointment, or by selecting the appointment
-and then chosing the <em>Properties</em> entry in the <A
-HREF="#item_menu">Item menu</A>.
-
-<H2><A NAME="repeat">Repeating Items</A></H2>
-
-Items can be made to repeat in various ways. Item repetition can be
-controlled by using the entries in the <A HREF="#repeat_menu">Repeat
-menu</A>.  These entries make the item repeat in certain frequently
-used ways. For example, the <em>Monthly</em> entry makes the selected
-item repeat once per month and the <em>Weekly</em> entry makes the
-selected item repeat once per week.  The <em>Edit Monthly</em>... and
-<em>Edit Weekly</em>... entries can be used to make items that repeat
-in more complex ways: for example, an item that occurs on the last
-Friday of each month, or an item that occurs on Monday, Wednesday, and
-Friday every week.
-<P>
-
-In addition to making an item repeat in one of the pre-defined ways,
-you can also restrict an item's starting and finishing date by
-selecting the <em>Set Range</em>... entry from the
-<A HREF="#repeat_menu">Repeat menu.</A>
-<P>
-
-Normally, a modification to a repeating item applies to all
-occurrences of that item. A single occurrence of a repeating item can
-be modified by selecting the occurrence and then choosing the
-<em>Make</em> <em>Unique</em> entry from the <A
-HREF="#repeat_menu">Repeat menu</A>.  The selected occurrence can now
-be modified independently of the repeating item.
-
-<H2>Todo Items</H2>
-
-Items can be marked as <em>todo</em> items by selecting the
-<em>Todo</em> entry in the <A HREF="#item_menu">Item menu</A>.  A
-<em>todo</em> item is automatically moved forward to today's date
-every day until the item is deleted or marked as done.  An item
-can be marked as done by clicking in the little check-box right
-next to the displayed item.
-
-<!--
-<H2>Links to External Documents</H2>
-Items can contain links to files and other documents on the World-Wide-Web.
-These links can be created and removed by selecting one of the entries
-in the <A HREF="#item_menu">Item menu</A>.  An item with a link has a little
-arrow in the top-right corner.  The link can be followed by clicking on
-this arrow.
--->
-
-<H2>Highlighting</H2>
-
-By default, if any item occurs on a date, then the date is highlighted
-in the date selector located in the top-left corner of the calendar
-window.  You can use the <em>Highlight</em> entries in the <A
-HREF="#item_menu">Item menu</A> to control this highlighting behavior
-on an item-by-item basis.
-
-<H1><A NAME="keys">Key Bindings</A></H1>
-
-<em>This section is currently incomplete.</em>
-
-<H1><A NAME="editing">Editing</A></H1>
-
-Dragging with the left mouse button in a selected appointment or
-notice sets the X selection.  The <A HREF="#edit_menu">Edit menu</A>
-provides commands for dealing with the X selection.
-<P>
-
-Ical also has a clipboard that can store a single item. The
-<em>Copy</em> entry in the <A HREF="#edit_menu">Edit menu</A> copies
-the selected item into the clipboard.  The <em>Cut</em> entry does the
-same, but it also deletes the item from the calendar. If the selected
-item repeats, then the <em>Cut</em> command allows the user to delete
-all occurrences of the item, or just the selected occurrence.
-However, if the selected item does not belong to you, then
-<em>Cut</em> just hides the item from you.  Other people will still
-see the item.  An item in the clipboard can be inserted into the
-current day by selecting <em>Paste</em> entry. The newly pasted item
-loses all repetition information, and occurs just on the day in which
-it was pasted.
-
-<H1><A NAME=listing>Listing Items</A></H1>
-
-You can generate listings of imminent items by selecting one of the
-listing options in the <A HREF="#list_menu">List menu</A>.  You can
-also use the command line options <code>-list</code>,
-<code>-show</code>, or <code>-popup</code> to generate item listings.
-The command line options are most useful in <code>.login</code> files.
-<P>
-
-By default an item is included in a listing for a particular date if
-it occurs either on that date, or on the very next day.  You can
-control this feature of item listings with the <em>List item</em>
-entry in the <A HREF="#item_menu">Item menu.</A>
-
-<H1><A NAME="print">Printing</A></H1>
-
-Calendar contents can be printed by selecting the <em>Print</em>
-option from the <A HREF="#file_menu">File menu</A>.
-
-<H1>Customization</H1>
-
-Some of <EM>ical's</EM> behavior can be customized via the <A
-HREF="#option_menu">Options menu</A>.  Other aspects of ical's
-behavior can be controlled via X Resources.
-
-<H2>X Resources</H2>
-
-<H3>Behavior</H3>
-
-The following X resources can be used to control various aspects of
-ical's behavior.
-
-<DL>
-<DT> Ical.pollSeconds
-<DD> Shared calendars are checked for changes made by other people
-     once every <em>pollSeconds</em> seconds.  The default value is
-     120.  If <em>ical</em> appears sluggish, or if it is using too
-     much CPU time, increase this value.
-
-<DT> Ical.saveSeconds
-<DD> Calendar files are saved once every <em>saveSeconds</em> seconds.
-     The default value is 30.  If <em>ical</em> appears sluggish, or
-     if it is using too much CPU time, increase this value.
-</DL>
-
-<H3>Dimensions</H3>
-
-The following X resources can be used to control various dimensions of
-ical's appearance.
-
-<DL>
-<DT> Ical.itemSelectWidth
-<DD> The border width of selected items is set to the value of this
-     option to display the selected status of the item to to the user.
-     On color displays, the default value of this option is 1
-     because on color displays selection is indicated by changing the
-     color of the selected item.  On monochrome displays, the default
-     value of <em>itemSelectWidth</em> is 4.
-
-<DT> Ical.Dayview.geometry
-<DD> X geometry specification for main calendar window.  Usually, you
-     will just specify the window position here.  The size of the
-     window is easier to control via the <em>Options</em> menu.
-
-<DT> Ical.Reminder.geometry
-<DD> X geometry specification for alarms.  Usually, you will just
-     specify the window position here.  The window size will be
-     calculated automatically.
-
-<DT> Ical.Listing.geometry
-<DD> X geometry specification for item listings.  Usually, you will
-     just specify the window position here.  The window size will be
-     calculated automatically.
-</DL>
-
-<H3>Colors</H3>
-
-The following X resources can be used to customize ical's use of
-colors.  If ical windows show up with illegible colors (not enough
-distinction between background and foreground), it may be because your
-X resources contain definitions for <CODE>*foreground</CODE> or
-<CODE>*background</CODE> that conflict with ical colors.  In general,
-it is a bad idea to define <CODE>*foreground</CODE> and
-<CODE>*background</CODE> in your resources because it will break a
-number of programs.  You will be better off defining resources on an
-application by application basis.
-
-<DL>
-<DT> Ical*Foreground/Ical*Background
-<DD> Foreground and background colors for most of ical's windows.
-
-<DT> Ical*disabledForeground
-<DD> Foreground color assigned to disabled buttons and menu entries.
-
-<DT> Ical.itemFg/Ical.itemBg
-<DD> Foreground and background colors for unselected items.  The
-     default foreground is black and the default background is gray.
-
-<DT> Ical.itemSelectFg/Ical.itemSelectBg
-<DD> Foreground and background colors for selected items.  The default
-     foreground is black and the default background is SlateBlue1.
-
-<DT> Ical.itemOverflowColor/Ical.itemOverflowStipple
-<DD> Background color and stippling used for appointment text that
-     overflows out of the appointment area.  On color displays, the
-     default overflow background is SlateBlue3 and no stippling is done
-     (specified by an empty stipple option).  On monochrome displays,
-     the default overflow background is black, and the default
-     overflow stippling is gray50.
-
-<DT> Ical.apptLineColor
-<DD> The color for the background lines and times displayed in the
-     appointment window.
-
-<DT> Ical.weekdayColor
-<DD> The color used to display days of the week.  The default is black.
-
-<DT> Ical.weekendColor
-<DD> The color used to display weekends.  The default is red.
-
-<DT> Ical.interestColor
-<DD> The color used to highlight interesting dates.  The default is blue.
-
-<DT> Ical.weekendInterestColor
-<DD> The color used to highlight interesting dates on weekends and
-     holidays.  The default is purple.
-</DL>
-
-<H3>Fonts</H3>
-
-The following resources can be used to customize ical's use of fonts.
-
-<DL>
-
-<DT> Ical.fontFamily
-<DD> Preferred font family.  Fonts for various purposes are obtained
-     from this family unless overridden with one of the specifications
-     below.  The default font family is <CODE>times</CODE>.  Some other font
-     families you can specify here are <CODE>charter</CODE>, <CODE>new
-     century schoolbook</CODE>, and <CODE>helvetica</CODE>.  My
-     personal favorite is <CODE>new century schoolbook</CODE>.
-
-<DT> Ical.fixedFontFamily
-<DD> Preferred font family for fixed-width fonts.  Fixed-width fonts for
-     various purposes are obtained from this family unless overridden with
-     one of the specifications below.  The default font family is
-     <CODE>courier</CODE>.  Some other font families you can specify
-     here are <CODE>fixed</CODE> and <CODE>terminal</CODE>.
-
-<DT> Ical.fontSize
-<DD> Font sizes used for ical.  Use the value <code>small</code> to
-    use small font sizes everywhere.  Any other value for this option
-    defaults to the normal fonts.
-
-<DT> Ical*itemFont
-<DD> Font used to display item contents.
-
-<DT> Ical.weekdayFont
-<DD> Font used for displaying days of the week.
-
-<DT> Ical.weekendFont
-<DD> Font used for displaying weekends.
-
-<DT> Ical.interestFont
-<DD> Font used to highlight interesting dates.
-
-<DT> Ical.weekendInterestFont
-<DD> Font used to highlight interesting dates on weekends and holidays.
-
-<DT> Ical.smallHeadingFont
-<DD> Font used for small headings.
-
-<DT> Ical.largeHeadingFont
-<DD> Font used for large headings.
-
-<DT> Ical*&lt;<em>class</em>&gt;*font:
-<DD> Font used for windows of a certain class.  Possible values for
-     &lt;<em>class</em>&gt; are <CODE>Dialog</CODE>,
-     <CODE>Button</CODE>, <CODE>Label</CODE>, <CODE>Menubutton</CODE>,
-     <CODE>Menu</CODE>, <CODE>Listbox</CODE>, and <CODE>Reminder</CODE>.
-</DL>
-
-<H2>Tcl Code</H2>
-
-Users can also customize ical by writing tcl code and storing it in
-the file <SAMP>~/.tk/ical/user.tcl</SAMP>.  The code stored in this
-file is executed when ical starts up.
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!-- Manual page created with latex2man on Tue Jul 28 16:50:33 2026
+** Author of latex2man: Juergen.Vollmer@informatik-vollmer.de
+** NOTE: This file is generated, DO NOT EDIT. -->
+<html>
+<head><title>ICAL</title>
+</head><body bgcolor="white">
+<h1 align=center>
 <p>
-Ical also looks for site-specific customizations at startup.  These
-customizations can be placed in the file <samp>site.tcl</samp> in
-either the ical library directory, or its parent directory.  (By
-default, ical looks for site.tcl in
-<samp>/usr/local/lib/ical/v[<em>version</em>]/</samp>, and
-<samp>/usr/local/lib/ical/</samp>, but these directories
- may be located elsewhere on your system.)  The site specific files
-will be loaded in before any user specific customization file is
-loaded in.
-<P>
-See the "Tcl Interface to Ical" document available via the Ical help
-menu.
+</h1>
+<h4 align=center>Sanjay Ghemawat </h4>
+<h4 align=center>2026-07-28</h4>
+<h4 align=center>Version 3.0.5</h4>
+ical - An X based Calendar Program 
+<h3>Table of Contents</h3>
+<ul>
+<li><a href="#section_1">Synopsis </a></li>
+<li><a href="#section_2">Description </a></li>
+<li><a href="#section_3">Options </a>
+<ul>
+<li><a href="#section_4">General Options </a></li>
+<li><a href="#section_5">X Options </a></li>
+</ul>
+<li><a href="#section_6">Windows </a>
+<ul>
+<li><a href="#section_7">Date Selector </a></li>
+<li><a href="#section_8">Notice Window </a></li>
+<li><a href="#section_9">Appointment Window </a></li>
+<li><a href="#section_10">Menubar </a></li>
+<li><a href="#section_11">Status Line </a></li>
+</ul>
+<li><a href="#section_12">Calendar Files </a>
+<ul>
+<li><a href="#section_13">Including and Sharing Calendars </a></li>
+</ul>
+<li><a href="#section_14">Items </a>
+<ul>
+<li><a href="#section_15">Notices </a></li>
+<li><a href="#section_16">Appointments </a></li>
+<li><a href="#section_17">Alarms </a></li>
+<li><a href="#section_18">Repeating Items </a></li>
+<li><a href="#section_19">Todo Items </a></li>
+<li><a href="#section_20">Highlighting </a></li>
+</ul>
+<li><a href="#section_21">Key bindings </a></li>
+<li><a href="#section_22">Editing </a></li>
+<li><a href="#section_23">Listing items </a></li>
+<li><a href="#section_24">Printing </a></li>
+<li><a href="#section_25">Customization </a>
+<ul>
+<li><a href="#section_26">X Resources Behavior </a></li>
+<li><a href="#section_27">Dimensions </a></li>
+<li><a href="#section_28">Colors </a></li>
+<li><a href="#section_29">Fonts </a></li>
+<li><a href="#section_30">Tcl Code </a></li>
+</ul>
+<li><a href="#section_31">Menus </a>
+<ul>
+<li><a href="#section_32">File Menu </a></li>
+<li><a href="#section_33">Edit Menu </a></li>
+<li><a href="#section_34">Item Menu </a></li>
+<li><a href="#section_35">Repeat Menu </a></li>
+<li><a href="#section_36"> List Menu </a></li>
+<li><a href="#section_37">Option Menu </a></li>
+<li><a href="#section_38">Help Menu </a></li>
+</ul>
+<li><a href="#section_39">Author </a></li>
+<li><a href="#section_40">Copyright </a></li>
+</ul>
 <p>
-<strong>Ical can run even when X is not available, therefore
-customization files should be written so that they will function
-even when Tk commands are not available.</strong>
-
-<H1>Menus</H1>
-
-<H2><A NAME=file_menu>File Menu</A></H2>
-
-<DL>
-<DT> Save
-<DD> Save any modifications to the appropriate calendar files.
-
-<DT> Re-Read
-<DD> Read any changes made to a shared calendar by another user
-     or another instance of ical.
-     Ical will automatically invoke this function periodically.
-     It is provided as a menu entry only so for people who do not
-     want to wait for ical's periodic checks.
-
-<DT> Print
-<DD> Print calendar contents.  The user has the option of saving the
-     print-out to a file, pre viewing the print-out by specifying a
-     PostScript displaying program, or sending the print-out directly
-     to a PostScript printer by specifying a printing command.
-
-
-<DT> Include Calendar
-<DD> Select a calendar to include into your private calendar.
-     Included calendars are normally used to share calendars between
-     different users.
-
-<DT> Remove Include
-<DD> Remove a previously included calendar from your private calendar.
-
-<DT> New Window
-<DD> Open a new calendar window. This new window can be used to view the
-     items for a different date than the original window.
-
-<DT> Close Window
-<DD> Close the selected window.
-
-<DT> Exit
-<DD> Save any changes and kill ical. 
-</DL>
-
-<H2><A NAME="edit_menu">Edit Menu</A></H2>
-
-<DL>
-<DT> Cut Item
-<DD> Delete the currently selected item and store it in the
-     <A HREF="#editing">clipboard</A>.
-
-<DT> Copy Item
-<DD> Copy selected item to the <A HREF="#editing">clipboard</A>.
-
-<DT> Paste Item
-<DD> Paste item from <A HREF="#editing">clipboard</A> into calendar.
-
-<DT> Delete Text
-<DD> Delete the currently selected text from the selected item.
-
-<DT> Insert Text
-<DD> Insert the current X selection into the selected item.
-
-<DT> Import Text
-<DD> Import the current X selection as a new item into the calendar.
-     The date and time of this new item are parsed from the X
-     selection if possible.
-</DL>
-
-<H2><A NAME="item_menu">Item Menu</A></H2>
-
-<DL>
-<DT> Todo
-<DD> Toggle the item between being a todo item and not being a todo
-     item.
-
-<DT> Always Highlight
-<DD> The item always causes the corresponding date to be highlighted.  This
-     is the default behavior.
-
-<DT> Never Highlight
-<DD> The item never causes the corresponding date to be highlighted.
-
-<DT> Highlight Future
-<DD> The item causes the corresponding date to be highlighted if and only
-     if the date is not in the past.
-
-<DT> Holiday
-<DD> The item causes the corresponding date to be highlighted as a holiday.
-
-<!--
-<DT> Link to Web Document
-<DD> Prompts the user for the name of a Web document and creates a link
-     from the current item to that document.
-
-<DT> Link to File
-<DD> Prompts the user for a file name and creates a link from the current
-     item to that file.
-
-<DT> Remove Link
-<DD> If the current item contains a link to an external document, that link
-     is removed.
--->
-
-<DT> Change Alarms
-<DD> This item pops up a dialog box that allows you to edit the alarm
-     times for an appointment.<P>
-
-     Note that this will only change the alarm times for the
-     selected appointments.  You can make this change for all appointments
-     that do not have special alarm times by using the
-     <em>Default Alarms</em> entry in the
-     <A HREF="#option_menu">Options menu</A>.
-
-<DT> Early Warning
-<DD> By default an item is included in a listing for a particular date
-     if it occurs either on that date, or on the very next day.
-     Sometimes, you may want to include an item in listings for
-     earlier dates. For example, if you have an item reminding you of
-     a birthday on March 17th, you might want this item to be included
-     in all listings from March 7th to March 17th so that you will
-     have enough time to go out and buy a present.  You can achieve
-     this effect by selecting this menu entry and then entering "10 days"
-     into the resulting dialog.<P>
-
-     Note that this will only change the listing behavior for the
-     selected item.  You can make this change for all items you create
-     from now on by using the <em>Default Listings</em> entry in the
-     <A HREF="#option_menu">Options menu</A>.
-
-<!--
-<DT> Move Item To ...
-<DD> Move the currently selected item to another calendar.
--->
-
-<DT> Properties ...
-<DD> Edit various item properties, including the calendar to which the
-     item belongs, highlighting information, early warning options, alarm
-     times, and starting and ending times for appointments.  You can
-     also double-click on an item to pop up the property editing dialog.
-
-<DT> Search Forward
-<DD> Search forward looking for an item that contains a user specified string.
-
-<DT> Search Backward
-<DD> Search backward looking for an item that contains a user specified string.
-
-</DL>
-
-<H2><A NAME="repeat_menu">Repeat Menu</A></H2>
-
-<DL>
-<DT> Don't Repeat
-<DD> Make the selected item a non-repeating item.
-
-<DT> Daily
-<DD> Make the item repeat every day.
-
-<DT> Weekly
-<DD> Make the item repeat once every week.
-
-<DT> Monthly
-<DD> Make the item repeat once every month.
-
-<DT> Annually
-<DD> Make the item repeat once every year.
-
-<DT> Edit Weekly
-<DD> Make the item repeat on a weekly basis in a complicated fashion.  For
-     example, on Tuesday and Thursday every week.
-
-<DT> Edit Monthly
-<DD> Make the item repeat on a monthly basis in a complicated fashion.
-     For example, on the third Sunday in June, or the last working day
-     of each month.
-
-<DT> Set Range...
-<DD> Restrict the range for a repeating item.
-
-<DT> Last Occurrence
-<DD> Make the current occurrence the last occurrence of the selected item.
-     I.e., remove any occurrences after the current date.
-
-<DT> Make Unique
-<DD> If you want to modify just a single occurrence of a repeating
-     item, select the item occurrence you want to modify and then
-     activate this menu entry.  Now all modifications to this item
-     occurrence will only affect this particular occurrence.
-</DL>
-
-<H2><A NAME="list_menu">List Menu</A></H2>
-
-<DL>
-<DT> One Day
-<DD> List the item occurrences for one day.
-
-<DT> Seven Days
-<DD> List the item occurrences for the next seven days.
-
-<DT> Ten Days
-<DD> List the item occurrences for the next ten days.
-
-<DT> Thirty Days
-<DD> List the item occurrences for the next thirty days.
-
-<DT> Week
-<DD> List the item occurrences for this week.
-
-<DT> Month
-<DD> List the item occurrences for this month.
-
-<DT> Year
-<DD> List the item occurrences for this year.
-
-<DT> From Calendar ...
-<DD> List all item occurrences from a selected calendar.
-</DL>
-
-
-<H2><A NAME="option_menu">Option Menu</A></H2>
-
-<DL>
-<DT> Appointment Range
-<DD> Controls the subset of a day displayed by default in the
-     appointment listing.  The factory settings display 8:00am to
-     6:00pm.
-
-<DT> Notice Window Height
-<DD> This entry can be used to change the height of the notice window.
-
-<DT> Item Width
-<DD> This entry can be used to change the width of displayed appointments
-     and notices.
-
-<DT> Allow Text Overflow
-<DD> If this option is selected, then you can type in any amount of
-     text into an appointment.  The part of the text that does not fit
-     into the appointment will be allowed to overflow out of the
-     appointment.  If you do not like text overflowing out of an
-     appointment, then you should turn off this option.
-
-<DT> Display Am/Pm
-<DD> If this option is selected, time will be printed in twelve hour
-     mode with <CODE>am</CODE> or <CODE>pm</CODE> indicators.
-     Otherwise, time will be printed in twenty-four hour mode.
-
-<DT> Start Week on Monday
-<DD> If this option is selected, month displays will start each week off on
-     a Monday.  Otherwise, each week will start on a Sunday.
-
-
-<DT> Default Alarms
-<DD> Use this menu entry to change the time intervals at which alarms
-     go off.  The factory settings cause alarms to be triggered
-     fifteen minutes before each appointment, and then once every five
-     minutes until the appointment actually starts.  This menu entry
-     changes the default alarm behavior for all appointments.  You can
-     override this default behavior on an appointment-by-appointment
-     basis by selecting an appointment and then selecting the
-     <em>Change</em> <em>Alarms</em> entry in the <em>item</em> menu.
-
-
-<DT> Default Listings
-<DD> This menu can be used to select the default listing behavior for
-     newly created items.  If the <em>On Occurrence</em> entry is
-     selected, then a newly created item will only be shown in the
-     listing of the day on which the item occurs.  If the <em>A Day
-     Early</em> entry is selected, then a new item will be shown in
-     listings starting a day before the item occurrence.  Similarly,
-     the other menu entries can be selected to make new items show up
-     in listings a number of days before their actual occurrence.
-     This menu selects the default behavior for new items.  Individual
-     item behavior can be controlled by similar entries in the
-     <A HREF="#item_menu">Item menu</A>.
-</DL>
-
-<H2><A NAME="help_menu">Help Menu</A></H2>
-
-<DL>
-<DT> About Ical
-<DD> Displays ical version number and author information.
-
-<DT> User Guide
-<DD> Displays this document.
-</DL>
-
-<H1>Author</H1>
-
-Sanjay Ghemawat (sanjay@pa.dec.com)
-<A HREF="http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/home.html">http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/home.html</A>
-
-<H1>Copyright</H1>
-
-Copyright (c) 1993 by Sanjay Ghemawat.  Permission is granted to make
-and distribute verbatim copies of this manual provided the copyright
-notice and this permission notice are preserved on all copies.
-
-<H1>See Also</H1>
-
-Ical <A HREF="http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html">http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html</A>
+<h2><a name="section_1">Synopsis</a></h2>
+
+<p>
+<tt>ical</tt>
+[<font class="optstyle">-calendar</font><font class="argstyle"> filename</font>]
+[<font class="optstyle">-date</font><font class="argstyle"> date</font>]
+[<font class="optstyle">-show</font><font class="argstyle"> +days</font>]
+[<font class="optstyle">-list</font><font class="argstyle"></font>]
+[<font class="optstyle">-print</font><font class="argstyle"> 1|2|4|8|10|month</font>]
+[<font class="optstyle">-exportics</font><font class="argstyle"></font>]
+[<font class="optstyle">-addone</font><font class="argstyle"></font>]
+[<font class="optstyle">-addmultiple</font><font class="argstyle"></font>]
+[<font class="optstyle">-iconic</font><font class="argstyle"></font>]
+[<font class="optstyle">-iconposition</font><font class="argstyle"> x,y</font>]
+[<font class="optstyle">-popup</font><font class="argstyle"></font>]
+[<font class="optstyle">-geometry</font><font class="argstyle"> +x+y</font>]
+[<font class="optstyle">-fg</font><font class="argstyle"> color</font>]
+[<font class="optstyle">-bg</font><font class="argstyle"> color</font>]
+[<font class="optstyle">-display</font><font class="argstyle"> display</font>]
+[<font class="optstyle">-nodisplay</font><font class="argstyle"></font>]
+<p>
+<h2><a name="section_2">Description</a></h2>
+
+<p>
+<dl compact>
+<p>
+Ical provides an X interface for maintaining a calendar. A 
+calendar is basically just a set of items. An item is either an 
+appointment, or a notice. An appointment starts at a particular time 
+of the day, and finishes at a particular time of the day. A notice 
+does not have any starting or ending time. Notices are useful for 
+marking certain days as special. For example, a calendar may contain 
+a notice for April 15th indicating that taxes are due. When the 
+documentation below refers to an item, it applies both to notices 
+and appointments. The main features of ical are: 
+<p>
+<ul compact>
+<li>Items can be created and edited easily. 
+</li>
+<li>Items can be cut, copied and pasted. 
+</li>
+<li>Items can be made to repeat in various ways. 
+</li>
+<li>Ical will generate alarms for upcoming appointments. 
+</li>
+<li>Users can view many calendars at a time. 
+</li>
+<li>Calendars can be shared by many users. 
+</li>
+<li>Related items can be grouped in their own calendar. 
+</li>
+</ul>
+</dd>
+</dl>
+<p>
+<h2><a name="section_3">Options</a></h2>
+
+<h4><a name="section_4">General Options</a></h4>
+
+<dl compact>
+<dt>[<font class="optstyle">-nodisplay</font><font class="argstyle"></font>]
+</dt>
+<dd> 
+Ignore the DISPLAY environment variable. 
+<p>
+</dd>
+<dt><font class="optstyle">-calendar</font><font class="argstyle"> filename</font>
+</dt>
+<dd> 
+The calendar is read from the specified <i>filename</i>.
+See the description of calendar files for more information. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-date</font><font class="argstyle"> date</font>]
+</dt>
+<dd> 
+Set the starting date for item listings or window displays 
+to the specified date. If this option is not specified, 
+then the starting date is today. For example: 
+<ul compact>
+<li>ical -date 1/aug/1997 
+</li>
+<li>ical -date 10/8/2026 
+</li>
+</ul>
+<p>
+</dd>
+<dt>[<font class="optstyle">-show</font><font class="argstyle"> +days</font>]
+</dt>
+<dd> 
+Print a text listing of items in the date range <br>
+
+[starting date...(starting date + <i>days</i>
+- 1)]
+to stdout. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-list</font><font class="argstyle"></font>]
+</dt>
+<dd> 
+Same as <i>-show</i>
++2 
+<p>
+</dd>
+<dt>[<font class="optstyle">-print</font><font class="argstyle"> 1|2|4|8|10|month</font>]
+</dt>
+<dd> 
+Generate a single page calendar in postscript format to stdout for 
+items in the next few days, or for the current month. The 
+starting date may be changed with the <i>-date</i>
+option. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-exportics</font><font class="argstyle"></font>]
+</dt>
+<dd> 
+Export the entire calendar in .ics format to standard out. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-addone</font><font class="argstyle"></font>]
+</dt>
+<dd> 
+Read all of stdin as a single text block, extracts date 
+and time info from it, and adds it to the calendar. If 
+the text contains a time, it is added as an appointment. 
+Otherwise, it is added as a notice. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-addmultiple</font><font class="argstyle"></font>]
+</dt>
+<dd> 
+Same as <font class="optstyle">-addone</font><font class="argstyle"></font>
+except it processes each line of 
+stdin as a separate calendar item. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_5">X Options</a></h4>
+
+<dl compact>
+<p>
+The following options are valid only if you are logged in on an X display. 
+<p>
+<dt>[<font class="optstyle">-iconic</font><font class="argstyle"></font>]
+</dt>
+<dd> 
+Start up with the main window iconified. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-iconposition</font><font class="argstyle"> x,y</font>]
+</dt>
+<dd> 
+Icon is placed at the specified position. This is an ancient 
+option that seems to have no effect in modern Linux environments. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-popup</font><font class="argstyle"></font>]
+</dt>
+<dd> 
+Popup a window containing the same contents as <i>-show</i>
++2 
+and exit as soon as the window is dismissed. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-geometry</font><font class="argstyle"> +x+y</font>]
+</dt>
+<dd> 
+Use <i>+x+y</i>
+as the geometry for the main window. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-fg</font><font class="argstyle"> color</font>]
+</dt>
+<dd> 
+Use <i>color</i>
+as the foreground for all windows. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-bg</font><font class="argstyle"> color</font>]
+</dt>
+<dd> 
+Use <i>color</i>
+as the background for all windows. 
+<p>
+</dd>
+<dt>[<font class="optstyle">-display</font><font class="argstyle"> display</font>]
+</dt>
+<dd> 
+Use the specified X display. 
+<p>
+</dd>
+</dl>
+<p>
+<h2><a name="section_6">Windows</a></h2>
+
+The main calendar window displays the appointments and notices for 
+a particular date. 
+<p>
+<h4><a name="section_7">Date Selector</a></h4>
+
+The top left portion of the window contains a date selector. 
+You can click on the various arrows to change the month or the 
+year. The day of the month can be selected by clicking on the 
+appropriate day in the month display. The date selector 
+contains various other buttons for convenient date selection. 
+<p>
+<h4><a name="section_8">Notice Window</a></h4>
+
+The bottom left portion of the window contains the notices for 
+the selected date. A scroll bar is provided if all of the 
+notices for the selected date do not fit into the notice 
+window. 
+<p>
+<h4><a name="section_9">Appointment Window</a></h4>
+
+The right portion of the window contains the appointments for 
+the selected day. You can scroll this region by using the 
+scroll bar, or by dragging with the middle mouse button in the 
+background. 
+<p>
+<h4><a name="section_10">Menubar</a></h4>
+
+A menubar runs along the top of the calendar window. The File 
+menu allows you to cre‐ ate and destroy application 
+windows. 
+<p>
+<h4><a name="section_11">Status Line</a></h4>
+
+The bottom portion of the window contains a status line. This 
+status line indicates the calendar from which the selected 
+item comes and whether or not the selected item repeats. 
+<p>
+<h2><a name="section_12">Calendar Files</a></h2>
+
+A calendar is stored in a calendar file. The default calendar file 
+is named .calendar and is kept in the user's home directory. If 
+the CALENDAR environment variable is set, its value is used as the 
+name of the calendar file. The CALENDAR environment variable and 
+the default can both be overridden by specifying a file name on 
+the command line as follows -- ical -calendar file-name. Ical 
+periodically saves any modifications made to a calendar to the 
+corresponding calendar file. It also periodically incorporates 
+changes made to a shared calendar file by other instances of ical. 
+You can explicitly trigger these periodic saves and reads by using 
+the File menu. 
+<p>
+<h4><a name="section_13">Including and Sharing Calendars</a></h4>
+
+You can include other calendars into your private 
+calendar. This facility is mainly useful for allowing a group 
+of people to share a common set of items. For example, members 
+of a particular group might have a calendar that contains the 
+birthdays for each member of the group. This calendar can be 
+included in each group member's private calendar. Use the 
+File menu to include and exclude shared calendars. Use the 
+Move Item To ... entry from the Item menu to move items 
+between calendars. Use the From Calendar ... entry in the 
+List menu to list all items a particular calendar. 
+<p>
+<h2><a name="section_14">Items</a></h2>
+
+<h4><a name="section_15">Notices</a></h4>
+
+You can enter notices by clicking in the background in the 
+bottom-left portion of the main calendar window. This click 
+will create a new notice for the selected date. You can enter 
+text into the notice by typing into it while it is selected 
+(selected notices are highlighted by being displayed in 
+different colors). A notice can be selected for editing by 
+clicking with left button. 
+<p>
+<h4><a name="section_16">Appointments</a></h4>
+
+You can enter appointments by left-clicking in the background 
+in the right portion of the main calendar window. This click 
+will create a new appointment for the selected date. The start 
+time for this appointment is determined by the click 
+location. You can move the appointment by dragging it with the 
+middle mouse button held down. The appointment can be resized 
+by dragging with the right mouse button held down. 
+<p>
+Appointment text can be edited by typing into the appointment 
+window while it is selected. If the appointment text you are 
+typing in does not fit into the appointment area, then it will 
+overflow out of the appointment area, but will be editable 
+normally. If you do not like overflowing text, you should 
+turn off the Allow Text Overflow option in the Options menu . 
+With this option turned off, if the current text completely 
+fills the area allocated to the appointment, then any attempts 
+to add to the appointment text will be ignored until the 
+appointment is enlarged with the right mouse button. 
+Likewise, the right mouse button will refuse to shrink an 
+appointment window if the appointment text completely fills 
+the appointment window. 
+<p>
+<h4><a name="section_17">Alarms</a></h4>
+
+Ical generates alarms for appointments. By default, the first 
+alarm is generated fifteen minutes before the appointment is 
+supposed to start and successive alarms are generated every 
+five minutes until the appointment actually starts. You can 
+change this default behavior by selecting the Default Alarms 
+entry from the Options menu. You can also change the timings 
+of these alarms on an appointment-by-appointment basis by 
+double-clicking on the appointment, or by selecting the 
+appointment and then chosing the Properties entry in the Item 
+menu. 
+<p>
+<h4><a name="section_18">Repeating Items</a></h4>
+
+Items can be made to repeat in various ways. Item repetition 
+can be controlled by using the entries in the Repeat menu. 
+These entries make the item repeat in certain frequently used 
+ways. For example, the Monthly entry makes the selected item 
+repeat once per month and the Weekly entry makes the selected 
+item repeat once per week. The Edit Monthly... and Edit 
+Weekly... entries can be used to make items that repeat in 
+more complex ways: for example, an item that occurs on the 
+last Friday of each month, or an item that occurs on Monday, 
+Wednesday, and Friday every week. 
+<p>
+In addition to making an item repeat in one of the pre-defined 
+ways, you can also restrict an item's starting and finishing 
+date by selecting the Set Range... entry from the Repeat menu. 
+<p>
+Normally, a modification to a repeating item applies to all 
+occurrences of that item. A single occurrence of a repeating 
+item can be modified by selecting the occurrence and then 
+choosing the Make Unique entry from the Repeat menu. The 
+selected occurrence can now be modified independently of the 
+repeating item. 
+<p>
+<h4><a name="section_19">Todo Items</a></h4>
+
+Items can be marked as todo items by selecting the Todo entry 
+in the Item menu. A todo item is automatically moved forward 
+to today's date every day until the item is deleted or marked 
+as done. An item can be marked as done by clicking in the 
+little check-box right next to the displayed item. 
+<p>
+<h4><a name="section_20">Highlighting</a></h4>
+
+By default, if any item occurs on a date, then the date is 
+highlighted in the date selector located in the top-left 
+corner of the calendar window. You can use the Highlight 
+entries in the Item menu to control this highlighting behavior 
+on an item-by-item basis. 
+<p>
+<h2><a name="section_21">Key bindings</a></h2>
+
+This section is currently incomplete. 
+<p>
+<h2><a name="section_22">Editing</a></h2>
+
+Dragging with the left mouse button in a selected appointment or 
+notice sets the X selection. The Edit menu provides commands for 
+dealing with the X selection. 
+<p>
+Ical also has a clipboard that can store a single item. The Copy 
+entry in the Edit menu copies the selected item into the 
+clipboard. The Cut entry does the same, but it also deletes the 
+item from the calendar. If the selected item repeats, then the Cut 
+command allows the user to delete all occurrences of the item, or 
+just the selected occurrence. However, if the selected item does 
+not belong to you, then Cut just hides the item from you. Other 
+people will still see the item. An item in the clipboard can be 
+inserted into the current day by selecting Paste entry. The newly 
+pasted item loses all repetition information, and occurs just on 
+the day in which it was pasted. 
+<p>
+<h2><a name="section_23">Listing items</a></h2>
+
+You can generate listings of imminent items by selecting one of 
+the listing options in the List menu. You can also use the 
+command line options -list, -show, or -popup to generate item 
+listings. The command line options are most useful in .login 
+files. 
+<p>
+By default an item is included in a listing for a particular date 
+if it occurs either on that date, or on the very next day. You 
+can control this feature of item listings with the List item entry 
+in the Item menu. 
+<p>
+<h2><a name="section_24">Printing</a></h2>
+
+Calendar contents can be printed by selecting the Print option 
+from the File menu. 
+<p>
+<h2><a name="section_25">Customization</a></h2>
+
+Some of ical's behavior can be customized via the Options menu. 
+Other aspects of ical's behavior can be controlled via X 
+Resources. 
+<p>
+<h4><a name="section_26">X Resources Behavior</a></h4>
+
+<dl compact>
+The following X resources can be used to control various 
+aspects of ical's behavior. 
+<p>
+<dt>Ical.pollSeconds</dt>
+<dd> 
+Shared calendars are checked for changes made by other 
+people once every pollSeconds seconds. The default value 
+is 120. If ical appears sluggish, or if it is using too 
+much CPU time, increase this value. 
+<p>
+</dd>
+<dt>Ical.saveSeconds</dt>
+<dd> 
+Calendar files are saved once every saveSeconds seconds. 
+The default value is 30. If ical appears sluggish, or if 
+it is using too much CPU time, increase this value. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_27">Dimensions</a></h4>
+
+<dl compact>
+The following X resources can be used to control various 
+dimensions of ical's appearance. 
+<p>
+<dt>Ical.itemSelectWidth</dt>
+<dd> 
+The border width of selected items is set to the value of 
+this option to display the selected status of the item to 
+to the user. On color displays, the default value of this 
+option is 1 because on color displays selection is 
+indicated by changing the color of the selected item. On 
+monochrome displays, the default value of itemSelectWidth 
+is 4. 
+<p>
+</dd>
+<dt>Ical.Dayview.geometry</dt>
+<dd> 
+X geometry specification for main calendar window. 
+Usually, you will just specify the window position here. 
+The size of the window is easier to control via the 
+Options menu. 
+<p>
+</dd>
+<dt>Ical.Reminder.geometry</dt>
+<dd> 
+X geometry specification for alarms. Usually, you will 
+just specify the window posi‐ tion here. The 
+window size will be calculated automatically. 
+<p>
+</dd>
+<dt>Ical.Listing.geometry</dt>
+<dd> 
+X geometry specification for item listings. Usually, you 
+will just specify the window position here. The window 
+size will be calculated automatically. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_28">Colors</a></h4>
+
+<dl compact>
+The following X resources can be used to customize ical's use 
+of colors. If ical windows show up with illegible colors (not 
+enough distinction between background and foreground), it may 
+be because your X resources contain definitions for 
+*foreground or *background that conflict with ical colors. In 
+general, it is a bad idea to define *foreground and 
+*background in your resources because it will break a number 
+of programs. You will be better off defining resources on an 
+application by application basis. 
+<p>
+<dt>Ical*Foreground/Ical*Background</dt>
+<dd> 
+Foreground and background colors for most of ical's 
+windows. 
+<p>
+</dd>
+<dt>Ical*disabledForeground</dt>
+<dd> 
+Foreground color assigned to disabled buttons and menu 
+entries. 
+<p>
+</dd>
+<dt>Ical.itemFg/Ical.itemBg</dt>
+<dd> 
+Foreground and background colors for unselected items. 
+The default foreground is black and the default background 
+is gray. 
+<p>
+</dd>
+<dt>Ical.itemSelectFg/Ical.itemSelectBg</dt>
+<dd> 
+Foreground and background colors for selected items. The 
+default foreground is black and the default background is 
+SlateBlue1. 
+<p>
+</dd>
+<dt>Ical.itemOverflowColor/Ical.itemOverflowStipple</dt>
+<dd> 
+Background color and stippling used for appointment text 
+that overflows out of the ap‐ pointment area. On 
+color displays, the default overflow background is 
+SlateBlue3 and no stippling is done (specified by an empty 
+stipple option). On monochrome displays, the default 
+overflow background is black, and the default overflow 
+stippling is gray50. 
+<p>
+</dd>
+<dt>Ical.apptLineColor</dt>
+<dd> 
+The color for the background lines and times displayed in 
+the appointment window. 
+<p>
+</dd>
+<dt>Ical.weekdayColor</dt>
+<dd> 
+The color used to display days of the week. The default 
+is black. 
+<p>
+</dd>
+<dt>Ical.weekendColor</dt>
+<dd> 
+The color used to display weekends. The default is red. 
+<p>
+</dd>
+<dt>Ical.interestColor</dt>
+<dd> 
+The color used to highlight interesting dates. The 
+default is blue. 
+<p>
+</dd>
+<dt>Ical.weekendInterestColor</dt>
+<dd> 
+The color used to highlight interesting dates on weekends 
+and holidays. The default is purple. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_29">Fonts</a></h4>
+
+<dl compact>
+The following resources can be used to customize ical's use of 
+fonts. 
+<p>
+<dt>Ical.fontFamily</dt>
+<dd> 
+Preferred font family. Fonts for various purposes are 
+obtained from this family unless overridden with 
+one of the specifications below. The default font family 
+is times. Some other font families you can specify here 
+are charter, new century school book, and 
+helvetica. My personal favorite is new century 
+schoolbook. 
+<p>
+</dd>
+<dt>Ical.fixedFontFamily</dt>
+<dd> 
+Preferred font family for fixed-width fonts. Fixed-width 
+fonts for various purposes are obtained from this family 
+unless overridden with one of the specifications below. 
+The default font family is courier. Some other font 
+families you can specify here are fixed and terminal. 
+<p>
+</dd>
+<dt>Ical.fontSize</dt>
+<dd> 
+Font sizes used for ical. Use the value small to use 
+small font sizes everywhere. Any other value for this 
+option defaults to the normal fonts. 
+<p>
+</dd>
+<dt>Ical*itemFont</dt>
+<dd> 
+Font used to display item contents. 
+<p>
+</dd>
+<dt>Ical.weekdayFont</dt>
+<dd> 
+Font used for displaying days of the week. 
+<p>
+</dd>
+<dt>Ical.weekendFont</dt>
+<dd> 
+Font used for displaying weekends. 
+<p>
+</dd>
+<dt>Ical.interestFont</dt>
+<dd> 
+Font used to highlight interesting dates. 
+<p>
+</dd>
+<dt>Ical.weekendInterestFont</dt>
+<dd> 
+Font used to highlight interesting dates on weekends and holidays. 
+<p>
+</dd>
+<dt>Ical.smallHeadingFont</dt>
+<dd> 
+Font used for small headings. 
+<p>
+</dd>
+<dt>Ical.largeHeadingFont</dt>
+<dd> 
+Font used for large headings. 
+<p>
+</dd>
+<dt>Ical*<class>*font</dt>
+<dd> 
+Font used for windows of a certain class. Possible values 
+for <class> are Dialog, Button, Label, Menubutton, Menu, 
+Listbox, and Reminder. 
+<p>
+<h4><a name="section_30">Tcl Code</a></h4>
+
+Users can also customize ical by writing tcl code and storing 
+it in the file &nbsp;/.tk/ical/user.tcl. The code stored in this 
+file is executed when ical starts up. 
+<p>
+Ical also looks for site-specific customizations at startup. 
+These customizations can be placed in the file site.tcl in 
+either the ical library directory, or its parent directory. 
+(By default, ical looks for site.tcl in 
+/usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but 
+these directories may be located elsewhere on your 
+system.) The site specific files will be loaded in before any 
+user specific customization file is loaded in. 
+<p>
+See the "Tcl Interface to Ical" document available via the 
+Ical help menu. 
+<p>
+Ical can run even when X is not available, therefore 
+customization files should be written so that they will 
+function even when Tk commands are not available. 
+<p>
+<h2><a name="section_31">Menus</a></h2>
+
+<h4><a name="section_32">File Menu</a></h4>
+
+<dl compact>
+<dt>Save</dt>
+<dd> 
+Save any modifications to the appropriate calendar files. 
+<p>
+</dd>
+<dt>Re-Read</dt>
+<dd> 
+Read any changes made to a shared calendar by another user 
+or another instance of ical. Ical will automatically 
+invoke this function periodically. It is provided as a 
+menu entry only so for people who do not want to wait for 
+ical's periodic checks. 
+<p>
+</dd>
+<dt>Print</dt>
+<dd> 
+Print calendar contents. The user has the option of 
+saving the print-out to a file, pre viewing the print-out 
+by specifying a PostScript displaying program, or sending 
+the print-out directly to a PostScript printer by 
+specifying a printing command. 
+<p>
+</dd>
+<dt>Include Calendar</dt>
+<dd> 
+Select a calendar to include into your private calendar. 
+Included calendars are normally used to share calendars 
+between different users. 
+<p>
+</dd>
+<dt>New Window</dt>
+<dd> 
+Open a new calendar window. This new window can be used to 
+view the items for a different date than the original 
+window. 
+<p>
+</dd>
+<dt>Close Window</dt>
+<dd> 
+Close the selected window. 
+<p>
+</dd>
+<dt>Exit</dt>
+<dd> 
+Save any changes and kill ical. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_33">Edit Menu</a></h4>
+
+<dl compact>
+<dt>Cut Item</dt>
+<dd> 
+Delete the currently selected item and store it in the 
+clipboard. 
+<p>
+</dd>
+<dt>Copy Item</dt>
+<dd> 
+Copy selected item to the clipboard. 
+<p>
+</dd>
+<dt>Paste Item</dt>
+<dd> 
+Paste item from clipboard into calendar. 
+<p>
+</dd>
+<dt>Delete Text</dt>
+<dd> 
+Delete the currently selected text from the selected item. 
+<p>
+</dd>
+<dt>Insert Text</dt>
+<dd> 
+Insert the current X selection into the selected item. 
+<p>
+</dd>
+<dt>Import Text</dt>
+<dd> 
+Import the current X selection as a new item into the 
+calendar. The date and time of this new item are parsed 
+from the X selection if possible. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_34">Item Menu</a></h4>
+
+<dl compact>
+<dt>Todo</dt>
+<dd> 
+Toggle the item between being a todo item and not being a 
+todo item. 
+<p>
+</dd>
+<dt>Always Highlight</dt>
+<dd> 
+The item always causes the corresponding date to be 
+highlighted. This is the default behavior. 
+<p>
+</dd>
+<dt>Never Highlight</dt>
+<dd> 
+The item never causes the corresponding date to be 
+highlighted. 
+<p>
+</dd>
+<dt>Highlight Future</dt>
+<dd> 
+The item causes the corresponding date to be highlighted 
+if and only if the date is not in the past. 
+<p>
+</dd>
+<dt>Holiday</dt>
+<dd> 
+The item causes the corresponding date to be highlighted 
+as a holiday. 
+<p>
+</dd>
+<dt>Change Alarms</dt>
+<dd> 
+This item pops up a dialog box that allows you to edit the 
+alarm times for an appointment. 
+<p>
+Note that this will only change the alarm times for the 
+selected appointments. You can make this change for all 
+appointments that do not have special alarm times by using 
+the Default Alarms entry in the Options menu. 
+<p>
+</dd>
+<dt>Early Warning</dt>
+<dd> 
+By default an item is included in a listing for a 
+particular date if it occurs either on that date, or on 
+the very next day. Sometimes, you may want to include an 
+item in listings for earlier dates. For example, if you 
+have an item reminding you of a birthday on March 17th, 
+you might want this item to be included in all listings 
+from March 7th to March 17th so that you will have enough 
+time to go out and buy a present. You can achieve this 
+effect by selecting this menu entry and then entering "10 
+days" into the resulting dialog. 
+<p>
+Note that this will only change the listing behavior for 
+the selected item. You can make this change for all items 
+you create from now on by using the Default Listings entry 
+in the Options menu. 
+<p>
+</dd>
+<dt>Properties ...</dt>
+<dd> 
+Edit various item properties, including the calendar to 
+which the item belongs, highlighting information, early 
+warning options, alarm times, and starting and ending 
+times for appointments. You can also double-click on an 
+item to pop up the property editing dialog. 
+<p>
+</dd>
+<dt>Search Forward</dt>
+<dd> 
+Search forward looking for an item that contains a user 
+specified string. 
+<p>
+</dd>
+<dt>Search Backward</dt>
+<dd> 
+Search backward looking for an item that contains a user 
+specified string. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_35">Repeat Menu</a></h4>
+
+<dl compact>
+<dt>Don't Repeat</dt>
+<dd> 
+Make the selected item a non-repeating item. 
+<p>
+</dd>
+<dt>Daily</dt>
+<dd> 
+Make the item repeat every day. 
+<p>
+</dd>
+<dt>Weekly</dt>
+<dd> 
+Make the item repeat once every week. 
+<p>
+</dd>
+<dt>Monthly</dt>
+<dd> 
+Make the item repeat once every month. 
+<p>
+</dd>
+<dt>Annually</dt>
+<dd> 
+Make the item repeat once every year. 
+<p>
+</dd>
+<dt>Edit Weekly</dt>
+<dd> 
+Make the item repeat on a weekly basis in a complicated 
+fashion. For example, on Tuesday and Thursday every week. 
+<p>
+</dd>
+<dt>Edit Monthly</dt>
+<dd> 
+Make the item repeat on a monthly basis in a complicated 
+fashion. For example, on the third Sunday in June, or the 
+last working day of each month. 
+<p>
+</dd>
+<dt>Set Range...</dt>
+<dd> 
+Restrict the range for a repeating item. 
+<p>
+</dd>
+<dt>Last Occurrence</dt>
+<dd> 
+Make the current occurrence the last occurrence of the 
+selected item. I.e., remove any occurrences after the 
+current date. 
+<p>
+</dd>
+<dt>Make Unique</dt>
+<dd> 
+If you want to modify just a single occurrence of a 
+repeating item, select the item occurrence you want to 
+modify and then activate this menu entry. Now all 
+modifications to this item occurrence will only affect 
+this particular occurrence. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_36"> List Menu</a></h4>
+
+<dl compact>
+<dt>One Day</dt>
+<dd> 
+List the item occurrences for one day. 
+<p>
+</dd>
+<dt>Seven Days</dt>
+<dd> 
+List the item occurrences for the next seven days. 
+<p>
+</dd>
+<dt>Ten Days</dt>
+<dd> 
+List the item occurrences for the next ten days. 
+<p>
+</dd>
+<dt>Thirty Days</dt>
+<dd> 
+List the item occurrences for the next thirty days. 
+<p>
+</dd>
+<dt>Week</dt>
+<dd> 
+List the item occurrences for this week. 
+<p>
+</dd>
+<dt>Month</dt>
+<dd> 
+List the item occurrences for this month. 
+<p>
+</dd>
+<dt>Year</dt>
+<dd> 
+List the item occurrences for this year. 
+<p>
+</dd>
+<dt>From Calendar ...</dt>
+<dd> 
+List all item occurrences from a selected calendar. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_37">Option Menu</a></h4>
+
+<dl compact>
+<dt>Appointment Range</dt>
+<dd> 
+Controls the subset of a day displayed by default in the 
+appointment listing. The factory settings display 8:00am 
+to 6:00pm. 
+<p>
+</dd>
+<dt>Notice Window Height</dt>
+<dd> 
+This entry can be used to change the height of the notice 
+window. 
+<p>
+</dd>
+<dt>Item Width</dt>
+<dd> 
+This entry can be used to change the width of displayed 
+appointments and notices. 
+<p>
+</dd>
+<dt>Allow Text Overflow</dt>
+<dd> 
+If this option is selected, then you can type in any 
+amount of text into an appointment. The part of the text 
+that does not fit into the appointment will be allowed to 
+overflow out of the appointment. If you do not like text 
+overflowing out of an appointment, then you should turn 
+off this option. 
+<p>
+</dd>
+<dt>Display Am/Pm</dt>
+<dd> 
+If this option is selected, time will be printed in twelve 
+hour mode with am or pm indicators. Otherwise, time will 
+be printed in twenty-four hour mode. 
+<p>
+</dd>
+<dt>Start Week on Monday</dt>
+<dd> 
+If this option is selected, month displays will start each 
+week off on a Monday. Otherwise, each week will start on 
+a Sunday. 
+<p>
+</dd>
+<dt>Default Alarms</dt>
+<dd> 
+Use this menu entry to change the time intervals at which 
+alarms go off. The factory settings cause alarms to be 
+triggered fifteen minutes before each appointment, and 
+then once every five minutes until the appointment 
+actually starts. This menu entry changes the default 
+alarm behavior for all appointments. You can override 
+this default behavior on an appointment-by-appointment 
+basis by selecting an appointment and then selecting the 
+Change Alarms entry in the item menu. 
+<p>
+</dd>
+<dt>Default Listings</dt>
+<dd> 
+This menu can be used to select the default listing 
+behavior for newly created items. If the On Occurrence 
+entry is selected, then a newly created item will only be 
+shown in the listing of the day on which the item occurs. 
+If the A Day Early entry is selected, then a new item will 
+be shown in listings starting a day before the item 
+occurrence. Similarly, the other menu entries can be 
+selected to make new items show up in listings a number of 
+days before their actual occurrence. This menu selects 
+the default behavior for new items. Individual item 
+behavior can be controlled by similar entries in the Item 
+menu. 
+<p>
+</dd>
+</dl>
+<p>
+<h4><a name="section_38">Help Menu</a></h4>
+
+<dl compact>
+<dt>About Ical</dt>
+<dd> 
+Displays ical version number and author information. 
+<p>
+</dd>
+<dt>User Guide</dt>
+<dd> 
+Displays this document. 
+<p>
+</dd>
+<dt>Tcl Interface to Ical</dt>
+<dd> 
+Displays instructions for using Tcl to customize Ical. 
+<p>
+<h2><a name="section_39">Author</a></h2>
+
+<p>
+Originally written by Sanjay Ghemawat in 1993. Updated by Carl 
+Byington in 2026. 
+<p>
+<h2><a name="section_40">Copyright</a></h2>
+
+<p>
+Copyright &copy;&nbsp; 1993 by Sanjay Ghemawat. Permission is granted to make 
+and distribute verbatim copies of this manual provided the copyright 
+notice and this permission notice are preserved on all copies. 
+<p>
+</body>
+</html>
+<!-- NOTE: This file is generated, DO NOT EDIT. -->
