@@ -4,12 +4,15 @@
  * like the Tcl main routine.  The following control whether or not
  * Tk is used --
  *
- *      $DISPLAY in environment                 Use Tk
- *      -display                                Use Tk
- *      -list                                   Do not use Tk
- *      -show                                   Do not use Tk
- *      -print                                  Do not use Tk
- *      -nodisplay                              Do not use Tk
+ *      $DISPLAY in environment     Use Tk
+ *      -display                    Use Tk
+ *      -list                       Do not use Tk
+ *      -show                       Do not use Tk
+ *      -print                      Do not use Tk
+ *      -exportics                  Do not use Tk
+ *      -addone                     Do not use Tk
+ *      -addmultiple                Do not use Tk
+ *      -nodisplay                  Do not use Tk
  *
  * The "-f" flag can be used to pass in an initialization script regardless
  * of whether or not Tk is used.
@@ -67,6 +70,18 @@ main(int argc, char* argv[]) {
             continue;
         }
         if (strcmp(argv[i], "-print") == 0) {
+            have_tk = 0;
+            continue;
+        }
+        if (strcmp(argv[i], "-exportics") == 0) {
+            have_tk = 0;
+            continue;
+        }
+        if (strcmp(argv[i], "-addone") == 0) {
+            have_tk = 0;
+            continue;
+        }
+        if (strcmp(argv[i], "-addmultiple") == 0) {
             have_tk = 0;
             continue;
         }

@@ -151,8 +151,7 @@ proc text_fold {t} {
     return $t2
 }
 
-proc export_ics {
-    global cal
+proc export_ics {cal} {
     preamble stdout
     cal query [date first] [date last] i d {
         iteminfo stdout $i $d

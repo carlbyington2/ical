@@ -1,0 +1,23 @@
+#!/bin/bash
+
+tf=/tmp/tcl.files
+rm -f $tf
+
+# patch the tcl files
+grep -E -rl '^(class|action) ' . | while read fn; do
+    if [[ $fn == *.tcl ]]; then
+        echo $fn >>$tf
+        cp -a $fn $fn.save
+        sed -i -r -e 's/^(class|action) /proc /g' $fn
+    fi
+done
+
+# rebuild the indices
+echo 'auto_mkindex .      *.tcl' | tclsh
+echo 'auto_mkindex tcllib *.tcl' | tclsh
+echo 'auto_mkindex tests  *.tcl' | tclsh
+
+# undo the patches
+cat $tf | while read fn; do
+    mv $fn.save $fn
+done

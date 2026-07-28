@@ -8,6 +8,8 @@ proc ical_no_tk_script {} {
     global argv ical
 
     set showcount 1
+    set doaddone  0
+    set doaddmul  0
     set doexport  0
     set doprint   0
     set dolist    0
@@ -17,6 +19,12 @@ proc ical_no_tk_script {} {
         set argv [lrange $argv 1 end]
 
         switch -- $arg {
+            "-addmultiple" {
+                set doaddmul 1
+            }
+            "-addone" {
+                set doaddone 1
+            }
             "-exportics" {
                 set doexport 1
             }
@@ -50,8 +58,37 @@ proc ical_no_tk_script {} {
     # Get calendar
     calendar cal $ical(calendar)
 
+    if $doaddmul {
+        # Adapted from "icaladd" by "ark@research.att.com".
+        puts stderr =====
+        while {[gets stdin line] >= 0} {
+            set item [item_parse $line]
+            puts stderr [date2text [$item first]]
+            puts -nonewline stderr [item2text notify $item]
+            cal add $item
+            puts stderr =====
+        }
+        cal save
+    }
+
+    if $doaddone {
+        set text {}
+        while {[gets stdin line] >= 0} {
+            lappend text $line
+        }
+        set text [join $text "\n"]
+
+        set item [item_parse $text]
+        cal add $item
+        cal save
+        puts stderr =====
+        puts stderr [date2text [$item first]]
+        puts -nonewline stderr [item2text notify $item]
+        puts stderr =====
+    }
+
     if $doexport {
-        export_ics
+        export_ics cal
     }
 
     if $doprint {
@@ -74,7 +111,8 @@ proc ical_no_tk_script {} {
             }
             puts -nonewline stdout [item2text $d $i]
         }
-        cal delete
     }
+
+    cal delete
     exit 0
 }

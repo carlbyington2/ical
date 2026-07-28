@@ -208,6 +208,9 @@ proc repeat_check {leader item date} {
 #   -list
 #   -show [+<days>]
 #   -print (1|2|4|8|10|month)
+#   -exportics
+#   -addone
+#   -addmultiple
 
 # parsed by main.C/main
 #   -file <script.tcl>
@@ -227,21 +230,24 @@ proc repeat_check {leader item date} {
 # effects - Print usage message and exit
 proc ical_usage {} {
     puts stderr {Usage: ical [options]
-          -nodisplay                ; Ignore DISPLAY environment variable
-          -display <xdisplay>       ; Override DISPLAY environment variable
-          -calendar <file>          ; Calendar file
-          -date <date>              ; Start ical on specified date
-          -list                     ; List imminent items
-          -show [+<days>]           ; Like "-list" but covers specified range
-          -print (1|2|4|8|10|month) ; Generate postscript for specified range
-          -file <script.tcl>        ; Run a tcl script
+        -nodisplay                ; Ignore DISPLAY environment variable
+        -display <xdisplay>       ; Override DISPLAY environment variable
+        -calendar <file>          ; Calendar file
+        -date <date>              ; Start ical on specified date
+        -list                     ; List imminent items
+        -show [+<days>]           ; Like "-list" but covers specified range
+        -print (1|2|4|8|10|month) ; Generate postscript for specified range
+        -file <script.tcl>        ; Run a tcl script
+        -exportics                ; export the calendar to stdout in ics format
+        -addone                   ; add a single calendar entry from stdin; can span multiple lines
+        -addmultiple              ; add multiple calendar entries from stdin; one per line
     If on X display --
-          -popup                    ; Just display imminent items
-          -iconic                   ; Start iconified
-          -iconposition <x,y>       ; Initial icon position
-          -fg <color>               ; Foreground color
-          -bg <color>               ; Background color
-          -geometry <geometry>      ; Initial window geometry}
+        -popup                    ; Just display imminent items
+        -iconic                   ; Start iconified
+        -iconposition <x,y>       ; Initial icon position
+        -fg <color>               ; Foreground color
+        -bg <color>               ; Background color
+        -geometry <geometry>      ; Initial window geometry}
     exit 1
 }
 
