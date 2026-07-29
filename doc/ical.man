@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Tue Jul 28 16:50:32 2026
+.\" Manual page created with latex2man on Wed Jul 29 16:03:21 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -35,6 +35,15 @@ ical
 [\fB\-bg\fP\fI color\fP]
 [\fB\-display\fP\fI display\fP]
 [\fB\-nodisplay\fP\fI\fP]
+.PP
+.SH HISTORY
+
+.PP
+By todays standards, this is an ancient program. Much of the code 
+is 33 years old and counting, and it still runs nicely. Please 
+see \fBhttps://opal.com/src/ical\fP
+for more on the history of 
+this project. 
 .PP
 .SH DESCRIPTION
 
@@ -81,16 +90,17 @@ Related items can be grouped in their own calendar.
 .SS GENERAL OPTIONS
 .TP
 [\fB\-nodisplay\fP\fI\fP]
- Ignore the DISPLAY environment variable. 
+Ignore the DISPLAY environment variable. 
 .PP
 .TP
 \fB\-calendar\fP\fI filename\fP
- The calendar is read from the specified \fIfilename\fP\&.
-See the description of calendar files for more information. 
+The calendar is read from the specified \fIfilename\fP\&.
+See the 
+description of calendar files for more information. 
 .PP
 .TP
 [\fB\-date\fP\fI date\fP]
- Set the starting date for item listings or window displays 
+Set the starting date for item listings or window displays 
 to the specified date. If this option is not specified, 
 then the starting date is today. For example: 
 .RS
@@ -106,7 +116,7 @@ ical \-date 10/8/2026
 .RE
 .TP
 [\fB\-show\fP\fI +days\fP]
- Print a text listing of items in the date range 
+Print a text listing of items in the date range 
 .br
 [starting date...(starting date + \fIdays\fP
 \- 1)]
@@ -114,30 +124,30 @@ to stdout.
 .PP
 .TP
 [\fB\-list\fP\fI\fP]
- Same as \fI\-show\fP
+Same as \fI\-show\fP
 +2 
 .PP
 .TP
 [\fB\-print\fP\fI 1|2|4|8|10|month\fP]
- Generate a single page calendar in postscript format to stdout for 
+Generate a single page calendar in postscript format to stdout for 
 items in the next few days, or for the current month. The 
 starting date may be changed with the \fI\-date\fP
 option. 
 .PP
 .TP
 [\fB\-exportics\fP\fI\fP]
- Export the entire calendar in \&.ics format to standard out. 
+Export the entire calendar in \&.ics format to standard out. 
 .PP
 .TP
 [\fB\-addone\fP\fI\fP]
- Read all of stdin as a single text block, extracts date 
+Read all of stdin as a single text block, extracts date 
 and time info from it, and adds it to the calendar. If 
 the text contains a time, it is added as an appointment. 
 Otherwise, it is added as a notice. 
 .PP
 .TP
 [\fB\-addmultiple\fP\fI\fP]
- Same as \fB\-addone\fP\fI\fP
+Same as \fB\-addone\fP\fI\fP
 except it processes each line of 
 stdin as a separate calendar item. 
 .PP
@@ -147,37 +157,37 @@ The following options are valid only if you are logged in on an X display.
 .PP
 .TP
 [\fB\-iconic\fP\fI\fP]
- Start up with the main window iconified. 
+Start up with the main window iconified. 
 .PP
 .TP
 [\fB\-iconposition\fP\fI x,y\fP]
- Icon is placed at the specified position. This is an ancient 
+Icon is placed at the specified position. This is an ancient 
 option that seems to have no effect in modern Linux environments. 
 .PP
 .TP
 [\fB\-popup\fP\fI\fP]
- Popup a window containing the same contents as \fI\-show\fP
+Popup a window containing the same contents as \fI\-show\fP
 +2 
 and exit as soon as the window is dismissed. 
 .PP
 .TP
 [\fB\-geometry\fP\fI +x+y\fP]
- Use \fI+x+y\fP
+Use \fI+x+y\fP
 as the geometry for the main window. 
 .PP
 .TP
 [\fB\-fg\fP\fI color\fP]
- Use \fIcolor\fP
+Use \fIcolor\fP
 as the foreground for all windows. 
 .PP
 .TP
 [\fB\-bg\fP\fI color\fP]
- Use \fIcolor\fP
+Use \fIcolor\fP
 as the background for all windows. 
 .PP
 .TP
 [\fB\-display\fP\fI display\fP]
- Use the specified X display. 
+Use the specified X display. 
 .PP
 .SH WINDOWS
 
@@ -256,8 +266,7 @@ in the right portion of the main calendar window. This click
 will create a new appointment for the selected date. The start 
 time for this appointment is determined by the click 
 location. You can move the appointment by dragging it with the 
-middle mouse button held down. The appointment can be resized 
-by dragging with the right mouse button held down. 
+middle mouse button held down. 
 .PP
 Appointment text can be edited by typing into the appointment 
 window while it is selected. If the appointment text you are 
@@ -268,10 +277,9 @@ turn off the Allow Text Overflow option in the Options menu \&.
 With this option turned off, if the current text completely 
 fills the area allocated to the appointment, then any attempts 
 to add to the appointment text will be ignored until the 
-appointment is enlarged with the right mouse button. 
-Likewise, the right mouse button will refuse to shrink an 
-appointment window if the appointment text completely fills 
-the appointment window. 
+appointment is enlarged. Likewise, dragging the window resize 
+dots will refuse to shrink an appointment window if the 
+appointment text completely fills the appointment window. 
 .PP
 .SS ALARMS
 Ical generates alarms for appointments. By default, the first 
@@ -364,9 +372,43 @@ from the File menu.
 .PP
 .SH CUSTOMIZATION
 
+.PP
 Some of ical\&'s behavior can be customized via the Options menu. 
-Other aspects of ical\&'s behavior can be controlled via X 
-Resources. 
+Other aspects of ical\&'s behavior can be controlled via Tcl code or 
+X Resources. Customization via X Resources is a last resort. 
+.PP
+.SS TCL CODE
+Users can customize ical by writing tcl code and storing 
+it in the file  /.tk/ical/user.tcl. The code stored in this 
+file is executed when ical starts up. This is mostly used 
+to include pre\-written source files from the contrib/ directory. 
+For example: 
+.PP
+.Vb
+global ical
+set ical(dpi_scaling)  1.5
+pref_fixfonts
+
+set d $ical(library)/contrib
+source $d/timeofday.tcl
+source $d/weeknumber.tcl
+.Ve
+.PP
+Ical also looks for site\-specific customizations at startup. 
+These customizations can be placed in the file site.tcl in 
+either the ical library directory, or its parent directory. 
+(By default, ical looks for site.tcl in 
+/usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but 
+these directories may be located elsewhere on your 
+system.) The site specific files will be loaded in before any 
+user specific customization file is loaded in. 
+.PP
+See the "Tcl Interface to Ical" document available via the 
+Ical help menu. 
+.PP
+Ical can run even when X is not available, therefore 
+customization files should be written so that they will 
+function even when Tk commands are not available. 
 .PP
 .SS X RESOURCES BEHAVIOR
 The following X resources can be used to control various 
@@ -376,14 +418,12 @@ aspects of ical\&'s behavior.
 Ical.pollSeconds 
 Shared calendars are checked for changes made by other 
 people once every pollSeconds seconds. The default value 
-is 120. If ical appears sluggish, or if it is using too 
-much CPU time, increase this value. 
+is 120. 
 .PP
 .TP
 Ical.saveSeconds 
-Calendar files are saved once every saveSeconds seconds. 
-The default value is 30. If ical appears sluggish, or if 
-it is using too much CPU time, increase this value. 
+Calendar files are checked for modifications every 
+saveSeconds seconds. The default value is 30. 
 .PP
 .SS DIMENSIONS
 The following X resources can be used to control various 
@@ -547,31 +587,11 @@ Font used for windows of a certain class. Possible values
 for <class> are Dialog, Button, Label, Menubutton, Menu, 
 Listbox, and Reminder. 
 .PP
-.SS TCL CODE
-Users can also customize ical by writing tcl code and storing 
-it in the file  /.tk/ical/user.tcl. The code stored in this 
-file is executed when ical starts up. 
-.PP
-Ical also looks for site\-specific customizations at startup. 
-These customizations can be placed in the file site.tcl in 
-either the ical library directory, or its parent directory. 
-(By default, ical looks for site.tcl in 
-/usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but 
-these directories may be located elsewhere on your 
-system.) The site specific files will be loaded in before any 
-user specific customization file is loaded in. 
-.PP
-See the "Tcl Interface to Ical" document available via the 
-Ical help menu. 
-.PP
-Ical can run even when X is not available, therefore 
-customization files should be written so that they will 
-function even when Tk commands are not available. 
-.PP
 .SH MENUS
 
 .SS FILE MENU
 .RS
+.RE
 .TP
 Save 
 Save any modifications to the appropriate calendar files. 
@@ -583,8 +603,8 @@ Re\-Read
 Read any changes made to a shared calendar by another user 
 or another instance of ical. Ical will automatically 
 invoke this function periodically. It is provided as a 
-menu entry only so for people who do not want to wait for 
-ical\&'s periodic checks. 
+menu entry for people who do not want to wait for ical\&'s 
+periodic checks. 
 .RS
 .PP
 .RE
@@ -713,13 +733,35 @@ as a holiday.
 .PP
 .RE
 .TP
+Link to Web Document 
+Adds a link to a URI to the item. The item will display with 
+a small arrow, and a left\-click on that arrow will open 
+the configured browser with that URI. 
+.RS
+.PP
+.RE
+.TP
+Link to Local File 
+Adds a link to a local file to the item. The item will display 
+with a small arrow, and a left\-click on that arrow will open 
+a text window to display that file. 
+.RS
+.PP
+.RE
+.TP
+Remove Link 
+Removes the link from the item. 
+.RS
+.PP
+.RE
+.TP
 Change Alarms 
-This item pops up a dialog box that allows you to edit the 
+Pops up a dialog box that allows you to edit the 
 alarm times for an appointment. 
 .RS
 .PP
 Note that this will only change the alarm times for the 
-selected appointments. You can make this change for all 
+selected appointment. You can make this change for all 
 appointments that do not have special alarm times by using 
 the Default Alarms entry in the Options menu. 
 .PP
@@ -906,21 +948,26 @@ List all item occurrences from a selected calendar.
 .TP
 Appointment Range 
 Controls the subset of a day displayed by default in the 
-appointment listing. The factory settings display 8:00am 
+appointment listing. The default settings display 8:00am 
 to 6:00pm. 
 .RS
 .PP
 .RE
 .TP
 Notice Window Height 
-This entry can be used to change the height of the notice 
-window. 
+Controls the height of the notice window. 
 .RS
 .PP
 .RE
 .TP
 Item Width 
-This entry can be used to change the width of displayed 
+Controls the width of displayed appointments and notices. 
+.RS
+.PP
+.RE
+.TP
+Web Browser 
+Sets the path to the web browser used to open links from 
 appointments and notices. 
 .RS
 .PP

@@ -3,7 +3,6 @@
 \usepackage[latin1]{inputenc}
 \usepackage{babel}
 \usepackage{verbatim}
-\usepackage{enumitem}
 
 %% do we have the `hyperref package?
 \IfFileExists{hyperref.sty}{
@@ -28,11 +27,10 @@
 \setVersion{3.0.5}
 
 \pagestyle{fancy}
-\lfoot{\Version}
 
 \begin{document}
 
-\begin{Name}{1}{ical}{Sanjay Ghemawat}{ical \Version}{}
+\begin{Name}{1}{ical}{}{ical \Version}{ical - An X based Calendar Program}
 ical - An X based Calendar Program
 \end{Name}
 
@@ -55,6 +53,14 @@ ical - An X based Calendar Program
             \oOptArg{-bg}{ color}
             \oOptArg{-display}{ display}
             \oOptArg{-nodisplay}{}
+
+\section{History}
+%%%%%%%%%%%%%%%%%%%%%
+
+By todays standards, this is an ancient program. Much of the code
+is 33 years old and counting, and it still runs nicely. Please
+see \URL{https://opal.com/src/ical} for more on the history of
+this project.
 
 \section{Description}
 %%%%%%%%%%%%%%%%%%%%%
@@ -90,8 +96,8 @@ ical - An X based Calendar Program
     Ignore the DISPLAY environment variable.
 
 \item[\OptArg{-calendar}{ filename}]
-    The  calendar  is read from the specified \Arg{filename}.
-    See the description of calendar files for more information.
+    The calendar is read from the specified \Arg{filename}.  See the
+    description of calendar files for more information.
 
 \item[\oOptArg{-date}{ date}]
     Set the starting date for item listings or window displays
@@ -234,8 +240,7 @@ The following options are valid only if you are logged in on an X display.
         will create a new appointment for the selected date. The start
         time for this appointment is determined by the click
         location. You can move the appointment by dragging it with the
-        middle mouse button held down. The appointment can be resized
-        by dragging with the right mouse button held down.
+        middle mouse button held down.
 
         Appointment text can be edited by typing into the appointment
         window while it is selected.  If the appointment text you are
@@ -246,10 +251,9 @@ The following options are valid only if you are logged in on an X display.
         With this option turned off, if the current text completely
         fills the area allocated to the appointment, then any attempts
         to add to the appointment text will be ignored until the
-        appointment is enlarged with the right mouse button.
-        Likewise, the right mouse button will refuse to shrink an
-        appointment window if the appointment text completely fills
-        the appointment window.
+        appointment is enlarged.  Likewise, dragging the window resize
+        dots will refuse to shrink an appointment window if the
+        appointment text completely fills the appointment window.
 
     \subsection{Alarms}
         Ical generates alarms for appointments. By default, the first
@@ -337,9 +341,43 @@ The following options are valid only if you are logged in on an X display.
     from the File menu.
 
 \section{Customization}
+
     Some of ical's behavior can be customized via the Options menu.
-    Other aspects of ical's behavior can be controlled via X
-    Resources.
+    Other aspects of ical's behavior can be controlled via Tcl code or
+    X Resources. Customization via X Resources is a last resort.
+
+    \subsection{Tcl Code}
+        Users can customize ical by writing tcl code and storing
+        it in the file ~/.tk/ical/user.tcl.  The code stored in this
+        file is executed when ical starts up. This is mostly used
+        to include pre-written source files from the contrib/ directory.
+        For example:
+
+\begin{verbatim}
+global ical
+set ical(dpi_scaling)  1.5
+pref_fixfonts
+
+set d $ical(library)/contrib
+source $d/timeofday.tcl
+source $d/weeknumber.tcl
+\end{verbatim}
+
+        Ical also looks for site-specific customizations at startup.
+        These customizations can be placed in the file site.tcl in
+        either the ical library directory, or its parent directory.
+        (By default, ical looks for site.tcl in
+        /usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but
+        these directories may be located elsewhere on your
+        system.)  The site specific files will be loaded in before any
+        user specific customization file is loaded in.
+
+        See the "Tcl Interface to Ical" document available via the
+        Ical help menu.
+
+        Ical can run even when X is not available, therefore
+        customization files should be written so that they will
+        function even when Tk commands are not available.
 
     \subsection{X Resources Behavior}
         \begin{Description}\setlength{\itemsep}{0cm}
@@ -349,13 +387,11 @@ The following options are valid only if you are logged in on an X display.
         \item[Ical.pollSeconds]
             Shared calendars are checked for changes made by other
             people once every pollSeconds seconds.  The default value
-            is 120.  If ical appears sluggish, or if it is using too
-            much CPU time, increase this value.
+            is 120.
 
         \item[Ical.saveSeconds]
-            Calendar files are saved once every saveSeconds seconds.
-            The default value is 30.  If ical appears sluggish, or if
-            it is using too much CPU time, increase this value.
+            Calendar files are checked for modifications every
+            saveSeconds seconds. The default value is 30.
 
         \end{Description}
 
@@ -503,27 +539,6 @@ The following options are valid only if you are logged in on an X display.
             for <class> are Dialog, Button, Label, Menubutton, Menu,
             Listbox, and Reminder.
 
-    \subsection{Tcl Code}
-        Users can also customize ical by writing tcl code and storing
-        it in the file ~/.tk/ical/user.tcl.  The code stored in this
-        file is executed when ical starts up.
-
-        Ical also looks for site-specific customizations at startup.
-        These customizations can be placed in the file site.tcl in
-        either the ical library directory, or its parent directory.
-        (By default, ical looks for site.tcl in
-        /usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but
-        these directories may be located elsewhere on your
-        system.)  The site specific files will be loaded in before any
-        user specific customization file is loaded in.
-
-        See the "Tcl Interface to Ical" document available via the
-        Ical help menu.
-
-        Ical can run even when X is not available, therefore
-        customization files should be written so that they will
-        function even when Tk commands are not available.
-
 \section{Menus}
     \subsection{File Menu}
         \begin{Description}\setlength{\itemsep}{0cm}
@@ -534,8 +549,8 @@ The following options are valid only if you are logged in on an X display.
             Read any changes made to a shared calendar by another user
             or another instance of ical.  Ical will automatically
             invoke this function periodically.  It is provided as a
-            menu entry only so for people who do not want to wait for
-            ical's periodic checks.
+            menu entry for people who do not want to wait for ical's
+            periodic checks.
 
         \item[Print]
             Print calendar contents.  The user has the option of
@@ -609,12 +624,25 @@ The following options are valid only if you are logged in on an X display.
             The item causes the corresponding date to be highlighted
             as a holiday.
 
+        \item[Link to Web Document]
+            Adds a link to a URI to the item. The item will display with
+            a small arrow, and a left-click on that arrow will open
+            the configured browser with that URI.
+
+        \item[Link to Local File]
+            Adds a link to a local file to the item. The item will display
+            with a small arrow, and a left-click on that arrow will open
+            a text window to display that file.
+
+        \item[Remove Link]
+            Removes the link from the item.
+
         \item[Change Alarms]
-            This item pops up a dialog box that allows you to edit the
+            Pops up a dialog box that allows you to edit the
             alarm times for an appointment.
 
             Note that this will only change the alarm times for the
-            selected appointments.  You can make this change for all
+            selected appointment.  You can make this change for all
             appointments that do not have special alarm times by using
             the Default Alarms entry in the Options menu.
 
@@ -727,15 +755,17 @@ The following options are valid only if you are logged in on an X display.
         \begin{Description}\setlength{\itemsep}{0cm}
         \item[Appointment Range]
             Controls the subset of a day displayed by default in the
-            appointment listing.  The factory settings display 8:00am
+            appointment listing.  The default settings display 8:00am
             to 6:00pm.
 
         \item[Notice Window Height]
-            This entry can be used to change the height of the notice
-            window.
+            Controls the height of the notice window.
 
         \item[Item Width]
-            This entry can be used to change the width of displayed
+            Controls the width of displayed appointments and notices.
+
+        \item[Web Browser]
+            Sets the path to the web browser used to open links from
             appointments and notices.
 
         \item[Allow Text Overflow]

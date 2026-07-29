@@ -22,6 +22,7 @@ proc ical_init {} {
     set ical(author)            {sanjay@pa.dec.com}
     set ical(version)           {@PACKAGE_VERSION@}
     set ical(mailer)            {@MAILER@}
+    set ical(docdir)            {@pkgdocdir@}
     set ical(libparent)         {@pkglibdir@}
     set ical(library)           {@icallibdir@}
     set ical(startdate)         [date today]
@@ -29,6 +30,7 @@ proc ical_init {} {
     set ical(prefs)             {}
     set ical(geometry)          {}
     set ical(iconposition)      {}
+    set ical(dpi_scaling)       1.5
 
     # Handle environment variables
     if [info exists env(ICAL_LIBRARY)] {set ical(library) $env(ICAL_LIBRARY)}

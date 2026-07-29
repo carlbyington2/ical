@@ -157,7 +157,7 @@ static int app_init(Tcl_Interp* tcl) {
     return TCL_OK;
 }
 
-// Macro to create a Tk bitmap.  Returns true iff successfull.
+// Macro to create a Tk bitmap.  Returns true iff successful.
 #define MAKE_BITMAP(tcl,id,n) \
 (Tk_DefineBitmap(tcl,Tk_GetUid(id),n##_bits,n##_width,n##_height) == TCL_OK)
 

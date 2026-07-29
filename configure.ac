@@ -6,6 +6,13 @@ LT_INIT
 AC_CONFIG_HEADERS([config.h])
 
 ############################################################################
+# pass pkgdocdir thru to Makefile.am for substitution into startup.tcl.in
+
+docdir='${datadir}/doc/${PACKAGE}'
+pkgdocdir='${docdir}'
+AC_SUBST([pkgdocdir])
+
+############################################################################
 # Check for programs
 
 AC_PROG_INSTALL

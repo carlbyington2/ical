@@ -129,6 +129,7 @@ proc pref_init {} {
 # Fix fonts in option database
 proc pref_fixfonts {} {
     global preference
+    global ical
     set ff [option get . fontFamily String]
     set preference(norm_fontfamilies) [concat [list $ff] {
         times
@@ -146,7 +147,7 @@ proc pref_fixfonts {} {
         lucidatypewriter
     }]
 
-    set scale 1.5
+    set scale $ical(dpi_scaling)
     switch -exact -- [option get . fontSize String] {
         small {
             set size1  [expr {120 * $scale}]

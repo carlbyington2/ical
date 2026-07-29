@@ -1,5 +1,6 @@
 bin_PROGRAMS = ical
 icallibdir = $(pkglibdir)/v@PACKAGE_VERSION@
+icaldocdir = $(pkgdocdir)
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
 	       @ICAL_TCLLIB_SCRIPTS@ $(srcdir)/tcllib/tclIndex \
 	       @ICAL_CONTRIB@
@@ -56,6 +57,7 @@ ical.desktop:
 startup.tcl: startup.tcl.in
 	@SED@ -e 's!@''PACKAGE_VERSION''@!@PACKAGE_VERSION@!g' \
 	      -e 's!@''MAILER''@!@MAILER@!g' \
+	      -e 's!@''pkgdocdir''@!$(pkgdocdir)!g' \
 	      -e 's!@''pkglibdir''@!$(pkglibdir)!g' \
 	      -e 's!@''icallibdir''@!$(icallibdir)!g' < $< > $@
 

@@ -4,7 +4,9 @@
 #include <sys/types.h>
 #include <math.h>
 #include <string.h>
+#ifndef __FreeBSD__
 #include <alloca.h>
+#endif /* __FreeBSD__ */
 #include <stdlib.h>
 
 #include "config.h"
@@ -99,11 +101,11 @@ void Time::Convert(struct timeval& tv) const {
 time_t timezone_to_local(time_t clock, const char *tz) {
     const char *old=getenv("TZ");
     if (old) old=strdupa(old);
-    
+
     struct tm* t = localtime(&clock);
     setenv("TZ", tz, 1);
     tzset();
-    
+
     clock = mktime(t);
     if (old) setenv("TZ", old, 1); else unsetenv("TZ");
     tzset();
@@ -114,11 +116,11 @@ time_t timezone_to_local(time_t clock, const char *tz) {
 time_t local_to_timezone(time_t clock, const char *tz) {
     const char *old=getenv("TZ");
     if (old) old=strdupa(old);
-    
+
     setenv("TZ", tz, 1);
     tzset();
     struct tm* t = localtime(&clock);
-    
+
     if (old) setenv("TZ", old, 1); else unsetenv("TZ");
     tzset();
     clock = mktime(t);

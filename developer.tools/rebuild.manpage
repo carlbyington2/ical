@@ -1,4 +1,13 @@
 #!/bin/bash
 
-latex2man    developer.tools/ical.manpage.tex doc/ical.man
-latex2man -H developer.tools/ical.manpage.tex doc/ical.html
+if [ ! -f developer.tools/ical.manpage.tex ]; then
+    echo "run this from the main ical directory"
+else
+    pushd developer.tools
+        latex2man ical.manpage.tex                       ../doc/ical.man
+        sed -i -e 's/^ //g'                              ../doc/ical.man
+        sed -i -e '/SS FILE MENU/{n;a .RE' -e '}'        ../doc/ical.man
+        man2html ../doc/ical.man | tail -n +3           >../doc/ical.html
+        sed -i -e 's/.*Return to Main Contents.*/<HR>/g' ../doc/ical.html
+    popd
+fi

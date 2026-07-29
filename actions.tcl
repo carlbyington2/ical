@@ -769,12 +769,12 @@ action ical_gripe always {Gripe to the author of ical} {} {
 
 action ical_help always {Display help on ical} {} {
     global ical
-    Ical_Doc ical_doc
+    follow_link "file://$ical(docdir)/ical.html"
 }
 
 action ical_tcl_interface always {Display the Tcl interface to ical} {} {
     global ical
-    Ical_Doc interface_doc
+    follow_link "file://$ical(docdir)/interface.html"
 }
 
 action ical_about always {Display information about this version of ical} {} {
@@ -932,7 +932,7 @@ action ical_search_forward always {Search forward} {} {
         }
         incr current
     }
-            
+
     # Get list of items we want to query over
     set list {}
     cal loop i {

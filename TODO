@@ -1,10 +1,2 @@
-Finish moving contrib/ files into command line options
-as appropriate.
-
-Document the remaining contrib/ files that go into ~/.tk/ical/user.tcl
-with examples in the man page.
-
-Remove *_doc.tcl files that generate windows for the help
-menu. Replace those with an invocation of the browser to
-view the installed html files.
-
+Scale the small dot and arrow images by dpi scaling factor.
+Probably need to convert those to .svg format first.

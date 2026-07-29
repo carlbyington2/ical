@@ -4,15 +4,19 @@
 
 proc follow_link {uri} {
     if [regexp {^file://localhost/(.*)$} $uri junk filename] {
-        follow_file_link /$filename
-        return
+        if {![regexp {html$} $filename]} {
+            follow_file_link /$filename
+            return
+        }
     }
     if [regexp {^/} $uri] {
-        follow_file_link $uri
-        return
+        if {![regexp {html$} $uri]} {
+            follow_file_link $uri
+            return
+        }
     }
 
-    set w netscape
+    set w firefox
     catch {set w [cal option WebBrowser]}
     catch {exec $w $uri &}
     # this trick will reap a zombie left from the exec above

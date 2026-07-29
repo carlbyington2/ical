@@ -7,9 +7,21 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * switch to tcl 9, tk 9
 
-    * fix signed/unsigned type mismatches
+    * fixed signed/unsigned type mismatches.
 
-    * removed ancient files that are no longer useful
+    * removed ancient files that are no longer useful. Moved
+    some of the contrib/ files to the main program as command
+    line options.
+
+    * the master copy of the man page is now in latex. Many
+    updates to the man page to match the current code.
+
+    * replaced the code that generated the help entries with
+    invoking the browser to display the man page or tcl interface
+    documentation.
+
+    * force links to local html files (from notices and appointments)
+    to display in the web browser rather than in a text window.
 
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
