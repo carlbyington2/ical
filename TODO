@@ -1,2 +1,6 @@
 Scale the small dot and arrow images by dpi scaling factor.
 Probably need to convert those to .svg format first.
+
+Allow iso8601 dates and times.
+
+Document tz stuff.

@@ -2,14 +2,17 @@
 <HTML><HEAD><TITLE>Man page of ICAL</TITLE>
 </HEAD><BODY>
 <H1>ICAL</H1>
-Section: ical 3.0.5 (1)<BR>Updated: 2026-07-28<BR><A HREF="#index">Index</A>
+Section: Ical 3.0.5 (1)<BR>Updated: 2026-07-28<BR><A HREF="#index">Index</A>
 <HR>
 
 <A NAME="lbAB">&nbsp;</A>
 <H2>NAME</H2>
 
 <P>
-ical - An X based Calendar Program 
+Ical - An X based Calendar Program 
+<BR>
+
+This is NOT Apple’s iCal or the IETF iCalendar standard RFC2445, RFC5545 or successors. 
 <P>
 
 <A NAME="lbAC">&nbsp;</A>
@@ -64,7 +67,7 @@ does not have any starting or ending time. Notices are useful for
 marking certain days as special. For example, a calendar may contain 
 a notice for April 15th indicating that taxes are due. When the 
 documentation below refers to an item, it applies both to notices 
-and appointments. The main features of ical are: 
+and appointments. The main features of Ical are: 
 <P>
 
 <DL COMPACT><DT><DD>
@@ -296,8 +299,7 @@ background.
 <H3>MENUBAR</H3>
 
 A menubar runs along the top of the calendar window. The File 
-menu allows you to cre‐ ate and destroy application 
-windows. 
+menu allows you to create and destroy application windows. 
 <P>
 
 <A NAME="lbAN">&nbsp;</A>
@@ -504,17 +506,17 @@ from the File menu.
 <P>
 <P>
 
-Some of ical's behavior can be customized via the Options menu. 
-Other aspects of ical's behavior can be controlled via Tcl code or 
+Some of Ical's behavior can be customized via the Options menu. 
+Other aspects of Ical's behavior can be controlled via Tcl code or 
 X Resources. Customization via X Resources is a last resort. 
 <P>
 
 <A NAME="lbBC">&nbsp;</A>
 <H3>TCL CODE</H3>
 
-Users can customize ical by writing tcl code and storing 
+Users can customize Ical by writing tcl code and storing 
 it in the file  /.tk/ical/user.tcl. The code stored in this 
-file is executed when ical starts up. This is mostly used 
+file is executed when Ical starts up. This is mostly used 
 to include pre-written source files from the contrib/ directory. 
 For example: 
 <P>
@@ -538,8 +540,8 @@ source $d/weeknumber.tcl
 
 Ical also looks for site-specific customizations at startup. 
 These customizations can be placed in the file site.tcl in 
-either the ical library directory, or its parent directory. 
-(By default, ical looks for site.tcl in 
+either the Ical library directory, or its parent directory. 
+(By default, Ical looks for site.tcl in 
 /usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but 
 these directories may be located elsewhere on your 
 system.) The site specific files will be loaded in before any 
@@ -608,8 +610,8 @@ Options menu.
 <DL COMPACT>
 <DT>Ical.Reminder.geometry <DD>
 X geometry specification for alarms. Usually, you will 
-just specify the window posi‐ tion here. The 
-window size will be calculated automatically. 
+just specify the window position here. The window size 
+will be calculated automatically. 
 </DL>
 <P>
 
@@ -625,10 +627,10 @@ size will be calculated automatically.
 <H3>COLORS</H3>
 
 The following X resources can be used to customize ical's use 
-of colors. If ical windows show up with illegible colors (not 
+of colors. If Ical windows show up with illegible colors (not 
 enough distinction between background and foreground), it may 
 be because your X resources contain definitions for 
-*foreground or *background that conflict with ical colors. In 
+*foreground or *background that conflict with Ical colors. In 
 general, it is a bad idea to define *foreground and 
 *background in your resources because it will break a number 
 of programs. You will be better off defining resources on an 
@@ -668,12 +670,12 @@ SlateBlue1.
 <DL COMPACT>
 <DT>Ical.itemOverflowColor/Ical.itemOverflowStipple <DD>
 Background color and stippling used for appointment text 
-that overflows out of the ap‐ pointment area. On 
-color displays, the default overflow background is 
-SlateBlue3 and no stippling is done (specified by an empty 
-stipple option). On monochrome displays, the default 
-overflow background is black, and the default overflow 
-stippling is gray50. 
+that overflows out of the appointment area. On color 
+displays, the default overflow background is SlateBlue3 
+and no stippling is done (specified by an empty stipple 
+option). On monochrome displays, the default overflow 
+background is black, and the default overflow stippling is 
+gray50. 
 </DL>
 <P>
 
@@ -1351,7 +1353,7 @@ menu.
 
 <DL COMPACT>
 <DT>About Ical <DD>
-Displays ical version number and author information. 
+Displays Ical version number and author information. 
 <DL COMPACT><DT><DD>
 <P>
 
@@ -1457,6 +1459,6 @@ notice and this permission notice are preserved on all copies.
 This document was created by
 <A HREF="/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 22:03:21 GMT, July 29, 2026
+Time: 00:00:26 GMT, July 30, 2026
 </BODY>
 </HTML>

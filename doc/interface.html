@@ -7,20 +7,20 @@
 <h1>The Tcl Interface to Ical</h1>
 
 This document contains a brief description of the Tcl interface to
-ical. Part of this interface is implemented in C++ and the rest is
+Ical. Part of this interface is implemented in C++ and the rest is
 implemented by Tcl support libraries.
 
 <p>
 
-The C++ code exports calendar and item objects to tcl code.  A number
+The C++ code exports calendar and item objects to Tcl code.  A number
 of operations are provided to create such objects and to manipulate
 dates and times.  In addition, the calendar and item objects have
-various methods that can be called from tcl code.
+various methods that can be called from Tcl code.
 
 <h1>Computation Model</h1>
 
 Calendars and items are stored persistently on file systems.  Copies
-of these calendars and items are read into ical's address space.  The
+of these calendars and items are read into Ical's address space.  The
 Tcl code operates on these copies through well-defined interfaces.
 These interfaces contain special operations for saving pending
 modifications to persistent storage on the file system.
@@ -58,12 +58,12 @@ calendars.
 <ul>
 
 <li> <strong>calendar <em>cal</em> <em>file</em></strong><br>
-  Create a calendar object named <em>cal</em> with <em>file</em> as the main
-  calendar file.  The actual file named <em>file</em> contains a list of
-  included calendar files.  The files mentioned in this list are also
-  incorporated into <em>cal</em>.  Typically only one calendar object is created
-  in an ical application.  Included calendars are considered part of
-  this one calendar object.
+  Create a calendar object named <em>cal</em> with <em>file</em> as
+  the main calendar file.  The actual file named <em>file</em>
+  contains a list of included calendar files.  The files mentioned in
+  this list are also incorporated into <em>cal</em>.  Typically only
+  one calendar object is created in an Ical application.  Included
+  calendars are considered part of this one calendar object.
 
 <li> <strong><em>cal</em> delete</strong><br>
   Discard <em>cal</em> and all contained items from process memory.  The
@@ -150,7 +150,7 @@ calendars to persistent storage.
 
 Each calendar file contains a general mapping from option names to
 string values.  This mapping is typically used to store user preferences
-for ical.  Sometimes, however this mapping contains miscellaneous
+for Ical.  Sometimes, however this mapping contains miscellaneous
 properties of the calendar file.
 
 <ul>
@@ -410,7 +410,7 @@ set of dates on which an item occurs.
   Behaves like ``<strong><em>item</em> month_day</strong>'' except that <em>item</em> is made
   to repeat on the <em>n</em>th occurrence of a particular day of the week of
   the month.
-  
+
   The <em>day</em> argument should be an integer in the range $1 ...
   7$.  An argument of $1$ means that the item should repeat on the
   <em>n</em>th Sunday of the month.  An argument of $7$ means that the
@@ -420,7 +420,7 @@ set of dates on which an item occurs.
   <pre>
   $item month_week_day 5 3</pre>
 
-<li> <strong><em>item</em> month_last_week_day <em>day</em> <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br> 
+<li> <strong><em>item</em> month_last_week_day <em>day</em> <em>n</em> [<em>anchor</em> <em>interval</em>]</strong><br>
   Behaves like ``<strong><em>item</em> month_week_day</strong>'' except that
   occurrences of <em>day</em> are counted from the end of the month.  For
   example, the following code makes ``$item'' repeat on the last
@@ -483,7 +483,7 @@ are converted to the new time zone.
 
 <li> <strong><em>appt</em> alarms</strong><br>
   Return a list of alarm times.  For each entry <em>t</em> in this list,
-  ical will generate an alarm <em>t</em> minutes before the appointment
+  Ical will generate an alarm <em>t</em> minutes before the appointment
   starts.  All of the elements in this list are non-negative.
 
 <li> <strong><em>appt</em> alarms <em>list</em></strong><br>
@@ -626,10 +626,10 @@ operations on dates.
 <li> <strong>date today</strong><br>
   Returns today's date.
 <li> <strong>date first</strong><br>
-  Returns the first date that can be legally represented by the ical
+  Returns the first date that can be legally represented by the Ical
   implementation.
 <li> <strong>date last</strong><br>
-  Returns the last date that can be legally represented by the ical
+  Returns the last date that can be legally represented by the Ical
   implementation.
 <li> <strong>date monthsize <em>date</em></strong><br>
   Return the number of days in the month containing <em>date</em>.
@@ -674,7 +674,7 @@ subtraction.  Here is a list of other supported operations on times.
 <ul>
 
 <li> <strong>ical_time now</strong><br>
-  Returns the current time. 
+  Returns the current time.
 
 <li> <strong>ical_time date <em>time</em></strong><br>
   Returns the date on which <em>time</em> occurs.
@@ -737,18 +737,18 @@ subtraction.  Here is a list of other supported operations on times.
 <h1>Customization via Hooks</h1>
 
 Ical provides a number of hooks.  Users can attach code to these hooks
-to customize ical behavior.  Code is attached to hooks by one of
+to customize Ical behavior.  Code is attached to hooks by one of
 the following commands.
 
 <ul>
 <li> <strong>append-hook <em>hook</em> {<em>varnames...</em>} {<em>code</em>}</strong><br>
-  <em>Code</em> will be executed when the named <em>hook</em> is invoked by ical.
+  <em>Code</em> will be executed when the named <em>hook</em> is invoked by Ical.
   Ical will provide a number of arguments when it invokes <em>hook</em>.
   (The number of arguments will depend on the particular hook being
   invoked.)  The variables named by <em>varnames...</em> will be assigned the
   arguments supplied in the hook invocation before <em>code</em> is executed.
 
-  For example, ical calls the ``dayview-startup'' hook when it creates
+  For example, Ical calls the ``dayview-startup'' hook when it creates
   a new calendar window.  The hook is supplied one argument, the
   window being created.  The following code changes the window to have
   a vertical layout by moving the appointment sub-window from the
@@ -769,14 +769,14 @@ the following commands.
 
 <h2>General Hooks</h2>
 
-Here is a list of some general hooks for ical.
+Here is a list of some general hooks for Ical.
 
 <ul>
 <li> <strong>ical-startup</strong><br>
-  This hook is invoked without any arguments when ical starts up.
+  This hook is invoked without any arguments when Ical starts up.
 
 <li> <strong>ical-exit</strong><br>
-  This hook is invoked without any arguments just before ical exits.
+  This hook is invoked without any arguments just before Ical exits.
 
 <li> <strong>item-create <em>item</em></strong><br>
   This hook is invoked when a new item is created.  The created item is
@@ -828,7 +828,7 @@ in more detail later in this document.
 <p>
 
 This section describes the operations available on objects that represent
-the main ical windows.  These windows display the items for a particular
+the main Ical windows.  These windows display the items for a particular
 day.
 
 <h1>Common Editing Actions</h1>
@@ -840,7 +840,7 @@ day.
 This section describes the common editing operations that can be
 invoked from user customizations.  These operations build on the
 calendar and item interfaces described in earlier sections.  Use these
-operations when you customize ical's user interface because these
+operations when you customize Ical's user interface because these
 operations provide a consistent editing interface to the user.  For
 example, the operations described in this section produce friendly
 messages if the user tries to edit an item in a read-only calendar.
@@ -851,13 +851,13 @@ passed invalid arguments.
 
 <h1>Miscellaneous Commands</h1>
 
-The C++ code exports a few miscellaneous commands to tcl code.
+The C++ code exports a few miscellaneous commands to Tcl code.
 
 <ul>
   <li> <strong>wbeep <em>volume</em></strong><br> Produces a beep at the specified <em>volume</em>.
   The volume should be an integer in the range -100...100.  A
   volume of -100 is the quietest.  A volume of 100 is the loudest.
-  This command is only available when ical is running on an X display.
+  This command is only available when Ical is running on an X display.
 </ul>
 
 A few more commands are implemented in C++ to speed-up some
@@ -875,11 +875,6 @@ Sanjay Ghemawat (sanjay@pa.dec.com)<br>
 Copyright (c) 1995 by Sanjay Ghemawat.  Permission is granted to make
 and distribute verbatim copies of this manual provided the copyright
 notice and this permission notice are preserved on all copies.
-
-<H1>See Also</H1>
-
-Ical documentation at
-<A HREF="http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html">http://www.research.digital.com/SRC/personal/Sanjay_Ghemawat/ical/home.html</A>
 
 </body>
 </html>

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ ! -f developer.tools/ical.manpage.tex ]; then
+    echo "run this from the main ical directory"
+else
+    old=3.0.5
+    new=3.0.5
+    sed -i -e "s/$old/$new/g" configure.ac
+    sed -i -e "s/$old/$new/g" developer.tools/ical.manpage.tex
+    echo "add a new section to ChangeLog for version $new"
+fi

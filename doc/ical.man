@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Wed Jul 29 16:03:21 2026
+.\" Manual page created with latex2man on Wed Jul 29 18:00:26 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -10,10 +10,12 @@
 
 .fi
 ..
-.TH "ICAL" "1" "2026\-07\-28" "ical 3.0.5" "ical 3.0.5"
+.TH "ICAL" "1" "2026\-07\-28" "Ical 3.0.5" "Ical 3.0.5"
 .SH NAME
 
-ical \- An X based Calendar Program 
+Ical \- An X based Calendar Program 
+.br
+This is NOT Apple’s iCal or the IETF iCalendar standard RFC2445, RFC5545 or successors. 
 .PP
 .SH SYNOPSIS
 
@@ -56,7 +58,7 @@ does not have any starting or ending time. Notices are useful for
 marking certain days as special. For example, a calendar may contain 
 a notice for April 15th indicating that taxes are due. When the 
 documentation below refers to an item, it applies both to notices 
-and appointments. The main features of ical are: 
+and appointments. The main features of Ical are: 
 .PP
 .RS
 .TP
@@ -215,8 +217,7 @@ background.
 .PP
 .SS MENUBAR
 A menubar runs along the top of the calendar window. The File 
-menu allows you to cre‐ ate and destroy application 
-windows. 
+menu allows you to create and destroy application windows. 
 .PP
 .SS STATUS LINE
 The bottom portion of the window contains a status line. This 
@@ -373,14 +374,14 @@ from the File menu.
 .SH CUSTOMIZATION
 
 .PP
-Some of ical\&'s behavior can be customized via the Options menu. 
-Other aspects of ical\&'s behavior can be controlled via Tcl code or 
+Some of Ical\&'s behavior can be customized via the Options menu. 
+Other aspects of Ical\&'s behavior can be controlled via Tcl code or 
 X Resources. Customization via X Resources is a last resort. 
 .PP
 .SS TCL CODE
-Users can customize ical by writing tcl code and storing 
+Users can customize Ical by writing tcl code and storing 
 it in the file  /.tk/ical/user.tcl. The code stored in this 
-file is executed when ical starts up. This is mostly used 
+file is executed when Ical starts up. This is mostly used 
 to include pre\-written source files from the contrib/ directory. 
 For example: 
 .PP
@@ -396,8 +397,8 @@ source $d/weeknumber.tcl
 .PP
 Ical also looks for site\-specific customizations at startup. 
 These customizations can be placed in the file site.tcl in 
-either the ical library directory, or its parent directory. 
-(By default, ical looks for site.tcl in 
+either the Ical library directory, or its parent directory. 
+(By default, Ical looks for site.tcl in 
 /usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but 
 these directories may be located elsewhere on your 
 system.) The site specific files will be loaded in before any 
@@ -449,8 +450,8 @@ Options menu.
 .TP
 Ical.Reminder.geometry 
 X geometry specification for alarms. Usually, you will 
-just specify the window posi‐ tion here. The 
-window size will be calculated automatically. 
+just specify the window position here. The window size 
+will be calculated automatically. 
 .PP
 .TP
 Ical.Listing.geometry 
@@ -460,10 +461,10 @@ size will be calculated automatically.
 .PP
 .SS COLORS
 The following X resources can be used to customize ical\&'s use 
-of colors. If ical windows show up with illegible colors (not 
+of colors. If Ical windows show up with illegible colors (not 
 enough distinction between background and foreground), it may 
 be because your X resources contain definitions for 
-*foreground or *background that conflict with ical colors. In 
+*foreground or *background that conflict with Ical colors. In 
 general, it is a bad idea to define *foreground and 
 *background in your resources because it will break a number 
 of programs. You will be better off defining resources on an 
@@ -494,12 +495,12 @@ SlateBlue1.
 .TP
 Ical.itemOverflowColor/Ical.itemOverflowStipple 
 Background color and stippling used for appointment text 
-that overflows out of the ap‐ pointment area. On 
-color displays, the default overflow background is 
-SlateBlue3 and no stippling is done (specified by an empty 
-stipple option). On monochrome displays, the default 
-overflow background is black, and the default overflow 
-stippling is gray50. 
+that overflows out of the appointment area. On color 
+displays, the default overflow background is SlateBlue3 
+and no stippling is done (specified by an empty stipple 
+option). On monochrome displays, the default overflow 
+background is black, and the default overflow stippling is 
+gray50. 
 .PP
 .TP
 Ical.apptLineColor 
@@ -1038,7 +1039,7 @@ menu.
 .RE
 .TP
 About Ical 
-Displays ical version number and author information. 
+Displays Ical version number and author information. 
 .RS
 .PP
 .RE
