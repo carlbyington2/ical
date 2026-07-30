@@ -71,7 +71,4 @@ noinst_HEADERS = cal_tcl.h calendar/arrays.h calendar/calendar.h \
 		 time/Time_.h time/WeekDay.h time/Year.h time/parse.h \
 		 types/Array.h types/basic.h types/bitvec.h types/hashfuncs.h \
 		 types/htable.h types/htable_p.h types/intset.h \
-		 types/ohashmap.h types/ohashset.h types/tablerep.h \
-		 bitmaps/left.xbm bitmaps/right.xbm bitmaps/todo.xbm \
-		 bitmaps/done.xbm bitmaps/sleft.xbm bitmaps/dleft.xbm \
-		 bitmaps/sright.xbm bitmaps/ical.xbm bitmaps/dright.xbm
+		 types/ohashmap.h types/ohashset.h types/tablerep.h

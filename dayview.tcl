@@ -7,7 +7,7 @@
 # A DayView shows the notices and appointments for one day.
 
 set dayview_id 0
-set ICAL_ICON [file join [file dirname [info script]] ical.png]
+set ICAL_ICON [file join [file dirname [info script]] images/ical.svg]
 
 class DayView {} {
     global ICAL_ICON

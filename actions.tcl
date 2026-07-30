@@ -560,6 +560,8 @@ action ical_toggle_done witem {Mark todo item as done} {} {
 
     if [$i is_done] {
         $i done 0
+        $i hilite always
+        run-hook todo-item-done $i
         return
     }
 
@@ -577,7 +579,6 @@ action ical_toggle_done witem {Mark todo item as done} {} {
     $i date $date
     $i done 1
     $i hilite never
-
     run-hook todo-item-done $i
 }
 

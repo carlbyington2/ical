@@ -63,16 +63,12 @@ class ItemWindow {canvas font item date} {
         -width 0\
         -tags [list item $self rect.$self click.$self vis.$self]
 
-    $canvas create bitmap -100 -100\
+    $canvas create image -100 -100\
         -anchor nw\
-        -foreground $slot(fg)\
-        -background $slot(bg)\
         -tags [list item $self icon.$self vis.$self]
 
-    $canvas create bitmap -100 -100\
+    $canvas create image -100 -100\
         -anchor ne\
-        -foreground $slot(fg)\
-        -background $slot(bg)\
         -tags [list item $self link.$self vis.$self]
 
     set slot(text) [$canvas create text -100 -100\
@@ -170,8 +166,8 @@ method ItemWindow select {} {
     set slot(sel) 1
     focus $slot(canvas)
     $slot(canvas) itemconfig text.$self -fill [pref itemSelectFg]
-    $slot(canvas) itemconfig icon.$self -background [pref itemSelectBg]
-    $slot(canvas) itemconfig link.$self -background [pref itemSelectBg]
+    $slot(canvas) itemconfig icon.$self
+    $slot(canvas) itemconfig link.$self
     $slot(canvas) itemconfig rect.$self\
         -fill [pref itemSelectBg]\
         -width [pref itemSelectWidth]
@@ -184,8 +180,8 @@ method ItemWindow unselect {} {
     set slot(sel) 0
     focus [winfo toplevel $slot(canvas)]
     $slot(canvas) itemconfig text.$self -fill $slot(fg)
-    $slot(canvas) itemconfig icon.$self -background $slot(bg)
-    $slot(canvas) itemconfig link.$self -background $slot(bg)
+    $slot(canvas) itemconfig icon.$self
+    $slot(canvas) itemconfig link.$self
     $slot(canvas) itemconfig rect.$self -fill $slot(bg) -width 0
     $slot(canvas) focus ""
 }
@@ -235,26 +231,31 @@ method ItemWindow follow_link {} {
 
 # effects - Just position the text and any icon correctly
 method ItemWindow place_text_and_icon {} {
+    global ical
+    set scale $ical(dpi_scaling)
+    set pad [expr $scale * 3]
+    set icon_width [expr $scale * 18]
+
     if ![string compare $slot(icon) {}] {
         set iw 0
         $slot(canvas) coords icon.$self -100 -100
     } else {
-        set iw 18
-        $slot(canvas) coords icon.$self [expr $slot(x)+2] [expr $slot(y)+2]
+        set iw $icon_width
+        $slot(canvas) coords icon.$self [expr $slot(x)+$pad] [expr $slot(y)+$pad]
     }
-    $slot(canvas) itemconfig icon.$self -bitmap $slot(icon)
+    $slot(canvas) itemconfig icon.$self -image $slot(icon)
 
     if ![string compare $slot(link) {}] {
         set lw 0
         $slot(canvas) coords link.$self -100 -100
     } else {
-        set lw 18
+        set lw $icon_width
         set pos [expr $slot(x) + $slot(width)]
-        $slot(canvas) coords link.$self [expr $pos - 2] [expr $slot(y)+2]
+        $slot(canvas) coords link.$self [expr $pos-$pad] [expr $slot(y)+$pad]
     }
-    $slot(canvas) itemconfig link.$self -bitmap $slot(link)
+    $slot(canvas) itemconfig link.$self -image $slot(link)
 
-    set tx [expr $slot(x) + $iw + 2]
+    set tx [expr $slot(x) + $iw + $pad]
     $slot(canvas) coords text.$self $tx [expr $slot(y)+1]
     $slot(canvas) itemconfig text.$self -width [expr $slot(width) - $iw - $lw]
 }
@@ -480,6 +481,9 @@ method ApptItemWindow place {} {
 }
 
 method ApptItemWindow place_handles {x1 y1 x2 y2} {
+    global ical
+    set scale $ical(dpi_scaling)
+
     # Display handles only if selected and writable
     set hide 1
     if {$slot(sel)} {
@@ -491,18 +495,20 @@ method ApptItemWindow place_handles {x1 y1 x2 y2} {
             $slot(canvas) coords $slot(handle:$h) -100 -100 -101 -101
         }
     } else {
+        set size [expr $scale * 4]
+        set avg  [expr ($x1+$x2)/2]
         $slot(canvas) coords $slot(handle:tl)\
-            [expr $x1-4] [expr $y1-4] [expr $x1+4] [expr $y1+4]
+            [expr $x1-$size] [expr $y1-$size] [expr $x1+$size] [expr $y1+$size]
         $slot(canvas) coords $slot(handle:tm)\
-            [expr ($x1+$x2)/2-4] [expr $y1-4] [expr ($x1+$x2)/2+4] [expr $y1+4]
+            [expr $avg-$size] [expr $y1-$size] [expr $avg+$size] [expr $y1+$size]
         $slot(canvas) coords $slot(handle:tr)\
-            [expr $x2-4] [expr $y1-4] [expr $x2+4] [expr $y1+4]
+            [expr $x2-$size] [expr $y1-$size] [expr $x2+$size] [expr $y1+$size]
         $slot(canvas) coords $slot(handle:bl)\
-            [expr $x1-4] [expr $y2-4] [expr $x1+4] [expr $y2+4]
+            [expr $x1-$size] [expr $y2-$size] [expr $x1+$size] [expr $y2+$size]
         $slot(canvas) coords $slot(handle:bm)\
-            [expr ($x1+$x2)/2-4] [expr $y2-4] [expr ($x1+$x2)/2+4] [expr $y2+4]
+            [expr $avg-$size] [expr $y2-$size] [expr $avg+$size] [expr $y2+$size]
         $slot(canvas) coords $slot(handle:br)\
-            [expr $x2-4] [expr $y2-4] [expr $x2+4] [expr $y2+4]
+            [expr $x2-$size] [expr $y2-$size] [expr $x2+$size] [expr $y2+$size]
     }
 }
 

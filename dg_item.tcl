@@ -150,10 +150,10 @@ proc iedit_make_editor {w label cmd} {
     frame $w
     label  $w.label -text $label -anchor w -width 14
     label  $w.entry -width 8
-    button $w.dleft -bitmap double_left -relief flat
-    button $w.sleft -bitmap single_left -relief flat
-    button $w.sright -bitmap single_right -relief flat
-    button $w.dright -bitmap double_right -relief flat
+    button $w.dleft -image double_left -relief flat
+    button $w.sleft -image single_left -relief flat
+    button $w.sright -image single_right -relief flat
+    button $w.dright -image double_right -relief flat
 
     $w.dleft   configure -command [concat $cmd [list -10]]
     $w.sleft   configure -command [concat $cmd [list -1]]

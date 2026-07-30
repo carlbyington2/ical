@@ -104,6 +104,7 @@ proc pref_init {} {
     }
 
     pref_fixfonts
+    pref_load_images
 
     # Cache various entries
     set preference(itemPad)     [winfo pixels . [option get . itemPad Size]]
@@ -124,6 +125,26 @@ proc pref_init {} {
     # Handle command line preferences
     global ical
     foreach pref $ical(prefs) {eval $pref}
+}
+
+# load one scalable image
+proc pref_load_one {imgName svgName} {
+    global ical
+    set libdir $ical(library)
+    set scale  $ical(dpi_scaling)
+    image create photo $imgName -file "$libdir/images/$svgName.svg" -format "svg -scale $scale"
+}
+
+# load the scalable images
+proc pref_load_images {} {
+    pref_load_one "left_arrow"   "left"
+    pref_load_one "right_arrow"  "right"
+    pref_load_one "todo_box"     "todo"
+    pref_load_one "done_box"     "done"
+    pref_load_one "single_left"  "sleft"
+    pref_load_one "double_left"  "dleft"
+    pref_load_one "single_right" "sright"
+    pref_load_one "double_right" "dright"
 }
 
 # Fix fonts in option database

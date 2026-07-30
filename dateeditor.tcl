@@ -44,9 +44,9 @@ class DateEditor {name date view} {
     frame $name.month
     label $name.month.label -text Month\
         -anchor center -width 9
-    button $name.month.left -bitmap left_arrow -relief flat\
+    button $name.month.left -image left_arrow -relief flat\
         -command {ical_last_month}
-    button $name.month.right -bitmap right_arrow -relief flat\
+    button $name.month.right -image right_arrow -relief flat\
         -command {ical_next_month}
 
     pack $name.month.left       -side left
@@ -57,9 +57,9 @@ class DateEditor {name date view} {
     frame $name.year
     label $name.year.label -text Year\
         -anchor center -width 4
-    button $name.year.left -bitmap left_arrow -relief flat\
+    button $name.year.left -image left_arrow -relief flat\
         -command {ical_last_year}
-    button $name.year.right -bitmap right_arrow -relief flat\
+    button $name.year.right -image right_arrow -relief flat\
         -command {ical_next_year}
 
     pack $name.year.left        -side left

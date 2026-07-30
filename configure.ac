@@ -19,6 +19,8 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PATH_PROGS([MAILER],[Mail mail],[Mail])
 AC_PROG_CXX
+# RANLIB needed for FreeBSD
+AC_PROG_RANLIB
 AC_PROG_SED
 
 ############################################################################

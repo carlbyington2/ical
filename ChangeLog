@@ -23,6 +23,12 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
     * force links to local html files (from notices and appointments)
     to display in the web browser rather than in a text window.
 
+    * convert bitmaps to scalable svg and scale them by the
+    dpi scaling factor.
+
+    * changing a todo item to done switches to highlight never.
+    changing back to un-done switches back to highlight always.
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file

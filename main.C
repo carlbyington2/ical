@@ -27,16 +27,6 @@
 #include <tk.h>
 #include "ical.h"
 
-#include "bitmaps/left.xbm"
-#include "bitmaps/right.xbm"
-#include "bitmaps/todo.xbm"
-#include "bitmaps/done.xbm"
-#include "bitmaps/sleft.xbm"
-#include "bitmaps/dleft.xbm"
-#include "bitmaps/sright.xbm"
-#include "bitmaps/dright.xbm"
-#include "bitmaps/ical.xbm"
-
 // Is Tk available?
 static int have_tk;
 
@@ -44,7 +34,7 @@ static int have_tk;
 static int have_script;
 
 static int app_init(Tcl_Interp*);
-extern int Ical_Init(Tcl_Interp*);
+static int Ical_Init(Tcl_Interp*);
 
 int
 main(int argc, char* argv[]) {
@@ -157,24 +147,10 @@ static int app_init(Tcl_Interp* tcl) {
     return TCL_OK;
 }
 
-// Macro to create a Tk bitmap.  Returns true iff successful.
-#define MAKE_BITMAP(tcl,id,n) \
-(Tk_DefineBitmap(tcl,Tk_GetUid(id),n##_bits,n##_width,n##_height) == TCL_OK)
-
 int Ical_Init(Tcl_Interp* tcl) {
     if (have_tk) {
         /* Load necessary Tk support code */
         Tk_MainWindow(tcl);
-
-        if (!MAKE_BITMAP(tcl, "left_arrow",     left))    return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "right_arrow",    right))   return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "todo_box",       todo))    return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "done_box",       done))    return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "single_left",    sleft))   return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "double_left",    dleft))   return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "single_right",   sright))  return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "double_right",   dright))  return TCL_ERROR;
-        if (!MAKE_BITMAP(tcl, "ical_icon",      ical))    return TCL_ERROR;
     }
 
     // Non-Tk ical commands
