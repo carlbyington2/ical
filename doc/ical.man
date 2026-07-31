@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Thu Jul 30 13:36:45 2026
+.\" Manual page created with latex2man on Fri Jul 31 15:41:59 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -41,8 +41,21 @@ ical
 .SH HISTORY
 
 .PP
-By todays standards, this is an ancient program. Much of the code 
-is 33 years old and counting, and it still runs nicely. Please 
+By today\&'s standards, this is an ancient program. Much of the code 
+is 33 years old and counting, and it still runs nicely. Performance 
+is no longer an issue. My calendar has 3500 entries from the last 
+25 years. 
+.PP
+Ical was written by Sanjay Ghemawat when he was at DEC, Palo Alto back 
+in 1993. At that time, graphic X terminals were used to allow multiple 
+users to share a Unix workstation, and the home directories were 
+stored on the remote Unix filesystem. Today, everyone has their own 
+workstation, and your home directory is generally stored locally. 
+To reach other users\&' calendars in their home directories, you will 
+need to mount those filesystems with some remote access protocol like 
+samba or nfs. 
+.PP
+Please 
 see \fBhttps://opal.com/src/ical\fP
 for more on the history of 
 this project. 
@@ -269,6 +282,17 @@ time for this appointment is determined by the click
 location. You can move the appointment by dragging it with the 
 middle mouse button held down. 
 .PP
+Appointments have an associated time zone that defaults to 
+local time. The appointment display always shows the local 
+time for the appointment. Suppose your local time is Denver 
+and you add a 12:00 appointment in the Los Angeles time zone. 
+The window will show this appoint at 13:00. Now if you fly to 
+Los Angeles, and your workstation picks up the time zone 
+change, the appointment will show at 12:00. 
+.PP
+Appointments created with the default local time zone will not 
+be adjusted in this manner. 
+.PP
 Appointment text can be edited by typing into the appointment 
 window while it is selected. If the appointment text you are 
 typing in does not fit into the appointment area, then it will 
@@ -322,7 +346,9 @@ Items can be marked as todo items by selecting the Todo entry
 in the Item menu. A todo item is automatically moved forward 
 to today\&'s date every day until the item is deleted or marked 
 as done. An item can be marked as done by clicking in the 
-little check\-box right next to the displayed item. 
+little check\-box right next to the displayed item. Checking 
+the done box switches the highlighting to never. Unchecking 
+the done box switches the highlighting to always. 
 .PP
 .SS HIGHLIGHTING
 By default, if any item occurs on a date, then the date is 
@@ -387,12 +413,16 @@ For example:
 .PP
 .Vb
 global ical
-set ical(dpi_scaling)  1.5
-pref_fixfonts
+global have_tk
 
-set d $ical(library)/contrib
-source $d/timeofday.tcl
-source $d/weeknumber.tcl
+if $have_tk {
+   set ical(dpi_scaling)  1.5
+   pref_fixfonts
+
+   set d $ical(library)/contrib
+   source $d/timeofday.tcl
+   source $d/weeknumber.tcl
+}
 .Ve
 .PP
 Ical also looks for site\-specific customizations at startup. 

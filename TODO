@@ -1,3 +1,39 @@
+Add an option to default new appointments to the local time zone as
+discovered by /etc/localtime
+
+Add note to either adjust tz manually, or enable both automatic device
+location and automatic time zone.
+
+set file_path "/etc/localtime"
+
+# Ensure the file exists and is indeed a symbolic link
+if {[file exists $file_path] && [file type $file_path] eq "link"} {
+
+    # Read the underlying target path (e.g., ../usr/share/zoneinfo/America/New_York)
+    set target_path [file readlink $file_path]
+
+    # Normalize path segments to confidently locate the zoneinfo boundary
+    set split_path [file split $target_path]
+    set index [lsearch -exact $split_path "zoneinfo"]
+
+    if {$index != -1} {
+        # Extract everything following the "zoneinfo" index segment
+        set tz_parts [lrange $split_path [expr {$index + 1}] end]
+        set timezone [file join {*}$tz_parts]
+
+        puts "System Time Zone: $timezone"
+    } else {
+        # Fallback if the link structure is non-standard but contains trailing parts
+        set timezone "[lindex $split_path end-1]/[lindex $split_path end]"
+        puts "System Time Zone (Fallback match): $timezone"
+    }
+} else {
+    # Failover strategy leveraging runtime core evaluation if symlink is missing/broken
+    set timezone [clock format [clock seconds] -format "%Z"]
+    puts "Could not read symlink. Current active Zone Abbreviation: $timezone"
+}
+
+
 Allow iso8601 dates and times.
 
 Audit the export to ics format code.
