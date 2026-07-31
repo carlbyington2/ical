@@ -123,6 +123,15 @@ AC_SUBST(TK_XINCLUDES)
 AC_SUBST(TCL_INCLUDE_SPEC)
 AC_SUBST(TK_INCLUDE_SPEC)
 
+#### rpmversion passed in from the .spec file
+AC_MSG_CHECKING(for rpmversion)
+AC_ARG_WITH(rpmversion,
+            [AS_HELP_STRING([--with-rpmversion=version],[version from rpm .spec file])],
+            [rpmversion="$withval"],
+            [rpmversion="$PACKAGE_VERSION"]}
+AC_MSG_RESULT($rpmversion)
+
+
 # Generate lists of all the files that need to be installed
 generated='startup\|ps_header'
 ICAL_TCLLIB_SCRIPTS=`echo $srcdir/tcllib/*.tcl`
@@ -132,6 +141,7 @@ ICAL_IMAGES=`echo $srcdir/images/*`
 ICAL_ICON=`echo $srcdir/images/$PACKAGE.svg`
 ICAL_LICENSE=COPYING
 ICAL_DOC=`echo $srcdir/doc/*.html $srcdir/ChangeLog`
+ICAL_RPMVERSION=$rpmversion
 pkgdocdir=`echo $datadir/doc/$PACKAGE`
 AC_SUBST(ICAL_TCLLIB_SCRIPTS)
 AC_SUBST(ICAL_SCRIPTS)
@@ -140,6 +150,7 @@ AC_SUBST(ICAL_IMAGES)
 AC_SUBST(ICAL_ICON)
 AC_SUBST(ICAL_LICENSE)
 AC_SUBST(ICAL_DOC)
+AC_SUBST(ICAL_RPMVERSION)
 AC_SUBST(pkgdocdir)
 
 AC_CHECK_FUNCS(fsync)

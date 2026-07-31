@@ -1,5 +1,5 @@
 bin_PROGRAMS = ical
-icallibdir = $(pkglibdir)/v@PACKAGE_VERSION@
+icallibdir = $(pkglibdir)/v@ICAL_RPMVERSION@
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
 	       @ICAL_TCLLIB_SCRIPTS@ $(srcdir)/tcllib/tclIndex \
 	       @ICAL_CONTRIB@ @ICAL_IMAGES@
@@ -54,7 +54,7 @@ ps_header.tcl: ps_header.ps
 
 # cannot do it in configure, as libdir is not known there :(
 startup.tcl: startup.tcl.in
-	@SED@ -e 's!@''PACKAGE_VERSION''@!@PACKAGE_VERSION@!g' \
+	@SED@ -e 's!@''PACKAGE_VERSION''@!@ICAL_RPMVERSION@!g' \
 	      -e 's!@''MAILER''@!@MAILER@!g' \
 	      -e 's!@''pkgdocdir''@!$(pkgdocdir)!g' \
 	      -e 's!@''pkglibdir''@!$(pkglibdir)!g' \
