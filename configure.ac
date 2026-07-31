@@ -16,6 +16,15 @@ AC_PROG_CXX
 AC_PROG_RANLIB
 AC_PROG_SED
 
+#### rpmversion passed in from the .spec file
+AC_MSG_CHECKING(for rpmversion)
+AC_ARG_WITH(rpmversion,
+            [AS_HELP_STRING([--with-rpmversion=version],[version from rpm .spec file])],
+            [rpmversion="$withval"],
+            [rpmversion="$PACKAGE_VERSION"])
+AC_MSG_RESULT($rpmversion)
+
+
 ############################################################################
 # Find Tcl/Tk
 
@@ -122,14 +131,6 @@ AC_SUBST(TK_EXEC_PREFIX)
 AC_SUBST(TK_XINCLUDES)
 AC_SUBST(TCL_INCLUDE_SPEC)
 AC_SUBST(TK_INCLUDE_SPEC)
-
-#### rpmversion passed in from the .spec file
-AC_MSG_CHECKING(for rpmversion)
-AC_ARG_WITH(rpmversion,
-            [AS_HELP_STRING([--with-rpmversion=version],[version from rpm .spec file])],
-            [rpmversion="$withval"],
-            [rpmversion="$PACKAGE_VERSION"]}
-AC_MSG_RESULT($rpmversion)
 
 
 # Generate lists of all the files that need to be installed
