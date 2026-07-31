@@ -6,13 +6,6 @@ LT_INIT
 AC_CONFIG_HEADERS([config.h])
 
 ############################################################################
-# pass pkgdocdir thru to Makefile.am for substitution into startup.tcl.in
-
-docdir='${datadir}/doc/${PACKAGE}'
-pkgdocdir='${docdir}'
-AC_SUBST([pkgdocdir])
-
-############################################################################
 # Check for programs
 
 AC_PROG_INSTALL
@@ -130,15 +123,24 @@ AC_SUBST(TK_XINCLUDES)
 AC_SUBST(TCL_INCLUDE_SPEC)
 AC_SUBST(TK_INCLUDE_SPEC)
 
-# Generate list of all .tcl files that need to be installed
+# Generate lists of all the files that need to be installed
 generated='startup\|ps_header'
 ICAL_TCLLIB_SCRIPTS=`echo $srcdir/tcllib/*.tcl`
 ICAL_SCRIPTS=`echo $srcdir/*.tcl|sed -e "s/[[^ ]]*\($generated\)[[^ ]]*//g"`
 ICAL_CONTRIB=`echo $srcdir/contrib/*`
-
+ICAL_IMAGES=`echo $srcdir/images/*`
+ICAL_ICON=`echo $srcdir/images/$PACKAGE.svg`
+ICAL_LICENSE=COPYING
+ICAL_DOC=`echo $srcdir/doc/*.html $srcdir/ChangeLog`
+pkgdocdir=`echo $datadir/doc/$PACKAGE`
 AC_SUBST(ICAL_TCLLIB_SCRIPTS)
 AC_SUBST(ICAL_SCRIPTS)
 AC_SUBST(ICAL_CONTRIB)
+AC_SUBST(ICAL_IMAGES)
+AC_SUBST(ICAL_ICON)
+AC_SUBST(ICAL_LICENSE)
+AC_SUBST(ICAL_DOC)
+AC_SUBST(pkgdocdir)
 
 AC_CHECK_FUNCS(fsync)
 

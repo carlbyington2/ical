@@ -1,16 +1,28 @@
 bin_PROGRAMS = ical
 icallibdir = $(pkglibdir)/v@PACKAGE_VERSION@
-icaldocdir = $(pkgdocdir)
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
 	       @ICAL_TCLLIB_SCRIPTS@ $(srcdir)/tcllib/tclIndex \
-	       @ICAL_CONTRIB@
+	       @ICAL_CONTRIB@ @ICAL_IMAGES@
 icallib_DATA = $(builddir)/startup.tcl $(builddir)/ps_header.tcl
-EXTRA_DIST = startup.tcl.in ps_header.ps doc/ical.html doc/interface.html \
-	     COPYRIGHT.ORIG Makefile.am
+
+docdir = $(prefix)/share/doc/@PACKAGE_NAME@
+doc_DATA = @ICAL_DOC@
+
+EXTRA_DIST = startup.tcl.in ps_header.ps COPYRIGHT.ORIG Makefile.am
 dist_man1_MANS = doc/ical.man
 
 appdir = $(prefix)/share/applications
 app_DATA = ical.desktop
+
+metadir = $(prefix)/share/metainfo
+meta_DATA = com.five-ten-sg.ical.metainfo.xml
+
+icondir = $(prefix)/share/icons/hicolor/scalable/apps
+icon_DATA = @ICAL_ICON@
+
+licensedir = $(prefix)/share/licenses
+license_DATA = @ICAL_LICENSE@
+
 ical_SOURCES = cal_tcl.C dateeditor.C dispatch.C ical.C ical_tcl.C \
 	       item_tcl.C object.C time_tcl.C main.C
 ical_CPPFLAGS = -DICALLIBDIR='"$(icallibdir)"' -I$(srcdir)/calendar -I$(srcdir)/types -I$(srcdir)/time @TK_XINCLUDES@

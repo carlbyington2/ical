@@ -1,6 +1,7 @@
-Allow iso8601 dates and times.
-
 White paper in the main ical.svg icon
 
-Document appointment item time zone, and the interaction of
-that with listings.
+Allow iso8601 dates and times.
+
+Audit the export to ics format code.
+
+

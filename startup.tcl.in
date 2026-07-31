@@ -46,7 +46,9 @@ proc ical_init {} {
                    [list $ical(library) $ical(library)/tcllib]\
                    $auto_path]
 
+    global have_tk
     set have_tk [string compare [info commands tk] ""]
+
     support_init
     if $have_tk ical_tk_init
 }
