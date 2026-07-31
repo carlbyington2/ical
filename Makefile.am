@@ -8,7 +8,7 @@ icallib_DATA = $(builddir)/startup.tcl $(builddir)/ps_header.tcl
 docdir = $(prefix)/share/doc/@PACKAGE_NAME@
 doc_DATA = @ICAL_DOC@
 
-EXTRA_DIST = startup.tcl.in ps_header.ps COPYRIGHT.ORIG Makefile.am
+EXTRA_DIST = startup.tcl.in ps_header.ps COPYRIGHT.ORIG Makefile.am developer.tools
 dist_man1_MANS = doc/ical.man
 
 appdir = $(prefix)/share/applications

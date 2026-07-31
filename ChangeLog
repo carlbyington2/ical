@@ -2,9 +2,6 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * changes to the desktop file for fedora packaging
 
-    * brighter icon image to show up better against the fedora
-    default background
-
     * switch to tcl/tk9
 
     * fixed signed/unsigned type mismatches.
@@ -30,6 +27,11 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
     changing back to un-done switches back to highlight always.
 
     * the desktop and metainfo files are now in the source repo.
+
+    * update configure.ac/Makefile.am to do a full install
+
+    * brighter icon image to show up better against the fedora
+    default background
 
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 

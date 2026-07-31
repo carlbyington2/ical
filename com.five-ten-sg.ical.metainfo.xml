@@ -12,6 +12,6 @@
        shared calendars between different users.
     </p>
   </description>
-  <url type="homepage">https://opal.com/src/ical</url>
+  <url type="homepage">https://github.com/carlbyington2/ical</url>
   <launchable type="desktop-id">ical.desktop</launchable>
 </component>
