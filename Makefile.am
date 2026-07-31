@@ -40,19 +40,6 @@ ps_header.tcl: ps_header.ps
 	      -e 's/.*/  set val "$$val&\\n"/' < $< >> $@;
 	echo '  return $$val\n}' >> $@
 
-ical.desktop:
-	echo "[Desktop Entry]" >$@
-	echo "Name=Ical" >>$@
-	echo "Comment=Ical calendar package" >>$@
-	echo "Exec=ical" >>$@
-	echo "Icon=ical" >>$@
-	echo "Terminal=false" >>$@
-	echo "Type=Application" >>$@
-	echo "Categories=Office" >>$@
-	echo "StartupNotify=true" >>$@
-	echo "StartupWMClass=Dayview" >>$@
-	chmod 644 $@
-
 # cannot do it in configure, as libdir is not known there :(
 startup.tcl: startup.tcl.in
 	@SED@ -e 's!@''PACKAGE_VERSION''@!@PACKAGE_VERSION@!g' \

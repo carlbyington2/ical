@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id type="desktop">com.five-ten-sg.ical</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0-only</project_license>
+  <name>ical</name>
+  <summary>An X Window System-based calendar program</summary>
+  <description>
+    <p>Ical is an X Window System based calendar program. Ical will
+       create/edit/delete entries, create repeating entries, remind you about
+       upcoming appointments, print and list item occurrences, and allow
+       shared calendars between different users.
+    </p>
+  </description>
+  <url type="homepage">https://opal.com/src/ical</url>
+  <launchable type="desktop-id">ical.desktop</launchable>
+</component>

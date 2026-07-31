@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Ical
+Comment=Ical calendar package
+Exec=ical
+Icon=ical
+Terminal=false
+Type=Application
+Categories=Office
+StartupNotify=true
+StartupWMClass=Dayview
+
