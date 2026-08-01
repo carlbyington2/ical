@@ -33,6 +33,8 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
     * brighter icon image to show up better against the fedora
     default background
 
+    * new appointments default to the current system timezone
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file

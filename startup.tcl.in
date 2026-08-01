@@ -31,6 +31,7 @@ proc ical_init {} {
     set ical(geometry)          {}
     set ical(iconposition)      {}
     set ical(dpi_scaling)       1.5
+    set ical(timezone)          [ical_default_timezone]
 
     # Handle environment variables
     if [info exists env(ICAL_LIBRARY)] {set ical(library) $env(ICAL_LIBRARY)}
@@ -51,6 +52,34 @@ proc ical_init {} {
 
     support_init
     if $have_tk ical_tk_init
+}
+
+proc ical_default_timezone {} {
+    set file_path "/etc/localtime"
+
+    # Ensure the file exists and is indeed a symbolic link
+    if {[file exists $file_path] && [file type $file_path] eq "link"} {
+
+        # Read the underlying target path (e.g., ../usr/share/zoneinfo/America/New_York)
+        set target_path [file readlink $file_path]
+
+        # Normalize path segments to confidently locate the zoneinfo boundary
+        set split_path [file split $target_path]
+        set index [lsearch -exact $split_path "zoneinfo"]
+
+        if {$index != -1} {
+            # Extract everything following the "zoneinfo" index segment
+            set tz_parts [lrange $split_path [expr {$index + 1}] end]
+            set timezone [file join {*}$tz_parts]
+        } else {
+            # Fallback if the link structure is non-standard but contains trailing parts
+            set timezone "<Local>"
+        }
+    } else {
+        # Failover strategy if symlink is missing/broken
+        set timezone "<Local>"
+    }
+    return $timezone
 }
 
 proc ical_tk_init {} {

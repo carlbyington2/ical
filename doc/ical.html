@@ -2,7 +2,7 @@
 <HTML><HEAD><TITLE>Man page of ICAL</TITLE>
 </HEAD><BODY>
 <H1>ICAL</H1>
-Section: Ical 3.0.5 (1)<BR>Updated: 2026-07-28<BR><A HREF="#index">Index</A>
+Section: Ical 3.0.5 (1)<BR>Updated: 2026-08-01<BR><A HREF="#index">Index</A>
 <HR>
 
 <A NAME="lbAB">&nbsp;</A>
@@ -12,7 +12,7 @@ Section: Ical 3.0.5 (1)<BR>Updated: 2026-07-28<BR><A HREF="#index">Index</A>
 Ical - An X based Calendar Program 
 <BR>
 
-This is NOT Apple’s iCal or the IETF iCalendar standard RFC2445, RFC5545 or successors. 
+This is NOT Apple's iCal or the IETF iCalendar standard RFC2445, RFC5545 or successors. 
 <P>
 
 <A NAME="lbAC">&nbsp;</A>
@@ -46,10 +46,12 @@ ical
 <P>
 <P>
 
-By today's standards, this is an ancient program. Much of the code 
-is 33 years old and counting, and it still runs nicely. Performance 
-is no longer an issue. My calendar has 3500 entries from the last 
-25 years. 
+By today's standards, this is an ancient program. Much of the code is 
+33 years old and counting, and it still runs nicely. Performance is no 
+longer an issue. My calendar has 3500 entries from the last 25 years. 
+This is NOT Apple's iCal or the IETF iCalendar standard RFC2445, 
+RFC5545 or successors. The first version of Apple's iCal was released 
+in 2002, nine years after this was written. 
 <P>
 
 Ical was written by Sanjay Ghemawat when he was at DEC, Palo Alto back 
@@ -115,6 +117,11 @@ Calendars can be shared by many users.
 
 <DD>
 Related items can be grouped in their own calendar. 
+<DT><B>*</B>
+
+<DD>
+The calendar is stored in .calendar as plain iso8859-1 
+text. You can use git to archive your calendar changes. 
 </DL>
 </DL>
 
@@ -384,8 +391,9 @@ location. You can move the appointment by dragging it with the
 middle mouse button held down. 
 <P>
 
-Appointments have an associated time zone that defaults to 
-local time. The appointment display always shows the local 
+Appointments have an associated time zone that defaults to the 
+current system time zone, or &quot;&lt;Local&gt;&quot; if that cannot be 
+determined. The appointment display always shows the local 
 time for the appointment. Suppose your local time is Denver 
 and you add a 12:00 appointment in the Los Angeles time zone. 
 The window will show this appoint at 13:00. Now if you fly to 
@@ -393,8 +401,16 @@ Los Angeles, and your workstation picks up the time zone
 change, the appointment will show at 12:00. 
 <P>
 
-Appointments created with the default local time zone will not 
-be adjusted in this manner. 
+That automatic adjustment requires that you either adjust your 
+workstation time zone manually, or that you enable both 
+automatic device location and automatic time zone in the 
+desktop settings. 
+<P>
+
+Appointments created with the &quot;&lt;Local&gt;&quot; time zone will not be 
+adjusted in this manner. If you add a 12:00 appointment in the 
+&quot;&lt;Local&gt;&quot; time zone, then it will always show at 12:00 
+wherever you fly. 
 <P>
 
 Appointment text can be edited by typing into the appointment 
@@ -1493,6 +1509,6 @@ notice and this permission notice are preserved on all copies.
 This document was created by
 <A HREF="/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 21:41:59 GMT, July 31, 2026
+Time: 18:49:51 GMT, August 01, 2026
 </BODY>
 </HTML>

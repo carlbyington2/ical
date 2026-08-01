@@ -120,7 +120,7 @@ method ApptList background {} {
         -width $width\
         -height [expr $lines * $slot(font_height)]\
         -confine 1\
-        -scrollregion [list 0 0 $width $height]             
+        -scrollregion [list 0 0 $width $height]
 
     # Set scrolling increment and initial position
     $c configure -xscrollincrement $slot(font_height)
@@ -171,6 +171,7 @@ method ApptList background {} {
 }
 
 method ApptList new {y} {
+    global ical
     # Check if something already selected on this view
     if ![catch {set i [ical_find_selection]}] {
         ical_unselect
@@ -189,6 +190,7 @@ method ApptList new {y} {
     $id date $slot(date)
     $id earlywarning [cal option DefaultEarlyWarning]
     $id own
+    $id timezone $ical(timezone)
 
     cal add $id
     ical_with_view $slot(view) {run-hook item-create $id}

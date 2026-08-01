@@ -34,7 +34,7 @@ class Appointment;
  * Done: bool                   Has item been marked "done"
  *
  * AsNotice: Notice*            Typecast to Notice if legal.  Null otherwise.
- * AsAppointment: Appointment*  Typecast to Appointment if legal ... 
+ * AsAppointment: Appointment*  Typecast to Appointment if legal ...
  *
  */
 
@@ -200,8 +200,7 @@ class Notice : public Item {
  */
 class Appointment : public Item {
   public:
-    Appointment() : start(30), length(30), alarms(0)
-    { timezone=copy_string("<Local>"); cache.invalidate(); }
+    Appointment();
 
     ~Appointment() {
         delete [] timezone;
@@ -227,7 +226,7 @@ class Appointment : public Item {
         cache.invalidate();
         if (convert_remote && date->first(d))
             start=time_from_tz(d,start);
-        else 
+        else
             convert_remote=false;
         delete [] timezone;
         timezone = copy_string(tz);

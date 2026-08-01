@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Fri Jul 31 15:41:59 2026
+.\" Manual page created with latex2man on Sat Aug  1 12:49:50 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -10,12 +10,12 @@
 
 .fi
 ..
-.TH "ICAL" "1" "2026\-07\-28" "Ical 3.0.5" "Ical 3.0.5"
+.TH "ICAL" "1" "2026\-08\-01" "Ical 3.0.5" "Ical 3.0.5"
 .SH NAME
 
 Ical \- An X based Calendar Program 
 .br
-This is NOT Apple’s iCal or the IETF iCalendar standard RFC2445, RFC5545 or successors. 
+This is NOT Apple\&'s iCal or the IETF iCalendar standard RFC2445, RFC5545 or successors. 
 .PP
 .SH SYNOPSIS
 
@@ -41,10 +41,12 @@ ical
 .SH HISTORY
 
 .PP
-By today\&'s standards, this is an ancient program. Much of the code 
-is 33 years old and counting, and it still runs nicely. Performance 
-is no longer an issue. My calendar has 3500 entries from the last 
-25 years. 
+By today\&'s standards, this is an ancient program. Much of the code is 
+33 years old and counting, and it still runs nicely. Performance is no 
+longer an issue. My calendar has 3500 entries from the last 25 years. 
+This is NOT Apple\&'s iCal or the IETF iCalendar standard RFC2445, 
+RFC5545 or successors. The first version of Apple\&'s iCal was released 
+in 2002, nine years after this was written. 
 .PP
 Ical was written by Sanjay Ghemawat when he was at DEC, Palo Alto back 
 in 1993. At that time, graphic X terminals were used to allow multiple 
@@ -95,6 +97,10 @@ Calendars can be shared by many users.
 .TP
 .B *
 Related items can be grouped in their own calendar. 
+.TP
+.B *
+The calendar is stored in .calendar as plain iso8859\-1 
+text. You can use git to archive your calendar changes. 
 .RE
 .RS
 .PP
@@ -282,16 +288,24 @@ time for this appointment is determined by the click
 location. You can move the appointment by dragging it with the 
 middle mouse button held down. 
 .PP
-Appointments have an associated time zone that defaults to 
-local time. The appointment display always shows the local 
+Appointments have an associated time zone that defaults to the 
+current system time zone, or "<Local>" if that cannot be 
+determined. The appointment display always shows the local 
 time for the appointment. Suppose your local time is Denver 
 and you add a 12:00 appointment in the Los Angeles time zone. 
 The window will show this appoint at 13:00. Now if you fly to 
 Los Angeles, and your workstation picks up the time zone 
 change, the appointment will show at 12:00. 
 .PP
-Appointments created with the default local time zone will not 
-be adjusted in this manner. 
+That automatic adjustment requires that you either adjust your 
+workstation time zone manually, or that you enable both 
+automatic device location and automatic time zone in the 
+desktop settings. 
+.PP
+Appointments created with the "<Local>" time zone will not be 
+adjusted in this manner. If you add a 12:00 appointment in the 
+"<Local>" time zone, then it will always show at 12:00 
+wherever you fly. 
 .PP
 Appointment text can be edited by typing into the appointment 
 window while it is selected. If the appointment text you are 

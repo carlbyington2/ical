@@ -285,6 +285,11 @@ Item* Notice::Clone() const {
     return copy;
 }
 
+Appointment::Appointment() : start(30), length(30), alarms(0) {
+    timezone = copy_string("<Local>");
+    cache.invalidate();
+}
+
 int Appointment::Parse(Lexer* lex, char const* keyword) {
     if (strcmp(keyword, "Start") == 0) {
         if (! lex->SkipWS() ||
