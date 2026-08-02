@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Sat Aug  1 12:49:50 2026
+.\" Manual page created with latex2man on Sun Aug  2 10:22:36 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -108,6 +108,7 @@ text. You can use git to archive your calendar changes.
 .PP
 .SH OPTIONS
 
+.PP
 .SS GENERAL OPTIONS
 .TP
 [\fB\-nodisplay\fP\fI\fP]
@@ -253,7 +254,7 @@ the default can both be overridden by specifying a file name on
 the command line as follows \-\- ical \-calendar file\-name. Ical 
 periodically saves any modifications made to a calendar to the 
 corresponding calendar file. It also periodically incorporates 
-changes made to a shared calendar file by other instances of ical. 
+changes made to a shared calendar file by other instances of Ical. 
 You can explicitly trigger these periodic saves and reads by using 
 the File menu. 
 .PP
@@ -290,10 +291,13 @@ middle mouse button held down.
 .PP
 Appointments have an associated time zone that defaults to the 
 current system time zone, or "<Local>" if that cannot be 
-determined. The appointment display always shows the local 
+determined. That default can be overridden in user.tcl as 
+shown in the \fICustomization\fP
+section. 
+The appointment display always shows the local 
 time for the appointment. Suppose your local time is Denver 
 and you add a 12:00 appointment in the Los Angeles time zone. 
-The window will show this appoint at 13:00. Now if you fly to 
+The window will show this appointment at 13:00. Now if you fly to 
 Los Angeles, and your workstation picks up the time zone 
 change, the appointment will show at 12:00. 
 .PP
@@ -426,26 +430,34 @@ to include pre\-written source files from the contrib/ directory.
 For example: 
 .PP
 .Vb
-global ical
-global have_tk
-
+######################################
 if $have_tk {
+   global ical
+   global have_tk
+
+    # override the dpi scaling, default is 1.5
    set ical(dpi_scaling)  1.5
    pref_fixfonts
+
+   # override the default timezone, default is your current
+   # timezone as seen by /etc/localtime
+   #set ical(timezone) "<Local>"
+   #set ical(timezone) "America/Denver"
 
    set d $ical(library)/contrib
    source $d/timeofday.tcl
    source $d/weeknumber.tcl
 }
+######################################
 .Ve
 .PP
 Ical also looks for site\-specific customizations at startup. 
 These customizations can be placed in the file site.tcl in 
 either the Ical library directory, or its parent directory. 
-(By default, Ical looks for site.tcl in 
-/usr/local/lib/ical/v[version]/, and /usr/local/lib/ical/, but 
-these directories may be located elsewhere on your 
-system.) The site specific files will be loaded in before any 
+By default, Ical looks for site.tcl in 
+/usr/local/lib64/ical/v[version]/, and /usr/local/lib64/ical/, 
+but these directories may be located elsewhere on your 
+system. The site specific files will be loaded in before any 
 user specific customization file is loaded in. 
 .PP
 See the "Tcl Interface to Ical" document available via the 
@@ -457,7 +469,7 @@ function even when Tk commands are not available.
 .PP
 .SS X RESOURCES BEHAVIOR
 The following X resources can be used to control various 
-aspects of ical\&'s behavior. 
+aspects of Ical\&'s behavior. 
 .PP
 .TP
 Ical.pollSeconds 
@@ -472,7 +484,7 @@ saveSeconds seconds. The default value is 30.
 .PP
 .SS DIMENSIONS
 The following X resources can be used to control various 
-dimensions of ical\&'s appearance. 
+dimensions of Ical\&'s appearance. 
 .PP
 .TP
 Ical.itemSelectWidth 
@@ -504,7 +516,7 @@ will just specify the window position here. The window
 size will be calculated automatically. 
 .PP
 .SS COLORS
-The following X resources can be used to customize ical\&'s use 
+The following X resources can be used to customize Ical\&'s use 
 of colors. If Ical windows show up with illegible colors (not 
 enough distinction between background and foreground), it may 
 be because your X resources contain definitions for 
@@ -516,7 +528,7 @@ application by application basis.
 .PP
 .TP
 Ical*Foreground/Ical*Background 
-Foreground and background colors for most of ical\&'s 
+Foreground and background colors for most of Ical\&'s 
 windows. 
 .PP
 .TP
@@ -571,7 +583,7 @@ The color used to highlight interesting dates on weekends
 and holidays. The default is purple. 
 .PP
 .SS FONTS
-The following resources can be used to customize ical\&'s use of 
+The following resources can be used to customize Ical\&'s use of 
 fonts. 
 .PP
 .TP
@@ -594,7 +606,7 @@ families you can specify here are fixed and terminal.
 .PP
 .TP
 Ical.fontSize 
-Font sizes used for ical. Use the value small to use 
+Font sizes used for Ical. Use the value small to use 
 small font sizes everywhere. Any other value for this 
 option defaults to the normal fonts. 
 .PP
@@ -640,15 +652,17 @@ Listbox, and Reminder.
 .TP
 Save 
 Save any modifications to the appropriate calendar files. 
+Ical will check for modifications every 30 seconds and will 
+save the calendar files if there have been any changes. 
 .RS
 .PP
 .RE
 .TP
 Re\-Read 
 Read any changes made to a shared calendar by another user 
-or another instance of ical. Ical will automatically 
+or another instance of Ical. Ical will automatically 
 invoke this function periodically. It is provided as a 
-menu entry for people who do not want to wait for ical\&'s 
+menu entry for people who do not want to wait for Ical\&'s 
 periodic checks. 
 .RS
 .PP
@@ -687,7 +701,7 @@ Close the selected window.
 .RE
 .TP
 Exit 
-Save any changes and kill ical. 
+Save any changes and kill Ical. 
 .RS
 .PP
 .RE
