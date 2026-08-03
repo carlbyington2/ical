@@ -26,7 +26,7 @@ class ItemListing {} {
     pack .$self.bot.def0 -side right -expand 0
 
     # Display
-    scrollbar .$self.scroll -orient vertical\
+    scrollbar .$self.scroll -orient vertical -width [scrollbar_width] \
         -command [list .$self.display yview]
     text .$self.display\
         -setgrid 1\

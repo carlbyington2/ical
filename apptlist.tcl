@@ -19,7 +19,7 @@ class ApptList {name view} {
     set slot(sel) {}
 
     frame $name -class ApptList
-    scrollbar $name.s -orient vertical -command [list $name.c yview]
+    scrollbar $name.s -orient vertical -width [scrollbar_width] -command [list $name.c yview]
     canvas $name.c -yscrollcommand [list $name.s set]
 
     # Get font for this window

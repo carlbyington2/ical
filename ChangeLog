@@ -35,6 +35,8 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * new appointments default to the current system timezone
 
+    * scrollbar width scales with the dpi scaling factor
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file

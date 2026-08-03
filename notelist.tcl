@@ -19,7 +19,7 @@ class NoteList {name view} {
 
     frame $name -class NoteList
     canvas $name.c
-    scrollbar $name.s -orient vertical -command [list $name.c yview]
+    scrollbar $name.s -orient vertical -width [scrollbar_width] -command [list $name.c yview]
     $name.c configure -yscrollcommand [list $self sbar_set]
 
     # Get font for this window

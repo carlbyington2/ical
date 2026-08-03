@@ -54,6 +54,11 @@ proc ical_init {} {
     if $have_tk ical_tk_init
 }
 
+proc scrollbar_width {} {
+    global ical
+    return  [expr 15 * $ical(dpi_scaling)]
+}
+
 proc ical_default_timezone {} {
     set file_path "/etc/localtime"
 
