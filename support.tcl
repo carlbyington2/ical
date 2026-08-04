@@ -57,9 +57,7 @@ proc support_init {} {
     create-hook dayview-close
     create-hook dayview-set-date
 
-    # Load various customization files
-    ical_load_file $ical(libparent)/site.tcl
-    ical_load_file $ical(library)/site.tcl
+    # Load customization file
     ical_load_file [file tildeexpand ~/.tk/ical/user.tcl]
 
     run-hook ical-startup

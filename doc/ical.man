@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Tue Aug  4 11:02:06 2026
+.\" Manual page created with latex2man on Tue Aug  4 13:31:39 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -112,7 +112,8 @@ text. You can use git to archive your calendar changes.
 .SS GENERAL OPTIONS
 .TP
 [\fB\-nodisplay\fP\fI\fP]
-Ignore the DISPLAY environment variable. 
+Ignore the DISPLAY environment variable and run in headless 
+mode without a display. 
 .PP
 .TP
 \fB\-calendar\fP\fI filename\fP
@@ -451,15 +452,6 @@ if $have_tk {
 ######################################
 .Ve
 .PP
-Ical also looks for site\-specific customizations at startup. 
-These customizations can be placed in the file site.tcl in 
-either the Ical library directory, or its parent directory. 
-By default, Ical looks for site.tcl in 
-/usr/local/lib64/ical/v[version]/, and /usr/local/lib64/ical/, 
-but these directories may be located elsewhere on your 
-system. The site specific files will be loaded in before any 
-user specific customization file is loaded in. 
-.PP
 See the "Tcl Interface to Ical" document available via the 
 Ical help menu. 
 .PP
@@ -491,7 +483,7 @@ Ical.itemSelectWidth
 The border width of selected items is set to the value of 
 this option to display the selected status of the item to 
 to the user. On color displays, the default value of this 
-option is 1 because on color displays selection is 
+option is 0 because on color displays selection is 
 indicated by changing the color of the selected item. On 
 monochrome displays, the default value of itemSelectWidth 
 is 4. 

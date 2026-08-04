@@ -51,6 +51,8 @@ class ItemWindow {canvas font item date} {
     }
     set slot(fg) $fg
     set slot(bg) $bg
+    set slot(isfg) [pref itemSelectFg]
+    set slot(isbg) [pref itemSelectBg]
 
     $canvas create rectangle -100 -100 -101 -101\
         -fill [pref itemOverflowColor]\
@@ -165,13 +167,10 @@ method ItemWindow insert {str} {
 method ItemWindow select {} {
     set slot(sel) 1
     focus $slot(canvas)
-    $slot(canvas) itemconfig text.$self -fill [pref itemSelectFg]
+    $slot(canvas) itemconfig text.$self -fill $slot(isfg)
     $slot(canvas) itemconfig icon.$self
     $slot(canvas) itemconfig link.$self
-    $slot(canvas) itemconfig rect.$self\
-        -fill [pref itemSelectBg]\
-        -width [pref itemSelectWidth]
-
+    $slot(canvas) itemconfig rect.$self -fill $slot(isbg) -width [pref itemSelectWidth]
     $slot(canvas) focus text.$self
     $self raise
 }

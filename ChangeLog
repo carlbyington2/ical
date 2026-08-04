@@ -6,27 +6,26 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * fixed signed/unsigned type mismatches.
 
-    * removed ancient files that are no longer useful. Moved
-    some of the contrib/ files to the main program as command
-    line options.
+    * removed ancient files that are no longer useful
 
-    * the master copy of the man page is now in latex. Many
-    updates to the man page to match the current code.
+    * moved some of the contrib/ files to the main program as command
+    line options
 
-    * replaced the code that generated the help entries with
-    invoking the browser to display the man page or tcl interface
-    documentation.
+    * the master copy of the man page is now in latex, and
+    updates to the man page to match the current code
+
+    * help menu entries now use the browser to display the help files
 
     * force links to local html files (from notices and appointments)
-    to display in the web browser rather than in a text window.
+    to display in the web browser rather than in a text window
 
-    * convert bitmaps to scalable svg and scale them by the
-    dpi scaling factor.
+    * converted bitmaps to scalable svg and scale them by the
+    dpi scaling factor
 
-    * changing a todo item to done switches to highlight never.
-    changing back to un-done switches back to highlight always.
+    * changing a todo item to done switches to highlight never
+    changing back to un-done switches back to highlight always
 
-    * the desktop and metainfo files are now in the source repo.
+    * the desktop and metainfo files are now in the source repo
 
     * update configure.ac/Makefile.am to do a full install
 
@@ -40,6 +39,12 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
     * use modern scalable fonts rather than the old X bitmap fonts
 
     * properly scale window sizes, padding and arrowshape
+
+    * remove customization via site.tcl since that was stored
+    in a directory that would be overwritten by an Ical update
+    and it is also not useful in modern single user workstations
+
+    * fix item padding issues in appointment and notice lists
 
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 

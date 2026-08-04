@@ -202,7 +202,7 @@ method NoteList rescan {args} {
 }
 
 method NoteList layout {} {
-    set x [pref itemPad]
+    set x 0
     set y 0
     foreach item $slot(items) {
         $slot(window.$item) geometry $x $y $slot(iwidth) 1
@@ -242,7 +242,7 @@ method NoteList make_window {item} {
 }
 
 method NoteList canvas_resize {w h} {
-    set slot(iwidth) [expr $w - 2*[pref itemPad]]
+    set slot(iwidth) $w
     $slot(window).c coord bg 0 0 $w [expr $slot(font_height)*100]
     $self layout
 }

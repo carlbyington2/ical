@@ -143,7 +143,8 @@ text. You can use git to archive your calendar changes.
 
 <DL COMPACT>
 <DT>[<B>-nodisplay</B><I></I>]<DD>
-Ignore the DISPLAY environment variable. 
+Ignore the DISPLAY environment variable and run in headless 
+mode without a display. 
 </DL>
 <P>
 
@@ -601,16 +602,6 @@ if $have_tk {
 
 <P>
 
-Ical also looks for site-specific customizations at startup. 
-These customizations can be placed in the file site.tcl in 
-either the Ical library directory, or its parent directory. 
-By default, Ical looks for site.tcl in 
-/usr/local/lib64/ical/v[version]/, and /usr/local/lib64/ical/, 
-but these directories may be located elsewhere on your 
-system. The site specific files will be loaded in before any 
-user specific customization file is loaded in. 
-<P>
-
 See the &quot;Tcl Interface to Ical&quot; document available via the 
 Ical help menu. 
 <P>
@@ -654,7 +645,7 @@ dimensions of Ical's appearance.
 The border width of selected items is set to the value of 
 this option to display the selected status of the item to 
 to the user. On color displays, the default value of this 
-option is 1 because on color displays selection is 
+option is 0 because on color displays selection is 
 indicated by changing the color of the selected item. On 
 monochrome displays, the default value of itemSelectWidth 
 is 4. 
@@ -1318,6 +1309,6 @@ notice and this permission notice are preserved on all copies.
 This document was created by
 <A HREF="/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 17:02:06 GMT, August 04, 2026
+Time: 19:31:39 GMT, August 04, 2026
 </BODY>
 </HTML>

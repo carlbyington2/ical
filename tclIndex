@@ -268,3 +268,4 @@ set auto_index(time_range_finish) [list source -encoding utf-8 [file join $dir t
 set auto_index(time_range_edit) [list source -encoding utf-8 [file join $dir timerange.tcl]]
 set auto_index(get_time_range) [list source -encoding utf-8 [file join $dir timerange.tcl]]
 set auto_index(trigger) [list source -encoding utf-8 [file join $dir trigger.tcl]]
+set auto_index(ps_header) [list source -encoding utf-8 [file join $dir ps_header.tcl]]

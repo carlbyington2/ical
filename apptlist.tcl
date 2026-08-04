@@ -388,11 +388,11 @@ method ApptList place {a} {
 # effects - Set item window geometry from "start/length"
 method ApptList set_geometry {a start length} {
     set adj [expr "$slot(adjust.$a) * $slot(font_height)"]
-    set finish [expr $start + $length]
+    set finish [expr {$start + $length}]
 
-    set x [expr "$slot(label_width) + $adj + [pref itemPad]"]
+    set x [expr "$slot(label_width) + $adj"]
     set y [expr "[$self coordinate $start]+1"]
-    set width [expr "$slot(width)-$adj-2*[pref itemPad]"]
+    set width [expr "$slot(width)-$adj"]
     set height [expr "[$self coordinate $finish] - $y"]
 
     $slot(window.$a) raise
