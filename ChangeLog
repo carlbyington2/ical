@@ -39,6 +39,8 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * use modern scalable fonts rather than the old X bitmap fonts
 
+    * properly scale window sizes, padding and arrowshape
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file
