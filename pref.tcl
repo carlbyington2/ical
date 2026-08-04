@@ -17,6 +17,7 @@ proc pref_load_common {} {
     option add *saveSeconds             30              startupFile
     option add *pollSeconds             120             startupFile
 
+    # option itemPad in points
     option add *itemPad                 2               startupFile
     option add *Reminder.geometry       +400+0          startupFile
     option add *Listing.geometry        +400+0          startupFile
@@ -104,9 +105,6 @@ proc pref_init {} {
     }
 
     pref_update_scaling
-
-    # Cache various entries
-    set preference(itemPad)     [winfo pixels . [option get . itemPad Size]]
 
     # Use command-line geometry specification (if any)
     global geometry
@@ -237,13 +235,22 @@ proc pref_load_fonts {} {
 proc pref_update_scaling {} {
     pref_load_fonts
     pref_load_images
+
+    global preference
+    global ical
+    set scale $ical(dpi_scaling)
+
+    # option     itemPad in points
+    # preference itemPad in pixels
+    set ip [expr {[option get . itemPad Size] * $scale}]
+    set preference(itemPad)    [winfo pixels . "${ip}p"]
 }
 
 # Find font matching given specification
 proc pref_findfont {weight style size ff} {
     global preference
     foreach family $preference($ff) {
-        set siz [expr {round($size)}]
+        set siz [expr {-round($size * [tk scaling])}]
         set f "$family-$weight-$style-$siz"
         if ![catch {set xx [font delete $f]}] {
             #puts stderr "deleted font $f"

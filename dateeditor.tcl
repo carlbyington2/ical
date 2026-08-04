@@ -67,12 +67,9 @@ class DateEditor {name date view} {
     pack $name.year.label       -side left -expand 1 -fill both
 
     # Miscellaneous buttons
-    button $name.last -text Prev\
-        -command {ical_last_day}
-    button $name.today -text Today\
-        -command {ical_today}
-    button $name.next -text Next\
-        -command {ical_next_day}
+    button $name.last  -text Prev  -command {ical_last_day}
+    button $name.today -text Today -command {ical_today}
+    button $name.next  -text Next  -command {ical_next_day}
 
     # The monthday selector
     set d $name.days
@@ -113,9 +110,9 @@ class DateEditor {name date view} {
     pack $name.month -in $name.top -side left -expand 1 -fill x
     pack $name.year  -in $name.top -side left -expand 1 -fill x
 
-    pack $name.last  -in $name.bot -side left  -expand 1 -fill x
-    pack $name.today -in $name.bot -side left  -expand 1 -fill x
-    pack $name.next  -in $name.bot -side right -expand 1 -fill x
+    pack $name.last  -in $name.bot -side left  -expand 1 -fill x -ipady 3p
+    pack $name.today -in $name.bot -side left  -expand 1 -fill x -ipady 3p
+    pack $name.next  -in $name.bot -side right -expand 1 -fill x -ipady 3p
 
     pack $d -in $name.mid -side top
 

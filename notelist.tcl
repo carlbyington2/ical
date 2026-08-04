@@ -85,7 +85,7 @@ method NoteList destructor {} {
 
 method NoteList reconfig {} {
     set name $slot(window)
-    set slot(width)  [winfo pixels $name "[cal option ItemWidth]c"]
+    set slot(width)  [winfo pixels $name "[ical_itemwidth_scaled]c"]
 
     # Set canvas geometry
     $name.c configure\

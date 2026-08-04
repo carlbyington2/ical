@@ -18,6 +18,7 @@ set auto_index(ical_with_mod_item) [list source -encoding utf-8 [file join $dir 
 set auto_index(ical_with_mod_single_item) [list source -encoding utf-8 [file join $dir actions.tcl]]
 set auto_index(ical_clip) [list source -encoding utf-8 [file join $dir actions.tcl]]
 set auto_index(ical_clipped) [list source -encoding utf-8 [file join $dir actions.tcl]]
+set auto_index(ical_itemwidth_scaled) [list source -encoding utf-8 [file join $dir actions.tcl]]
 set auto_index(action) [list source -encoding utf-8 [file join $dir actions.tcl]]
 set auto_index(ical_newview) [list source -encoding utf-8 [file join $dir actions.tcl]]
 set auto_index(ical_save) [list source -encoding utf-8 [file join $dir actions.tcl]]

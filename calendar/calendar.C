@@ -28,6 +28,8 @@ static OptionDesc option_list[] = {
 
     { "DayviewTimeStart",       "8"             },
     { "DayviewTimeFinish",      "18"            },
+
+    // ItemWidth in centimeters
     { "ItemWidth",              "9"             },
     { "NoticeHeight",           "6"             },
 
@@ -56,7 +58,7 @@ Calendar::Calendar()
             option_default->store(option_list[i].key, option_list[i].val);
         }
     }
-    
+
     readonly = 0;
     hidden = new UidSet;
     options = new OptionMap;
@@ -321,7 +323,7 @@ void Calendar::Hide(char const* uid) {
 void Calendar::RestrictHidden(UidSet const* set) {
     UidSet* old = new UidSet;
 
-    // Collect list of hide entries that can be removed 
+    // Collect list of hide entries that can be removed
     for (UidSet_Elements h = hidden; h.ok(); h.next()) {
         if (!set->contains(h.get())) {
             old->insert(h.get());

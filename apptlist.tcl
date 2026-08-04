@@ -102,7 +102,7 @@ method ApptList reconfig {} {
 method ApptList background {} {
     set c $slot(window).c
 
-    set slot(width) [winfo pixels $c "[cal option ItemWidth]c"]
+    set slot(width) [winfo pixels $c "[ical_itemwidth_scaled]c"]
 
     set width [expr $slot(label_width) + $slot(width)]
     set height [expr 48 * $slot(font_height)]

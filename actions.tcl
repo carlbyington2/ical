@@ -104,6 +104,17 @@ proc ical_clipped {} {
     return $ical_state(clip)
 }
 
+proc ical_itemwidth_scaled {} {
+    global ical
+    set scale  $ical(dpi_scaling)
+
+    # item width in centimeters
+    set w [cal option ItemWidth]
+
+    # return scaled width in centimeters
+    return [expr {$w * $scale}]
+}
+
 #### Creating an action routine ####
 
 proc action {name enabler title formals body} {

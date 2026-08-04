@@ -186,7 +186,7 @@ method DayView reconfig {} {
     set name $slot(window)
 
     # Geometry management
-    set width [winfo pixels $name "[cal option ItemWidth]c"]
+    set width [winfo pixels $name "[ical_itemwidth_scaled]c"]
 
     set start [cal option DayviewTimeStart]
     set finish [cal option DayviewTimeFinish]

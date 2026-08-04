@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Mon Aug  3 19:11:01 2026
+.\" Manual page created with latex2man on Tue Aug  4 11:02:06 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -435,8 +435,8 @@ if $have_tk {
    global ical
    global have_tk
 
-    # override the dpi scaling, default is 1.2
-   set ical(dpi_scaling)  1.5
+    # override the dpi scaling, default is 1.0
+   set ical(dpi_scaling)  1.2
    pref_update_scaling
 
    # override the default timezone, default is your current
