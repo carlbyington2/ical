@@ -2,7 +2,7 @@
 ###############################################################################
 # User Preferences
 
-# Autload support
+# Autoload support
 proc pref {type} {
     # Dispatch to appropriate method
     return [pref_$type]
@@ -103,8 +103,7 @@ proc pref_init {} {
         pref_load_mono
     }
 
-    pref_fixfonts
-    pref_load_images
+    pref_update_scaling
 
     # Cache various entries
     set preference(itemPad)     [winfo pixels . [option get . itemPad Size]]
@@ -147,12 +146,15 @@ proc pref_load_images {} {
     pref_load_one "double_right" "dright"
 }
 
-# Fix fonts in option database
-proc pref_fixfonts {} {
+# load scalable fonts
+proc pref_load_fonts {} {
     global preference
     global ical
-    set ff [option get . fontFamily String]
-    set preference(norm_fontfamilies) [concat [list $ff] {
+
+    set preference(norm_fontfamilies) [concat {
+        {Liberation Sans}
+        {DejaVu Sans}
+        {Latin Modern Sans}
         times
         charter
         {new century schoolbook}
@@ -160,8 +162,9 @@ proc pref_fixfonts {} {
         helvetica
     }]
 
-    set ff [option get . fixedFontFamily String]
-    set preference(fixed_fontfamilies) [concat [list $ff] {
+    set preference(fixed_fontfamilies) [concat {
+        {Liberation Mono}
+        {Latin Modern Mono}
         courier
         fixed
         terminal
@@ -169,36 +172,26 @@ proc pref_fixfonts {} {
     }]
 
     set scale $ical(dpi_scaling)
-    switch -exact -- [option get . fontSize String] {
-        small {
-            set size1  [expr {120 * $scale}]
-            set size2  [expr {120 * $scale}]
-            set size3  [expr {140 * $scale}]
-            set size4  [expr {180 * $scale}]
-        }
-        default {
-            set size1  [expr {120 * $scale}]
-            set size2  [expr {140 * $scale}]
-            set size3  [expr {180 * $scale}]
-            set size4  [expr {240 * $scale}]
-        }
-    }
+    set size1  [expr {10 * $scale}]
+    set size2  [expr {12 * $scale}]
+    set size3  [expr {14 * $scale}]
+    set size4  [expr {16 * $scale}]
 
     # Normal fonts
     set ff norm_fontfamilies
-    set norm120         [pref_findfont medium r $size1 $ff]
-    set norm140         [pref_findfont medium r $size2 $ff]
-    set ital140         [pref_findfont medium i $size2 $ff]
-    set bold140         [pref_findfont bold   r $size2 $ff]
-    set blit140         [pref_findfont bold   i $size2 $ff]
-    set norm180         [pref_findfont medium r $size3 $ff]
-    set bold180         [pref_findfont bold   r $size3 $ff]
-    set norm240         [pref_findfont medium r $size4 $ff]
+    set norm120         [pref_findfont normal roman  $size1 $ff]
+    set norm140         [pref_findfont normal roman  $size2 $ff]
+    set ital140         [pref_findfont normal italic $size2 $ff]
+    set bold140         [pref_findfont bold   roman  $size2 $ff]
+    set blit140         [pref_findfont bold   italic $size2 $ff]
+    set norm180         [pref_findfont normal roman  $size3 $ff]
+    set bold180         [pref_findfont bold   roman  $size3 $ff]
+    set norm240         [pref_findfont normal roman  $size4 $ff]
 
     # Fixed fonts
     set ff fixed_fontfamilies
-    set norm140fixed    [pref_findfont medium r $size2 $ff]
-    set bold140fixed    [pref_findfont medium r $size2 $ff]
+    set norm140fixed    [pref_findfont normal roman $size2 $ff]
+    set bold140fixed    [pref_findfont normal roman $size2 $ff]
 
     # Set option database
     option add *weekdayFont             $norm140 startupFile
@@ -241,22 +234,34 @@ proc pref_fixfonts {} {
     option add *Dialog*Dateeditor*Button*font   $norm180 startupFile
 }
 
-# effects - Find font matching given specification
+proc pref_update_scaling {} {
+    pref_load_fonts
+    pref_load_images
+}
+
+# Find font matching given specification
 proc pref_findfont {weight style size ff} {
     global preference
-    # Try a whole bunch of sizes
-    foreach sdelta {0 10 -10 20 -20 30 -30 40 -40} {
-        # Search for this size in families
-        set s [expr $size + $sdelta]
-        foreach family $preference($ff) {
-            set f "-*-$family-$weight-$style-normal-*-*-$s-*"
-            if [font_exists $f] {
-                return $f
-            }
+    foreach family $preference($ff) {
+        set siz [expr {round($size)}]
+        set f "$family-$weight-$style-$siz"
+        if ![catch {set xx [font delete $f]}] {
+            #puts stderr "deleted font $f"
+            ;
+        } else {
+            #puts stderr "$f does not exist yet"
+            ;
+        }
+        if ![catch {set fname [font create $f -family $family -weight $weight -slant $style -size $siz]
+        }] {
+            #puts stderr "found $fname $f"
+            return $fname
+        } else {
+            #puts stderr "cannot find $f"
+            ;
         }
     }
-
-    # Return default font
+    # return default font
     return fixed
 }
 
@@ -280,35 +285,63 @@ proc pref_cf {f} {
 }
 
 proc pref_weekdayFont {} {
-    return [pref_cf [option get . weekdayFont Font]]
+    set f [pref_cf [option get . weekdayFont Font]]
+    #puts stderr "pref_weekdayFont returns $f"
+    return $f
 }
 
 proc pref_weekendFont {} {
-    return [pref_cf [option get . weekendFont Font]]
+    set f [pref_cf [option get . weekendFont Font]]
+    #puts stderr "pref_weekendFont returns $f"
+    return $f
 }
 
 proc pref_interestFont {} {
-    return [pref_cf [option get . interestFont Font]]
+    set f [pref_cf [option get . interestFont Font]]
+    #puts stderr "pref_interestFont returns $f"
+    return $f
 }
 
 proc pref_weekendInterestFont {} {
-    return [pref_cf [option get . weekendInterestFont Font]]
+    set f [pref_cf [option get . weekendInterestFont Font]]
+    #puts stderr "pref_weekendInterestFont returns $f"
+    return $f
 }
 
 proc pref_itemFont {} {
-    return [pref_cf [option get . itemFont Font]]
+    set f [pref_cf [option get . itemFont Font]]
+    #puts stderr "pref_itemFont returns $f"
+    return $f
 }
 
-proc pref_normFont {} {return [pref_cf [option get . normFont Font]]}
-proc pref_boldFont {} {return [pref_cf [option get . boldFont Font]]}
-proc pref_italFont {} {return [pref_cf [option get . italFont Font]]}
+proc pref_normFont {} {
+    set f [pref_cf [option get . normFont Font]]
+    #puts stderr "pref_normFont returns $f"
+    return $f
+}
+
+proc pref_boldFont {} {
+    set f [pref_cf [option get . boldFont Font]]
+    #puts stderr "pref_boldFont returns $f"
+    return $f
+}
+
+proc pref_italFont {} {
+    set f [pref_cf [option get . italFont Font]]
+    #puts stderr "pref_italFont returns $f"
+    return $f
+}
 
 proc pref_smallHeadingFont {} {
-    return [pref_cf [option get . smallHeadingFont Font]]
+    set f [pref_cf [option get . smallHeadingFont Font]]
+    #puts stderr "pref_smallHeadingFont returns $f"
+    return $f
 }
 
 proc pref_largeHeadingFont {} {
-    return [pref_cf [option get . largeHeadingFont Font]]
+    set f [pref_cf [option get . largeHeadingFont Font]]
+    #puts stderr "pref_largeHeadingFont returns $f"
+    return $f
 }
 
 proc pref_weekdayColor {} {

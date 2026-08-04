@@ -397,9 +397,9 @@ if $have_tk {
     global ical
     global have_tk
 
-     # override the dpi scaling, default is 1.5
+     # override the dpi scaling, default is 1.2
     set ical(dpi_scaling)  1.5
-    pref_fixfonts
+    pref_update_scaling
 
     # override the default timezone, default is your current
     # timezone as seen by /etc/localtime
@@ -537,57 +537,6 @@ if $have_tk {
 
         \end{Description}
 
-    \subsection{Fonts}
-        \begin{Description}\setlength{\itemsep}{0cm}
-        The following resources can be used to customize Ical's use of
-        fonts.
-
-        \item[Ical.fontFamily]
-            Preferred font family.  Fonts for various purposes are
-            obtained from this family unless overridden with
-            one of the specifications below.  The default font family
-            is times.  Some other font families you can specify here
-            are charter, new century school book, and
-            helvetica.  My personal favorite is new century
-            schoolbook.
-
-        \item[Ical.fixedFontFamily]
-            Preferred font family for fixed-width fonts.  Fixed-width
-            fonts for various purposes are obtained from this family
-            unless overridden with one of the specifications below.
-            The default font family is courier.  Some other font
-            families you can specify here are fixed and terminal.
-
-        \item[Ical.fontSize]
-            Font sizes used for Ical.  Use the value small to use
-            small font sizes everywhere.  Any other value for this
-            option defaults to the normal fonts.
-
-        \item[Ical*itemFont]
-            Font used to display item contents.
-
-        \item[Ical.weekdayFont]
-            Font used for displaying days of the week.
-
-        \item[Ical.weekendFont]
-            Font used for displaying weekends.
-
-        \item[Ical.interestFont]
-            Font used to highlight interesting dates.
-
-        \item[Ical.weekendInterestFont]
-            Font used to highlight interesting dates on weekends and holidays.
-
-        \item[Ical.smallHeadingFont]
-            Font used for small headings.
-
-        \item[Ical.largeHeadingFont]
-            Font used for large headings.
-
-        \item[Ical*<class>*font]
-            Font used for windows of a certain class.  Possible values
-            for <class> are Dialog, Button, Label, Menubutton, Menu,
-            Listbox, and Reminder.
 
 \section{Menus}
     \subsection{File Menu}

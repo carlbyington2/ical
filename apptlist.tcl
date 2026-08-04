@@ -23,10 +23,7 @@ class ApptList {name view} {
     canvas $name.c -yscrollcommand [list $name.s set]
 
     # Get font for this window
-    set slot(font) [option get $name.c itemFont Font]
-    if ![string compare $slot(font) ""] {
-        set slot(font) [pref itemFont]
-    }
+    set slot(font) [pref itemFont]
 
     # Get font dimensions
     set slot(label_width) [text_width  $slot(font) "00:00AM" [pref itemPad]]

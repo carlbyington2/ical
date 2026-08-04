@@ -37,6 +37,8 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * scrollbar width scales with the dpi scaling factor
 
+    * use modern scalable fonts rather than the old X bitmap fonts
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file

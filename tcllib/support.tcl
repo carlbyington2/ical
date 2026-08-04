@@ -94,7 +94,7 @@ proc make_buttons {frame default spec} {
     }
 }
 
-# Set geometry so that toplevel shows up in same virtual window as leader 
+# Set geometry so that toplevel shows up in same virtual window as leader
 proc set_geometry {leader w g} {
     if ![regexp {^([+-])([0-9]+)([+-])([0-9]+)$} $g junk sx x sy y] {
         return

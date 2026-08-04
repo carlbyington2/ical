@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Sun Aug  2 10:22:36 2026
+.\" Manual page created with latex2man on Mon Aug  3 19:11:01 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -435,9 +435,9 @@ if $have_tk {
    global ical
    global have_tk
 
-    # override the dpi scaling, default is 1.5
+    # override the dpi scaling, default is 1.2
    set ical(dpi_scaling)  1.5
-   pref_fixfonts
+   pref_update_scaling
 
    # override the default timezone, default is your current
    # timezone as seen by /etc/localtime
@@ -582,81 +582,16 @@ Ical.weekendInterestColor
 The color used to highlight interesting dates on weekends 
 and holidays. The default is purple. 
 .PP
-.SS FONTS
-The following resources can be used to customize Ical\&'s use of 
-fonts. 
-.PP
-.TP
-Ical.fontFamily 
-Preferred font family. Fonts for various purposes are 
-obtained from this family unless overridden with 
-one of the specifications below. The default font family 
-is times. Some other font families you can specify here 
-are charter, new century school book, and 
-helvetica. My personal favorite is new century 
-schoolbook. 
-.PP
-.TP
-Ical.fixedFontFamily 
-Preferred font family for fixed\-width fonts. Fixed\-width 
-fonts for various purposes are obtained from this family 
-unless overridden with one of the specifications below. 
-The default font family is courier. Some other font 
-families you can specify here are fixed and terminal. 
-.PP
-.TP
-Ical.fontSize 
-Font sizes used for Ical. Use the value small to use 
-small font sizes everywhere. Any other value for this 
-option defaults to the normal fonts. 
-.PP
-.TP
-Ical*itemFont 
-Font used to display item contents. 
-.PP
-.TP
-Ical.weekdayFont 
-Font used for displaying days of the week. 
-.PP
-.TP
-Ical.weekendFont 
-Font used for displaying weekends. 
-.PP
-.TP
-Ical.interestFont 
-Font used to highlight interesting dates. 
-.PP
-.TP
-Ical.weekendInterestFont 
-Font used to highlight interesting dates on weekends and holidays. 
-.PP
-.TP
-Ical.smallHeadingFont 
-Font used for small headings. 
-.PP
-.TP
-Ical.largeHeadingFont 
-Font used for large headings. 
-.PP
-.TP
-Ical*<class>*font 
-Font used for windows of a certain class. Possible values 
-for <class> are Dialog, Button, Label, Menubutton, Menu, 
-Listbox, and Reminder. 
-.PP
 .SH MENUS
 
 .SS FILE MENU
-.RS
-.RE
 .TP
+.RE
 Save 
 Save any modifications to the appropriate calendar files. 
 Ical will check for modifications every 30 seconds and will 
 save the calendar files if there have been any changes. 
-.RS
 .PP
-.RE
 .TP
 Re\-Read 
 Read any changes made to a shared calendar by another user 
@@ -664,9 +599,7 @@ or another instance of Ical. Ical will automatically
 invoke this function periodically. It is provided as a 
 menu entry for people who do not want to wait for Ical\&'s 
 periodic checks. 
-.RS
 .PP
-.RE
 .TP
 Print 
 Print calendar contents. The user has the option of 
@@ -674,157 +607,107 @@ saving the print\-out to a file, pre viewing the print\-out
 by specifying a PostScript displaying program, or sending 
 the print\-out directly to a PostScript printer by 
 specifying a printing command. 
-.RS
 .PP
-.RE
 .TP
 Include Calendar 
 Select a calendar to include into your private calendar. 
 Included calendars are normally used to share calendars 
 between different users. 
-.RS
 .PP
-.RE
 .TP
 New Window 
 Open a new calendar window. This new window can be used to 
 view the items for a different date than the original 
 window. 
-.RS
 .PP
-.RE
 .TP
 Close Window 
 Close the selected window. 
-.RS
 .PP
-.RE
 .TP
 Exit 
 Save any changes and kill Ical. 
-.RS
-.PP
-.RE
-.RE
-.RS
 .PP
 .SS EDIT MENU
-.RS
-.RE
 .TP
 Cut Item 
 Delete the currently selected item and store it in the 
 clipboard. 
-.RS
 .PP
-.RE
 .TP
 Copy Item 
 Copy selected item to the clipboard. 
-.RS
 .PP
-.RE
 .TP
 Paste Item 
 Paste item from clipboard into calendar. 
-.RS
 .PP
-.RE
 .TP
 Delete Text 
 Delete the currently selected text from the selected item. 
-.RS
 .PP
-.RE
 .TP
 Insert Text 
 Insert the current X selection into the selected item. 
-.RS
 .PP
-.RE
 .TP
 Import Text 
 Import the current X selection as a new item into the 
 calendar. The date and time of this new item are parsed 
 from the X selection if possible. 
-.RS
-.PP
-.RE
-.RE
-.RS
 .PP
 .SS ITEM MENU
-.RS
-.RE
 .TP
 Todo 
 Toggle the item between being a todo item and not being a 
 todo item. 
-.RS
 .PP
-.RE
 .TP
 Always Highlight 
 The item always causes the corresponding date to be 
 highlighted. This is the default behavior. 
-.RS
 .PP
-.RE
 .TP
 Never Highlight 
 The item never causes the corresponding date to be 
 highlighted. 
-.RS
 .PP
-.RE
 .TP
 Highlight Future 
 The item causes the corresponding date to be highlighted 
 if and only if the date is not in the past. 
-.RS
 .PP
-.RE
 .TP
 Holiday 
 The item causes the corresponding date to be highlighted 
 as a holiday. 
-.RS
 .PP
-.RE
 .TP
 Link to Web Document 
 Adds a link to a URI to the item. The item will display with 
 a small arrow, and a left\-click on that arrow will open 
 the configured browser with that URI. 
-.RS
 .PP
-.RE
 .TP
 Link to Local File 
 Adds a link to a local file to the item. The item will display 
 with a small arrow, and a left\-click on that arrow will open 
 a text window to display that file. 
-.RS
 .PP
-.RE
 .TP
 Remove Link 
 Removes the link from the item. 
-.RS
 .PP
-.RE
 .TP
 Change Alarms 
 Pops up a dialog box that allows you to edit the 
 alarm times for an appointment. 
-.RS
 .PP
 Note that this will only change the alarm times for the 
 selected appointment. You can make this change for all 
 appointments that do not have special alarm times by using 
 the Default Alarms entry in the Options menu. 
 .PP
-.RE
 .TP
 Early Warning 
 By default an item is included in a listing for a 
@@ -837,14 +720,12 @@ from March 7th to March 17th so that you will have enough
 time to go out and buy a present. You can achieve this 
 effect by selecting this menu entry and then entering "10 
 days" into the resulting dialog. 
-.RS
 .PP
 Note that this will only change the listing behavior for 
 the selected item. You can make this change for all items 
 you create from now on by using the Default Listings entry 
 in the Options menu. 
 .PP
-.RE
 .TP
 Properties ... 
 Edit various item properties, including the calendar to 
@@ -852,88 +733,59 @@ which the item belongs, highlighting information, early
 warning options, alarm times, and starting and ending 
 times for appointments. You can also double\-click on an 
 item to pop up the property editing dialog. 
-.RS
 .PP
-.RE
 .TP
 Search Forward 
 Search forward looking for an item that contains a user 
 specified string. 
-.RS
 .PP
-.RE
 .TP
 Search Backward 
 Search backward looking for an item that contains a user 
 specified string. 
-.RS
-.PP
-.RE
-.RE
-.RS
 .PP
 .SS REPEAT MENU
-.RS
-.RE
 .TP
 Don\&'t Repeat 
 Make the selected item a non\-repeating item. 
-.RS
 .PP
-.RE
 .TP
 Daily 
 Make the item repeat every day. 
-.RS
 .PP
-.RE
 .TP
 Weekly 
 Make the item repeat once every week. 
-.RS
 .PP
-.RE
 .TP
 Monthly 
 Make the item repeat once every month. 
-.RS
 .PP
-.RE
 .TP
 Annually 
 Make the item repeat once every year. 
-.RS
 .PP
-.RE
 .TP
 Edit Weekly 
 Make the item repeat on a weekly basis in a complicated 
 fashion. For example, on Tuesday and Thursday every week. 
-.RS
 .PP
-.RE
 .TP
 Edit Monthly 
 Make the item repeat on a monthly basis in a complicated 
 fashion. For example, on the third Sunday in June, or the 
 last working day of each month. 
-.RS
 .PP
-.RE
 .TP
 Set Range... 
 Restrict the range for a repeating item. 
-.RS
 .PP
-.RE
 .TP
 Last Occurrence 
 Make the current occurrence the last occurrence of the 
 selected item. I.e., remove any occurrences after the 
 current date. 
-.RS
 .PP
-.RE
 .TP
 Make Unique 
 If you want to modify just a single occurrence of a 
@@ -941,96 +793,60 @@ repeating item, select the item occurrence you want to
 modify and then activate this menu entry. Now all 
 modifications to this item occurrence will only affect 
 this particular occurrence. 
-.RS
-.PP
-.RE
-.RE
-.RS
 .PP
 .SS  LIST MENU
-.RS
-.RE
 .TP
 One Day 
 List the item occurrences for one day. 
-.RS
 .PP
-.RE
 .TP
 Seven Days 
 List the item occurrences for the next seven days. 
-.RS
 .PP
-.RE
 .TP
 Ten Days 
 List the item occurrences for the next ten days. 
-.RS
 .PP
-.RE
 .TP
 Thirty Days 
 List the item occurrences for the next thirty days. 
-.RS
 .PP
-.RE
 .TP
 Week 
 List the item occurrences for this week. 
-.RS
 .PP
-.RE
 .TP
 Month 
 List the item occurrences for this month. 
-.RS
 .PP
-.RE
 .TP
 Year 
 List the item occurrences for this year. 
-.RS
 .PP
-.RE
 .TP
 From Calendar ... 
 List all item occurrences from a selected calendar. 
-.RS
-.PP
-.RE
-.RE
-.RS
 .PP
 .SS OPTION MENU
-.RS
-.RE
 .TP
 Appointment Range 
 Controls the subset of a day displayed by default in the 
 appointment listing. The default settings display 8:00am 
 to 6:00pm. 
-.RS
 .PP
-.RE
 .TP
 Notice Window Height 
 Controls the height of the notice window. 
-.RS
 .PP
-.RE
 .TP
 Item Width 
 Controls the width of displayed appointments and notices. 
-.RS
 .PP
-.RE
 .TP
 Web Browser 
 Sets the path to the web browser used to open links from 
 appointments and notices. 
-.RS
 .PP
-.RE
 .TP
 Allow Text Overflow 
 If this option is selected, then you can type in any 
@@ -1039,25 +855,19 @@ that does not fit into the appointment will be allowed to
 overflow out of the appointment. If you do not like text 
 overflowing out of an appointment, then you should turn 
 off this option. 
-.RS
 .PP
-.RE
 .TP
 Display Am/Pm 
 If this option is selected, time will be printed in twelve 
 hour mode with am or pm indicators. Otherwise, time will 
 be printed in twenty\-four hour mode. 
-.RS
 .PP
-.RE
 .TP
 Start Week on Monday 
 If this option is selected, month displays will start each 
 week off on a Monday. Otherwise, each week will start on 
 a Sunday. 
-.RS
 .PP
-.RE
 .TP
 Default Alarms 
 Use this menu entry to change the time intervals at which 
@@ -1069,9 +879,7 @@ alarm behavior for all appointments. You can override
 this default behavior on an appointment\-by\-appointment 
 basis by selecting an appointment and then selecting the 
 Change Alarms entry in the item menu. 
-.RS
 .PP
-.RE
 .TP
 Default Listings 
 This menu can be used to select the default listing 
@@ -1086,31 +894,19 @@ days before their actual occurrence. This menu selects
 the default behavior for new items. Individual item 
 behavior can be controlled by similar entries in the Item 
 menu. 
-.RS
-.PP
-.RE
-.RE
-.RS
 .PP
 .SS HELP MENU
-.RS
-.RE
 .TP
 About Ical 
 Displays Ical version number and author information. 
-.RS
 .PP
-.RE
 .TP
 User Guide 
 Displays this document. 
-.RS
 .PP
-.RE
 .TP
 Tcl Interface to Ical 
 Displays instructions for using Tcl to customize Ical. 
-.RS
 .PP
 .SH AUTHOR
 

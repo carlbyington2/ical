@@ -30,7 +30,7 @@ proc ical_init {} {
     set ical(prefs)             {}
     set ical(geometry)          {}
     set ical(iconposition)      {}
-    set ical(dpi_scaling)       1.5
+    set ical(dpi_scaling)       1.2
     set ical(timezone)          [ical_default_timezone]
 
     # Handle environment variables

@@ -23,10 +23,7 @@ class NoteList {name view} {
     $name.c configure -yscrollcommand [list $self sbar_set]
 
     # Get font for this window
-    set slot(font) [option get $name.c itemFont Font]
-    if ![string compare $slot(font) ""] {
-        set slot(font) [pref itemFont]
-    }
+    set slot(font) [pref itemFont]
 
     # Get font dimensions.  The text string "00:00AM" is used so that
     # we hit the cache entry created by "ApptList".
