@@ -193,7 +193,10 @@ method DayView reconfig {} {
     set wde [winfo reqwidth  $name.de]
     set w [expr {$wal + max($wde,$wnl)}]
     set h [winfo reqheight $name]
-    wm geometry $name ${w}x$h
+    set current [wm geometry $name]
+    # Extract the current position part (+X+Y or -X-Y etc.) starting at the first + or - after the size
+    regexp {^\d+x\d+([-+][-+0-9]+)} $current -> pos
+    wm geometry $name ${w}x${h}$pos
 }
 
 ##############################################################################
