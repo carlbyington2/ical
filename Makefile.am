@@ -1,6 +1,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
-bin_PROGRAMS = ical ical2pdf
+bin_PROGRAMS = ical
+bin_SCRIPTS  = ical2pdf
 icallibdir = $(pkglibdir)/v@ICAL_RPMVERSION@
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
 	       @ICAL_TCLLIB_SCRIPTS@ $(srcdir)/tcllib/tclIndex \
@@ -10,9 +11,8 @@ icallib_DATA = $(builddir)/startup.tcl
 docdir = $(prefix)/share/doc/@PACKAGE_NAME@
 doc_DATA = @ICAL_DOC@
 
-EXTRA_DIST = startup.tcl.in COPYRIGHT.ORIG Makefile.am developer.tools
+EXTRA_DIST = ical2pdf startup.tcl.in COPYRIGHT.ORIG Makefile.am developer.tools
 dist_man1_MANS = doc/ical.man
-dist_bin_SCRIPTS = ical2pdf
 
 appdir = $(prefix)/share/applications
 app_DATA = ical.desktop
@@ -47,9 +47,6 @@ libtime_a_SOURCES = time/Date.C time/Month.C time/Time.C time/WeekDay.C \
 libtypes_a_SOURCES = types/bitvec.C types/hashfuncs.C types/intset.C
 
 CLEANFILES = $(icallib_DATA) $(app_DATA)
-
-ical2pdf$(EXEEXT):
-	echo "nothing here"
 
 # cannot do it in configure, as libdir is not known there :(
 startup.tcl: startup.tcl.in

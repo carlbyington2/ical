@@ -5,6 +5,6 @@ aclocal
 autoheader
 automake --add-missing
 autoconf
-./configure
+./configure --with-tclconfig=/usr/lib64
 make
 make install
