@@ -21,12 +21,6 @@ else
     echo 'auto_mkindex tcllib *.tcl' | tclsh
     echo 'auto_mkindex tests  *.tcl' | tclsh
 
-    # add an entry for ps_header in ps_header.tcl
-    # which is created by the Makefile
-    cat <<'EOF' >>tclIndex
-set auto_index(ps_header) [list source -encoding utf-8 [file join $dir ps_header.tcl]]
-EOF
-
     # undo the patches
     cat $tf | while read fn; do
         mv $fn.save $fn

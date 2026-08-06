@@ -5,12 +5,12 @@ icallibdir = $(pkglibdir)/v@ICAL_RPMVERSION@
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
 	       @ICAL_TCLLIB_SCRIPTS@ $(srcdir)/tcllib/tclIndex \
 	       @ICAL_CONTRIB@ @ICAL_IMAGES@
-icallib_DATA = $(builddir)/startup.tcl $(builddir)/ps_header.tcl
+icallib_DATA = $(builddir)/startup.tcl
 
 docdir = $(prefix)/share/doc/@PACKAGE_NAME@
 doc_DATA = @ICAL_DOC@
 
-EXTRA_DIST = startup.tcl.in ps_header.ps COPYRIGHT.ORIG Makefile.am developer.tools
+EXTRA_DIST = startup.tcl.in COPYRIGHT.ORIG Makefile.am developer.tools
 dist_man1_MANS = doc/ical.man
 dist_bin_SCRIPTS = ical2pdf
 
@@ -50,13 +50,6 @@ CLEANFILES = $(icallib_DATA) $(app_DATA)
 
 ical2pdf$(EXEEXT):
 	echo "nothing here"
-
-ps_header.tcl: ps_header.ps
-	echo  'proc ps_header {} { set val {}' > $@;
-	@SED@ -e 's/\[/\\[/g' \
-	      -e 's/"/\\"/g' \
-	      -e 's/.*/  set val "$$val&\\n"/' < $< >> $@;
-	echo '  return $$val\n}' >> $@
 
 # cannot do it in configure, as libdir is not known there :(
 startup.tcl: startup.tcl.in
