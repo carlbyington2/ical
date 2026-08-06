@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = -I m4
+
 bin_PROGRAMS = ical ical2pdf
 icallibdir = $(pkglibdir)/v@ICAL_RPMVERSION@
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
@@ -46,7 +48,7 @@ libtypes_a_SOURCES = types/bitvec.C types/hashfuncs.C types/intset.C
 
 CLEANFILES = $(icallib_DATA) $(app_DATA)
 
-ical2pdf:
+ical2pdf$(EXEEXT):
 	echo "nothing here"
 
 ps_header.tcl: ps_header.ps

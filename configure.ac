@@ -2,6 +2,8 @@ AC_INIT([ical],[3.0.5])
 AM_INIT_AUTOMAKE([subdir-objects])
 LT_INIT
 
+AC_CONFIG_MACRO_DIRS([m4])
+
 # Create config files
 AC_CONFIG_HEADERS([config.h])
 
