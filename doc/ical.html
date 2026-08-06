@@ -120,7 +120,7 @@ Related items can be grouped in their own calendar.
 <DT><B>*</B>
 
 <DD>
-The calendar is stored in .calendar as plain iso8859-1 
+The calendar is stored in .calendar as plain utf-8 
 text. You can use git to archive your calendar changes. 
 </DL>
 </DL>
@@ -198,7 +198,7 @@ Same as <I>-show</I>
 
 <DL COMPACT>
 <DT>[<B>-print</B><I> 1|2|4|8|10|month</I>]<DD>
-Generate a single page calendar in postscript format to stdout for 
+Generate a single page calendar in PDF format to stdout for 
 items in the next few days, or for the current month. The 
 starting date may be changed with the <I>-date</I>
 option. 
@@ -591,8 +591,8 @@ if $have_tk {
    #set ical(timezone) &quot;America/Denver&quot;
 
    set d $ical(library)/contrib
-   source $d/timeofday.tcl
-   source $d/weeknumber.tcl
+   source -encoding utf-8 $d/timeofday.tcl
+   source -encoding utf-8 $d/weeknumber.tcl
 }
 ######################################
 
@@ -798,9 +798,13 @@ periodic checks.
 <DT>Print <DD>
 Print calendar contents. The user has the option of 
 saving the print-out to a file, pre viewing the print-out 
-by specifying a PostScript displaying program, or sending 
-the print-out directly to a PostScript printer by 
-specifying a printing command. 
+by specifying a PDF displaying program (default is 
+evince), or sending the print-out directly to a PDF 
+printer by specifying a printing command (default is 
+lpr). In the case of preview and print, the specified 
+command will have the name of a temp file appended to the 
+argument list, and that file will be deleted after the 
+preview program or printing program finishes. 
 </DL>
 <P>
 
@@ -1309,6 +1313,6 @@ notice and this permission notice are preserved on all copies.
 This document was created by
 <A HREF="/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 19:31:39 GMT, August 04, 2026
+Time: 03:08:11 GMT, August 06, 2026
 </BODY>
 </HTML>

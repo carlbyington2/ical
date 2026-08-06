@@ -99,7 +99,7 @@ this project.
         \item Users can view many calendars at a time.
         \item Calendars can be shared by many users.
         \item Related items can be grouped in their own calendar.
-        \item The calendar is stored in .calendar as plain iso8859-1
+        \item The calendar is stored in .calendar as plain utf-8
         text. You can use git to archive your calendar changes.
     \end{itemize}
     \end{Description}
@@ -134,7 +134,7 @@ this project.
     Same as \Arg{-show} +2
 
 \item[\oOptArg{-print}{ 1|2|4|8|10|month}]
-    Generate a single page calendar in postscript format to stdout for
+    Generate a single page calendar in PDF format to stdout for
     items in the next few days, or for the current month.  The
     starting date may be changed with the \Arg{-date} option.
 
@@ -408,8 +408,8 @@ if $have_tk {
     #set ical(timezone) "America/Denver"
 
     set d $ical(library)/contrib
-    source $d/timeofday.tcl
-    source $d/weeknumber.tcl
+    source -encoding utf-8 $d/timeofday.tcl
+    source -encoding utf-8 $d/weeknumber.tcl
 }
 ######################################
 \end{verbatim}
@@ -548,9 +548,13 @@ if $have_tk {
         \item[Print]
             Print calendar contents.  The user has the option of
             saving the print-out to a file, pre viewing the print-out
-            by specifying a PostScript displaying program, or sending
-            the print-out directly to a PostScript printer by
-            specifying a printing command.
+            by specifying a PDF displaying program (default is
+            evince), or sending the print-out directly to a PDF
+            printer by specifying a printing command (default is
+            lpr). In the case of preview and print, the specified
+            command will have the name of a temp file appended to the
+            argument list, and that file will be deleted after the
+            preview program or printing program finishes.
 
         \item[Include Calendar]
             Select a calendar to include into your private calendar.

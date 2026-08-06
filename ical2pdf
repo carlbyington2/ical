@@ -1,0 +1,156 @@
+#!/usr/bin/python3
+
+import os, subprocess, sys, tempfile, uuid
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4, letter, landscape
+from reportlab.pdfbase.pdfmetrics import stringWidth
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph
+
+def process(infilename, outfile):
+    infile = open(infilename, "r", encoding="utf-8")
+    pagesize = infile.readline().strip('\n')
+    rows,cols = [int(x) for x in infile.readline().strip('\n').split()]
+    leftheader = infile.readline().strip('\n')
+    rightheader = infile.readline().strip('\n')
+    columnheadings = infile.readline().strip('\n')
+
+    if pagesize == "SetUSLetter": orientation = letter
+    else:                         orientation = A4
+    orientation  = landscape(orientation)
+    width,height = orientation
+    hmargin   = 36 # 1/2 inch
+    vmargin   = 18 # 1/4 inch
+    top       = height - vmargin
+    right     = width - hmargin
+    bodywidth = width - 2*hmargin
+    cellwidth = bodywidth / cols
+
+    # Create a canvas object
+    c = canvas.Canvas(outfile, pagesize=orientation)
+    styles = getSampleStyleSheet()
+    style = styles["Normal"]
+
+    # left header
+    c.setFont("Helvetica", 25, leading=25)
+    c.drawString(hmargin, top-25, leftheader)
+    # right header
+    c.setFont("Helvetica", 14, leading=14)
+    tw = stringWidth(rightheader, "Helvetica", 14)
+    c.drawString(right - tw, top-14, rightheader)
+    top -= 40
+
+    if columnheadings:
+        c.setFont("Helvetica", 20, leading=20)
+        colhead = columnheadings.split(',')
+        x = hmargin
+        for ch in colhead:
+            cw = stringWidth(ch, "Helvetica", 20)
+            c.drawString(x + (cellwidth-cw)/2, top-20, ch)
+            x += cellwidth
+        top -= 35
+
+    # remaining height for the cells
+    bodyheight = top - vmargin
+    cellheight = bodyheight / rows
+
+    line = infile.readline().strip('\n')
+    while line:
+        row,col = [int(x) for x in line.strip('\n').split()]
+        leftcolheader = infile.readline().strip('\n')
+        rightcolheader = infile.readline().strip('\n')
+
+        # main day cell
+        celltop    = top - cellheight * row
+        cellbottom = celltop - cellheight
+        cellleft   = hmargin + cellwidth * col
+        cellright  = cellleft + cellwidth
+        c.setStrokeColorRGB(0, 0, 0)
+        c.setLineWidth(3)
+        c.rect(cellleft, cellbottom, cellwidth, cellheight, stroke=1)
+
+        # 25 point cell header containing 14 point text
+        cellhheight = 25
+        cellhwidth  = cellwidth / 4
+        if leftcolheader: cellhwidth = cellwidth
+        cellhleft   = cellright - cellhwidth
+        cellhbottom = celltop - cellhheight
+        # cell header background
+        c.setFillGray(0.9)
+        c.rect(cellhleft, cellhbottom, cellhwidth, cellhheight, stroke=1, fill=1)
+        # cell header text
+        c.setFillGray(0)
+        c.setFont("Helvetica", 14, leading=14)
+        cw = stringWidth(rightcolheader, "Helvetica", 14)
+        if leftcolheader:
+            c.drawString(cellhleft+4, cellhbottom+6, leftcolheader)
+            # right justify right header
+            rh = cellright - cw - 4
+        else:
+            # center right header
+            rh = cellhleft + (cellhwidth-cw)/2
+        cw = stringWidth(rightcolheader, "Helvetica", 14)
+        c.drawString(rh, cellhbottom+6, rightcolheader)
+        y = cellhbottom
+
+        line = infile.readline().strip('\n')
+        # process the appointments
+        cell = []
+        while line == "77143db1-ce11-4ba8-b68e-497add32185e":
+            # start of cell
+            line = infile.readline().strip('\n')
+            while line != "eadb44e9-3c78-44b0-a4f8-0604154b692f":
+                cell.append(line)
+                line = infile.readline().strip('\n')
+            while cell and not cell[-1].strip():
+                cell.pop()
+            line = infile.readline().strip('\n')
+        if cell:
+            text = '<br/>'.join(cell)
+            para = Paragraph(text, style)
+            padding = 3
+            # Wrap the paragraph to fit inside the rect minus padding
+            para_width = cellwidth - (2 * padding)
+            para_height = cellheight - (2 * padding)
+            w, h = para.wrap(para_width, para_height)
+            # Draw the paragraph inside the rect
+            para.drawOn(c, cellleft + padding, celltop - cellhheight - padding - h)
+
+    infile.close()
+
+    # Save and generate the PDF
+    c.save()
+
+
+def usage():
+    print("usage: ical2pdf inputname copy outputname")
+    print("       ical2pdf inputname arg  command ...")
+    print("       ical2pdf inputname redir cat")
+    sys.exit(0)
+
+
+print("args = ", sys.argv)
+if len(sys.argv) != 4: usage
+
+if sys.argv[2] == "copy":
+    temp_file = sys.argv[3]
+else:
+    temp_dir = tempfile.gettempdir()
+    unique_filename = f"temp_{uuid.uuid4().hex}.pdf"
+    temp_file = os.path.join(temp_dir, unique_filename)
+
+in_file = sys.argv[1]
+process(in_file, temp_file)
+
+if sys.argv[2] == "copy":
+    pass
+else:
+    if sys.argv[2] == "redir":
+        cmd = ["cat", temp_file]
+    else: #arg
+        cmd = sys.argv[3].split()
+        cmd.append(temp_file)
+    result = subprocess.run(cmd)
+    os.remove(temp_file)  # Manually clean it up
+
+os.remove(in_file)

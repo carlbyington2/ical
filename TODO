@@ -1,6 +1,12 @@
-Allow iso8601 dates and times.
+remove extra vertical padding on the prev/today/next buttons
 
-Switch to UTF-8 as the .calendar encoding. Change the postscript
-header to match.
+ical2pdf could make adjustments to force the appointments
+to fit into the box for the day.
+    remove internal blank lines
+    if there is no left header
+        wrap the first line into the cell header space
+    shrink the font
+
+Allow iso8601 dates and times.
 
 Audit the export to ics format code.

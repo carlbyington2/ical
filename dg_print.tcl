@@ -44,7 +44,7 @@ proc pr_make {} {
 
     set pr_save    cal.ps
     set pr_print   "lpr"
-    set pr_preview "ghostview -"
+    set pr_preview "evince"
     set pr_papersize SetUSLetter
     catch {set pr_print   [cal option PrintCommand]}
     catch {set pr_preview [cal option PreviewCommand]}
@@ -98,7 +98,7 @@ proc pr_make {} {
         -relief flat\
         -variable pr_count\
         -value other
-    
+
     frame $f.mid.save
     frame $f.mid.preview
     frame $f.mid.print
@@ -207,88 +207,31 @@ proc pr_interact {leader date} {
         cal option PrintPaperSize $pr_papersize
     }
 
-    # Get contents
-    set output [pr_output $date $pr_count $pr_papersize]
+    # print to temp file
+    set tmpName [pr_output $date $pr_count $pr_papersize]
 
     switch -exact -- $pr_type {
-        save    { pr_file $pr_save $output }
-        print   { pr_file "|$pr_print" $output }
-        preview { pr_bg   $pr_preview $output }
+        save    { set x [exec ical2pdf $tmpName copy $pr_save]    }
+        print   { set x [exec ical2pdf $tmpName arg  $pr_print]   }
+        preview { set x [exec ical2pdf $tmpName arg  $pr_preview] }
         default { error "Unknown printing mode $pr_type" }
     }
 }
 
-proc pr_file {filespec data} {
-    # effects   Write data to specified file.
-    #           Make sure file gets closed on error.
-    if [catch {
-        set outfile [open $filespec w]
-        # set the encoding to match the ps header
-        fconfigure $outfile -encoding iso8859-1
-        puts $outfile $data
-        close $outfile
-    } msg] {
-        catch {close $outfile}
-        error "Could not print to \"$filespec\"\n\n$msg"
-    }
-
-    catch {close $outfile}
-}
-
-proc pr_bg {cmd data} {
-    # effects   Run command with specified input.
-    if [catch {eval exec [list echo $data |] $cmd [list &]} msg] {
-        error "$cmd failed:\n\n$msg"
-    }
-}
-
-# effects - Return output file name
-proc pr_outfile {} {
-    global pr_type pr_save pr_preview pr_print
-
-    # Stash away printing commands
-    if ![cal readonly] {
-        cal option PrintCommand   $pr_print
-        cal option PreviewCommand $pr_preview
-    }
-
-    switch -exact -- $pr_type {
-        save {
-            set str $pr_save
-        }
-        preview {
-            set str "|$pr_preview"
-        }
-        print {
-            set str "|$pr_print"
-        }
-        default {
-            error "Unknown printing mode $pr_type"
-        }
-    }
-
-    return $str
-}
-
-# effects - Return postscript string
+# print to a temp file, and return the name of that file
 proc pr_output {date count papersize} {
+    set output [file tempfile tmpName]
+    fconfigure $output -encoding utf-8
+    puts $output $papersize
     if ![string compare $count month] {
-        set str [psmonth $date]
+        psmonth $output $date
     } else {
         if ![string compare $count "other"] {
             global pr_other
             set count $pr_other
         }
-
-        # Try to keep column width and row height similar
-        set cols [expr round(sqrt($count * 11.0 / 8.5))]
-
-        set str [psdays $date $count $cols 1]
+        psdays $output $date $count
     }
-    
-    set psheader [ps_header]
-    set header "$papersize\n%%EndProlog\n%%Page: 1 1\ngsave\n"
-    set trailer "\ngrestore\n%%Trailer\n%%Pages: 1"
-
-    return "$psheader\n$header$str$trailer"
+    close $output
+    return $tmpName
 }

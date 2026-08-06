@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Tue Aug  4 13:31:39 2026
+.\" Manual page created with latex2man on Wed Aug  5 21:08:11 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -99,7 +99,7 @@ Calendars can be shared by many users.
 Related items can be grouped in their own calendar. 
 .TP
 .B *
-The calendar is stored in .calendar as plain iso8859\-1 
+The calendar is stored in .calendar as plain utf\-8 
 text. You can use git to archive your calendar changes. 
 .RE
 .RS
@@ -152,7 +152,7 @@ Same as \fI\-show\fP
 .PP
 .TP
 [\fB\-print\fP\fI 1|2|4|8|10|month\fP]
-Generate a single page calendar in postscript format to stdout for 
+Generate a single page calendar in PDF format to stdout for 
 items in the next few days, or for the current month. The 
 starting date may be changed with the \fI\-date\fP
 option. 
@@ -446,8 +446,8 @@ if $have_tk {
    #set ical(timezone) "America/Denver"
 
    set d $ical(library)/contrib
-   source $d/timeofday.tcl
-   source $d/weeknumber.tcl
+   source \-encoding utf\-8 $d/timeofday.tcl
+   source \-encoding utf\-8 $d/weeknumber.tcl
 }
 ######################################
 .Ve
@@ -596,9 +596,13 @@ periodic checks.
 Print 
 Print calendar contents. The user has the option of 
 saving the print\-out to a file, pre viewing the print\-out 
-by specifying a PostScript displaying program, or sending 
-the print\-out directly to a PostScript printer by 
-specifying a printing command. 
+by specifying a PDF displaying program (default is 
+evince), or sending the print\-out directly to a PDF 
+printer by specifying a printing command (default is 
+lpr). In the case of preview and print, the specified 
+command will have the name of a temp file appended to the 
+argument list, and that file will be deleted after the 
+preview program or printing program finishes. 
 .PP
 .TP
 Include Calendar 

@@ -92,11 +92,12 @@ proc ical_no_tk_script {} {
     }
 
     if $doprint {
-        # Generate postscript
+        # Generate PDF to stdout
         set papersize SetUSLetter
         catch {set papersize [cal option PrintPaperSize]}
-        fconfigure stdout -encoding iso8859-1
-        puts stdout [pr_output $ical(startdate) $showcount $papersize]
+        set tmpName [pr_output $ical(startdate) $showcount $papersize]
+        puts stdout "exec ical2pdf $tmpName arg cat"
+        set x [exec ical2pdf $tmpName redir "cat" >@ stdout]
     }
 
     if $dolist {

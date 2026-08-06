@@ -1,4 +1,4 @@
-bin_PROGRAMS = ical
+bin_PROGRAMS = ical ical2pdf
 icallibdir = $(pkglibdir)/v@ICAL_RPMVERSION@
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
 	       @ICAL_TCLLIB_SCRIPTS@ $(srcdir)/tcllib/tclIndex \
@@ -10,6 +10,7 @@ doc_DATA = @ICAL_DOC@
 
 EXTRA_DIST = startup.tcl.in ps_header.ps COPYRIGHT.ORIG Makefile.am developer.tools
 dist_man1_MANS = doc/ical.man
+dist_bin_SCRIPTS = ical2pdf
 
 appdir = $(prefix)/share/applications
 app_DATA = ical.desktop
@@ -44,6 +45,9 @@ libtime_a_SOURCES = time/Date.C time/Month.C time/Time.C time/WeekDay.C \
 libtypes_a_SOURCES = types/bitvec.C types/hashfuncs.C types/intset.C
 
 CLEANFILES = $(icallib_DATA) $(app_DATA)
+
+ical2pdf:
+	echo "nothing here"
 
 ps_header.tcl: ps_header.ps
 	echo  'proc ps_header {} { set val {}' > $@;

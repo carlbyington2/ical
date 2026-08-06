@@ -46,6 +46,8 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * fix item padding issues in appointment and notice lists
 
+    * switch printing from iso8859-1 postscript to utf-8 pdf
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file
