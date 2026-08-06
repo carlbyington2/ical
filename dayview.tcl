@@ -24,6 +24,7 @@ class DayView {} {
 
     toplevel $n -class Dayview
     set_geometry {} $n [option get $n geometry Geometry]
+    wm resizable $n 0 1
 
     set slot(apptlist) [ApptList $n.al $self]
     set slot(notelist) [NoteList $n.nl $self]
@@ -186,17 +187,13 @@ method DayView reconfig {} {
     set name $slot(window)
 
     # Geometry management
-    set width [winfo pixels $name "[ical_itemwidth_scaled]c"]
-
-    set start [cal option DayviewTimeStart]
-    set finish [cal option DayviewTimeFinish]
-    wm grid $name\
-        1\
-        [expr ($finish - $start) * 2]\
-        $width\
-        [$slot(apptlist) line_height]
-    wm minsize $name 1 10
-    wm maxsize $name 1 48
+    update idletasks
+    set wal [winfo reqwidth  $name.al]
+    set wnl [winfo reqwidth  $name.nl]
+    set wde [winfo reqwidth  $name.de]
+    set w [expr {$wal + max($wde,$wnl)}]
+    set h [winfo reqheight $name]
+    wm geometry $name ${w}x$h
 }
 
 ##############################################################################

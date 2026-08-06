@@ -115,6 +115,17 @@ proc ical_itemwidth_scaled {} {
     return [expr {$w * $scale}]
 }
 
+proc ical_noticeheight_scaled {} {
+    global ical
+    set scale  $ical(dpi_scaling)
+
+    # item width in centimeters
+    set h [cal option NoticeHeight]
+
+    # return scaled width in centimeters
+    return [expr {$h * $scale}]
+}
+
 #### Creating an action routine ####
 
 proc action {name enabler title formals body} {

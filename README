@@ -1,0 +1,10 @@
+to build from the source tarball, extract the files, then
+
+libtoolize --copy --force
+aclocal
+autoheader
+automake --add-missing
+autoconf
+./configure
+make
+make install

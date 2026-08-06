@@ -48,6 +48,8 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * switch printing from iso8859-1 postscript to utf-8 pdf
 
+    * recompute main window height when notice window height changes
+
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 
     * New icon and desktop file

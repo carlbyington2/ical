@@ -88,11 +88,10 @@ method NoteList reconfig {} {
     set slot(width)  [winfo pixels $name "[ical_itemwidth_scaled]c"]
 
     # Set canvas geometry
-    $name.c configure\
-        -width $slot(width)\
-        -height "[cal option NoticeHeight]c"\
-        -confine 1\
-        -scrollregion [list 0 0 $slot(width) "[cal option NoticeHeight]c"]
+    set w $slot(width)
+    set h [winfo pixels $name "[ical_noticeheight_scaled]c"]
+    $name.c configure -width $w -height $h -confine 1\
+                      -scrollregion [list 0 0 $w $h]
 
     $name.c yview moveto 0
     $self layout

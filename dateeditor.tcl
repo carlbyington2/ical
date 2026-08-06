@@ -110,9 +110,9 @@ class DateEditor {name date view} {
     pack $name.month -in $name.top -side left -expand 1 -fill x
     pack $name.year  -in $name.top -side left -expand 1 -fill x
 
-    pack $name.last  -in $name.bot -side left  -expand 1 -fill x -ipady 3p
-    pack $name.today -in $name.bot -side left  -expand 1 -fill x -ipady 3p
-    pack $name.next  -in $name.bot -side right -expand 1 -fill x -ipady 3p
+    pack $name.last  -in $name.bot -side left  -expand 1 -fill x
+    pack $name.today -in $name.bot -side left  -expand 1 -fill x
+    pack $name.next  -in $name.bot -side right -expand 1 -fill x
 
     pack $d -in $name.mid -side top
 

@@ -1,4 +1,4 @@
-remove extra vertical padding on the prev/today/next buttons
+exportics needs to output dtstamp entries
 
 ical2pdf could make adjustments to force the appointments
 to fit into the box for the day.
@@ -7,6 +7,4 @@ to fit into the box for the day.
         wrap the first line into the cell header space
     shrink the font
 
-Allow iso8601 dates and times.
-
-Audit the export to ics format code.
+Allow iso8601 dates and times when parsing input data.
