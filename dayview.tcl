@@ -187,7 +187,7 @@ method DayView reconfig {} {
     set name $slot(window)
 
     # Geometry management
-    update idletasks
+    update
     set wal [winfo reqwidth  $name.al]
     set wnl [winfo reqwidth  $name.nl]
     set wde [winfo reqwidth  $name.de]
