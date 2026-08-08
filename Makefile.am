@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4
 
-bin_PROGRAMS = ical
+bin_PROGRAMS = ical ical2
 bin_SCRIPTS  = ical2pdf
 icallibdir = $(pkglibdir)/v@ICAL_RPMVERSION@
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
@@ -45,6 +45,9 @@ libtime_a_SOURCES = time/Date.C time/Month.C time/Time.C time/WeekDay.C \
 		    time/Year.C time/parse.C
 
 libtypes_a_SOURCES = types/bitvec.C types/hashfuncs.C types/intset.C
+
+ical2_SOURCES = ical2.cpp
+ical2_LDADD = -lical
 
 CLEANFILES = $(icallib_DATA) $(app_DATA)
 
