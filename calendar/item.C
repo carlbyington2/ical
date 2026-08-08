@@ -30,10 +30,11 @@ Item::Item() {
     uid = (char*) uid_new();
     uid_persistent = 0;
 
-    deleted = 0;
     remindStart = defaultRemindStart;
+    deleted = 0;
 
     date = new DateSet;
+    last_modified = Time::Now();
 
     hilite = copy_string("always");
     todo = 0;
@@ -47,7 +48,6 @@ Item::~Item() {
     delete [] uid;
     delete [] hilite;
     delete date;
-
     if (options != 0) delete options;
 }
 
@@ -82,12 +82,15 @@ int Item::Read(Lexer* lex) {
 }
 
 int Item::Parse(Lexer* lex, char const* keyword) {
-    if (strcmp(keyword, "Remind") == 0) {
-        if (! lex->SkipWS() ||
-            ! lex->GetNumber(remindStart)) {
-            lex->SetError("error reading remind level");
+    if (strcmp(keyword, "Uid") == 0) {
+        char const* x;
+        if (!lex->SkipWS() || !lex->GetUntil(']', x)) {
+            lex->SetError("error reading unique id");
             return 0;
         }
+        delete [] uid;
+        uid = copy_string(x);
+        uid_persistent = 1;
         return 1;
     }
 
@@ -102,18 +105,6 @@ int Item::Parse(Lexer* lex, char const* keyword) {
         return 1;
     }
 
-    if (strcmp(keyword, "Uid") == 0) {
-        char const* x;
-        if (!lex->SkipWS() || !lex->GetUntil(']', x)) {
-            lex->SetError("error reading unique id");
-            return 0;
-        }
-        delete [] uid;
-        uid = copy_string(x);
-        uid_persistent = 1;
-        return 1;
-    }
-
     if (strcmp(keyword, "Contents") == 0) {
         char const* x;
         if (! lex->GetString(x)) {
@@ -121,6 +112,15 @@ int Item::Parse(Lexer* lex, char const* keyword) {
             return 0;
         }
         SetText(x);
+        return 1;
+    }
+
+    if (strcmp(keyword, "Remind") == 0) {
+        if (! lex->SkipWS() ||
+            ! lex->GetNumber(remindStart)) {
+            lex->SetError("error reading remind level");
+            return 0;
+        }
         return 1;
     }
 
@@ -141,13 +141,21 @@ int Item::Parse(Lexer* lex, char const* keyword) {
         return 1;
     }
 
+    if (strcmp(keyword, "LastModified") == 0) {
+        char const* x;
+        if (!lex->GetString(x) || !last_modified.fromISO8601(x)) {
+            lex->SetError("error reading item last modified");
+            return 0;
+        }
+        return 1;
+    }
+
     if (strcmp(keyword, "Hilite") == 0) {
         char const* x;
         if (!lex->GetString(x)) {
             lex->SetError("error reading item hilite");
             return 0;
         }
-
         delete [] hilite;
         hilite = copy_string(x);
         return 1;
@@ -193,16 +201,21 @@ void Item::Write(charArray* out) const {
 
     format(out, "Remind [%d]\n", remindStart);
 
+    append_string(out, "Dates [");
+    date->write(out);
+    append_string(out, "]\n");
+
+    append_string(out, "LastModified [");
+    char *lm = last_modified.toISO8601();
+    append_string(out, lm);
+    append_string(out, "]\n");
+
     append_string(out, "Hilite [");
     Lexer::PutString(out, hilite);
     append_string(out, "]\n");
 
     if (todo) {append_string(out, "Todo []\n");}
     if (done) {append_string(out, "Done []\n");}
-
-    append_string(out, "Dates [");
-    date->write(out);
-    append_string(out, "]\n");
 
     if (options != 0) {
         options->write(out);

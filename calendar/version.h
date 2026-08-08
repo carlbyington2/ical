@@ -5,7 +5,7 @@
 /*
  * Calendar file version.
  */
-static const int VersionMajor = 2;
+static const int VersionMajor = 3;
 static const int VersionMinor = 0;
 
 #endif /* _VERSION_H */

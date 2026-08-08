@@ -1,4 +1,10 @@
-exportics needs to output dtstamp entries
+document how to use grep to revert back to the older .calendar
+format, removing all the LastModified lines.
+
+add copy item as ics to clipboard / paste item as ics from clipboard
+
+allow iCalendar format when creating items from stdin or clipboard
+the clipboard
 
 ical2pdf could make adjustments to force the appointments
 to fit into the box for the day.

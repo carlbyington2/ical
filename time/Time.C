@@ -8,6 +8,7 @@
 #include <alloca.h>
 #endif /* __FreeBSD__ */
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "config.h"
 
@@ -92,42 +93,47 @@ Time::Time(const struct timeval& tv) {
 
 void Time::Convert(struct timeval& tv) const {
     if (! initialized) Initialize();
-
     tv.tv_sec  = (long) floor(rep + offset);
     tv.tv_usec = (long) round((rep + offset - tv.tv_sec) * 1000000.0);
 }
 
-#if 0
-time_t timezone_to_local(time_t clock, const char *tz) {
-    const char *old=getenv("TZ");
-    if (old) old=strdupa(old);
-
-    struct tm* t = localtime(&clock);
-    setenv("TZ", tz, 1);
-    tzset();
-
-    clock = mktime(t);
-    if (old) setenv("TZ", old, 1); else unsetenv("TZ");
-    tzset();
-
-    return clock;
+char *Time::toISO8601() const {
+    if (! initialized) Initialize();
+    // yyyymmddThhmmssZ
+    static char t[20];
+    int     DD;
+    WeekDay wday;
+    Month   month;
+    int     YYYY;
+    int     hh, mm, ss;
+    int     milli;
+    BreakDown(DD, wday, month, YYYY, hh, mm, ss, milli, "UTC");
+    int MM = month.Index();
+    snprintf(t, sizeof(t), "%04d%02d%02dT%02d%02d%02dZ", YYYY, MM, DD, hh, mm, ss);
+    return t;
 }
 
-time_t local_to_timezone(time_t clock, const char *tz) {
-    const char *old=getenv("TZ");
-    if (old) old=strdupa(old);
-
-    setenv("TZ", tz, 1);
-    tzset();
-    struct tm* t = localtime(&clock);
-
-    if (old) setenv("TZ", old, 1); else unsetenv("TZ");
-    tzset();
-    clock = mktime(t);
-
-    return clock;
+bool Time::fromISO8601(char const* isodatetime) {
+    if (! initialized) Initialize();
+    // yyyymmddThhmmssZ
+    int YYYY,MM,DD,hh,mm,ss;
+    int rc = sscanf(isodatetime, "%04d%02d%02dT%02d%02d%02dZ", &YYYY, &MM, &DD, &hh, &mm, &ss);
+    if (rc != 6) return false;
+    struct tm utctime = {0};
+    utctime.tm_sec   = ss;
+    utctime.tm_min   = mm;
+    utctime.tm_hour  = hh;
+    utctime.tm_mday  = DD;
+    utctime.tm_mon   = MM - 1;
+    utctime.tm_year  = YYYY - 1900;
+    utctime.tm_wday  = 0;
+    utctime.tm_yday  = 0;
+    utctime.tm_isdst = 0;
+    time_t tt = timegm(&utctime);
+    if (tt < 0) return false;
+    rep = tt - offset;
+    return true;
 }
-#endif
 
 Duration::Duration(const struct timeval& tv) {
     rep = tv.tv_sec + ((double) tv.tv_usec) / 1000000.0;

@@ -22,9 +22,11 @@ class Item_Tcl : public Object {
     // effects  Return associated calendar file
     CalFile* calendar();
 
-    // effects  Set associated calendar fi;
+    // effects  Set associated calendar file
     void set_calendar(CalFile*);
 
+    // effects  Record the item is modified
+    void modified() { item->modified(); }
     // effects  Returns Item_Tcl for specified item.  If no such
     //          Item_Tcl exists, returns 0.
     //

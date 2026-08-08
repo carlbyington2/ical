@@ -48,7 +48,13 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * switch printing from iso8859-1 postscript to utf-8 pdf
 
-    * recompute main window height when notice window height changes
+    * recompute main window width and height when notice window
+    height changes or appointment window width changes
+
+    * new calendar format v3.0 to hold the last modified date
+    for each notice or appointment
+
+    * export to ics format now includes the required DTSTAMP element
 
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 

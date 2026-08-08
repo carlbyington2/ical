@@ -108,6 +108,8 @@ class Item {
 
     char const* GetUid() const { return uid; }
 
+    char const* GetLastModified() const { return last_modified.toISO8601(); }
+
     // effects - Return the uid.  The returned string is guaranteed
     //           to remain valid until the item is deleted.
 
@@ -154,16 +156,20 @@ class Item {
     int similar(Item const* x) const;
     // effects  Returns true iff this has same contents as x.
 
+    /* modified */
+    void modified() { last_modified = Time::Now(); }
+
     static const int defaultRemindStart;
 
   protected:
-    char*       text;
-    char*       owner;
     char*       uid;
     int         uid_persistent;
+    char*       owner;
+    char*       text;
     int         remindStart;    /* Start reminding early */
     int         deleted;
     DateSet*    date;
+    Time        last_modified;
     char*       hilite;
     int         todo;
     int         done;
@@ -175,11 +181,6 @@ class Item {
 /*
  * Notice
  *
- * An Item with just a length.
- * The length is just an indication of how big a window the notice must
- * be displayed in.  The length field can be interpreted just as the length
- * field for Appointments, and if notice->length == appt->length, then
- * the notice will be displayed the same size as the appt.
  */
 class Notice : public Item {
   public:

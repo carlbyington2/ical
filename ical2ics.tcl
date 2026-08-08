@@ -44,6 +44,7 @@ proc iteminfo {c i d} {
 proc vevent {c i d} {
     puts $c "BEGIN:VEVENT"
     puts $c "UID:[$i uid]"
+    puts $c "DTSTAMP:[$i last_modified]"
     puts $c "[text_fold SUMMARY:[string map [list "\n" {\n}] [$i text]]]"
     if {[$i repeats]} {
         set r [$i describe_repeat -terse]
@@ -59,6 +60,7 @@ proc vevent {c i d} {
 proc vjournal {c i d} {
     puts $c "BEGIN:VJOURNAL"
     puts $c "UID:[$i uid]"
+    puts $c "DTSTAMP:[$i last_modified]"
     puts $c "[text_fold SUMMARY:[string map [list "\n" {\n}] [$i text]]]"
     if {[$i repeats]} {
         set r [$i  describe_repeat -terse]
@@ -140,7 +142,6 @@ proc item_duration {i} {
 
 proc text_fold {t} {
     set x 0
-    # This won't exactly wrap UTF-8 right, but ...
     set i [expr {[string length $t] / 75}]
     if {$i == 0} {return $t}
     set t2 "[string range $t 0 74]"

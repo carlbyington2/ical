@@ -72,6 +72,7 @@ static int item_delete    (ClientData, Tcl_Interp*, int, const char**);
 static int item_cal       (ClientData, Tcl_Interp*, int, const char**);
 static int item_text      (ClientData, Tcl_Interp*, int, const char**);
 static int item_uid       (ClientData, Tcl_Interp*, int, const char**);
+static int item_last_modified  (ClientData, Tcl_Interp*, int, const char**);
 static int item_early     (ClientData, Tcl_Interp*, int, const char**);
 static int item_owner     (ClientData, Tcl_Interp*, int, const char**);
 static int item_owned     (ClientData, Tcl_Interp*, int, const char**);
@@ -121,6 +122,7 @@ static Dispatch_Entry item_dispatch[] = {
     { "calendar",               0, 0, item_cal          },
     { "text",                   0, 1, item_text         },
     { "uid",                    0, 0, item_uid          },
+    { "last_modified",          0, 0, item_last_modified},
     { "earlywarning",           0, 1, item_early        },
     { "owner",                  0, 1, item_owner        },
     { "owned",                  0, 0, item_owned        },
@@ -325,6 +327,11 @@ static int item_text(ClientData c, Tcl_Interp* tcl, int argc, const char** argv)
 static int item_uid(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {
     Item_Tcl* item = (Item_Tcl*) c;
     TCL_Return(tcl, (char*) item->value()->GetUid());
+}
+
+static int item_last_modified(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {
+    Item_Tcl* item = (Item_Tcl*) c;
+    TCL_Return(tcl, (char*) item->value()->GetLastModified());
 }
 
 static int item_early(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {
@@ -943,6 +950,8 @@ static int check_permission(Tcl_Interp* tcl, Item_Tcl* item) {
 }
 
 static void trigger_item(Tcl_Interp* tcl, Item_Tcl* item, char const* t) {
-    if (item->calendar() != 0)
+    if (item->calendar() != 0) {
+        item->modified();
         trigger(tcl, t, item->handle());
+    }
 }

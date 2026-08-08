@@ -73,6 +73,10 @@ class Time {
     Time(struct timeval const&);
     void Convert(struct timeval&) const;
 
+    // ISO 8601 conversions
+    char *toISO8601() const;
+    bool fromISO8601(char const* isodatetime);
+
     double EpochSeconds() const;        /* Return seconds since epoch */
   private:
     /*
