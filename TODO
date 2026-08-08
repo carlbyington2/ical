@@ -1,5 +1,7 @@
 document how to use grep to revert back to the older .calendar
 format, removing all the LastModified lines.
+use libical to parse incoming iCalendar test
+https://github.com/libical/libical/blob/4.0/docs/UsingLibical.md
 
 add copy item as ics to clipboard / paste item as ics from clipboard
 
