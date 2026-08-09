@@ -26,8 +26,8 @@ icon_DATA = @ICAL_ICON@
 licensedir = $(prefix)/share/licenses
 license_DATA = @ICAL_LICENSE@
 
-ical_SOURCES = cal_tcl.C dateeditor.C dispatch.C ical.C ical_tcl.C \
-	       item_tcl.C object.C time_tcl.C main.C
+ical_SOURCES = cal_tcl.cpp dateeditor.cpp dispatch.cpp ical.cpp ical_tcl.cpp \
+	       item_tcl.cpp object.cpp time_tcl.cpp main.cpp
 ical_CPPFLAGS = -DICALLIBDIR='"$(icallibdir)"' -I$(srcdir)/calendar -I$(srcdir)/types -I$(srcdir)/time @TK_XINCLUDES@
 ical_LDADD = libcalendar.a libtime.a libtypes.a \
 	     @TK_LIB_SPEC@ @TCL_LIB_SPEC@ @TK_LIBS@
@@ -35,16 +35,16 @@ ical_LDADD = libcalendar.a libtime.a libtypes.a \
 noinst_LIBRARIES = libcalendar.a libtime.a libtypes.a
 
 libcalendar_a_CPPFLAGS = -I$(srcdir)/types -I$(srcdir)/time
-libcalendar_a_SOURCES = calendar/arrays.C calendar/calendar.C \
-			calendar/calfile.C calendar/dateset.C \
-			calendar/item.C calendar/lexer.C calendar/misc.C \
-			calendar/options.C calendar/smallintset.C \
-			calendar/uid.C
+libcalendar_a_SOURCES = calendar/arrays.cpp calendar/calendar.cpp \
+			calendar/calfile.cpp calendar/dateset.cpp \
+			calendar/item.cpp calendar/lexer.cpp calendar/misc.cpp \
+			calendar/options.cpp calendar/smallintset.cpp \
+			calendar/uid.cpp
 
-libtime_a_SOURCES = time/Date.C time/Month.C time/Time.C time/WeekDay.C \
-		    time/Year.C time/parse.C
+libtime_a_SOURCES = time/Date.cpp time/Month.cpp time/Time.cpp time/WeekDay.cpp \
+		    time/Year.cpp time/parse.cpp
 
-libtypes_a_SOURCES = types/bitvec.C types/hashfuncs.C types/intset.C
+libtypes_a_SOURCES = types/bitvec.cpp types/hashfuncs.cpp types/intset.cpp
 
 ical2_SOURCES = ical2.cpp
 ical2_LDADD = -lical
