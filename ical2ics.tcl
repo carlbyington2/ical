@@ -41,11 +41,14 @@ proc iteminfo {c i d} {
     }
 }
 
-proc vevent {c i d} {
-    puts $c "BEGIN:VEVENT"
+proc vevent_or_journal {c i d} {
     puts $c "UID:[$i uid]"
     puts $c "DTSTAMP:[$i last_modified]"
     puts $c "[text_fold SUMMARY:[string map [list "\n" {\n}] [$i text]]]"
+    set t [$i timezone]
+    if {[string length $t] > 0} {
+        puts $c "Timezone:$t"
+    }
     if {[$i repeats]} {
         set r [$i describe_repeat -terse]
         rrule $c $i $r
@@ -53,22 +56,18 @@ proc vevent {c i d} {
     } else {
         puts $c "DTSTART:[item_time $i $d]"
     }
+}
+
+proc vevent {c i d} {
+    puts $c "BEGIN:VEVENT"
+    vevent_or_journal $c $i $d
     puts $c "DURATION:[item_duration $i]"
     puts $c "END:VEVENT"
 }
 
 proc vjournal {c i d} {
     puts $c "BEGIN:VJOURNAL"
-    puts $c "UID:[$i uid]"
-    puts $c "DTSTAMP:[$i last_modified]"
-    puts $c "[text_fold SUMMARY:[string map [list "\n" {\n}] [$i text]]]"
-    if {[$i repeats]} {
-        set r [$i  describe_repeat -terse]
-        rrule $c $i $r
-        puts $c "DTSTART:[item_date $i [lindex $r 0]]"
-    } else {
-        puts $c "DTSTART:[item_date $i $d]"
-    }
+    vevent_or_journal $c $i $d
     puts $c "END:VJOURNAL"
 }
 
