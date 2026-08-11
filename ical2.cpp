@@ -46,43 +46,23 @@ char *get_property(icalcomponent* comp, icalproperty_kind prop) {
     return rc;
 }
 
-const char *get_summary(icalcomponent* comp) {
-    const char *rc = NULL;
-    icalproperty *pr = icalcomponent_get_first_property(comp, ICAL_SUMMARY_PROPERTY);
-    if (pr) rc = icalproperty_get_summary(pr);
-    return rc;
-}
-
-const char *get_tzid(icalcomponent* comp) {
-    const char *rc = NULL;
+std::string get_tzid(icalcomponent* comp) {
     icalproperty *pr = icalcomponent_get_first_property(comp, ICAL_DTSTART_PROPERTY);
     if (pr) {
         icalparameter *pa = icalproperty_get_first_parameter(pr, ICAL_TZID_PARAMETER);
-        if (pa) {
-            rc = icalparameter_get_tzid(pa);
-        }
+        if (pa) return TranslateWindowsToIana(icalparameter_get_tzid(pa));
     }
-    return rc;
+    return "";
 }
 
 int get_duration(icalcomponent* comp) {
     // in minutes
-    int rc = -1;
-    icalproperty *pr = icalcomponent_get_first_property(comp, ICAL_DURATION_PROPERTY);
-    if (pr) {
-        struct icaldurationtype duration = icalproperty_get_duration(pr);
+    int rc = 0;
+    struct icaldurationtype duration = icalcomponent_get_duration(comp);
+    if (!icaldurationtype_is_null_duration(duration)) {
         rc = icaldurationtype_as_int(duration);
     }
     return rc / 60;
-}
-
-struct icaltimetype get_dtstart(icalcomponent* comp) {
-    struct icaltimetype rc{};
-    icalproperty *pr = icalcomponent_get_first_property(comp, ICAL_DTSTART_PROPERTY);
-    if (pr) {
-        rc = icalproperty_get_dtstart(pr);
-    }
-    return rc;
 }
 
 struct icalrecurrencetype get_rrule(icalcomponent* comp, bool &have_rrule) {
@@ -131,16 +111,16 @@ void traverse_components(icalcomponent* comp, int depth) {
     if ((kind == ICAL_VEVENT_COMPONENT) ||
         (kind == ICAL_VJOURNAL_COMPONENT) ||
         (kind == ICAL_VTODO_COMPONENT)) {
-        char *uid                       = get_property(comp, ICAL_UID_PROPERTY);
+        const char *uid                 = icalcomponent_get_uid(comp);
         char *dtstamp                   = get_property(comp, ICAL_DTSTAMP_PROPERTY);
-        const char *summary             = get_summary(comp);
+        const char *summary             = icalcomponent_get_summary(comp);
         char *dtstart                   = get_property(comp, ICAL_DTSTART_PROPERTY);
-        const char *tzid                = get_tzid(comp);
-        struct icaltimetype dt          = get_dtstart(comp);
+        std::string tzid                = get_tzid(comp);
+        struct icaltimetype dt          = icalcomponent_get_dtstart(comp);
         int   duration                  = get_duration(comp);
         bool  have_rrule;
         struct icalrecurrencetype recur = get_rrule(comp, have_rrule);
-        char *status                    = get_property(comp, ICAL_STATUS_PROPERTY);
+        enum icalproperty_status status = icalcomponent_get_status(comp);
         if (uid && dtstamp && summary && dtstart) {
             // build start from dtstart time
             char start[20];
@@ -198,7 +178,7 @@ void traverse_components(icalcomponent* comp, int depth) {
                 output("Contents", summary);
                 output("Start", start);
                 output("Length", length);
-                if (tzid) output("Timezone", tzid);
+                if (!tzid.empty()) output("Timezone", tzid.c_str());
                 output("Dates", dates);
                 output("End ]\n");
             } else {
@@ -212,15 +192,12 @@ void traverse_components(icalcomponent* comp, int depth) {
             }
             if (kind == ICAL_VTODO_COMPONENT) {
                 output("Todo", "");
-                if (status && (strcmp(status, "COMPLETED") == 0))
-                    output("Done", "");
+                if (status == ICAL_STATUS_COMPLETED) output("Done", "");
             }
             output("]\n");
         }
-        free(uid     );
         free(dtstamp );
         free(dtstart );
-        free(status  );
     }
 
     icalcomponent* child = icalcomponent_get_first_component(comp, ICAL_ANY_COMPONENT);
