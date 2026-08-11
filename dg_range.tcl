@@ -77,8 +77,8 @@ proc dr_init {} {
     update
 
     # Set-up a variable trace to track changes to editor state
-    trace add variable dr_state(start)  w dr_validate
-    trace add variable dr_state(finish) w dr_validate
+    trace add variable dr_state(start)  write dr_validate
+    trace add variable dr_state(finish) write dr_validate
     dr_validate
 }
 
