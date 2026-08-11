@@ -161,6 +161,7 @@ set auto_index(preamble) [list source -encoding utf-8 [file join $dir ical2ics.t
 set auto_index(postamble) [list source -encoding utf-8 [file join $dir ical2ics.tcl]]
 set auto_index(vtimezone) [list source -encoding utf-8 [file join $dir ical2ics.tcl]]
 set auto_index(iteminfo) [list source -encoding utf-8 [file join $dir ical2ics.tcl]]
+set auto_index(vevent_or_journal) [list source -encoding utf-8 [file join $dir ical2ics.tcl]]
 set auto_index(vevent) [list source -encoding utf-8 [file join $dir ical2ics.tcl]]
 set auto_index(vjournal) [list source -encoding utf-8 [file join $dir ical2ics.tcl]]
 set auto_index(rrule) [list source -encoding utf-8 [file join $dir ical2ics.tcl]]

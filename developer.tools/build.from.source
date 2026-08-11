@@ -1,0 +1,10 @@
+unpack source tarball
+
+libtoolize --copy --force
+aclocal
+autoheader
+automake --add-missing
+autoconf
+./configure --with-tclconfig=/usr/lib64 --prefix=/usr
+make
+make dist

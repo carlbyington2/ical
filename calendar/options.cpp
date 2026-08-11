@@ -63,7 +63,7 @@ void OptionMap::write(charArray* out) const {
         char const* key = (char const*) list[i];
         assert(rep->contains(key));
 
-        char const* val;
+        char const* val = "";
         rep->fetch(key, val);
         append_string(out, key);
         append_string(out, " [");

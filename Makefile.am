@@ -47,7 +47,7 @@ libtime_a_SOURCES = time/Date.cpp time/Month.cpp time/Time.cpp time/WeekDay.cpp 
 libtypes_a_SOURCES = types/bitvec.cpp types/hashfuncs.cpp types/intset.cpp
 
 ical2_SOURCES = ical2.cpp
-ical2_LDADD = -lical
+ical2_LDADD = -lical -licui18n -licuuc
 
 CLEANFILES = $(icallib_DATA) $(app_DATA)
 

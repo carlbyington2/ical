@@ -21,7 +21,7 @@
  * non-negative integer.
  *
  * <Comparer> should be the name of a function (or a macro) that can be
- * supplied two <Keys>.  It should return TRUE iff the supplied keys
+ * supplied two <Keys>.  It should return true iff the supplied keys
  * are equal.
  */
 
@@ -79,7 +79,7 @@ class HashMap {                                                               \
     /*                                                                        \
      * modifies - v                                                           \
      * effects  - If map has binding for k, post(v) = value bound to k        \
-     *            and returns TRUE.  Else post(v) = pre(v) and returns FALSE. \
+     *            and returns true.  Else post(v) = pre(v) and returns false. \
      */                                                                       \
                                                                               \
     Val fetch(Key k) const;                                                   \
@@ -243,10 +243,10 @@ inline bool HashMap::fetch(Key k, Val& v) const {                             \
     int i = find_index(k);                                                    \
     if (typ[i] == occupied) {                                                 \
         v = val[i];                                                           \
-        return TRUE;                                                          \
+        return true;                                                          \
     }                                                                         \
     else {                                                                    \
-        return FALSE;                                                         \
+        return false;                                                         \
     }                                                                         \
 }                                                                             \
                                                                               \
@@ -489,7 +489,7 @@ void HashMap::check() {                                                       \
                                                                               \
         bool* marked = new bool[tsize];                                       \
         for (j = 0; j < tsize; j++) {                                         \
-            marked[j] = FALSE;                                                \
+            marked[j] = false;                                                \
         }                                                                     \
                                                                               \
         int h1 = hasher(key[i]);                                              \
@@ -499,7 +499,7 @@ void HashMap::check() {                                                       \
         for (j = 0; j < tsize; j++) {                                         \
             int index = (first + h2*j) & mask;                                \
             assert(! marked[index]);                                          \
-            marked[index] = TRUE;                                             \
+            marked[index] = true;                                             \
         }                                                                     \
                                                                               \
         delete [] marked;                                                     \

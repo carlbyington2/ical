@@ -21,7 +21,7 @@
  * non-negative integer.
  *
  * <Comparer> should be the name of a function (or a macro) that can be
- * supplied two <Elements>.  It should return TRUE iff the supplied
+ * supplied two <Elements>.  It should return true iff the supplied
  * elements are equal.
  */
 
@@ -445,7 +445,7 @@ void HashSet::check() {                                                       \
                                                                               \
         bool* marked = new bool[tsize];                                       \
         for (j = 0; j < tsize; j++) {                                         \
-            marked[j] = FALSE;                                                \
+            marked[j] = false;                                                \
         }                                                                     \
                                                                               \
         int h1 = hasher(elt[i]);                                              \
@@ -455,7 +455,7 @@ void HashSet::check() {                                                       \
         for (j = 0; j < tsize; j++) {                                         \
             int index = (first + h2*j) & mask;                                \
             assert(! marked[index]);                                          \
-            marked[index] = TRUE;                                             \
+            marked[index] = true;                                             \
         }                                                                     \
                                                                               \
         delete [] marked;                                                     \

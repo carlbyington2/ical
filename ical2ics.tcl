@@ -34,6 +34,7 @@ proc iteminfo {c i d} {
             set ::ic2ics_events([$i uid]) 1
         }
     }
+    if {[$i text] eq "" } return
     if {[$i is appt]} {
         vevent $c $i $d
     } elseif {[$i is note]} {
@@ -41,37 +42,42 @@ proc iteminfo {c i d} {
     }
 }
 
-proc vevent_or_journal {c i d} {
+proc vevent_or_journal {c i d item_d_or_t zone} {
     puts $c "UID:[$i uid]"
     puts $c "DTSTAMP:[$i last_modified]"
-    puts $c "[text_fold SUMMARY:[string map [list "\n" {\n}] [$i text]]]"
-    set t [$i timezone]
-    if {[string length $t] > 0} {
-        puts $c "Timezone:$t"
-    }
+    puts $c "[text_fold SUMMARY:[string map [list "\n" {\n} "," {\,}] [$i text]]]"
     if {[$i repeats]} {
         set r [$i describe_repeat -terse]
-        rrule $c $i $r
-        puts $c "DTSTART:[item_time $i [lindex $r 0]]"
+        rrule $c $i $r $item_d_or_t $zone
+        puts $c "DTSTART$zone:[$item_d_or_t $i [lindex $r 0]]"
     } else {
-        puts $c "DTSTART:[item_time $i $d]"
+        puts $c "DTSTART$zone:[$item_d_or_t $i $d]"
     }
 }
 
 proc vevent {c i d} {
     puts $c "BEGIN:VEVENT"
-    vevent_or_journal $c $i $d
+    # get the time zone
+    set z [$i timezone]
+    if {[string length $z] > 0} {
+        if {$z eq "<Local>"} {
+            set z ""
+        } else {
+            set z ";TZID=$z"
+        }
+    }
+    vevent_or_journal $c $i $d "item_time" $z
     puts $c "DURATION:[item_duration $i]"
     puts $c "END:VEVENT"
 }
 
 proc vjournal {c i d} {
     puts $c "BEGIN:VJOURNAL"
-    vevent_or_journal $c $i $d
+    vevent_or_journal $c $i $d "item_date" ""
     puts $c "END:VJOURNAL"
 }
 
-proc rrule {c i r} {
+proc rrule {c i r item_d_or_t zone} {
     set rule ""
     switch -- [lindex $r 3] {
         "weekly" {
@@ -105,17 +111,13 @@ proc rrule {c i r} {
         }
     }
     if {[lindex $r 1] != [date last]} {
-        if {[$i is appt]} {
-            set rule "$rule;UNTIL=[item_time $i [lindex $r 1]]"
-        } else {
-            set rule "$rule;UNTIL=[item_date $i [lindex $r 1]]"
-        }
+        set rule "$rule;UNTIL=[$item_d_or_t $i [lindex $r 1]]"
     }
     puts $c "RRULE:$rule"
     if {[llength [lindex $r 2]]} {
         set l [list]
-        foreach d [lindex $r 2] { lappend l [item_time $i $d] }
-        puts $c "EXDATE:[join $l ,]"
+        foreach d [lindex $r 2] { lappend l [$item_d_or_t $i $d] }
+        puts $c "EXDATE$zone:[join $l ,]"
     }
 }
 
