@@ -580,7 +580,7 @@ action ical_toggle_done witem {Mark todo item as done} {} {
         return
     }
 
-    if [$i is_done] {
+    if [$i done] {
         $i done 0
         $i hilite always
         run-hook todo-item-done $i

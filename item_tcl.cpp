@@ -79,7 +79,6 @@ static int item_owned     (ClientData, Tcl_Interp*, int, const char**);
 static int item_own       (ClientData, Tcl_Interp*, int, const char**);
 static int item_hilite    (ClientData, Tcl_Interp*, int, const char**);
 static int item_todo      (ClientData, Tcl_Interp*, int, const char**);
-static int item_is_done   (ClientData, Tcl_Interp*, int, const char**);
 static int item_done      (ClientData, Tcl_Interp*, int, const char**);
 static int item_alarms    (ClientData, Tcl_Interp*, int, const char**);
 static int item_option    (ClientData, Tcl_Interp*, int, const char**);
@@ -129,8 +128,7 @@ static Dispatch_Entry item_dispatch[] = {
     { "own",                    0, 0, item_own          },
     { "hilite",                 0, 1, item_hilite       },
     { "todo",                   0, 1, item_todo         },
-    { "is_done",                0, 0, item_is_done      },
-    { "done",                   1, 1, item_done         },
+    { "done",                   0, 1, item_done         },
 
     { "contains",               1, 1, item_cont         },
     { "empty",                  0, 0, item_empty        },
@@ -417,20 +415,19 @@ static int item_todo(ClientData c, Tcl_Interp* tcl, int argc, const char** argv)
     TCL_Return(tcl, "");
 }
 
-static int item_is_done(ClientData c, Tcl_Interp* tcl,int argc,const char* argv[]) {
-    Item_Tcl* item = (Item_Tcl*) c;
-    TCL_Return(tcl, (char*)(item->value()->IsDone() ? "1" : "0"));
-}
-
 static int item_done(ClientData c, Tcl_Interp* tcl, int argc, const char** argv) {
     Item_Tcl* item = (Item_Tcl*) c;
-    if (! check_permission(tcl, item)) return TCL_ERROR;
+
+    if (argc == 0) {
+        TCL_Return(tcl, (char*)(item->value()->IsDone() ? "1" : "0"));
+    }
 
     int done;
     if (Tcl_GetBoolean(tcl, argv[0], &done) != TCL_OK) {
         TCL_Error(tcl, "invalid value for done flag");
     }
 
+    if (! check_permission(tcl, item)) return TCL_ERROR;
     item->value()->SetDone(done);
     trigger_item(tcl, item);
 

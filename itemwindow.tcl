@@ -133,8 +133,8 @@ method ItemWindow save {} {
 method ItemWindow read {} {
     set slot(icon) {}
     set slot(link) {}
-    if [$slot(item) todo]    {set slot(icon) todo_box}
-    if [$slot(item) is_done] {set slot(icon) done_box}
+    if [$slot(item) todo] {set slot(icon) todo_box}
+    if [$slot(item) done] {set slot(icon) done_box}
 
     if ![catch {$slot(item) option Link}] {
         set slot(link) right_arrow

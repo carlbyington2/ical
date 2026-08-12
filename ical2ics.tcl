@@ -17,13 +17,6 @@ proc postamble {c} {
     puts $c "END:VCALENDAR"
 }
 
-proc vtimezone {c tz} {
-    puts $c "BEGIN:VTIMEZONE"
-    puts $c "TZID:$tz"
-    dstinfo $c $tz
-    puts $c "END:VTIMEZONE"
-}
-
 proc iteminfo {c i d} {
     if {![info exists ::ic2ics_events]} {
         set ::ic2ics_events([$i uid]) 1
@@ -42,21 +35,33 @@ proc iteminfo {c i d} {
     }
 }
 
-proc vevent_or_journal {c i d item_d_or_t zone} {
+proc vevent_or_journal {c i d item_d_or_t zone typ} {
     puts $c "UID:[$i uid]"
     puts $c "DTSTAMP:[$i last_modified]"
     puts $c "[text_fold SUMMARY:[string map [list "\n" {\n} "," {\,}] [$i text]]]"
     if {[$i repeats]} {
         set r [$i describe_repeat -terse]
+        puts $c $r
         rrule $c $i $r $item_d_or_t $zone
-        puts $c "DTSTART$zone:[$item_d_or_t $i [lindex $r 0]]"
-    } else {
-        puts $c "DTSTART$zone:[$item_d_or_t $i $d]"
+    }
+    puts $c "DTSTART$zone:[$item_d_or_t $i $d]"
+    if {$typ eq "VTODO"} {
+        if {[$i done]} {
+            puts $c "STATUS:COMPLETED"
+        } else {
+            puts $c "STATUS:NEEDS-ACTION"
+        }
     }
 }
 
+proc vevent_or_journal_type {i typ} {
+    if {[$i todo]} {return "VTODO"}
+    return $typ
+}
+
 proc vevent {c i d} {
-    puts $c "BEGIN:VEVENT"
+    set typ [vevent_or_journal_type $i "VEVENT"]
+    puts $c "BEGIN:$typ"
     # get the time zone
     set z [$i timezone]
     if {[string length $z] > 0} {
@@ -66,15 +71,16 @@ proc vevent {c i d} {
             set z ";TZID=$z"
         }
     }
-    vevent_or_journal $c $i $d "item_time" $z
-    puts $c "DURATION:[item_duration $i]"
-    puts $c "END:VEVENT"
+    vevent_or_journal $c $i $d "item_time" $z $typ
+    if {$typ eq "VEVENT"} {puts $c "DURATION:[item_duration $i]"}
+    puts $c "END:$typ"
 }
 
 proc vjournal {c i d} {
-    puts $c "BEGIN:VJOURNAL"
-    vevent_or_journal $c $i $d "item_date" ""
-    puts $c "END:VJOURNAL"
+    set typ [vevent_or_journal_type $i "VJOURNAL"]
+    puts $c "BEGIN:$typ"
+    vevent_or_journal $c $i $d "item_date" "" $typ
+    puts $c "END:$typ"
 }
 
 proc rrule {c i r item_d_or_t zone} {

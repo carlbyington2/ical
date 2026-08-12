@@ -33,6 +33,24 @@ std::string TranslateWindowsToIana(const char *windowsZoneName) {
     return ianaStr;
 }
 
+struct icaltimetype count_to_until(struct icalrecurrencetype recur, struct icaltimetype start) {
+    icalrecur_iterator *ritr = icalrecur_iterator_new(recur, start);
+    int count = recur.count;
+    int index = 0;
+    struct icaltimetype next;
+    struct icaltimetype final_occurrence;
+    next = icalrecur_iterator_next(ritr);
+    while (!icaltime_is_null_time(next)) {
+        index++;
+        if (index == count) {
+            final_occurrence = next;
+            break;
+        }
+        next = icalrecur_iterator_next(ritr);
+    }
+    icalrecur_iterator_free(ritr);
+    return final_occurrence;
+}
 
 char *read_stream(char *s, size_t size, void *d)
 {
@@ -46,13 +64,14 @@ char *get_property(icalcomponent* comp, icalproperty_kind prop) {
     return rc;
 }
 
-std::string get_tzid(icalcomponent* comp) {
+std::string get_tzid(icalcomponent* comp, char *dtstart) {
     icalproperty *pr = icalcomponent_get_first_property(comp, ICAL_DTSTART_PROPERTY);
     if (pr) {
         icalparameter *pa = icalproperty_get_first_parameter(pr, ICAL_TZID_PARAMETER);
         if (pa) return TranslateWindowsToIana(icalparameter_get_tzid(pa));
     }
-    return "";
+    if (dtstart && (dtstart[strlen(dtstart)-1] == 'Z')) return "Etc/UTC";
+    return "<Local>";
 }
 
 int get_duration(icalcomponent* comp) {
@@ -115,7 +134,7 @@ void traverse_components(icalcomponent* comp, int depth) {
         char *dtstamp                   = get_property(comp, ICAL_DTSTAMP_PROPERTY);
         const char *summary             = icalcomponent_get_summary(comp);
         char *dtstart                   = get_property(comp, ICAL_DTSTART_PROPERTY);
-        std::string tzid                = get_tzid(comp);
+        std::string tzid                = get_tzid(comp, dtstart);
         struct icaltimetype dt          = icalcomponent_get_dtstart(comp);
         int   duration                  = get_duration(comp);
         bool  have_rrule;
@@ -162,9 +181,9 @@ void traverse_components(icalcomponent* comp, int depth) {
                     snprintf(freq, sizeof(freq), "[%s %s %d\n", fkey, firstday, recur.interval);
                 }
                 snprintf(start, sizeof(start), "Start %s\n", firstday);
-                if (!icaltime_is_null_time(recur.until)) {
-                    snprintf(finish, sizeof(finish), "Finish %d/%d/%d\n", recur.until.day, recur.until.month, recur.until.year);
-                }
+                if (icaltime_is_null_time(recur.until)) recur.until = count_to_until(recur, dt);
+                snprintf(finish, sizeof(finish), "Finish %d/%d/%d\n", recur.until.day, recur.until.month, recur.until.year);
+
                 std::string exclude = get_exdate(comp);
                 snprintf(dates, sizeof(dates), "%s%s%s%s", freq, start, finish, exclude.c_str());
             }
@@ -178,7 +197,7 @@ void traverse_components(icalcomponent* comp, int depth) {
                 output("Contents", summary);
                 output("Start", start);
                 output("Length", length);
-                if (!tzid.empty()) output("Timezone", tzid.c_str());
+                output("Timezone", tzid.c_str());
                 output("Dates", dates);
                 output("End ]\n");
             } else {
@@ -214,35 +233,18 @@ int main(int argc, char *argv[])
     FILE *stream;
     icalcomponent *c;
 
-    /* Create a new parser object */
-    icalparser *parser = icalparser_new();
-
     stream = fopen(argv[1], "r");
-
     assert(stream != 0);
-
-    /* Tell the parser what input route it should use. */
+    icalparser *parser = icalparser_new();
     icalparser_set_gen_data(parser, stream);
-
+    printf("%s", "Calendar [v3.0]");
     do {
-        /* Get a single content line by making one or more calls to
-           read_stream()*/
         line = icalparser_get_line(parser, read_stream);
-
-        /* Now, add that line into the parser object. If that line
-           completes a component, c will be non-zero */
         c = icalparser_add_line(parser, line);
-
         if (c != 0) {
             traverse_components(c, 0);
-            //char *temp = icalcomponent_as_ical_string_r(c);
-            //printf("%s", temp);
-            //free(temp);
-            //printf("\n---------------\n");
             icalcomponent_free(c);
         }
-
     } while (line != 0);
-
     icalparser_free(parser);
 }
