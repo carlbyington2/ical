@@ -140,14 +140,6 @@ std::string get_weekdays(struct icalrecurrencetype recur, int& nth) {
     return wdays;
 }
 
-int get_positive(short (&position)[ICAL_BY_SETPOS_SIZE]) {
-    int rc = 0;
-    for (int i=0; (i<ICAL_BY_SETPOS_SIZE) && (position[i] != ICAL_RECURRENCE_ARRAY_MAX); i++) {
-        if (position[i] > 0) return position[i];
-    }
-    return rc;
-}
-
 void traverse_components(icalcomponent* comp, int depth) {
     if (!comp) return;
 
@@ -209,29 +201,43 @@ void traverse_components(icalcomponent* comp, int depth) {
                         // ComplexMonths 1 2 8/10/2026 Forward ByWeek 5
                         // 2nd thursday every 2 months
                         // ComplexMonths 2 2 8/10/2026 Forward ByWeek 5
-                        int nth = get_positive(recur.by_set_pos);
+                        // 4th-last thursday every 2 months
+                        // ComplexMonths 2 4 8/10/2026 Backward ByWeek 5
+                        int nth = recur.by_set_pos[0];
+                        const char* direction;
                         if (nth > 0) {
-                            int junk;
-                            std::string wdays = get_weekdays(recur, junk);
-                            if (wdays == "2 3 4 5 6") {
-                                // working day m-f
-                                snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s Forward ByWorkDay\n", recur.interval, nth, firstday);
-                            }
-                            else if (wdays.length() == 1) {
-                                // single day
-                                snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s Forward ByWeek %s\n", recur.interval, nth, firstday, wdays.c_str());
-                            }
+                            direction = "Forward";
+                        } else {
+                            direction = "Backward";
+                            nth = 0 - nth;
+                        }
+                        int junk;
+                        std::string wdays = get_weekdays(recur, junk);
+                        if (wdays == "2 3 4 5 6") {
+                            // working day m-f
+                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWorkDay\n", recur.interval, nth, firstday, direction);
+                        }
+                        else if (wdays.length() == 1) {
+                            // single day
+                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWeek %s\n", recur.interval, nth, firstday, direction, wdays.c_str());
                         }
                     }
                     if ((recur.by_day[0] != 0) &&
                         (recur.by_day[0] != ICAL_RECURRENCE_ARRAY_MAX)) {
                         // 2nd thursday every 2 months
                         // ComplexMonths 2 2 8/10/2026 Forward ByWeek 5
-                        int nth;
+                        int nth = recur.by_day[0];
+                        const char* direction;
+                        if (nth > 0) {
+                            direction = "Forward";
+                        } else {
+                            direction = "Backward";
+                            nth = 0 - nth;
+                        }
                         std::string wdays = get_weekdays(recur, nth);
                         if (wdays.length() == 1) {
                             // single day
-                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s Forward ByWeek %s\n", recur.interval, nth, firstday, wdays.c_str());
+                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWeek %s\n", recur.interval, nth, firstday, direction, wdays.c_str());
                         }
                     }
                 }
