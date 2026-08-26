@@ -51,5 +51,6 @@ extern int Cmd_HiliteLoop       (ClientData, Tcl_Interp*, int, const char*[]);
 
 /* Convenience routines */
 extern int Cmd_ExpandFileName   (ClientData, Tcl_Interp*, int, const char*[]);
+extern int Cmd_Import_ICS       (ClientData, Tcl_Interp*, int, const char*[]);
 
 #endif /* _ICAL_H */

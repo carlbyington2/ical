@@ -161,6 +161,7 @@ int Ical_Init(Tcl_Interp* tcl) {
     Tcl_CreateCommand(tcl, "ical_time",    Cmd_Time,            NULL, NULL);
     Tcl_CreateCommand(tcl, "de_monthdays", Cmd_MonthDays,       NULL, NULL);
     Tcl_CreateCommand(tcl, "hilite_loop",  Cmd_HiliteLoop,      NULL, NULL);
+    Tcl_CreateCommand(tcl, "import_ics",   Cmd_Import_ICS,      NULL, NULL);
     Tcl_CreateCommand(tcl, "ical_expand_file_name", Cmd_ExpandFileName, 0, 0);
 
     // Initialize ical stuff

@@ -12,6 +12,9 @@
 #include <iostream>
 #include <string>
 
+std::map<std::string, Item*> items;     // uid -> item
+Calendar* calendar = NULL;              // calendar we are working on
+
 std::string TranslateWindowsToIana(const char *windowsZoneName) {
     // test if already an iana zone name
     if (strstr(windowsZoneName, "/")) return std::string(windowsZoneName);
@@ -158,6 +161,24 @@ void traverse_components(icalcomponent* comp, int depth) {
         struct icalrecurrencetype recur = get_rrule(comp, have_rrule);
         enum icalproperty_status status = icalcomponent_get_status(comp);
         if (uid && dtstamp && summary && dtstart) {
+            auto it = items.find(std::string(uid));
+            if (it != items.end()) {
+                // we already have an item matching uid
+                Item* item = it->second();
+                const char* lm = item->GetLastModified();
+                if (strcmp(mod, dtstamp) >= 0) {
+                    // our last modified is >= the dtstamp on the incoming item, ignore it
+                    free(dtstamp);
+                    free(dtstart);
+                    return;
+                } else {
+                    // our last modified is < the dtstamp on the incoming item
+                    // delete our old version
+                    calendar->Remove(item);
+                }
+            }
+        }
+        if (uid && dtstamp && summary && dtstart) {
             // build start from dtstart time
             char start[20];
             snprintf(start, sizeof(start), "%d", round(dt.hour*60 + dt.minute,15));
@@ -263,7 +284,15 @@ void traverse_components(icalcomponent* comp, int depth) {
                 // no recurrence rule
                 snprintf(dates, sizeof(dates), "[Single %d/%d/%d\n", dt.day, dt.month, dt.year);
             }
+            Item* item;
             if (duration > 0) {
+                item = new Appointment;
+                item->SetUid(uid);
+                item->SetLastModified(dtstamp);
+                item->SetText(summary);
+                item->SeetTimezone(tzid.c_str(), false);
+                item->SetStart(atoi(start));
+                item->SetLength(atoi(length));
                 output("\nAppt [\n");
                 output("Uid", uid);
                 output("LastModified", dtstamp);
@@ -274,22 +303,30 @@ void traverse_components(icalcomponent* comp, int depth) {
                 output("Dates", dates);
                 output("End ]\n");
             } else {
+                item = new Notice;
+                item->SetUid(uid);
+                item->SetLastModified(dtstamp);
+                item->SetText(summary);
                 output("\nNote [\n");
                 output("Uid", uid);
                 output("LastModified", dtstamp);
                 output("Contents", summary);
-                output("Start", start);
                 output("Dates", dates);
                 output(" End ]\n");
             }
             if (kind == ICAL_VTODO_COMPONENT) {
+                item->SetTodo(1);
                 output("Todo", "");
-                if (status == ICAL_STATUS_COMPLETED) output("Done", "");
+                if (status == ICAL_STATUS_COMPLETED) {
+                    item->SetDone(1);
+                    output("Done", "");
+                }
             }
+            calendar->Add(item);
             output("]\n");
         }
-        free(dtstamp );
-        free(dtstart );
+        free(dtstamp);
+        free(dtstart);
     }
 
     icalcomponent* child = icalcomponent_get_first_component(comp, ICAL_ANY_COMPONENT);
@@ -300,16 +337,32 @@ void traverse_components(icalcomponent* comp, int depth) {
     }
 }
 
-int main(int argc, char *argv[])
-{
+// "argv == <cmd> <cal>"
+int Cmd_Import_ICS(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
+    if (argc != 2) {
+        TCL_Error(tcl, "illegal number of arguments");
+    }
+
+    Calendar_Tcl* cal = find_cal(tcl, argv[1]);
+    if (cal == 0) {TCL_Error(tcl, "illegal calendar");}
+
+    // create items map of uid -> item
+    calendar = cal->main->GetCalendar();
+    for (int i = 0; i < calendar->Size(); i++) {
+        Item* item = calendar->Get(i);
+        if (!item) continue;
+        std::string uid = std::string(item->GetUid());
+        if (items.find(uid) == items.end()) {
+            // have not seen this uid, add it to the map
+            items[uid] = item;
+        }
+    }
+
     char *line;
-    FILE *stream;
     icalcomponent *c;
 
-    stream = fopen(argv[1], "r");
-    assert(stream != 0);
     icalparser *parser = icalparser_new();
-    icalparser_set_gen_data(parser, stream);
+    icalparser_set_gen_data(parser, stdin);
     printf("%s", "Calendar [v3.0]");
     do {
         line = icalparser_get_line(parser, read_stream);

@@ -11,6 +11,7 @@ proc ical_no_tk_script {} {
     set doaddone  0
     set doaddmul  0
     set doexport  0
+    set doimport  0
     set doprint   0
     set dolist    0
 
@@ -27,6 +28,9 @@ proc ical_no_tk_script {} {
             }
             "-exportics" {
                 set doexport 1
+            }
+            "-importics" {
+                set doimport 1
             }
             "-print" {
                 if {[llength $argv] < 1} ical_usage
@@ -89,6 +93,11 @@ proc ical_no_tk_script {} {
 
     if $doexport {
         export_ics cal
+    }
+
+    if $doimport {
+        import_ics cal
+        cal save
     }
 
     if $doprint {

@@ -60,6 +60,7 @@ proc vevent_or_journal_type {i typ} {
 }
 
 proc vevent {c i d} {
+    puts $c ""
     set typ [vevent_or_journal_type $i "VEVENT"]
     puts $c "BEGIN:$typ"
     # get the time zone
@@ -77,6 +78,7 @@ proc vevent {c i d} {
 }
 
 proc vjournal {c i d} {
+    puts $c ""
     set typ [vevent_or_journal_type $i "VJOURNAL"]
     puts $c "BEGIN:$typ"
     vevent_or_journal $c $i $d "item_date" "" $typ

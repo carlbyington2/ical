@@ -107,15 +107,15 @@ class Item {
     // effects  - Returns true iff this item is owned by the current user.
 
     char const* GetUid() const { return uid; }
-
-    char const* GetLastModified() const { return last_modified.toISO8601(); }
-
     // effects - Return the uid.  The returned string is guaranteed
     //           to remain valid until the item is deleted.
 
-    //void SetUid(char const*);
+    char const* GetLastModified() const { return last_modified.toISO8601(); }
+    void SetLastModified(const char *x) { last_modified.fromISO8601(x); }
+
+    void SetUid(const char *x) { delete uid; uid = strdup(x); }
     // modifies - this
-    // effects  - Sets uid to specified value.
+    // effects  - Sets uid to a copy of the specified value.
 
     int IsUidPersistent() const { return uid_persistent; }
     // effects - Return true iff uid is also stored persistently
