@@ -1,3 +1,15 @@
+Version 4.0.1 Carl Byington <carl@five-ten-sg.com>
+
+    * new calendar format v3.0 to hold the last modified date
+    for each notice or appointment
+
+    * export to ics format now includes the required DTSTAMP element,
+    DTSTART and EXDATE include the time zone, DTSUMMARY escapes commas
+
+    * Tcl9 fixes for trace add variable
+
+    * import from ics format handles simple cases
+
 Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * changes to the desktop file for fedora packaging
@@ -50,12 +62,6 @@ Version 3.0.5 Carl Byington <carl@five-ten-sg.com>
 
     * recompute main window width and height when notice window
     height changes or appointment window width changes
-
-    * new calendar format v3.0 to hold the last modified date
-    for each notice or appointment
-
-    * export to ics format now includes the required DTSTAMP element,
-    DTSTART and EXDATE include the time zone, DTSUMMARY escapes commas
 
 Version 3.0.4 Sergei Golubchik <sergii@pisem.net>
 

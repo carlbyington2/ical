@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Wed Aug  5 21:08:11 2026
+.\" Manual page created with latex2man on Mon Sep 28 17:06:20 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -27,6 +27,7 @@ ical
 [\fB\-list\fP\fI\fP]
 [\fB\-print\fP\fI 1|2|4|8|10|month\fP]
 [\fB\-exportics\fP\fI\fP]
+[\fB\-importics\fP\fI\fP]
 [\fB\-addone\fP\fI\fP]
 [\fB\-addmultiple\fP\fI\fP]
 [\fB\-iconic\fP\fI\fP]
@@ -52,10 +53,13 @@ Ical was written by Sanjay Ghemawat when he was at DEC, Palo Alto back
 in 1993. At that time, graphic X terminals were used to allow multiple 
 users to share a Unix workstation, and the home directories were 
 stored on the remote Unix filesystem. Today, everyone has their own 
-workstation, and your home directory is generally stored locally. 
-To reach other users\&' calendars in their home directories, you will 
-need to mount those filesystems with some remote access protocol like 
-samba or nfs. 
+workstation, and your home directory is generally stored locally. To 
+reach other users\&' calendars in their home directories, you will need 
+to mount those filesystems with some remote access protocol like samba 
+or nfs. Another alternative is \fBhttps://syncthing.net/\fP
+so your 
+local workstation has a synchronized copy of the other users\&' 
+calendar. 
 .PP
 Please 
 see \fBhttps://opal.com/src/ical\fP
@@ -159,7 +163,11 @@ option.
 .PP
 .TP
 [\fB\-exportics\fP\fI\fP]
-Export the entire calendar in \&.ics format to standard out. 
+Export the entire calendar in \&.ics format to stdout. 
+.PP
+.TP
+[\fB\-importics\fP\fI\fP]
+Import iCalendar entries from stdin. 
 .PP
 .TP
 [\fB\-addone\fP\fI\fP]
@@ -832,7 +840,8 @@ to 6:00pm.
 .PP
 .TP
 Notice Window Height 
-Controls the height of the notice window. 
+Controls the height of the notice window. The main window 
+height is recomputed based on the notice window height. 
 .PP
 .TP
 Item Width 

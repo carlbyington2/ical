@@ -23,14 +23,13 @@
 #include "collect.h"
 #include "ical.h"
 #include "item_tcl.h"
+#include "dateeditor.h"
 
 declareArray(HiliteList,char const*)
 implementArray(HiliteList,char const*)
 
 static int monday_first(Calendar_Tcl*);
 static int contains(HiliteList const&, char const*);
-
-static Calendar_Tcl* find_cal(Tcl_Interp*, char const* name);
 
 /*
  * requires     argc/argv === <cmd> <cal> <canvas> <date>
@@ -185,7 +184,7 @@ static int contains(HiliteList const& list, char const* hilite) {
     return 0;
 }
 
-static Calendar_Tcl* find_cal(Tcl_Interp* tcl, char const* name) {
+Calendar_Tcl* find_cal(Tcl_Interp* tcl, char const* name) {
     Tcl_CmdInfo info;
 
     if (! Tcl_GetCommandInfo(tcl, (char*)name, &info)) return 0;

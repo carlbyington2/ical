@@ -44,6 +44,7 @@ This is NOT Apple's iCal or the IETF iCalendar standard RFC2445, RFC5545 or succ
             \oOptArg{-list}{}
             \oOptArg{-print}{ 1|2|4|8|10|month}
             \oOptArg{-exportics}{}
+            \oOptArg{-importics}{}
             \oOptArg{-addone}{}
             \oOptArg{-addmultiple}{}
             \oOptArg{-iconic}{}
@@ -141,7 +142,10 @@ this project.
     starting date may be changed with the \Arg{-date} option.
 
 \item[\oOptArg{-exportics}{}]
-    Export the entire calendar in .ics format to standard out.
+    Export the entire calendar in .ics format to stdout.
+
+\item[\oOptArg{-importics}{}]
+    Import iCalendar entries from stdin.
 
 \item[\oOptArg{-addone}{}]
     Read all of stdin as a single text block, extracts date

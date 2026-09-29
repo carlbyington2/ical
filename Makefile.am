@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4
 
-bin_PROGRAMS = ical ical2
+bin_PROGRAMS = ical
 bin_SCRIPTS  = ical2pdf
 icallibdir = $(pkglibdir)/v@ICAL_RPMVERSION@
 nobase_dist_icallib_DATA = @ICAL_SCRIPTS@ $(srcdir)/tclIndex \
@@ -26,10 +26,10 @@ icon_DATA = @ICAL_ICON@
 licensedir = $(prefix)/share/licenses
 license_DATA = @ICAL_LICENSE@
 
-ical_SOURCES = cal_tcl.cpp dateeditor.cpp dispatch.cpp ical.cpp ical_tcl.cpp \
+ical_SOURCES = cal_tcl.cpp dateeditor.cpp dispatch.cpp ical.cpp ical2.cpp ical_tcl.cpp \
 	       item_tcl.cpp object.cpp time_tcl.cpp main.cpp
 ical_CPPFLAGS = -DICALLIBDIR='"$(icallibdir)"' -I$(srcdir)/calendar -I$(srcdir)/types -I$(srcdir)/time @TK_XINCLUDES@
-ical_LDADD = libcalendar.a libtime.a libtypes.a \
+ical_LDADD = libcalendar.a libtime.a libtypes.a -lical -licui18n -licuuc \
 	     @TK_LIB_SPEC@ @TCL_LIB_SPEC@ @TK_LIBS@
 
 noinst_LIBRARIES = libcalendar.a libtime.a libtypes.a
@@ -46,9 +46,6 @@ libtime_a_SOURCES = time/Date.cpp time/Month.cpp time/Time.cpp time/WeekDay.cpp 
 
 libtypes_a_SOURCES = types/bitvec.cpp types/hashfuncs.cpp types/intset.cpp
 
-ical2_SOURCES = ical2.cpp
-ical2_LDADD = -lical -licui18n -licuuc
-
 CLEANFILES = $(icallib_DATA) $(app_DATA)
 
 # cannot do it in configure, as libdir is not known there :(
@@ -64,7 +61,7 @@ noinst_HEADERS = cal_tcl.h calendar/arrays.h calendar/calendar.h \
 		 calendar/item.h calendar/itemmap.h calendar/lexer.h \
 		 calendar/misc.h calendar/options.h calendar/smallintset.h \
 		 calendar/statfix.h calendar/uid.h calendar/version.h \
-		 collect.h config.h dispatch.h ical.h item_tcl.h object.h \
+		 collect.h config.h dateeditor.h dispatch.h ical.h item_tcl.h object.h \
 		 types/Array.h types/basic.h time/Date.h time/Month.h \
 		 time/Time_.h time/WeekDay.h time/Year.h time/parse.h \
 		 types/Array.h types/basic.h types/bitvec.h types/hashfuncs.h \

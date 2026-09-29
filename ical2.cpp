@@ -11,6 +11,15 @@
 #include <unicode/unistr.h>
 #include <iostream>
 #include <string>
+#include <map>
+
+#include "ical.h"
+#include "cal_tcl.h"
+#include "arrays.h"
+#include "calfile.h"
+#include "calendar.h"
+#include "item.h"
+#include "dateeditor.h"
 
 std::map<std::string, Item*> items;     // uid -> item
 Calendar* calendar = NULL;              // calendar we are working on
@@ -164,9 +173,9 @@ void traverse_components(icalcomponent* comp, int depth) {
             auto it = items.find(std::string(uid));
             if (it != items.end()) {
                 // we already have an item matching uid
-                Item* item = it->second();
+                Item* item = it->second;
                 const char* lm = item->GetLastModified();
-                if (strcmp(mod, dtstamp) >= 0) {
+                if (strcmp(lm, dtstamp) >= 0) {
                     // our last modified is >= the dtstamp on the incoming item, ignore it
                     free(dtstamp);
                     free(dtstart);
@@ -287,12 +296,13 @@ void traverse_components(icalcomponent* comp, int depth) {
             Item* item;
             if (duration > 0) {
                 item = new Appointment;
+                Appointment* itema = item->AsAppointment();
                 item->SetUid(uid);
                 item->SetLastModified(dtstamp);
                 item->SetText(summary);
-                item->SeetTimezone(tzid.c_str(), false);
-                item->SetStart(atoi(start));
-                item->SetLength(atoi(length));
+                itema->SetTimezone(tzid.c_str(), false);
+                itema->SetStart(-1, atoi(start));
+                itema->SetLength(atoi(length));
                 output("\nAppt [\n");
                 output("Uid", uid);
                 output("LastModified", dtstamp);
@@ -373,4 +383,5 @@ int Cmd_Import_ICS(ClientData, Tcl_Interp* tcl, int argc, const char* argv[]) {
         }
     } while (line != 0);
     icalparser_free(parser);
+    return 0;
 }
