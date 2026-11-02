@@ -1,3 +1,7 @@
+Version 4.0.2 Carl Byington <carl@five-ten-sg.com>
+
+    * fixes for fedora-review issues
+
 Version 4.0.1 Carl Byington <carl@five-ten-sg.com>
 
     * new calendar format v3.0 to hold the last modified date
