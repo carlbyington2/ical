@@ -2,6 +2,9 @@ Version 4.0.2 Carl Byington <carl@five-ten-sg.com>
 
     * fixes for fedora-review issues
 
+    * update GPLv2 license text to the form currently recommended
+    by the FSF.
+
 Version 4.0.1 Carl Byington <carl@five-ten-sg.com>
 
     * new calendar format v3.0 to hold the last modified date
