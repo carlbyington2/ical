@@ -1,5 +1,5 @@
 '\" t
-.\" Manual page created with latex2man on Mon Sep 28 17:06:20 2026
+.\" Manual page created with latex2man on Tue Nov  3 16:07:20 2026
 .\" NOTE: This file is generated, DO NOT EDIT.
 .de Vb
 .ft CW
@@ -10,7 +10,7 @@
 
 .fi
 ..
-.TH "ICAL" "1" "2026\-08\-01" "Ical 3.0.5" "Ical 3.0.5"
+.TH "ICAL" "1" "2026\-11\-03" "Ical 4.0.2" "Ical 4.0.2"
 .SH NAME
 
 Ical \- An X based Calendar Program 

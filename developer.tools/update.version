@@ -4,8 +4,10 @@ if [ ! -f developer.tools/ical.manpage.tex ]; then
     echo "run this from the main ical directory"
 else
     old=4.0.1
-    new=3.0.1
+    new=4.0.2
+    da=$(date -I)
     sed -i -e "s/$old/$new/g" configure.ac
     sed -i -e "s/$old/$new/g" developer.tools/ical.manpage.tex
+    sed -i -e "s/setDate.*\$/setDate{$da}       %%%% must be manually set/g" developer.tools/ical.manpage.tex
     echo "add a new section to ChangeLog for version $new"
 fi
