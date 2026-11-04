@@ -23,7 +23,7 @@ meta_DATA = com.five-ten-sg.ical.metainfo.xml
 icondir = $(prefix)/share/icons/hicolor/scalable/apps
 icon_DATA = @ICAL_ICON@
 
-licensedir = $(prefix)/share/licenses
+licensedir = $(prefix)/share/licenses/ical
 license_DATA = @ICAL_LICENSE@
 
 ical_SOURCES = cal_tcl.cpp dateeditor.cpp dispatch.cpp ical.cpp ical2.cpp ical_tcl.cpp \
