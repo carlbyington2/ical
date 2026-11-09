@@ -21,6 +21,23 @@
 #include "item.h"
 #include "dateeditor.h"
 
+// libical 4 made recurrence rules reference counted (passed by pointer)
+// and the BY* rule parts dynamically sized arrays; these macros hide the
+// difference to libical 3, where they are fixed-size arrays terminated
+// by ICAL_RECURRENCE_ARRAY_MAX.
+#if ICAL_CHECK_VERSION(4, 0, 0)
+#define BY_LEN(r, part, field) ((r)->by[part].size)
+#define BY_AT(r, part, field, i) ((r)->by[part].data[i])
+#else
+static int by_len(const short *a, int max) {
+    int n = 0;
+    while ((n < max) && (a[n] != ICAL_RECURRENCE_ARRAY_MAX)) n++;
+    return n;
+}
+#define BY_LEN(r, part, field) by_len((r)->field, (int)(sizeof((r)->field) / sizeof((r)->field[0])))
+#define BY_AT(r, part, field, i) ((r)->field[i])
+#endif
+
 std::map<std::string, Item*> items;     // uid -> item
 Calendar* calendar = NULL;              // calendar we are working on
 
@@ -45,9 +62,13 @@ std::string TranslateWindowsToIana(const char *windowsZoneName) {
     return ianaStr;
 }
 
-struct icaltimetype count_to_until(struct icalrecurrencetype recur, struct icaltimetype start) {
+struct icaltimetype count_to_until(struct icalrecurrencetype *recur, struct icaltimetype start) {
+#if ICAL_CHECK_VERSION(4, 0, 0)
     icalrecur_iterator *ritr = icalrecur_iterator_new(recur, start);
-    int count = recur.count;
+#else
+    icalrecur_iterator *ritr = icalrecur_iterator_new(*recur, start);
+#endif
+    int count = recur->count;
     int index = 0;
     struct icaltimetype next;
     struct icaltimetype final_occurrence;
@@ -91,20 +112,27 @@ int get_duration(icalcomponent* comp) {
     int rc = 0;
     struct icaldurationtype duration = icalcomponent_get_duration(comp);
     if (!icaldurationtype_is_null_duration(duration)) {
+#if ICAL_CHECK_VERSION(4, 0, 0)
+        rc = icaldurationtype_as_utc_seconds(duration);
+#else
         rc = icaldurationtype_as_int(duration);
+#endif
     }
     return rc / 60;
 }
 
-struct icalrecurrencetype get_rrule(icalcomponent* comp, bool &have_rrule) {
-    have_rrule = false;
-    struct icalrecurrencetype rc{};
+// returns NULL if comp has no RRULE; with libical 4 the rule belongs to
+// the property, with libical 3 it is copied into storage
+struct icalrecurrencetype *get_rrule(icalcomponent* comp, struct icalrecurrencetype &storage) {
     icalproperty *pr = icalcomponent_get_first_property(comp, ICAL_RRULE_PROPERTY);
-    if (pr) {
-        rc = icalproperty_get_rrule(pr);
-        have_rrule = true;
-    }
-    return rc;
+    if (!pr) return NULL;
+#if ICAL_CHECK_VERSION(4, 0, 0)
+    (void)storage;
+    return icalproperty_get_rrule(pr);
+#else
+    storage = icalproperty_get_rrule(pr);
+    return &storage;
+#endif
 }
 
 std::string get_exdate(icalcomponent* comp) {
@@ -135,18 +163,18 @@ int round(int v, int d) {
     return ((v + half) / d) * d;
 }
 
-std::string get_weekdays(struct icalrecurrencetype recur, int& nth) {
+std::string get_weekdays(const struct icalrecurrencetype *recur, int& nth) {
     std::string wdays = "";
     const std::string day_names[] = {"", "1", "2", "3", "4", "5", "6", "7"};
-    for (int i=0; (i<ICAL_BY_DAY_SIZE) && (recur.by_day[i] != ICAL_RECURRENCE_ARRAY_MAX); i++) {
+    for (int i=0; i<BY_LEN(recur, ICAL_BY_DAY, by_day); i++) {
         // Extract the day part by decoding the encoded short int
-        icalrecurrencetype_weekday day = icalrecurrencetype_day_day_of_week(recur.by_day[i]);
+        icalrecurrencetype_weekday day = icalrecurrencetype_day_day_of_week(BY_AT(recur, ICAL_BY_DAY, by_day, i));
         if (day >= 1 && day <= 7) {
             if (!wdays.empty()) {
                 wdays += " ";
             }
             wdays += day_names[day];
-            nth = icalrecurrencetype_day_position(recur.by_day[i]);
+            nth = icalrecurrencetype_day_position(BY_AT(recur, ICAL_BY_DAY, by_day, i));
         }
     }
     return wdays;
@@ -166,8 +194,9 @@ void traverse_components(icalcomponent* comp, int depth) {
         std::string tzid                = get_tzid(comp, dtstart);
         struct icaltimetype dt          = icalcomponent_get_dtstart(comp);
         int   duration                  = get_duration(comp);
-        bool  have_rrule;
-        struct icalrecurrencetype recur = get_rrule(comp, have_rrule);
+        struct icalrecurrencetype rrule_storage{};
+        struct icalrecurrencetype *recur = get_rrule(comp, rrule_storage);
+        bool  have_rrule = (recur != NULL);
         enum icalproperty_status status = icalcomponent_get_status(comp);
         if (uid && dtstamp && summary && dtstart) {
             auto it = items.find(std::string(uid));
@@ -200,27 +229,27 @@ void traverse_components(icalcomponent* comp, int depth) {
             // build dates from dtstart date and rrule
             char dates[220];
             if (have_rrule &&
-                ((recur.freq == ICAL_DAILY_RECURRENCE) ||
-                 (recur.freq == ICAL_WEEKLY_RECURRENCE) ||
-                 (recur.freq == ICAL_MONTHLY_RECURRENCE))) {
+                ((recur->freq == ICAL_DAILY_RECURRENCE) ||
+                 (recur->freq == ICAL_WEEKLY_RECURRENCE) ||
+                 (recur->freq == ICAL_MONTHLY_RECURRENCE))) {
                 char freq[100]{};
-                if (recur.freq == ICAL_DAILY_RECURRENCE) {
-                    snprintf(freq, sizeof(freq), "[Days %s %d\n", firstday, recur.interval);
+                if (recur->freq == ICAL_DAILY_RECURRENCE) {
+                    snprintf(freq, sizeof(freq), "[Days %s %d\n", firstday, recur->interval);
                 }
-                if (recur.freq == ICAL_WEEKLY_RECURRENCE) {
+                if (recur->freq == ICAL_WEEKLY_RECURRENCE) {
                     int junk;
                     std::string wdays = get_weekdays(recur, junk);
                     snprintf(freq, sizeof(freq), "[Weekdays %s Months 1 2 3 4 5 6 7 8 9 10 11 12\n", wdays.c_str());
                 }
-                if (recur.freq == ICAL_MONTHLY_RECURRENCE) {
-                    if ((recur.by_month_day[0] != 0) &&
-                        (recur.by_month_day[0] != ICAL_RECURRENCE_ARRAY_MAX)) {
+                if (recur->freq == ICAL_MONTHLY_RECURRENCE) {
+                    if ((BY_LEN(recur, ICAL_BY_MONTH_DAY, by_month_day) > 0) &&
+                        (BY_AT(recur, ICAL_BY_MONTH_DAY, by_month_day, 0) != 0)) {
                         // there may be multiple by_monthday entries, but we can
                         // only represent one
-                        snprintf(freq, sizeof(freq), "[Months %s %d\n", firstday, recur.interval);
+                        snprintf(freq, sizeof(freq), "[Months %s %d\n", firstday, recur->interval);
                     }
-                    if ((recur.by_set_pos[0] != 0) &&
-                        (recur.by_set_pos[0] != ICAL_RECURRENCE_ARRAY_MAX)) {
+                    if ((BY_LEN(recur, ICAL_BY_SET_POS, by_set_pos) > 0) &&
+                        (BY_AT(recur, ICAL_BY_SET_POS, by_set_pos, 0) != 0)) {
                         // there may be multiple by_set_pos entries, but we can
                         // only represent one, and that must be positive
                         // first weekday of month
@@ -233,7 +262,7 @@ void traverse_components(icalcomponent* comp, int depth) {
                         // ComplexMonths 2 2 8/10/2026 Forward ByWeek 5
                         // 4th-last thursday every 2 months
                         // ComplexMonths 2 4 8/10/2026 Backward ByWeek 5
-                        int nth = recur.by_set_pos[0];
+                        int nth = BY_AT(recur, ICAL_BY_SET_POS, by_set_pos, 0);
                         const char* direction;
                         if (nth > 0) {
                             direction = "Forward";
@@ -245,18 +274,18 @@ void traverse_components(icalcomponent* comp, int depth) {
                         std::string wdays = get_weekdays(recur, junk);
                         if (wdays == "2 3 4 5 6") {
                             // working day m-f
-                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWorkDay\n", recur.interval, nth, firstday, direction);
+                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWorkDay\n", recur->interval, nth, firstday, direction);
                         }
                         else if (wdays.length() == 1) {
                             // single day
-                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWeek %s\n", recur.interval, nth, firstday, direction, wdays.c_str());
+                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWeek %s\n", recur->interval, nth, firstday, direction, wdays.c_str());
                         }
                     }
-                    if ((recur.by_day[0] != 0) &&
-                        (recur.by_day[0] != ICAL_RECURRENCE_ARRAY_MAX)) {
+                    if ((BY_LEN(recur, ICAL_BY_DAY, by_day) > 0) &&
+                        (BY_AT(recur, ICAL_BY_DAY, by_day, 0) != 0)) {
                         // 2nd thursday every 2 months
                         // ComplexMonths 2 2 8/10/2026 Forward ByWeek 5
-                        int nth = recur.by_day[0];
+                        int nth = BY_AT(recur, ICAL_BY_DAY, by_day, 0);
                         const char* direction;
                         if (nth > 0) {
                             direction = "Forward";
@@ -267,7 +296,7 @@ void traverse_components(icalcomponent* comp, int depth) {
                         std::string wdays = get_weekdays(recur, nth);
                         if (wdays.length() == 1) {
                             // single day
-                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWeek %s\n", recur.interval, nth, firstday, direction, wdays.c_str());
+                            snprintf(freq, sizeof(freq), "[ComplexMonths %d %d %s %s ByWeek %s\n", recur->interval, nth, firstday, direction, wdays.c_str());
                         }
                     }
                 }
@@ -276,10 +305,12 @@ void traverse_components(icalcomponent* comp, int depth) {
                     char start[20]{};
                     char finish[20]{};
                     snprintf(start, sizeof(start), "Start %s\n", firstday);
-                    if (icaltime_is_null_time(recur.until) && (recur.count > 0))
-                        recur.until = count_to_until(recur, dt);
-                    if (!icaltime_is_null_time(recur.until)) {
-                        snprintf(finish, sizeof(finish), "Finish %d/%d/%d\n", recur.until.day, recur.until.month, recur.until.year);
+                    // local copy: with libical 4 the rule belongs to the property
+                    struct icaltimetype until = recur->until;
+                    if (icaltime_is_null_time(until) && (recur->count > 0))
+                        until = count_to_until(recur, dt);
+                    if (!icaltime_is_null_time(until)) {
+                        snprintf(finish, sizeof(finish), "Finish %d/%d/%d\n", until.day, until.month, until.year);
                     }
                     std::string exclude = get_exdate(comp);
                     snprintf(dates, sizeof(dates), "%s%s%s%s", freq, start, finish, exclude.c_str());
